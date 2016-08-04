@@ -1,4 +1,2 @@
 # sovolo
 そぼろ
-
-test
