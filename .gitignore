@@ -1,2 +1,8 @@
+Dockerfile
 .python-version
-sovolo/db.sqlite3
+app/db.sqlite3
+app.sock
+nginx-app.conf
+supervisor-app.conf
+uwsgi.ini
+uwsgi_params
