@@ -4,6 +4,6 @@ from . import views
 app_name = 'user'
 
 urlpatterns = [
-    #url(r'^$', views.IndexView.as_view(), name='index'),
-
+    url(r'^(?P<user_id>[0-9]+)/$', views.IndexView.view, name='userpage'),
+    #url(r'^$', views.IndexView.view,name='userpage'),
 ]
