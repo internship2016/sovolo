@@ -4,4 +4,4 @@ from django.shortcuts import render
 
 
 def detail(request, event_id):
-    return render(request, 'event/detail.html', event_id)
+    return render(request, 'event/detail.html', {'event_id':event_id})
