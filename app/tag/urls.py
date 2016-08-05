@@ -1,9 +1,9 @@
 from django.conf.urls import url, include
 from . import views
 
-app_name='tag'
+app_name = 'tag'
 
 urlpatterns = [
-    url(r'^$', views.IndexView.as_view(), name='index'),
+    #url(r'^$', views.IndexView.as_view(), name='index'),
 
 ]
