@@ -6,3 +6,5 @@ nginx-app.conf
 supervisor-app.conf
 uwsgi.ini
 uwsgi_params
+.idea/
+app/sovolo/__pycache__/
