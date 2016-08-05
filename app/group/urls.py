@@ -4,6 +4,6 @@ from . import views
 app_name = 'group'
 
 urlpatterns = [
-    #url(r'^$', views.IndexView.as_view(), name='index'),
-
+    url(r'^(?P<group_id>[0-9]+)/$', views.IndexView.view, name='grouppage'),
+    
 ]
