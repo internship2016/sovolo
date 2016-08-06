@@ -40,9 +40,9 @@ class Event(models.Model):
 
 class Frame(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    description = models.TextField()
-    lower_limit = models.IntegerField()
-    upper_limit = models.IntegerField()
+    description = models.TextField(default='通常参加枠')
+    lower_limit = models.IntegerField(blank=True)
+    upper_limit = models.IntegerField(blank=True)
     deadline = models.DateTimeField()
     created = models.DateTimeField(editable=False)
     updated = models.DateTimeField()
@@ -86,12 +86,12 @@ class Comment(models.Model):
         return super(Comment, self).save(*args, **kwargs)
 
 class Question(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='question')
     question = models.TextField()
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answer')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answer')
 
     created = models.DateTimeField(editable=False)
     updated = models.DateTimeField()

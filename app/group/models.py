@@ -9,9 +9,9 @@ class Group(models.Model):
     name = models.CharField(max_length=100)
     created = models.DateTimeField(editable=False)
     modified = models.DateTimeField()
-    image = models.ImageField(upload_to='group/')
+    image = models.ImageField(upload_to='group/', blank=True)
 
-    event = models.ManyToManyField(Event)
+    event = models.ManyToManyField(Event, blank=True)
 
     member = models.ManyToManyField(User)
 
@@ -25,4 +25,4 @@ class Group(models.Model):
 class Membership(models.Model):
     member = models.ForeignKey(User)
     group = models.ForeignKey(Group)
-    role = models.CharField(max_length=20)
+    role = models.CharField(max_length=20, default='Normal')
