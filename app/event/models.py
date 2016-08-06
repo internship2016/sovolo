@@ -15,21 +15,21 @@ class Event(models.Model):
     end_time = models.DateTimeField()
     meeting_place = models.CharField(max_length=400)
     place = models.CharField(max_length=400)
-    longitude = models.FloatField()
-    latitude = models.FloatField()
+    longitude = models.FloatField(blank=True)
+    latitude = models.FloatField(blank=True)
     image = models.ImageField(upload_to='events/')
     contact = models.CharField(max_length=200)
     details = models.TextField()
-    notes = models.TextField()
+    notes = models.TextField(blank=True)
     ticket = models.BooleanField()
-    hashtag = models.CharField(max_length=100)
-    share_message = models.CharField(max_length=100)
+    hashtag = models.CharField(max_length=100, blank=True)
+    share_message = models.CharField(max_length=100, blank=True)
     host_user = models.ForeignKey(User, related_name='host_event')
     #regionは地方自治体コードで指定
     region = models.IntegerField()
 
-    participant = models.ManyToManyField(User, through='Participation')
-    admin = models.ManyToManyField(User, related_name='admin_event')
+    participant = models.ManyToManyField(User, through='Participation', blank=True)
+    admin = models.ManyToManyField(User, related_name='admin_event', blank=True)
 
     def save(self, *args, **kwargs):
         # On save, update timestamps

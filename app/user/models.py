@@ -16,16 +16,16 @@ class User(models.Model):
     last_name = models.CharField(max_length=100)
     nickname = models.CharField(max_length=100)
     birthday = models.DateField()
-    telephone = models.CharField(max_length=11)
-    emergency_contact = models.CharField(max_length=11)
+    telephone = models.CharField(max_length=11, blank=True)
+    emergency_contact = models.CharField(max_length=11, blank=True)
     email = models.CharField(max_length=200)
-    occupation = models.CharField(max_length=100)
+    occupation = models.CharField(max_length=100, blank=True)
     # regionは地方自治体コードで指定
     region = models.IntegerField()
-    fb_access_token = models.CharField(max_length=100)
-    twitter_access_token = models.CharField(max_length=100)
-    follow_tag = models.ManyToManyField(Tag, related_name='follower')
-    image = models.ImageField(upload_to='users/')
+    fb_access_token = models.CharField(max_length=100, blank=True)
+    twitter_access_token = models.CharField(max_length=100, blank=True)
+    follow_tag = models.ManyToManyField(Tag, related_name='follower', blank=True)
+    image = models.ImageField(upload_to='users/', blank=True)
 
     def save(self, *args, **kwargs):
         # On save, update timestamps
