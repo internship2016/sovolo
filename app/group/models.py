@@ -9,7 +9,7 @@ class Group(models.Model):
     name = models.CharField(max_length=100)
     created = models.DateTimeField(editable=False)
     modified = models.DateTimeField()
-    image = models.ImageField()
+    image = models.ImageField(upload_to='group/')
 
     event = models.ManyToManyField(Event)
 

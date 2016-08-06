@@ -24,8 +24,8 @@ class User(models.Model):
     region = models.IntegerField()
     fb_access_token = models.CharField(max_length=100)
     twitter_access_token = models.CharField(max_length=100)
-
     follow_tag = models.ManyToManyField(Tag, related_name='follower')
+    image = models.ImageField(upload_to='users/')
 
     def save(self, *args, **kwargs):
         # On save, update timestamps
