@@ -6,6 +6,8 @@ supervisor-app.conf
 uwsgi.ini
 uwsgi_params
 .idea/
+media/*
+!media/.gitkeep
 
 
 ### https://github.com/github/gitignore/blob/master/Python.gitignore {{{
