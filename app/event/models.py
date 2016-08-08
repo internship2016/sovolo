@@ -4,6 +4,14 @@ from django.utils import timezone
 from django.db import models
 from user.models import User
 
+from PIL import Image
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import BytesIO as StringIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import sys
+
 # Create your models here.
 
 class Event(models.Model):
@@ -15,8 +23,8 @@ class Event(models.Model):
     end_time = models.DateTimeField()
     meeting_place = models.CharField(max_length=400)
     place = models.CharField(max_length=400)
-    longitude = models.FloatField(blank=True)
-    latitude = models.FloatField(blank=True)
+    longitude = models.FloatField(blank=True, null=True)
+    latitude = models.FloatField(blank=True, null=True)
     image = models.ImageField(upload_to='events/')
     contact = models.CharField(max_length=200)
     details = models.TextField()
@@ -31,11 +39,41 @@ class Event(models.Model):
     participant = models.ManyToManyField(User, through='Participation', blank=True)
     admin = models.ManyToManyField(User, related_name='admin_event', blank=True)
 
+    def __str__(self):
+        return self.name
+
     def save(self, *args, **kwargs):
         # On save, update timestamps
         if not self.id:
             self.created = timezone.now()
         self.modified = timezone.now()
+
+        #image processing
+        width = 500
+        height = 500
+        if self.image:
+            img_file = Image.open(StringIO(self.image.read()))
+            (imw, imh) = img_file.size
+            if (imw > width) or (imh > height):
+                img_file.thumbnail((width, height), Image.ANTIALIAS)
+
+            if img_file.mode == "RGBA":
+                img_file.load()
+                background = Image.new("RGB", image.size, (255, 255, 255))
+                background.paste(image, mask=image.split()[3])  # 3 is alpha channel
+                img_file = background
+
+            output = StringIO()
+            img_file.convert('RGB').save(output, format='JPEG', quality = 60)
+            output.seek(0)
+            self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0], 'image/jpeg', sys.getsizeof(output), None)
+
+        try:
+            this = Event.objects.get(id=self.id)
+            if this.photo != self.photo:
+                this.photo.delete(save=False)
+        except: pass
+
         return super(Event, self).save(*args, **kwargs)
 
 class Frame(models.Model):
