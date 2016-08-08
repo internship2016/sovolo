@@ -12,7 +12,7 @@ app/media/*
 node_modules
 bower_components
 .sass-cache
-app/sovolo/static/css
+app/static/css
 
 ### https://github.com/github/gitignore/blob/master/Python.gitignore {{{
 

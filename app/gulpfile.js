@@ -4,7 +4,7 @@ var notify = require('gulp-notify');
 var bower = require('gulp-bower');
 
 var conf = {
-  sassPath: './sovolo/static/sass',
+  sassPath: './static/sass',
   bowerDir: './bower_components'
 };
 
@@ -17,12 +17,12 @@ gulp.task('bower', function () {
 gulp.task('css', function () {
   return sass(conf.sassPath + '/style.scss', {
       style: 'compressed',
-      loadPath: ['./sovolo/static/sass']
+      loadPath: ['./static/sass']
     })
     .on('error', notify.onError(function (e) {
       return "Error: " + e.message;
     }))
-    .pipe(gulp.dest('./sovolo/static/css'));
+    .pipe(gulp.dest('./static/css'));
 });
 
 gulp.task('watch', function () {
