@@ -9,6 +9,8 @@ uwsgi_params
 media/*
 !media/.gitkeep
 
+node_modules
+bower_components
 
 ### https://github.com/github/gitignore/blob/master/Python.gitignore {{{
 
