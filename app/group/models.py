@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.db import models
 from user.models import User
 from event.models import Event
+import sys
 # Create your models here.
 
 class Group(models.Model):
