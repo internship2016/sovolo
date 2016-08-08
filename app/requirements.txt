@@ -1,3 +1,4 @@
 django
 Pillow
 django-registration
+django-bootstrap3

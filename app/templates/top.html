@@ -3,5 +3,11 @@
 {% block title %}Top page{% endblock %}
 
 {% block content %}
-<h1>This is top page.</h1>
+
+{% load bootstrap3 %}
+{% bootstrap_css %}
+{% bootstrap_javascript %}
+
+
+<h1>This is TOP{% bootstrap_icon 'star' %}PAGE.</h1>
 {% endblock %}
