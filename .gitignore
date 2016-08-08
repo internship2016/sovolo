@@ -6,8 +6,8 @@ supervisor-app.conf
 uwsgi.ini
 uwsgi_params
 .idea/
-media/*
-!media/.gitkeep
+app/media/*
+!app/media/.gitkeep
 
 node_modules
 bower_components
