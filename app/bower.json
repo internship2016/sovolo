@@ -1,0 +1,20 @@
+{
+  "name": "sovolo",
+  "description": "So Volo!",
+  "main": "",
+  "authors": [
+    "Shin Kojima <shin@kojima.org>"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/internship2016/sovolo",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "^15.3.0"
+  }
+}
