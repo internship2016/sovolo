@@ -1,15 +1,16 @@
 # coding=utf-8
 from django.utils import timezone
-from django.core.files.uploadedfile import InMemoryUploadedFile
-import sys
 
 from django.db import models
 from user.models import User
+
 from PIL import Image
 try:
     from StringIO import StringIO
 except ImportError:
     from io import BytesIO as StringIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import sys
 
 # Create your models here.
 

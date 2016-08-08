@@ -5,6 +5,15 @@ import sys
 
 from tag.models import Tag
 
+from PIL import Image
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import BytesIO as StringIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
+import sys
+
+
 # Create your models here.
 
 class User(models.Model):

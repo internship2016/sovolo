@@ -3,6 +3,13 @@ from django.utils import timezone
 from django.db import models
 from user.models import User
 from event.models import Event
+
+from PIL import Image
+try:
+    from StringIO import StringIO
+except ImportError:
+    from io import BytesIO as StringIO
+from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
 # Create your models here.
 
