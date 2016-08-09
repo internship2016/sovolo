@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.db import models
 from user.models import User
 from event.models import Event
+from django.conf import settings
 
 from PIL import Image
 try:
@@ -13,6 +14,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
 # Create your models here.
 
+
 class Group(models.Model):
     name = models.CharField(max_length=100)
     created = models.DateTimeField(editable=False)
@@ -21,7 +23,7 @@ class Group(models.Model):
 
     event = models.ManyToManyField(Event, blank=True)
 
-    member = models.ManyToManyField(User)
+    member = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
     def __str__(self):
         return self.name

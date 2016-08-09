@@ -4,7 +4,8 @@ from django.utils import timezone
 from django.db import models
 from django.core.urlresolvers import reverse
 from user.models import User
-from django.contrib.auth.models import User as DjangoUser
+from django.conf import settings
+
 
 from PIL import Image
 try:
@@ -34,12 +35,12 @@ class Event(models.Model):
     ticket = models.BooleanField()
     hashtag = models.CharField(max_length=100, blank=True)
     share_message = models.CharField(max_length=100, blank=True)
-    host_user = models.ForeignKey(DjangoUser, related_name='host_event')
+    host_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='host_event')
     #regionは地方自治体コードで指定
     region = models.IntegerField()
 
-    participant = models.ManyToManyField(User, through='Participation', blank=True)
-    admin = models.ManyToManyField(User, related_name='admin_event', blank=True)
+    participant = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Participation', blank=True)
+    admin = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='admin_event', blank=True)
 
     def __str__(self):
         return self.name
