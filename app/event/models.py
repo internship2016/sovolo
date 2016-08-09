@@ -45,7 +45,7 @@ class Event(AbstractBaseModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('event:detail', kwargs={'event_id': self.id})
+        return reverse('event:detail', kwargs={'pk': self.id})
 
     def save(self, *args, **kwargs):
         return super(Event, self).save(*args, **kwargs)

@@ -1,0 +1,10 @@
+{% for event in all_events %}
+    <a href="{% url 'event:detail' event.id %}"><img src={{ event.image.url }}></a>
+    <h2>Name: {{event}}</h2>
+
+    <form action="{% url 'event:delete' event.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value ='DELETE'>
+    </form>
+
+{% endfor %}

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView
+from django.core.urlresolvers import reverse_lazy
 from .models import Event
 
 from django.utils import timezone
@@ -22,9 +23,6 @@ def participants(request,event_id):
         'event_id':event_id
     }
     return render(request, 'event/participants.html', data)
-
-def add(request):
-    return render(request, 'event/add.html')
 
 class EventCreate(CreateView):
     model = Event
@@ -48,3 +46,15 @@ class EventIndexView(ListView):
     context_object_name = 'all_events'
     def get_queryset(self):
         return Event.objects.all()
+
+class EventEditView(UpdateView):
+    model = Event
+    fields = ['name', 'start_time','end_time','meeting_place', 'place', 'image', 'details', 'notes']
+    template_name = 'event/edit.html'
+
+class EventDeleteView(DeleteView):
+    model = Event
+    success_url = reverse_lazy('event:index')
+    template_name = 'event/check_delete.html'
+
+
