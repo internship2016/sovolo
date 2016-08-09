@@ -25,6 +25,8 @@ class Group(AbstractBaseModel):
 
     member = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
+    description = models.TextField()
+
     def __str__(self):
         return self.name
 
