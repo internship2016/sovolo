@@ -2,15 +2,11 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView
 from django.core.urlresolvers import reverse_lazy
-from .models import Event
+from .models import Event, Participation
 
 from django.utils import timezone
 
 # Create your views here.
-
-
-def detail(request, event_id):
-    return render(request, 'event/detail.html', {'event_id':event_id})
 
 def manage(request,event_id):
     data ={
@@ -58,3 +54,18 @@ class EventDeleteView(DeleteView):
     template_name = 'event/check_delete.html'
 
 
+class EventParticipantsView(ListView):
+    model = Participation
+    template_name = 'event/participants.html'
+    context_object_name = 'all_participants'
+
+    def get_context_data(self, **kwargs):
+        context = super(EventParticipantsView, self).get_context_data(**kwargs)
+        context['event_id'] = self.kwargs['event_id']
+        return context
+
+    def get_queryset(self):
+        event_id = self.kwargs['event_id']
+        requested_event = Event.objects.get(pk=event_id)
+
+        return Participation.objects.filter(event=requested_event)
