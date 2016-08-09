@@ -6,7 +6,7 @@ from django.core.urlresolvers import reverse
 from user.models import User
 from base.models import AbstractBaseModel
 from django.conf import settings
-
+from django.contrib import admin
 
 from PIL import Image
 try:
@@ -49,6 +49,9 @@ class Event(AbstractBaseModel):
 
     def save(self, *args, **kwargs):
         return super(Event, self).save(*args, **kwargs)
+
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('name', 'created', 'modified')
 
 class Frame(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

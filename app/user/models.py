@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.utils import timezone
 from django.db import models
+from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 import sys
 
@@ -83,3 +84,6 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     def save(self, *args, **kwargs):
         return super(User, self).save(*args, **kwargs)
+
+class UserAdmin(admin.ModelAdmin):
+    list_display = ('nickname', 'created', 'modified')

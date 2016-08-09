@@ -12,6 +12,8 @@ except ImportError:
     from io import BytesIO as StringIO
 
 from base.models import AbstractBaseModel
+from django.contrib import admin
+
 # Create your models here.
 
 
@@ -28,6 +30,9 @@ class Group(AbstractBaseModel):
 
     def save(self, *args, **kwargs):
         return super(Group, self).save(*args, **kwargs)
+
+class GroupAdmin(admin.ModelAdmin):
+    list_display = ('name', 'created', 'modified')
 
 class Membership(models.Model):
     member = models.ForeignKey(User)
