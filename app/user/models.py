@@ -5,6 +5,7 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 import sys
 
 from tag.models import Tag
+from base.models import AbstractBaseModel
 
 from PIL import Image
 try:
@@ -34,10 +35,8 @@ class UserManager(BaseUserManager):
         return user
 
 
-class User(AbstractBaseUser):
+class User(AbstractBaseModel, AbstractBaseUser):
     # Numbers are arbitrary
-    created = models.DateTimeField(editable=False)
-    modified = models.DateTimeField(null=True)
     first_name = models.CharField(max_length=100,null=True)
     last_name = models.CharField(max_length=100,null=True)
     nickname = models.CharField(max_length=100,null=True)
@@ -49,7 +48,7 @@ class User(AbstractBaseUser):
 
     # regionは地方自治体コードで指定
     region = models.IntegerField(null=True)
-    follow_tag = models.ManyToManyField(Tag, related_name='follower', null=True)
+    follow_tag = models.ManyToManyField(Tag, related_name='follower', blank=True)
     image = models.ImageField(upload_to='users/', null=True)
 
     objects = UserManager()
@@ -83,37 +82,4 @@ class User(AbstractBaseUser):
         return self.email
 
     def save(self, *args, **kwargs):
-        # On save, update timestamps
-        if not self.id:
-            self.created = timezone.now()
-        self.modified = timezone.now()
-
-        width = 500
-        height = 500
-        if self.image:
-            img_file = Image.open(StringIO(self.image.read()))
-            (imw, imh) = img_file.size
-            if (imw > width) or (imh > height):
-                #change size of image to fit within boudaries specified by width and height
-                img_file.thumbnail((width, height), Image.ANTIALIAS)
-
-            if img_file.mode == "RGBA":
-                img_file.load()
-                background = Image.new("RGB", image.size, (255, 255, 255))
-                background.paste(image, mask=image.split()[3])  # 3 is alpha channel
-                img_file = background
-
-            output = StringIO()
-            img_file.convert('RGB').save(output, format='JPEG', quality=60)
-            output.seek(0)
-            self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
-                                              'image/jpeg', sys.getsizeof(output), None)
-
-        try:
-            this = Event.objects.get(id=self.id)
-            if this.photo != self.photo:
-                this.photo.delete(save=False)
-        except:
-            pass
-
         return super(User, self).save(*args, **kwargs)
