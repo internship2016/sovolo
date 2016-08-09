@@ -1,0 +1,6 @@
+<!-- テスト用のForm -->
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% include 'event/form_template.html' %}
+    <button type="submit">送信</button>
+</form>
