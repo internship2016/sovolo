@@ -1,11 +1,15 @@
 #coding=utf-8
 from django.conf.urls import url, include
+from django.conf import settings
+from django.conf.urls.static import static
+
 from . import views
 
 app_name='event'
 
 urlpatterns = [
-    url(r'^(?P<event_id>[0-9]+)/$', views.detail, name='detail'),
+    url(r'^$', views.EventIndexView.as_view(), name='index'),
+    url(r'^(?P<pk>[0-9]+)/$', views.EventDetailView.as_view(), name='detail'),
     url(r'^(?P<event_id>[0-9]+)/manage/$', views.manage, name='manage'),
     url(r'^(?P<event_id>[0-9]+)/participants/$', views.participants, name='participants'),
     #url(r'^add/$', views.add, name='add'),
