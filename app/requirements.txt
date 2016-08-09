@@ -1,4 +1,5 @@
 django
 Pillow
-django-registration
 django-bootstrap3
+django-dotenv
+python-social-auth

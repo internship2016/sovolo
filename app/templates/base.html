@@ -24,7 +24,11 @@
           <button type="submit" class="btn btn-default">検索</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{% url 'user:login' %}">ログイン</a></li>
+          {% if request.user.is_anonymous %}
+            <li><a href="{% url 'user:login' %}">ログイン</a></li>
+          {% else %}
+            <li>{{ request.user.nickname}}({{request.user.email}})</li>
+          {% endif %}
         </ul>
       </div>
     </div>

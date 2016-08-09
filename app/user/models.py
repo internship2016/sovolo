@@ -18,10 +18,9 @@ import sys
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email, password=None):
-        if not email:
-            raise ValueError
+    def create_user(self, email="", username="", password=None):
         user = self.model(
+            nickname=username,
             email=self.normalize_email(email)
         )
 

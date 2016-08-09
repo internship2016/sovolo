@@ -1,13 +1,34 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>User page</title>
-</head>
-<body>
-<h1>This is LoginPage</h1>
-<div>
-    <a href="{% url 'user:register' %}">register</a>
-</div>
-</body>
-</html>
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+    {% if form.errors %}
+        <p>なんかおかしいです: {{ form.errors }}</p>
+    {% endif %}
+
+    <form method="post" action="{% url 'user:login' %}">
+        {% csrf_token %}
+        <h2>Sign in</h2>
+        <hr />
+
+        <div>
+            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+            {{ form.username }}
+        </div>
+        <div>
+            <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+            {{ form.password }}
+        </div>
+
+        <button type="submit">Sign in</button>
+        <input type="hidden" name="next" value="{{ next }}" />
+    </form>
+
+    <li>
+        <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a>
+        <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a>
+    </li>
+
+{% endblock %}
