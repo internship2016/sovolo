@@ -28,4 +28,4 @@ urlpatterns = [
     url(r'^group/', include('group.urls')),
     url(r'^tag/', include('tag.urls')),
     url(r'^user/', include('user.urls')),
-] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
+] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
