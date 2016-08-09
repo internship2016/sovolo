@@ -2,7 +2,9 @@
 from django.utils import timezone
 
 from django.db import models
+from django.core.urlresolvers import reverse
 from user.models import User
+from django.contrib.auth.models import User as DjangoUser
 
 from PIL import Image
 try:
@@ -32,7 +34,7 @@ class Event(models.Model):
     ticket = models.BooleanField()
     hashtag = models.CharField(max_length=100, blank=True)
     share_message = models.CharField(max_length=100, blank=True)
-    host_user = models.ForeignKey(User, related_name='host_event')
+    host_user = models.ForeignKey(DjangoUser, related_name='host_event')
     #regionは地方自治体コードで指定
     region = models.IntegerField()
 
@@ -41,6 +43,9 @@ class Event(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_absolute_url(self):
+        return reverse('event:detail', kwargs={'event_id': self.id})
 
     def save(self, *args, **kwargs):
         # On save, update timestamps
