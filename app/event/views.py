@@ -29,6 +29,7 @@ class EventCreate(CreateView):
     model = Event
     fields = ['name', 'start_time', 'end_time', 'meeting_place', 'place', 'image', 'contact', 'details', 'notes', 'ticket', 'region']
 
+    template_name = "event/event_form.html"
     def form_valid(self, form):
         form.instance.host_user = self.request.user
         return super(EventCreate, self).form_valid(form)
