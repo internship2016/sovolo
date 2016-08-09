@@ -19,12 +19,18 @@
       <div class="collapse navbar-collapse">
         <form class="navbar-form navbar-left" role="search">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="イベントを検索">
+            <input type="text" class="form-control" placeholder="イベントを探す">
           </div>
           <button type="submit" class="btn btn-default">検索</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{% url 'user:login' %}">ログイン</a></li>
+          {% if login %}
+            <li><a href="{% url 'user:register' %}">ユーザー登録</a></li>
+            <li><a href="{% url 'user:login' %}">ログイン</a></li>
+          {% else %}
+            <li><a href="#">(ユーザ名)</a> </li>
+          {% endif %}
+          <li><button class="btn btn-default navbar-btn">イベント作成</button></li>
         </ul>
       </div>
     </div>

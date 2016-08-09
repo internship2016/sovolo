@@ -1,13 +1,9 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>User page</title>
-</head>
-<body>
-<h1>This is LoginPage</h1>
-<div>
-    <a href="{% url 'user:register' %}">register</a>
-</div>
-</body>
-</html>
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}
+  ログイン
+{% endblock %}
+{% block content %}
+  This is LoginPage
+{% endblock %}

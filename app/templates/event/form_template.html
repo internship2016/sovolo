@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
 {% for field in form %}
     <label> {{field.label_tag}} </label>
     <div> {{field}} </div>
