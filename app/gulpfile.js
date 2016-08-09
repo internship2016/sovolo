@@ -1,5 +1,5 @@
 var gulp = require('gulp');
-var sass = require('gulp-ruby-sass');
+var sass = require('gulp-sass');
 var notify = require('gulp-notify');
 var bower = require('gulp-bower');
 
@@ -15,13 +15,8 @@ gulp.task('bower', function () {
 // Watch static/sass/style.scss,
 // Compress all sass files into css
 gulp.task('css', function () {
-  return sass(conf.sassPath + '/style.scss', {
-      style: 'compressed',
-      loadPath: ['./static/sass']
-    })
-    .on('error', notify.onError(function (e) {
-      return "Error: " + e.message;
-    }))
+  return gulp.src(conf.sassPath + '/*.scss')
+    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(gulp.dest('./static/css'));
 });
 
