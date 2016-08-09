@@ -8,7 +8,5 @@ urlpatterns = [
     url(r'^(?P<event_id>[0-9]+)/$', views.detail, name='detail'),
     url(r'^(?P<event_id>[0-9]+)/manage/$', views.manage, name='manage'),
     url(r'^(?P<event_id>[0-9]+)/participants/$', views.participants, name='participants'),
-    #url(r'^add/$', views.add, name='add'),
-    #Event追加
-    url(r'^add/$', views.EventCreate.as_view(), name='add'),
+    url(r'^add/$', views.EventCreate.as_view(), name='add')
 ]
