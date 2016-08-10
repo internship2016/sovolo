@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView
 from django.core.urlresolvers import reverse_lazy
@@ -102,3 +103,12 @@ class EventSearchResultsView(ListView):
         query = self.make_query_from_string(user_entry)
 
         return Event.objects.filter(query)
+
+def event_participate(request, event_id):
+    event = Event.objects.get(pk=event_id)
+
+    if request.user.is_authenticated:
+        event.participation_set.create(user=request.user, frame_id=1)
+        return redirect(event)
+    else:
+        return redirect(reverse('user:login'))
