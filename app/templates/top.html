@@ -4,6 +4,114 @@
 {% block title %}Top page{% endblock %}
 
 {% block content %}
-
-<h1>This is TOP{% bootstrap_icon 'star' %}PAGE.</h1>
+  <div class="row">
+    <div id="events-area" class="col-md-6">
+      <div id="upcoming-events" class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">参加予定のボランティア</h3>
+        </div>
+        <div class="panel-body">
+          <div id="sample-event1" class="media">
+            <div class="media-left">
+              <a href="/event/1">
+                <img class="media-object" src="#" width="64" height="64" alt="画像">
+              </a>
+            </div>
+            <div class="media-body">
+              <div class="media-heading">
+                <h4>event1</h4>
+              </div>
+              <p>2016/8/10 531 Page st.</p>
+            </div>
+          </div>
+          <a href="#">参加予定イベント一覧</a>
+        </div>
+      </div>
+      <div id="mygroup-events" class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">参加予定のボランティア</h3>
+        </div>
+        <div class="panel-body">
+          <div id="sample-event1" class="media">
+            <div class="media-left">
+              <a href="/event/1">
+                <img class="media-object" src="#" width="64" height="64" alt="画像">
+              </a>
+            </div>
+            <div class="media-body">
+              <div class="media-heading">
+                <h4>event1</h4>
+              </div>
+              <p>2016/8/10 531 Page st.</p>
+            </div>
+          </div>
+          <a href="#">参加予定イベント一覧</a>
+        </div>
+      </div>
+      <div id="myarea-events" class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">参加予定のボランティア</h3>
+        </div>
+        <div class="panel-body">
+          <div id="sample-event1" class="media">
+            <div class="media-left">
+              <a href="/event/1">
+                <img class="media-object" src="#" width="64" height="64" alt="画像">
+              </a>
+            </div>
+            <div class="media-body">
+              <div class="media-heading">
+                <h4>event1</h4>
+              </div>
+              <p>2016/8/10 531 Page st.</p>
+            </div>
+          </div>
+          <a href="#">参加予定イベント一覧</a>
+        </div>
+      </div>
+      <div id="mytag-events" class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">参加予定のボランティア</h3>
+        </div>
+        <div class="panel-body">
+          <div id="sample-event1" class="media">
+            <div class="media-left">
+              <a href="/event/1">
+                <img class="media-object" src="#" width="64" height="64" alt="画像">
+              </a>
+            </div>
+            <div class="media-body">
+              <div class="media-heading">
+                <h4>event1</h4>
+              </div>
+              <p>2016/8/10 531 Page st.</p>
+            </div>
+          </div>
+          <a href="#">参加予定イベント一覧</a>
+        </div>
+      </div>
+    </div>
+    <div id="search-area" class="col-md-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">イベント検索</h3>
+        </div>
+        <div class="panel-body">
+          <form role="search" action="{% url 'event:search' %}" method="get">
+            <div id="word-search">
+              <form class="" role="search" action="{% url 'event:search' %}" method="get">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="キーワード" name="q">
+                </div>
+              </form>
+            </div>
+            <div id="search-calender">カレンダー</div>
+            <div id="search-category">タグ</div>
+            <div id="search-area">地域</div>
+            <button type="submit" class="btn btn-default">検索</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
