@@ -5,17 +5,93 @@
 イベント(#{{event}})詳細
 {% endblock %}
 {% block content %}
-<h1>This is event#{{ event.id }}</h1>
-<img src={{ event.image.url }}>
-<h2>Name: {{event}}</h2>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.7";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
-<a href="{% url 'event:participate' event.id %}">参加する</a>
-<!---->
-{% if login_user_participating %}
-    <form action="{% url 'event:cancel' participation.id %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value ='Cancel'>
-    </form>
-{% endif %}
-<!---->
+<div class="event-display-content">
+    <div class="media">
+        <div class="media-left">
+           <img src={{ event.image.url }}>
+        </div>
+        <div class="media-body event-head-title">
+            <h1 class="media-heading"><u>{{event}}</u></h1>
+            {% if True %}
+             <div class="btn pull-right cancel-btn">
+                 <a class="btn btn-default" href="{% url 'event:add' %}" role="button">参加をキャンセル</a>
+                 <a href="{% url 'event:participate' event.id %}">参加する</a>
+             </div>
+            {% endif %}
+            <div class="btn pull-right btn-group .active">
+                <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+                 <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://twitter.com" data-text="So volo!!">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <p>
+                <h2>日時： {{ event.start_time }} ～ {{ event.end_time }}</h2>
+                <h2>場所： {{ event.place }}</h2>
+            </p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    説明
+                </div>
+                <div class="panel-body">
+                    {{ event.detail }}
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                        参加条件
+                </div>
+                <div class="panel-body">
+                        <li>集合場所：{{ event.meeting_place }}</li>
+                        <li>連絡先:{{ event.contact }}</li>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <li>主催者：</li>
+            <li>グループ：</li>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    管理者
+                </div>
+                <div class="panel-body">
+                    interlink
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    参加者
+                </div>
+                <div class="panel-body">
+                    student
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            参加状況
+        </div>
+        <div class="panel-body">
+            web開発作業　4/4
+            <button class="btn pull-right">参加</button>
+        </div>
+    </div>
+    <div>
+        <u>コメント</u>
+
+    </div>
+</div>
+
 {% endblock %}

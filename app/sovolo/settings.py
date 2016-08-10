@@ -48,7 +48,11 @@ INSTALLED_APPS = [
 ]
 
 BOOTSTRAP3 = {
-    'jquery_url': '//code.jquery.com/jquery-2.2.4.min.js',
+    'include_jquery': False,
+    'jquery_url': '/static/js/jquery.js',
+    'base_url': '/static',
+    'css_url': '/static/css/bootstrap.css',
+    'javascript_url': '/static/js/bootstrap.js',
 }
 
 MIDDLEWARE = [
@@ -92,8 +96,12 @@ WSGI_APPLICATION = 'sovolo.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'sovolo',
+        'USER': 'sovolo_admin',
+        'PASSWORD': 'pass',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
     }
 }
 
