@@ -3,3 +3,4 @@ Pillow
 django-bootstrap3
 django-dotenv
 python-social-auth
+django-extensions

@@ -43,8 +43,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social.apps.django_app.default',
+    'django_extensions',
     'bootstrap3',
 ]
+
+BOOTSTRAP3 = {
+    'jquery_url': '//code.jquery.com/jquery-2.2.4.min.js',
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

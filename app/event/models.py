@@ -7,6 +7,7 @@ from user.models import User
 from base.models import AbstractBaseModel
 from django.conf import settings
 from django.contrib import admin
+from tag.models import Tag
 
 from PIL import Image
 try:
@@ -16,7 +17,6 @@ except ImportError:
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys, os
 
-# Create your models here.
 
 class Event(AbstractBaseModel):
     #Numbers are arbitrary
@@ -41,6 +41,8 @@ class Event(AbstractBaseModel):
     participant = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Participation', blank=True)
     admin = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='admin_event', blank=True)
 
+    tag = models.ManyToManyField(Tag, blank=True)
+
     def __str__(self):
         return self.name
 
@@ -50,8 +52,10 @@ class Event(AbstractBaseModel):
     def save(self, *args, **kwargs):
         return super(Event, self).save(*args, **kwargs)
 
+
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified')
+
 
 class Frame(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
@@ -73,6 +77,7 @@ class Participation(AbstractBaseModel):
     def save(self, *args, **kwargs):
         return super(Participation, self).save(*args, **kwargs)
 
+
 class ParticipationAdmin(admin.ModelAdmin):
     list_display = ['event', 'user', 'status', 'frame']
 
@@ -80,18 +85,30 @@ class ParticipationAdmin(admin.ModelAdmin):
 class Comment(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     text = models.TextField()
-    reply_to = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies')
+    reply_to = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies',null=True)
+
+    def __str__(self):
+        return self.text
 
     def save(self, *args, **kwargs):
         return super(Comment, self).save(*args, **kwargs)
+
 
 class Question(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='question')
     question = models.TextField()
 
+    def __str__(self):
+        return self.question
+
+
 class Answer(AbstractBaseModel):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answer')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answer')
+    text = models.TextField()
+
+    def __str__(self):
+        return self.text
 
     def save(self, *args, **kwargs):
         return super(Answer, self).save(*args, **kwargs)

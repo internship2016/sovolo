@@ -85,5 +85,6 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def save(self, *args, **kwargs):
         return super(User, self).save(*args, **kwargs)
 
+
 class UserAdmin(admin.ModelAdmin):
     list_display = ('nickname', 'created', 'modified')
