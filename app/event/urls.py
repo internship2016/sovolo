@@ -26,4 +26,7 @@ urlpatterns = [
     url(r'^search/$', views.EventSearchResultsView.as_view(), name='search'),
     # event/participate
     url(r'^(?P<event_id>[0-9]+)/participate/$', views.event_participate, name='participate'),
+    # event/1/cancel
+    url(r'^(?P<pk>[0-9]+)/cancel/$', views.ParticipationDeleteView.as_view(), name='cancel'),
+
 ]
