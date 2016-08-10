@@ -4,6 +4,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
+from django.db import IntegrityError
 from .models import Event, Participation
 
 from django.utils import timezone
@@ -116,7 +117,10 @@ def event_participate(request, event_id):
     event = Event.objects.get(pk=event_id)
 
     if request.user.is_authenticated:
-        event.participation_set.create(user=request.user, frame_id=1)
+        try:
+            event.participation_set.create(user=request.user, frame_id=1)
+        except IntegrityError as e:
+            pass
         return redirect(event)
     else:
         return redirect(reverse('user:login'))

@@ -74,6 +74,9 @@ class Participation(AbstractBaseModel):
     status = models.CharField(max_length=30)
     frame = models.ForeignKey(Frame, blank=True, null=True)
 
+    class Meta:
+        unique_together = (('event', 'user'),)
+
     def save(self, *args, **kwargs):
         return super(Participation, self).save(*args, **kwargs)
 
