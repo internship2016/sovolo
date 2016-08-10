@@ -10,5 +10,12 @@
 <h2>Name: {{event}}</h2>
 
 <a href="{% url 'event:participate' event.id %}">参加する</a>
-
+<!---->
+{% if login_user_participating %}
+    <form action="{% url 'event:cancel' participation.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value ='Cancel'>
+    </form>
+{% endif %}
+<!---->
 {% endblock %}

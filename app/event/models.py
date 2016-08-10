@@ -82,7 +82,7 @@ class Participation(AbstractBaseModel):
 
 
 class ParticipationAdmin(admin.ModelAdmin):
-    list_display = ['event', 'user', 'status', 'frame']
+    list_display = ['pk', 'event', 'user', 'status', 'frame']
 
 
 class Comment(AbstractBaseModel):
