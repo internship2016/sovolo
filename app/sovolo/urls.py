@@ -29,4 +29,4 @@ urlpatterns = [
     url(r'^tag/', include('tag.urls')),
     url(r'^user/', include('user.urls')),
     url('', include('social.apps.django_app.urls', namespace='social')),
-] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS)
+] + static(settings.STATIC_URL, document_root=settings.STATICFILES_DIRS) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

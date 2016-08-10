@@ -1,0 +1,10 @@
+{% for group in all_groups %}
+    <a href="{% url 'group:detail' group.id %}"><img src={{ group.image.url }}></a>
+    <h2>Name: {{group}}</h2>
+
+    <form action="{% url 'group:delete' group.id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value ='DELETE'>
+    </form>
+
+{% endfor %}

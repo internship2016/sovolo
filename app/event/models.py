@@ -45,13 +45,13 @@ class Event(AbstractBaseModel):
         return self.name
 
     def get_absolute_url(self):
-        return reverse('event:detail', kwargs={'event_id': self.id})
+        return reverse('event:detail', kwargs={'pk': self.id})
 
     def save(self, *args, **kwargs):
         return super(Event, self).save(*args, **kwargs)
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('name', 'created', 'modified')
+    list_display = ('pk', 'name', 'created', 'modified')
 
 class Frame(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
@@ -67,11 +67,15 @@ class Frame(AbstractBaseModel):
 class Participation(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=10)
-    frame = models.ForeignKey(Frame)
+    status = models.CharField(max_length=30)
+    frame = models.ForeignKey(Frame, blank=True, null=True)
 
     def save(self, *args, **kwargs):
         return super(Participation, self).save(*args, **kwargs)
+
+class ParticipationAdmin(admin.ModelAdmin):
+    list_display = ['event', 'user', 'status', 'frame']
+
 
 class Comment(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)

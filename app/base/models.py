@@ -25,7 +25,7 @@ class AbstractBaseModel(models.Model):
 
         width = 500
         height = 500
-        if self.image:
+        if hasattr(self, 'image') and self.image:
             img_file = Image.open(StringIO(self.image.read()))
             (imw, imh) = img_file.size
             if (imw > width) or (imh > height):
