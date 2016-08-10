@@ -38,6 +38,9 @@ class EventDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(EventDetailView, self).get_context_data(**kwargs)
         context['now'] = timezone.now()
+        login_user = self.request.user
+        context['participants'] = self.object.participant.all()
+        context['login_user_participating'] = login_user in self.object.participant.all()
         return context
 
 
@@ -126,3 +129,8 @@ def event_participate(request, event_id):
         return redirect(event)
     else:
         return redirect(reverse('user:login'))
+
+class ParticipationDeleteView(DeleteView):
+    model = Participation
+    success_url = reverse_lazy('event:detail')
+    template_name = 'event/check_delete.html'
