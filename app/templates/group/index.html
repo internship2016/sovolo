@@ -1,3 +1,5 @@
+{% extends "base.html" %}
+
 {% for group in all_groups %}
     <a href="{% url 'group:detail' group.id %}"><img src={{ group.image.url }}></a>
     <h2>Name: {{group}}</h2>
