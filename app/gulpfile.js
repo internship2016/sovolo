@@ -2,15 +2,44 @@ var gulp = require('gulp');
 var sass = require('gulp-sass');
 var notify = require('gulp-notify');
 var bower = require('gulp-bower');
+var gf = require('gulp-filter');
+var mbf = require('main-bower-files');
+var debug = require('gulp-debug');
 
 var conf = {
   sassPath: './static/sass',
   bowerDir: './bower_components'
 };
 
-gulp.task('bower', function () {
+gulp.task('bower.install', function () {
   return bower().pipe(gulp.dest(conf.bowerDir));
 });
+
+gulp.task('bower.copy', function () {
+  var filter_js = gf('**/*.js', {restore: true});
+  var filter_css = gf('**/*.css', {restore: true});
+  var filter_font = gf(['**/*.eot', '**/*.woff', '**/*.svg', '**/*.ttf'], {restore: true});
+
+  return gulp.src(mbf())
+    .pipe(filter_js)
+    .pipe(gulp.dest('./static/js'))
+    .pipe(filter_js.restore)
+
+    .pipe(filter_css)
+    .pipe(gulp.dest('./static/css'))
+    .pipe(filter_css.restore)
+
+    .pipe(filter_font)
+    .pipe(gulp.dest('./static/fonts'))
+    .pipe(filter_font.restore)
+
+    ;
+});
+
+gulp.task('bower', [
+  'bower.install',
+  'bower.copy'
+]);
 
 // Watch static/sass/style.scss,
 // Compress all sass files into css

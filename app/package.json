@@ -5,7 +5,10 @@
   "devDependencies": {
     "gulp": "^3.9.1",
     "gulp-bower": "0.0.13",
+    "gulp-debug": "^2.1.2",
+    "gulp-filter": "^4.0.0",
     "gulp-notify": "^2.2.0",
-    "gulp-sass": "^2.3.2"
+    "gulp-sass": "^2.3.2",
+    "main-bower-files": "^2.13.1"
   }
 }
