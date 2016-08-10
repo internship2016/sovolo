@@ -21,5 +21,5 @@ urlpatterns = [
     # event/1/participants/
     url(r'^(?P<event_id>[0-9]+)/participants/$', views.EventParticipantsView.as_view(), name='participants'),
     # event/add
-    url(r'^add/$', views.EventCreate.as_view(), name='event-add'),
+    url(r'^add/$', views.EventCreate.as_view(), name='add'),
 ]

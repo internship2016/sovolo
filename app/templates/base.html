@@ -28,8 +28,12 @@
             <li><a href="#">ユーザー登録</a></li>
             <li><a href="{% url 'user:login' %}">ログイン</a></li>
           {% else %}
-            <li>{{ request.user.nickname}}({{request.user.email}})</li>
+            <li>
+              {{ request.user.nickname}}({{request.user.email}})
+              <a href="{% url 'user:logout' %}">ログアウト</a>
+            </li>
           {% endif %}
+          <li><p class="navbar-btn"><a class="btn btn-default" href="{% url 'event:add' %}" role="button">イベント作成</a></p></li>
         </ul>
       </div>
     </div>
