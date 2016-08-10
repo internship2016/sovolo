@@ -10,6 +10,9 @@
 
 </head>
 <body>
+<script type="text/javascript">
+  $('.dropdown-toggle').dropdown()
+</script>
 <header>
   <nav class="navbar navbar-default">
     <div class="container">
@@ -28,10 +31,17 @@
             <li><a href="{% url 'user:register' %}">ユーザー登録</a></li>
             <li><a href="{% url 'user:login' %}">ログイン</a></li>
           {% else %}
-            <li>
-              {{ request.user.nickname}}({{request.user.email}})
-              <a href="{% url 'user:logout' %}">ログアウト</a>
+            <li class="dropdown">
+              <p id="dUser" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {{ request.user.nickname }}
+                <span class="caret"></span>
+              </p>
+              <ul class="dropdown-menu" aria-labelledby="dUser">
+                <li><a href="#">プロフィール</a></li>
+                <li><a href="{% url 'user:logout' %}">ログアウト</a></li>
+              </ul>
             </li>
+            <li></li><a href="{% url 'user:logout' %}">ログアウト</a></li>
           {% endif %}
           <li><p class="navbar-btn"><a class="btn btn-default" href="{% url 'event:add' %}" role="button">イベント作成</a></p></li>
         </ul>
