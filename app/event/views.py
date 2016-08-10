@@ -15,12 +15,6 @@ def manage(request,event_id):
     }
     return render(request, 'event/manage.html', data)
 
-def participants(request,event_id):
-    data ={
-        'event_id':event_id
-    }
-    return render(request, 'event/participants.html', data)
-
 class EventCreate(CreateView):
     model = Event
     fields = ['name', 'start_time', 'end_time', 'meeting_place', 'place', 'image', 'contact', 'details', 'notes', 'ticket', 'region']

@@ -1,21 +1,19 @@
 # coding=utf-8
-from django.utils import timezone
 from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
-import sys
+from django.conf import settings
 
 from tag.models import Tag
 from base.models import AbstractBaseModel
 
-from PIL import Image
 try:
     from StringIO import StringIO
 except ImportError:
     from io import BytesIO as StringIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
-import sys
+
+import sys, os
 
 
 class UserManager(BaseUserManager):
@@ -51,7 +49,6 @@ class User(AbstractBaseModel, AbstractBaseUser):
     region = models.IntegerField(null=True)
     follow_tag = models.ManyToManyField(Tag, related_name='follower', blank=True)
     image = models.ImageField(upload_to='users/', null=True)
-
     objects = UserManager()
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
