@@ -47,7 +47,7 @@ INSTALLED_APPS = [
 ]
 
 BOOTSTRAP3 = {
-    'jquery_url': '//code.jquery.com/jquery-3.1.0.min.js',
+    'jquery_url': '//code.jquery.com/jquery-2.2.4.min.js',
 }
 
 MIDDLEWARE = [
