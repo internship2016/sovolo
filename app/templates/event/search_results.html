@@ -1,12 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <form action="{% url 'event:search' %}" method="get">
-        <input type="text" name="q">
-        <input type="submit" value="検索">
-    </form>
-
-{% for event in all_events %}
+{% for event in result_events %}
     <a href="{% url 'event:detail' event.id %}"><img src={{ event.image.url }}></a>
     <h2>Name: {{event}}</h2>
 

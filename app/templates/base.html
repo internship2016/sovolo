@@ -17,9 +17,9 @@
         <a class="navbar-brand" href="{% url 'top' %}">Sovolo</a>
       </div>
       <div class="collapse navbar-collapse">
-        <form class="navbar-form navbar-left" role="search">
+        <form class="navbar-form navbar-left" role="search" action="{% url 'event:search' %}" method="get">
           <div class="form-group">
-            <input type="text" class="form-control" placeholder="イベントを検索">
+            <input type="text" class="form-control" placeholder="イベントを検索" name="q">
           </div>
           <button type="submit" class="btn btn-default">検索</button>
         </form>

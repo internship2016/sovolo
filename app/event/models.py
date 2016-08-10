@@ -14,7 +14,7 @@ try:
 except ImportError:
     from io import BytesIO as StringIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
-import sys
+import sys, os
 
 # Create your models here.
 
