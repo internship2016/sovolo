@@ -1,8 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
+from django.db import IntegrityError
+from django.contrib import messages
 from .models import Event, Participation
 
 from django.utils import timezone
@@ -35,6 +38,9 @@ class EventDetailView(DetailView):
     def get_context_data(self, **kwargs):
         context = super(EventDetailView, self).get_context_data(**kwargs)
         context['now'] = timezone.now()
+        login_user = self.request.user
+        context['participants'] = self.object.participant.all()
+        context['login_user_participating'] = login_user in self.object.participant.all()
         return context
 
 
@@ -110,3 +116,21 @@ class EventSearchResultsView(ListView):
         query = self.make_query_from_string(user_entry)
 
         return Event.objects.filter(query)
+
+def event_participate(request, event_id):
+    event = Event.objects.get(pk=event_id)
+
+    if request.user.is_authenticated:
+        try:
+            event.participation_set.create(user=request.user, frame_id=1)
+            messages.success(request, "エントリーしました")
+        except IntegrityError:
+            messages.error(request, "すでにエントリー済みです")
+        return redirect(event)
+    else:
+        return redirect(reverse('user:login'))
+
+class ParticipationDeleteView(DeleteView):
+    model = Participation
+    success_url = reverse_lazy('event:detail')
+    template_name = 'event/check_delete.html'

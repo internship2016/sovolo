@@ -6,8 +6,8 @@
 {% block content %}
 <h1>Event Participants #{{event_id}}</h1>
 <ul>
-    {% for user in all_participants %}
-        <li>{{ user }}</li>
+    {% for participation in all_participants %}
+        <li>{{ participation.user }}</li>
     {% endfor %}
 </ul>
 {% endblock %}
