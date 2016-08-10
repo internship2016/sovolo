@@ -5,6 +5,7 @@ from django.views.generic import DetailView, ListView
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.db import IntegrityError
+from django.contrib import messages
 from .models import Event, Participation
 
 from django.utils import timezone
@@ -119,8 +120,9 @@ def event_participate(request, event_id):
     if request.user.is_authenticated:
         try:
             event.participation_set.create(user=request.user, frame_id=1)
-        except IntegrityError as e:
-            pass
+            messages.success(request, "エントリーしました")
+        except IntegrityError:
+            messages.error(request, "すでにエントリー済みです")
         return redirect(event)
     else:
         return redirect(reverse('user:login'))
