@@ -5,25 +5,19 @@ from django.core.urlresolvers import reverse_lazy
 from .models import User
 
 from django.utils import timezone
-
-# Create your views here.
-
-class IndexView:
-    def view(request,user_id):
-        data = {
-            "user_id":user_id
-            }
-        return render(request,"user/user_page.html",data)
+from .models import User
 
 
-def login_view(request):
-    return render(request, "user/login_page.html")
+class UserCreateView(CreateView):
+    model = User
+    fields = ['email', 'password', 'nickname']
+    template_name = 'user/register.html'
 
-
-def register_view(request):
-    return render(request, "user/register_page.html")
-
-
+    def form_valid(self, form):
+        self.object = form.save(commit=False)
+        self.object.set_password(form.cleaned_data['password'])
+        self.object.save()
+        return super(UserCreateView, self).form_valid(form)
 
 class UserDetailView(DetailView):
     template_name = 'user/detail.html'

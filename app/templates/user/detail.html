@@ -3,7 +3,8 @@
 イベント(#{{user}})詳細
 {% endblock %}
 {% block content %}
-<h1>This is user#{{ user.id }}</h1>
-<img src={{ user.image.url }}>
-<h2>Name: {{user}}</h2>
+<h1>Hi, I'm {{ user.nickname }}</h1>
+<h2>ID: {{user.id}}</h2>
+<h2>Email: {{user.email}}</h2>
+
 {% endblock %}

@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.db import models
 from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.core.urlresolvers import reverse
 import sys
 
 from tag.models import Tag
@@ -77,6 +78,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
     @property
     def is_staff(self):
         return self.is_admin
+
+    def get_absolute_url(self):
+        return reverse('user:detail', kwargs={'pk': self.id})
 
     def __str__(self):
         return self.email
