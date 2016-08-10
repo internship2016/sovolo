@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var sass = require('gulp-sass');
+var less = require('gulp-less');
 var notify = require('gulp-notify');
 var bower = require('gulp-bower');
 var gf = require('gulp-filter');
@@ -18,6 +19,7 @@ gulp.task('bower.install', function () {
 gulp.task('bower.copy', function () {
   var filter_js = gf('**/*.js', {restore: true});
   var filter_css = gf('**/*.css', {restore: true});
+  var filter_less = gf('**/*.less', {restore: true});
   var filter_font = gf(['**/*.eot', '**/*.woff', '**/*.svg', '**/*.ttf'], {restore: true});
 
   return gulp.src(mbf())
@@ -28,6 +30,11 @@ gulp.task('bower.copy', function () {
     .pipe(filter_css)
     .pipe(gulp.dest('./static/css'))
     .pipe(filter_css.restore)
+
+    .pipe(filter_less)
+    .pipe(less())
+    .pipe(gulp.dest('./static/css'))
+    .pipe(filter_less.restore)
 
     .pipe(filter_font)
     .pipe(gulp.dest('./static/fonts'))
