@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'bootstrap3',
 ]
 
+BOOTSTRAP3 = {
+    'jquery_url': '//code.jquery.com/jquery-3.1.0.min.js',
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
