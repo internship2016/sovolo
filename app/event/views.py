@@ -2,11 +2,11 @@ from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView
 from django.core.urlresolvers import reverse_lazy
+from django.db.models import Q
 from .models import Event, Participation
 
 from django.utils import timezone
-
-# Create your views here.
+import re
 
 
 def manage(request,event_id):
@@ -14,13 +14,6 @@ def manage(request,event_id):
         'event_id':event_id
     }
     return render(request, 'event/manage.html', data)
-
-
-def participants(request,event_id):
-    data ={
-        'event_id':event_id
-    }
-    return render(request, 'event/participants.html', data)
 
 
 class EventCreate(CreateView):
@@ -80,3 +73,40 @@ class EventParticipantsView(ListView):
         requested_event = Event.objects.get(pk=event_id)
 
         return Participation.objects.filter(event=requested_event)
+
+class EventSearchResultsView(ListView):
+    model = Event
+    template_name = 'event/search_results.html'
+    context_object_name = 'result_events'
+
+    def split_string_to_terms(self, string):
+        findterms = re.compile(r'"([^"]+)"|(\S+)').findall
+        normspace = re.compile(r'\s{2,}').sub
+
+        return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(string)]
+
+    def make_query_from_string(self, string):
+        query = None
+        fields = ['name', 'details']
+        terms = self.split_string_to_terms(string)
+        for term in terms:
+            term_query = None
+            for field in fields:
+                q = Q(**{"%s__icontains" % field: term})
+                if term_query is None:
+                    term_query = q
+                else:
+                    term_query = term_query | q
+        if query is None:
+            query = term_query
+        else:
+            query = query & term_query
+
+        return query
+
+    def get_queryset(self):
+        user_entry = self.request.GET['q']
+
+        query = self.make_query_from_string(user_entry)
+
+        return Event.objects.filter(query)

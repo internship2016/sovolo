@@ -22,4 +22,6 @@ urlpatterns = [
     url(r'^(?P<event_id>[0-9]+)/participants/$', views.EventParticipantsView.as_view(), name='participants'),
     # event/add
     url(r'^add/$', views.EventCreate.as_view(), name='add'),
+    #event/search
+    url(r'^search/$', views.EventSearchResultsView.as_view(), name='search'),
 ]
