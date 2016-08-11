@@ -51,8 +51,9 @@ BOOTSTRAP3 = {
     'include_jquery': False,
     'jquery_url': '/static/js/jquery.js',
     'base_url': '/static',
-    'css_url': '/static/css/bootstrap.css',
+    'css_url': '/static/css/bootstrap.min.css',
     'javascript_url': '/static/js/bootstrap.js',
+    'theme_url': '/static/css/bootstrap-theme.min.css',
 }
 
 MIDDLEWARE = [
