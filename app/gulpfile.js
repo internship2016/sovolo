@@ -22,7 +22,18 @@ gulp.task('bower.copy', function () {
   var filter_less = gf('**/*.less', {restore: true});
   var filter_font = gf(['**/*.eot', '**/*.woff', '**/*.svg', '**/*.ttf'], {restore: true});
 
-  return gulp.src(mbf())
+  return gulp.src(mbf({
+      overrides: {
+        bootstrap: {
+          main: [
+            './dist/js/bootstrap.js',
+            './dist/css/*.min.*',
+            './dist/fonts/*.*'
+          ]
+        }
+      }
+    }))
+
     .pipe(filter_js)
     .pipe(gulp.dest('./static/js'))
     .pipe(filter_js.restore)
