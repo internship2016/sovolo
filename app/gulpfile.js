@@ -9,6 +9,7 @@ var debug = require('gulp-debug');
 
 var conf = {
   sassPath: './static/sass',
+  scriptPath: './static/script',
   bowerDir: './bower_components'
 };
 
@@ -16,6 +17,7 @@ gulp.task('bower.install', function () {
   return bower().pipe(gulp.dest(conf.bowerDir));
 });
 
+// TODO: minify/uglify/etc
 gulp.task('bower.copy', function () {
   var filter_js = gf('**/*.js', {restore: true});
   var filter_css = gf('**/*.css', {restore: true});
@@ -67,8 +69,14 @@ gulp.task('css', function () {
     .pipe(gulp.dest('./static/css'));
 });
 
-gulp.task('watch', function () {
-  gulp.watch(conf.sassPath + '/**/*.scss', ['css']);
+gulp.task('js', function () {
+  return gulp.src(conf.scriptPath + '/*.js')
+    .pipe(gulp.dest('./static/js'));
 });
 
-gulp.task('default', ['bower', 'css']);
+gulp.task('watch', function () {
+  gulp.watch(conf.sassPath + '/**/*.scss', ['css']);
+  gulp.watch(conf.scriptPath + '/**/*.js', ['js']);
+});
+
+gulp.task('default', ['bower', 'css', 'js']);
