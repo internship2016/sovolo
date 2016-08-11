@@ -19,12 +19,20 @@ gulp.task('bower.install', function () {
 
 // TODO: minify/uglify/etc
 gulp.task('bower.copy', function () {
-  var filter_js = gf('**/*.js', {restore: true});
-  var filter_css = gf('**/*.css', {restore: true});
-  var filter_less = gf('**/*.less', {restore: true});
-  var filter_font = gf(['**/*.eot', '**/*.woff', '**/*.svg', '**/*.ttf'], {restore: true});
+  var filter = {
+    js: gf('**/*.js', {restore: true}),
+    css: gf('**/*.css', {restore: true}),
+    less: gf('**/*.less', {restore: true}),
+    fonts: gf([
+      '**/*.eot',
+      '**/*.woff',
+      '**/*.svg',
+      '**/*.ttf'
+    ], {restore: true})
+  };
 
-  return gulp.src(mbf({
+  return gulp.src(
+    mbf({
       overrides: {
         bootstrap: {
           main: [
@@ -34,26 +42,27 @@ gulp.task('bower.copy', function () {
           ]
         }
       }
-    }))
+    })
+  )
 
-    .pipe(filter_js)
-    .pipe(gulp.dest('./static/js'))
-    .pipe(filter_js.restore)
+  .pipe(filter.js)
+  .pipe(gulp.dest('./static/js'))
+  .pipe(filter.js.restore)
 
-    .pipe(filter_css)
-    .pipe(gulp.dest('./static/css'))
-    .pipe(filter_css.restore)
+  .pipe(filter.css)
+  .pipe(gulp.dest('./static/css'))
+  .pipe(filter.css.restore)
 
-    .pipe(filter_less)
-    .pipe(less())
-    .pipe(gulp.dest('./static/css'))
-    .pipe(filter_less.restore)
+  .pipe(filter.less)
+  .pipe(less())
+  .pipe(gulp.dest('./static/css'))
+  .pipe(filter.less.restore)
 
-    .pipe(filter_font)
-    .pipe(gulp.dest('./static/fonts'))
-    .pipe(filter_font.restore)
+  .pipe(filter.fonts)
+  .pipe(gulp.dest('./static/fonts'))
+  .pipe(filter.fonts.restore)
 
-    ;
+  ;
 });
 
 gulp.task('bower', [
