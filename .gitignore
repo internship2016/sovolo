@@ -13,6 +13,7 @@ node_modules
 bower_components
 .sass-cache
 app/static/css
+app/static/fonts
 
 ### https://github.com/github/gitignore/blob/master/Python.gitignore {{{
 
