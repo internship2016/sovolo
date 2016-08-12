@@ -45,7 +45,11 @@ class Event(AbstractBaseModel):
         through='Participation',
         blank=True,
     )
-    admin = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='admin_event', blank=True)
+    admin = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='admin_event',
+        blank=True,
+    )
 
     tag = models.ManyToManyField(Tag, blank=True)
 
