@@ -22,7 +22,7 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.index,name='top'),
+    url(r'^$', views.index, name='top'),
     url(r'^admin/', admin.site.urls),
     url(r'^event/', include('event.urls')),
     url(r'^group/', include('group.urls')),
