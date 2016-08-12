@@ -82,7 +82,7 @@ class Command(BaseCommand):
         default_admin = User(
                 first_name = 'admin',
                 last_name = 'admin',
-                nickname = 'admin',
+                username = 'admin',
                 birthday = timezone.now(),
                 telephone = 123456789,
                 emergency_contact = 119,
@@ -96,7 +96,7 @@ class Command(BaseCommand):
         testuser = User(
                 first_name = 'test',
                 last_name = 'user',
-                nickname = 'test',
+                username = 'test',
                 birthday = timezone.now(),
                 telephone = 123456789,
                 emergency_contact = 119,
@@ -108,12 +108,12 @@ class Command(BaseCommand):
 
         for i in range(10):
             lastname = str(i)
-            nickname = "generic_user_%d" %(i)
+            username = "generic_user_%d" %(i)
             email = "test@%d.com" %(i)
             user = User(
                 first_name = 'genericuser',
                 last_name = lastname,
-                nickname = nickname,
+                username = username,
                 birthday = timezone.now(),
                 telephone = 123456789,
                 emergency_contact = 119,
@@ -218,6 +218,8 @@ class Command(BaseCommand):
                 group=group,
                 role='admin',
             )
+
+            membership.save()
 
     def _create_tags(self):
         taglist = ('python', 'ruby', 'django', 'ohmygod', 'mddslkfjakl', 'global', 'ゴミ拾い', '環境保護', 'interlink', '子供')

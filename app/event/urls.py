@@ -1,11 +1,10 @@
-#coding=utf-8
 from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
 
 from . import views
 
-app_name='event'
+app_name = 'event'
 
 urlpatterns = [
     # event/

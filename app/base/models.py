@@ -10,6 +10,7 @@ except ImportError:
     from io import BytesIO as StringIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
+
 class AbstractBaseModel(models.Model):
     created = models.DateTimeField(editable=False)
     modified = models.DateTimeField(null=True)
@@ -29,19 +30,29 @@ class AbstractBaseModel(models.Model):
             img_file = Image.open(StringIO(self.image.read()))
             (imw, imh) = img_file.size
             if (imw > width) or (imh > height):
-                #change size of image to fit within boudaries specified by width and height
+                # Change size of image to fit within boudaries specified by
+                # width and height
                 img_file.thumbnail((width, height), Image.ANTIALIAS)
 
             if img_file.mode == "RGBA":
                 img_file.load()
                 background = Image.new("RGB", img_file.size, (255, 255, 255))
-                background.paste(img_file, mask=img_file.split()[3])  # 3 is alpha channel
+
+                # 3 is alpha channel
+                background.paste(img_file, mask=img_file.split()[3])
+
                 img_file = background
 
             output = StringIO()
             img_file.convert('RGB').save(output, format='JPEG', quality=60)
             output.seek(0)
-            self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
-                                              'image/jpeg', sys.getsizeof(output), None)
+            self.image = InMemoryUploadedFile(
+                file=output,
+                field_name='ImageField',
+                name="%s.jpg" % self.image.name.split('.')[0],
+                content_type='image/jpeg',
+                size=sys.getsizeof(output),
+                charset=None,
+            )
 
         return super(AbstractBaseModel, self).save(*args, **kwargs)
