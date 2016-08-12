@@ -16,7 +16,19 @@ import re
 
 class EventCreate(CreateView):
     model = Event
-    fields = ['name', 'start_time', 'end_time', 'meeting_place', 'place', 'image', 'contact', 'details', 'notes', 'ticket', 'region']
+    fields = [
+        'name',
+        'start_time',
+        'end_time',
+        'meeting_place',
+        'place',
+        'image',
+        'contact',
+        'details',
+        'notes',
+        'ticket',
+        'region',
+    ]
 
     template_name = "event/add.html"
 
@@ -37,8 +49,13 @@ class EventDetailView(DetailView):
         context['participants'] = self.object.participant.all()
         login_user_participating = login_user in self.object.participant.all()
         context['login_user_participating'] = login_user_participating
+
         if login_user_participating:
-            context['participation'] = Participation.objects.filter(event=self.object).get(user=login_user)
+            context['participation'] \
+                = Participation.objects \
+                               .filter(event=self.object) \
+                               .get(user=login_user)
+
         return context
 
 
@@ -52,7 +69,16 @@ class EventIndexView(ListView):
 
 class EventEditView(UserPassesTestMixin, UpdateView):
     model = Event
-    fields = ['name', 'start_time','end_time','meeting_place', 'place', 'image', 'details', 'notes']
+    fields = [
+        'name',
+        'start_time',
+        'end_time',
+        'meeting_place',
+        'place',
+        'image',
+        'details',
+        'notes',
+    ]
     template_name = 'event/edit.html'
 
     def test_func(self):
@@ -103,7 +129,8 @@ class EventSearchResultsView(ListView):
         findterms = re.compile(r'"([^"]+)"|(\S+)').findall
         normspace = re.compile(r'\s{2,}').sub
 
-        return [normspace(' ', (t[0] or t[1]).strip()) for t in findterms(string)]
+        return [normspace(' ', (t[0] or t[1]).strip()) for t
+                in findterms(string)]
 
     def make_query_from_string(self, string):
         query = None
