@@ -130,6 +130,7 @@ class EventSearchResultsView(ListView):
 
         return Event.objects.filter(query)
 
+
 def event_participate(request, event_id):
     event = Event.objects.get(pk=event_id)
 
