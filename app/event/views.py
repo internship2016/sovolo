@@ -69,7 +69,16 @@ class EventIndexView(ListView):
 
 class EventEditView(UserPassesTestMixin, UpdateView):
     model = Event
-    fields = ['name', 'start_time','end_time','meeting_place', 'place', 'image', 'details', 'notes']
+    fields = [
+        'name',
+        'start_time',
+        'end_time',
+        'meeting_place',
+        'place',
+        'image',
+        'details',
+        'notes',
+    ]
     template_name = 'event/edit.html'
 
     def test_func(self):
