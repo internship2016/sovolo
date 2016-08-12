@@ -93,7 +93,14 @@ class Frame(AbstractBaseModel):
 
 
 class FrameAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'event', 'description', 'lower_limit', 'upper_limit', 'deadline')
+    list_display = (
+        'pk',
+         'event',
+         'description',
+         'lower_limit',
+         'upper_limit',
+         'deadline',
+    )
 
 class Participation(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
