@@ -65,6 +65,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
             age -= 1
         return math.floor(age / 10) * 10
 
+    def is_manager_for(self, event):
+        return event in self.admin_event.all() or event in self.host_event.all()
+
     def get_full_name(self):
         return self.email
 

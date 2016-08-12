@@ -7,17 +7,11 @@ from django.db.models import Q
 from django.db import IntegrityError
 from django.http import HttpResponseForbidden
 from django.contrib import messages
+from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import Event, Participation, Comment, Question, Answer
 
 from django.utils import timezone
 import re
-
-
-def manage(request,event_id):
-    data ={
-        'event_id':event_id
-    }
-    return render(request, 'event/manage.html', data)
 
 
 class EventCreate(CreateView):
@@ -56,10 +50,16 @@ class EventIndexView(ListView):
         return Event.objects.all()
 
 
-class EventEditView(UpdateView):
+class EventEditView(UserPassesTestMixin, UpdateView):
     model = Event
     fields = ['name', 'start_time','end_time','meeting_place', 'place', 'image', 'details', 'notes']
     template_name = 'event/edit.html'
+
+    def test_func(self):
+        return self.request.user.is_manager_for(self.get_object())
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden()
 
 
 class EventDeleteView(DeleteView):
@@ -92,6 +92,7 @@ class EventParticipantsView(ListView):
         requested_event = Event.objects.get(pk=event_id)
 
         return Participation.objects.filter(event=requested_event)
+
 
 class EventSearchResultsView(ListView):
     model = Event
@@ -144,11 +145,13 @@ def event_participate(request, event_id):
     else:
         return redirect(reverse('user:login'))
 
+
 class ParticipationDeleteView(DeleteView):
     model = Participation
 
     def get_success_url(self):
         return reverse_lazy('event:index')
+
 
 class CommentCreate(CreateView):
     model = Comment

@@ -4,31 +4,59 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
+    <style>
+        .Loginpanel > div {
+            text-align: center;
+            height: 15em;
+        }
+    </style>
+
     {% if form.errors %}
         <p>なんかおかしいです: {{ form.errors }}</p>
     {% endif %}
+    {% csrf_token %}
 
-    <form method="post" action="{% url 'user:login' %}">
-        {% csrf_token %}
-        <h2>Sign in</h2>
-        <hr />
+    <h2>Sign in Sovolo</h2>
+    <hr />
+    <div class="center-block row">
+        <div class="col-md-4">
+            <div class="panel panel-default Loginpanel">
+                <div class="panel-body">
+                    <form method="post" action="{% url 'user:login' %}">
+                        <div>
+                            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                            {{ form.username }}
+                        </div>
+                        <div>
+                            <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                            {{ form.password }}
+                        </div>
 
-        <div>
-            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-            {{ form.username }}
+                        <button class="btn" type="submit">Sign in</button>
+                        <input type="hidden" name="next" value="{{ next }}" />
+                      </form>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
-            {{ form.password }}
-        </div>
-
-        <button type="submit">Sign in</button>
-        <input type="hidden" name="next" value="{{ next }}" />
-    </form>
-
-    <li>
-        <a href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">Login with Twitter</a>
-        <a href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">Login with Facebook</a>
-    </li>
-
+        <div class="col-md-4">
+            <div class="panel panel-default Loginpanel">
+                <div class="panel-body">
+                    <a class="btn btn-block btn-social btn-twitter" href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">
+                        <span class="fa fa-twitter"></span> Login with Twitter
+                    </a>
+                    <a class="btn btn-block btn-social btn-facebook" href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
+                        <span class="va fa-facebook"></span> Login with Facebook
+                    </a>
+                </div>
+            </div>
+         </div>
+    </div>
+    <div style="text-align:center;">
+        アカウントをお持ちでない方</br>
+        <form method="get" action="{% url 'user:register' %}">
+            <button class="btn btn-secondary btn-sm">
+                新規登録
+            </button>
+        </form>
+    </div>
 {% endblock %}
