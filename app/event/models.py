@@ -56,7 +56,7 @@ class Event(AbstractBaseModel):
         if self.image:
             return self.image.url
         else:
-            return os.path.join(settings.MEDIA_URL, 'events/', "default_event_image.jpeg")
+            return os.path.join(settings.MEDIA_URL, 'events/', "default_event_image.jpg")
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified')
