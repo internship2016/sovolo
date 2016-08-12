@@ -52,7 +52,7 @@ class Event(AbstractBaseModel):
     def save(self, *args, **kwargs):
         return super(Event, self).save(*args, **kwargs)
 
-    def getImageUrl(self):
+    def get_image_url(self):
         if self.image:
             return self.image.url
         else:

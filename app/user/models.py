@@ -58,13 +58,6 @@ class User(AbstractBaseModel, AbstractBaseUser):
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
-    def image_url(self):
-        if self.image is not None:
-            return self.image.url
-        else:
-            #TODO: set default icon url
-            return "#"
-
     def get_about_age(self):
         today = datetime.today()
         age = today.year - self.birthday.year
@@ -101,7 +94,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def __str__(self):
         return self.email
 
-    def getImageUrl(self):
+    def get_image_url(self):
         if self.image:
             return self.image.url
         else:
