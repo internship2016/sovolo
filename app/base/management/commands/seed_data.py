@@ -209,6 +209,7 @@ class Command(BaseCommand):
                 member=member,
                 group=group,
             )
+            membership.save()   
 
             if group.pk==1:
                 continue
