@@ -149,7 +149,11 @@ class Comment(AbstractBaseModel):
 
 
 class Question(models.Model):
-    event = models.ForeignKey(Event, on_delete=models.CASCADE, related_name='question')
+    event = models.ForeignKey(
+        Event,
+        on_delete=models.CASCADE,
+        related_name='question',
+    )
     question = models.TextField()
 
     def __str__(self):
