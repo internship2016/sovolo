@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.db import IntegrityError
 from django.http import HttpResponseForbidden
 from django.contrib import messages
-from .models import Event, Participation
+from .models import Event, Participation, Comment, Question, Answer
 
 from django.utils import timezone
 import re
@@ -149,3 +149,14 @@ class ParticipationDeleteView(DeleteView):
 
     def get_success_url(self):
         return reverse_lazy('event:index')
+
+class CommentCreate(CreateView):
+    model = Comment
+    template_name = 'event/add_comment.html'
+    fields = ['text']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        event_id = self.kwargs['event_id']
+        form.instance.event = Event.objects.get(pk=event_id)
+        return super(EventCreate, self).form_valid(form)

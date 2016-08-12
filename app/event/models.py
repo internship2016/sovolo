@@ -52,6 +52,11 @@ class Event(AbstractBaseModel):
     def save(self, *args, **kwargs):
         return super(Event, self).save(*args, **kwargs)
 
+    def getImageUrl(self):
+        if self.image:
+            return self.image.url
+        else:
+            return os.path.join(settings.MEDIA_URL, 'events/', "default_event_image.jpeg")
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified')

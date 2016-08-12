@@ -13,6 +13,7 @@ except ImportError:
 
 from base.models import AbstractBaseModel
 from django.contrib import admin
+import os
 
 # Create your models here.
 
@@ -34,12 +35,10 @@ class Group(AbstractBaseModel):
         return super(Group, self).save(*args, **kwargs)
 
     def image_url(self):
-        print()
         if self.image is not None:
             return self.image
         else:
-            #TODO: set default icon url
-            return "#"
+            return os.path.join(settings.MEDIA_URL, 'groups/', "default_group_image.jpg")
 
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('name', 'created', 'modified')
