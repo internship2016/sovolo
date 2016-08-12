@@ -89,7 +89,7 @@ class Frame(AbstractBaseModel):
         return super(Frame, self).save(*args, **kwargs)
 
     def __str__(self):
-        return "Frame #%d" %(self.pk)
+        return "Frame #%d" % (self.pk)
 
 
 class FrameAdmin(admin.ModelAdmin):
