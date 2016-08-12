@@ -30,13 +30,17 @@ class AbstractBaseModel(models.Model):
             img_file = Image.open(StringIO(self.image.read()))
             (imw, imh) = img_file.size
             if (imw > width) or (imh > height):
-                #change size of image to fit within boudaries specified by width and height
+                # Change size of image to fit within boudaries specified by
+                # width and height
                 img_file.thumbnail((width, height), Image.ANTIALIAS)
 
             if img_file.mode == "RGBA":
                 img_file.load()
                 background = Image.new("RGB", img_file.size, (255, 255, 255))
-                background.paste(img_file, mask=img_file.split()[3])  # 3 is alpha channel
+
+                # 3 is alpha channel
+                background.paste(img_file, mask=img_file.split()[3])
+
                 img_file = background
 
             output = StringIO()
