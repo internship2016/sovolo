@@ -14,8 +14,6 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/$', views.EventDetailView.as_view(), name='detail'),
     # event/1/delete
     url(r'^(?P<pk>[0-9]+)/delete/$', views.EventDeleteView.as_view(), name='delete'),
-    # event/1/manage
-    url(r'^(?P<event_id>[0-9]+)/manage/$', views.manage, name='manage'),
     # event/1/edit/
     url(r'^(?P<pk>[0-9]+)/edit/$', views.EventEditView.as_view(), name='edit'),
     # event/1/participants/
@@ -28,5 +26,7 @@ urlpatterns = [
     url(r'^(?P<event_id>[0-9]+)/participate/$', views.event_participate, name='participate'),
     # event/1/cancel
     url(r'^(?P<pk>[0-9]+)/cancel/$', views.ParticipationDeleteView.as_view(), name='cancel'),
+    # event/1/comment
+    url(r'^(?P<event_id>[0-9]+)/comment/$', views.CommentCreate.as_view(), name='comment'),
 
 ]

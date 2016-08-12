@@ -52,6 +52,11 @@ class Event(AbstractBaseModel):
     def save(self, *args, **kwargs):
         return super(Event, self).save(*args, **kwargs)
 
+    def getImageUrl(self):
+        if self.image:
+            return self.image.url
+        else:
+            return os.path.join(settings.MEDIA_URL, 'events/', "default_event_image.jpg")
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified')
@@ -67,6 +72,11 @@ class Frame(AbstractBaseModel):
     def save(self, *args, **kwargs):
         return super(Frame, self).save(*args, **kwargs)
 
+    def __str__(self):
+        return "Frame #%d" %(self.pk)
+
+class FrameAdmin(admin.ModelAdmin):
+    list_display = ('pk', 'event', 'description', 'lower_limit', 'upper_limit', 'deadline')
 
 class Participation(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
@@ -87,11 +97,15 @@ class ParticipationAdmin(admin.ModelAdmin):
 
 class Comment(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
     reply_to = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies',null=True)
 
     def __str__(self):
-        return self.text
+        if self.reply_to:
+            return ">> " + str(self.reply_to) + "\n" + self.user.nickname + " :\"" + self.text
+        else:
+            return self.user.nickname + ": \"" + self.text
 
     def save(self, *args, **kwargs):
         return super(Comment, self).save(*args, **kwargs)
@@ -107,11 +121,11 @@ class Question(models.Model):
 
 class Answer(AbstractBaseModel):
     question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answer')
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='answer')
+    participation = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='answer')
     text = models.TextField()
 
     def __str__(self):
-        return self.text
+        return "Q: " + self.question.question + " -> " + "A: " + self.text
 
     def save(self, *args, **kwargs):
         return super(Answer, self).save(*args, **kwargs)

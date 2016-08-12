@@ -7,18 +7,11 @@ from django.db.models import Q
 from django.db import IntegrityError
 from django.http import HttpResponseForbidden
 from django.contrib import messages
-from .models import Event, Participation
 from django.contrib.auth.mixins import UserPassesTestMixin
+from .models import Event, Participation, Comment, Question, Answer
 
 from django.utils import timezone
 import re
-
-
-def manage(request,event_id):
-    data ={
-        'event_id':event_id
-    }
-    return render(request, 'event/manage.html', data)
 
 
 class EventCreate(CreateView):
@@ -100,6 +93,7 @@ class EventParticipantsView(ListView):
 
         return Participation.objects.filter(event=requested_event)
 
+
 class EventSearchResultsView(ListView):
     model = Event
     template_name = 'event/search_results.html'
@@ -137,6 +131,7 @@ class EventSearchResultsView(ListView):
 
         return Event.objects.filter(query)
 
+
 def event_participate(request, event_id):
     event = Event.objects.get(pk=event_id)
 
@@ -150,8 +145,21 @@ def event_participate(request, event_id):
     else:
         return redirect(reverse('user:login'))
 
+
 class ParticipationDeleteView(DeleteView):
     model = Participation
 
     def get_success_url(self):
         return reverse_lazy('event:index')
+
+
+class CommentCreate(CreateView):
+    model = Comment
+    template_name = 'event/add_comment.html'
+    fields = ['text']
+
+    def form_valid(self, form):
+        form.instance.user = self.request.user
+        event_id = self.kwargs['event_id']
+        form.instance.event = Event.objects.get(pk=event_id)
+        return super(EventCreate, self).form_valid(form)

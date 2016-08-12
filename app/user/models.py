@@ -101,6 +101,12 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def __str__(self):
         return self.email
 
+    def getImageUrl(self):
+        if self.image:
+            return self.image.url
+        else:
+            return os.path.join(settings.MEDIA_URL, 'users/', "default_user_image.jpg")
+
     def save(self, *args, **kwargs):
         return super(User, self).save(*args, **kwargs)
 

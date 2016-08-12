@@ -2,7 +2,7 @@
 {% block content %}
 
 {% for event in result_events %}
-    <a href="{% url 'event:detail' event.id %}"><img src={{ event.image.url }}></a>
+    <a href="{% url 'event:detail' event.id %}"><img src={{ event.getImageUrl }}></a>
     <h2>Name: {{event}}</h2>
 
     <form action="{% url 'event:delete' event.id %}" method="post">
