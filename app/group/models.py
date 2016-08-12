@@ -44,8 +44,10 @@ class Group(AbstractBaseModel):
                 "default_group_image.jpg",
             )
 
+
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('name', 'created', 'modified')
+
 
 class Membership(models.Model):
     member = models.ForeignKey(User)
