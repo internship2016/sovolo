@@ -19,10 +19,11 @@
     <h2>Sign in Sovolo</h2>
     <hr />
     <div class="center-block row">
-        <div class="col-md-4">
+        <div class="col-md-4 col-md-offset-2">
             <div class="panel panel-default Loginpanel">
                 <div class="panel-body">
                     <form method="post" action="{% url 'user:login' %}">
+                        {% csrf_token %}
                         <div>
                             <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
                             {{ form.username }}

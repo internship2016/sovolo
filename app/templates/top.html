@@ -11,10 +11,11 @@
           <h3 class="panel-title">参加予定のボランティア</h3>
         </div>
         <div class="panel-body">
-          <div id="sample-event1" class="media">
+          {% for participation in request.user.get_user_participations %}
+          <div id="sample-event{{ participation.event }}" class="media">
             <div class="media-left">
               <a href="/event/1">
-                <img class="media-object" src="#" width="64" height="64" alt="画像">
+                <img class="media-object" src={{ participation.event.get_image_url }} width="64" height="64" alt="画像">
               </a>
             </div>
             <div class="media-body">
@@ -24,6 +25,7 @@
               <p>2016/8/10 531 Page st.</p>
             </div>
           </div>
+          {% endfor %}
           <a href="#">参加予定イベント一覧</a>
         </div>
       </div>
