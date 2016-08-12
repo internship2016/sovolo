@@ -49,8 +49,13 @@ class EventDetailView(DetailView):
         context['participants'] = self.object.participant.all()
         login_user_participating = login_user in self.object.participant.all()
         context['login_user_participating'] = login_user_participating
+
         if login_user_participating:
-            context['participation'] = Participation.objects.filter(event=self.object).get(user=login_user)
+            context['participation'] \
+                = Participation.objects \
+                               .filter(event=self.object) \
+                               .get(user=login_user)
+
         return context
 
 
