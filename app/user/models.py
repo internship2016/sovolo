@@ -102,9 +102,11 @@ class User(AbstractBaseModel, AbstractBaseUser):
         else:
             return os.path.join(settings.MEDIA_URL, 'users/', "default_user_image.jpg")
 
-    def get_user_participations(self):
+    def get_participating_events(self):
         Participation = apps.get_model('event', 'Participation')
-        return Participation.objects.filter(user=self)
+        #print(Participation.objects.values_list('event', flat=True).filter(user=self), file=sys.stderr)
+        events = [participation.event for participation in Participation.objects.filter(user=self)]
+        return events
 
     def save(self, *args, **kwargs):
         return super(User, self).save(*args, **kwargs)
