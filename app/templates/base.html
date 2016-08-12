@@ -7,12 +7,19 @@
 {% load bootstrap3 %}
 {% bootstrap_css %}
 {% bootstrap_javascript jquery=True %}
-<link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}" />
+<script type="text/javascript" src="{% static 'js/moment.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+<link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}" />
 
 </head>
 <body>
 <script type="text/javascript">
-  $('.dropdown-toggle').dropdown()
+  $('.dropdown-toggle').dropdown();
+  $(function () {
+    $('#calendar').datetimepicker({
+      inline: true,
+    });
+  });
 </script>
 <header>
   <nav class="navbar navbar-default">
