@@ -13,11 +13,12 @@ try:
 except ImportError:
     from io import BytesIO as StringIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
-import sys, os
+import sys
+import os
 
 
 class Event(AbstractBaseModel):
-    #Numbers are arbitrary
+    # Numbers are arbitrary
     name = models.CharField(max_length=100)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
@@ -32,12 +33,24 @@ class Event(AbstractBaseModel):
     ticket = models.BooleanField()
     hashtag = models.CharField(max_length=100, blank=True)
     share_message = models.CharField(max_length=100, blank=True)
-    host_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='host_event')
-    #regionは地方自治体コードで指定
+    host_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='host_event',
+    )
+
+    # regionは地方自治体コードで指定
     region = models.IntegerField()
 
-    participant = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Participation', blank=True)
-    admin = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='admin_event', blank=True)
+    participant = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        through='Participation',
+        blank=True,
+    )
+    admin = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='admin_event',
+        blank=True,
+    )
 
     tag = models.ManyToManyField(Tag, blank=True)
 
@@ -54,7 +67,12 @@ class Event(AbstractBaseModel):
         if self.image:
             return self.image.url
         else:
-            return os.path.join(settings.MEDIA_URL, 'events/', "default_event_image.jpg")
+            return os.path.join(
+                settings.MEDIA_URL,
+                'events/',
+                "default_event_image.jpg",
+            )
+
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified')

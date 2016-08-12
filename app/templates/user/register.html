@@ -6,9 +6,30 @@
 {% endblock %}
 
 {% block content %}
-  <form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_ul }}
-    <input type="submit" value="Create" />
-  </form>
+    <h2>Register</h2>
+    <hr />
+    <div class="center-block row">
+        <div class="col-md-4 col-md-offset-2">
+            <div class="panel panel-default Loginpanel">
+                <div class="panel-body">
+                   <form action="" method="post">
+                    <input type="submit" value="Create" />
+                  </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default Loginpanel">
+                <div class="panel-body">
+                    <a class="btn btn-block btn-social btn-twitter" href="#">
+                        <span class="fa fa-twitter"></span> Register with Twitter
+                    </a>
+                    <a class="btn btn-block btn-social btn-facebook" href="#">
+                        <span class="va fa-facebook"></span> Register with Facebook
+                    </a>
+                </div>
+            </div>
+         </div>
+    </div>
+
 {% endblock %}
