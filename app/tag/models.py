@@ -6,6 +6,7 @@ from django.contrib import admin
 
 # Create your models here.
 
+
 class Tag(AbstractBaseModel):
     name = models.CharField(max_length=100)
 
@@ -14,6 +15,7 @@ class Tag(AbstractBaseModel):
 
     def __str__(self):
         return self.name
+
 
 class TagAdmin(admin.ModelAdmin):
     list_display = ('name', 'created', 'modified')
