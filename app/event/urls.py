@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 
 from . import views
 
-app_name='event'
+app_name = 'event'
 
 urlpatterns = [
     # event/
