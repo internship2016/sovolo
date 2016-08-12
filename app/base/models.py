@@ -10,6 +10,7 @@ except ImportError:
     from io import BytesIO as StringIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 
+
 class AbstractBaseModel(models.Model):
     created = models.DateTimeField(editable=False)
     modified = models.DateTimeField(null=True)
