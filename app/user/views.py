@@ -30,7 +30,7 @@ class UserDetailView(DetailView):
 
 class UserEditView(UpdateView):
     model = User
-    fields = ['nickname']
+    fields = ['username']
     template_name = 'user/edit.html'
 
 class UserDeleteView(DeleteView):

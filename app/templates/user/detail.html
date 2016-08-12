@@ -5,28 +5,7 @@
 {% block content %}
 
 
-<div class="media">
-    <div class="media-left">
-        <img class="media-object" src={{ user.get_image_url }} alt="ユーザーアイコン" width="160" height="160">
-    </div>
-    <div class="media-body">
-        <h1 class="media-heading">
-            {{ user.username }}
-            {% if user.id == request.user.id %}
-                <a class="btn btn-default" href="{% url "user:edit" pk=user.pk %}">プロフィール編集</a>
-            {% endif %}
-        </h1>
-        <div class="container-fluid">
-            <div class="col-xs-6">
-                <dl>
-                    <dt>表示名</dt><dd>{{ user.username }}</dd>
-                    <dt>年齢</dt><dd>{{ user.get_about_age }}代</dd>
-                    <dt>性別</dt><dd>{{ user.sex|yesno:"男,女,秘密"}}</dd>
-                </dl>
-            </div>
-        </div>
-    </div>
-</div>
+{% include "user/user_header.html" %}
 
 <div class="panel panel-default">
     <div class="panel-heading">
