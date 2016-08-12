@@ -95,11 +95,11 @@ class Frame(AbstractBaseModel):
 class FrameAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
-         'event',
-         'description',
-         'lower_limit',
-         'upper_limit',
-         'deadline',
+        'event',
+        'description',
+        'lower_limit',
+        'upper_limit',
+        'deadline',
     )
 
 
