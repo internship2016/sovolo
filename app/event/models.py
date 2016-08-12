@@ -13,7 +13,8 @@ try:
 except ImportError:
     from io import BytesIO as StringIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
-import sys, os
+import sys
+import os
 
 
 class Event(AbstractBaseModel):
@@ -66,7 +67,12 @@ class Event(AbstractBaseModel):
         if self.image:
             return self.image.url
         else:
-            return os.path.join(settings.MEDIA_URL, 'events/', "default_event_image.jpg")
+            return os.path.join(
+                settings.MEDIA_URL,
+                'events/',
+                "default_event_image.jpg",
+            )
+
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified')
@@ -85,8 +91,17 @@ class Frame(AbstractBaseModel):
     def __str__(self):
         return "Frame #%d" %(self.pk)
 
+
 class FrameAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'event', 'description', 'lower_limit', 'upper_limit', 'deadline')
+    list_display = (
+        'pk',
+         'event',
+         'description',
+         'lower_limit',
+         'upper_limit',
+         'deadline',
+    )
+
 
 class Participation(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
