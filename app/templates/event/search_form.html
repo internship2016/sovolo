@@ -1,0 +1,31 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">イベント検索</h3>
+  </div>
+  <div class="panel-body row">
+    <form class="form-horizontal" role="search" action="{% url 'event:search' %}" method="get">
+      <div class="form-group" id="search-calendar">
+        <input type="hidden" id="searchform-date" class="form-control" name="date" />
+      </div>
+      <div class="form-group" id="search-category">
+        <label for="searchform-tag" class="col-md-4 control-label">タグ</label>
+        <div class="col-md-8">
+          <input type="text" id="searchform-tag" class="form-control" name="tag" /> <!-- name は要確認-->
+        </div>
+      </div>
+      <div class="form-group" id="search-area">
+        <label for="searchform-area" class="col-md-4 control-label">場所</label>
+        <div class="col-md-8">
+          <input type="text" id="searchform-area" class="form-control" name="area" /> <!-- name は要確認-->
+        </div>
+      </div>
+      <div class="form-group" id="word-search">
+        <label for="searchform-keyword" class="col-md-4 control-label">キーワード</label>
+        <div class="col-md-8">
+          <input type="text" id="searchform-keyword" class="form-control"  name="q" />
+        </div>
+      </div>
+      <button type="submit" class="btn btn-default center-block">検索</button>
+    </form>
+  </div>
+</div>
