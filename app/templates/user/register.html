@@ -6,6 +6,12 @@
 {% endblock %}
 
 {% block content %}
+    <style>
+        .Loginpanel > div {
+            text-align: center;
+            height: 15em;
+        }
+    </style>
     <h2>Register</h2>
     <hr />
     <div class="center-block row">
@@ -13,7 +19,8 @@
             <div class="panel panel-default Loginpanel">
                 <div class="panel-body">
                    <form action="" method="post">
-                    <input type="submit" value="Create" />
+                     {{ form.as_ul }}
+                    <input type="submit" class="btn" value="登録" />
                   </form>
                 </div>
             </div>
