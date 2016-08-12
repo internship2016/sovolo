@@ -5,6 +5,7 @@ from django.views.generic import DetailView, ListView
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.db import IntegrityError
+from django.http import HttpResponseForbidden
 from django.contrib import messages
 from .models import Event, Participation
 
@@ -65,6 +66,15 @@ class EventDeleteView(DeleteView):
     model = Event
     success_url = reverse_lazy('event:index')
     template_name = 'event/check_delete.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(EventDeleteView, self).get_context_data()
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        if self.request.user not in self.get_object().admin.all():
+            return HttpResponseForbidden()
+        return super(DeleteView, self).dispatch(request, *args, **kwargs)
 
 
 class EventParticipantsView(ListView):

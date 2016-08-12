@@ -50,7 +50,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
     # regionは地方自治体コードで指定
     region = models.IntegerField(null=True)
     follow_tag = models.ManyToManyField(Tag, related_name='follower', blank=True)
-    image = models.ImageField(upload_to='users/', null=True)
+    image = models.ImageField(upload_to='users/', null=True, blank=True)
     objects = UserManager()
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)

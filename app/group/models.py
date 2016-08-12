@@ -19,7 +19,7 @@ from django.contrib import admin
 
 class Group(AbstractBaseModel):
     name = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='group/', blank=True)
+    image = models.ImageField(upload_to='group/', blank=True, null=True)
 
     event = models.ManyToManyField(Event, blank=True)
 
