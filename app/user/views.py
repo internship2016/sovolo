@@ -10,7 +10,7 @@ from .models import User
 
 class UserCreateView(CreateView):
     model = User
-    fields = ['email', 'password', 'nickname']
+    fields = ['email', 'password', 'username']
     template_name = 'user/register.html'
 
     def form_valid(self, form):

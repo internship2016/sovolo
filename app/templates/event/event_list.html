@@ -1,0 +1,15 @@
+{% for event in events %}
+<div id="sample-event{{event.pk}}" class="media">
+  <div class="media-left">
+    <a href="/event/{{event.pk}}">
+      <img class="media-object" src={{event.get_image_url}} width="64" height="64" alt="画像">
+    </a>
+  </div>
+  <div class="media-body">
+    <div class="media-heading">
+      <h4>{{event.name}}</h4>
+    </div>
+    <p>{{event.start_time}} {{event.place}}</p>
+  </div>
+</div>
+{% endfor %}

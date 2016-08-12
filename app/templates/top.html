@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load event_tags %}
 
 {% block title %}Top page{% endblock %}
 
@@ -11,21 +12,7 @@
           <h3 class="panel-title">参加予定のボランティア</h3>
         </div>
         <div class="panel-body">
-          {% for participation in request.user.get_user_participations %}
-          <div id="sample-event{{ participation.event }}" class="media">
-            <div class="media-left">
-              <a href="/event/1">
-                <img class="media-object" src={{ participation.event.get_image_url }} width="64" height="64" alt="画像">
-              </a>
-            </div>
-            <div class="media-body">
-              <div class="media-heading">
-                <h4>event1</h4>
-              </div>
-              <p>2016/8/10 531 Page st.</p>
-            </div>
-          </div>
-          {% endfor %}
+          {% event_list request.user.get_participating_events %}
           <a href="#">参加予定イベント一覧</a>
         </div>
       </div>

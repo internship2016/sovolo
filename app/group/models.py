@@ -38,10 +38,16 @@ class Group(AbstractBaseModel):
         if self.image is not None:
             return self.image
         else:
-            return os.path.join(settings.MEDIA_URL, 'groups/', "default_group_image.jpg")
+            return os.path.join(
+                settings.MEDIA_URL,
+                'groups/',
+                "default_group_image.jpg",
+            )
+
 
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('name', 'created', 'modified')
+
 
 class Membership(models.Model):
     member = models.ForeignKey(User)
