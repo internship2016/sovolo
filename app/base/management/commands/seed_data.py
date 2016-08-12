@@ -219,6 +219,8 @@ class Command(BaseCommand):
                 role='admin',
             )
 
+            membership.save()
+
     def _create_tags(self):
         taglist = ('python', 'ruby', 'django', 'ohmygod', 'mddslkfjakl', 'global', 'ゴミ拾い', '環境保護', 'interlink', '子供')
         user = User.objects.get(pk=1)
