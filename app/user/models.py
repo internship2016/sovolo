@@ -20,7 +20,7 @@ import sys, os, math
 class UserManager(BaseUserManager):
     def create_user(self, email="", username="", password=None):
         user = self.model(
-            nickname=username,
+            username=username,
             email=self.normalize_email(email)
         )
 
@@ -39,7 +39,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
     # Numbers are arbitrary
     first_name = models.CharField(max_length=100,null=True)
     last_name = models.CharField(max_length=100,null=True)
-    nickname = models.CharField(max_length=100,null=True)
+    username = models.CharField(max_length=100,null=True)
     birthday = models.DateField(null=True)
     telephone = models.CharField(max_length=11, null=True)
     emergency_contact = models.CharField(max_length=11, null=True)
@@ -112,4 +112,4 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('nickname', 'created', 'modified')
+    list_display = ('username', 'created', 'modified')

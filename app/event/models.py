@@ -98,14 +98,14 @@ class ParticipationAdmin(admin.ModelAdmin):
 class Comment(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    text = models.TextField()
+    username = models.TextField()
     reply_to = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies',null=True)
 
     def __str__(self):
         if self.reply_to:
-            return ">> " + str(self.reply_to) + "\n" + self.user.nickname + " :\"" + self.text
+            return ">> " + str(self.reply_to) + "\n" + self.user.username + " :\"" + self.username
         else:
-            return self.user.nickname + ": \"" + self.text
+            return self.user.username + ": \"" + self.username
 
     def save(self, *args, **kwargs):
         return super(Comment, self).save(*args, **kwargs)
