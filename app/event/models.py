@@ -13,7 +13,8 @@ try:
 except ImportError:
     from io import BytesIO as StringIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
-import sys, os
+import sys
+import os
 
 
 class Event(AbstractBaseModel):
