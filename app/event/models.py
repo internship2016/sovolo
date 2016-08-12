@@ -72,6 +72,7 @@ class Event(AbstractBaseModel):
                 "default_event_image.jpg",
             )
 
+
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified')
 
