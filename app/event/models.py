@@ -27,7 +27,7 @@ class Event(AbstractBaseModel):
     place = models.CharField(max_length=400)
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
-    image = models.ImageField(upload_to='events/')
+    image = models.ImageField(upload_to='events/', null=True, blank=True)
     contact = models.CharField(max_length=200)
     details = models.TextField()
     notes = models.TextField(blank=True)
