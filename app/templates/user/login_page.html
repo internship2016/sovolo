@@ -23,6 +23,7 @@
             <div class="panel panel-default Loginpanel">
                 <div class="panel-body">
                     <form method="post" action="{% url 'user:login' %}">
+                        {% csrf_token %}
                         <div>
                             <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
                             {{ form.username }}

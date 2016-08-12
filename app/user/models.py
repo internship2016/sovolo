@@ -4,6 +4,8 @@ from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from django.apps import apps
+
 from datetime import datetime
 
 from tag.models import Tag
@@ -99,6 +101,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
             return self.image.url
         else:
             return os.path.join(settings.MEDIA_URL, 'users/', "default_user_image.jpg")
+
+    def get_user_participations(self):
+        Participation = apps.get_model('event', 'Participation')
+        return Participation.objects.filter(user=self)
 
     def save(self, *args, **kwargs):
         return super(User, self).save(*args, **kwargs)
