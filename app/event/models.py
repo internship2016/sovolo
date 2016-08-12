@@ -133,9 +133,16 @@ class Comment(AbstractBaseModel):
 
     def __str__(self):
         if self.reply_to:
-            return ">> " + str(self.reply_to) + "\n" + self.user.username + " :\"" + self.username
+            return ">> %s\n%s :\"%s" % (
+                str(self.reply_to),
+                self.user.username,
+                self.username,
+            )
         else:
-            return self.user.username + ": \"" + self.username
+            return "%s: \"" % (
+                self.user.username,
+                self.username,
+            )
 
     def save(self, *args, **kwargs):
         return super(Comment, self).save(*args, **kwargs)
