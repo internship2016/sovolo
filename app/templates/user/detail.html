@@ -7,7 +7,7 @@
 
 <div class="media">
     <div class="media-left">
-        <img class="media-object" src="#" alt="ユーザーアイコン" width="160" height="160">
+        <img class="media-object" src="{{ user.image_url }}" alt="ユーザーアイコン" width="160" height="160">
     </div>
     <div class="media-body">
         <h1 class="media-heading">
@@ -19,16 +19,9 @@
         <div class="container-fluid">
             <div class="col-xs-6">
                 <dl>
-                    <dt>ID</dt><dd>{{ user.id }}</dd>
-                    <dt>Nickname</dt><dd>{{ user.nickname }}</dd>
-                    <dt>Email</dt><dd>{{ user.email }}</dd>
-                </dl>
-            </div>
-            <div class="col-xs-6">
-                <dl>
-                    <dt>ID</dt><dd>{{ user.id }}</dd>
-                    <dt>Nickname</dt><dd>{{ user.nickname }}</dd>
-                    <dt>Email</dt><dd>{{ user.email }}</dd>
+                    <dt>表示名</dt><dd>{{ user.nickname }}</dd>
+                    <dt>年齢</dt><dd>{{ user.get_about_age }}代</dd>
+                    <dt>性別</dt><dd>{{ user.sex|yesno:"男,女,秘密"}}</dd>
                 </dl>
             </div>
         </div>
@@ -40,13 +33,13 @@
         <h1 class="panel-title">所属グループ一覧</h1>
     </div>
     <div class="panel-body">
-        {% for i in "ABC" %}
+        {% for group in user.group_set.all %}
         <div class="media">
             <div class="media-left">
-                <img class="media-object" src="#" alt="グループアイコン" width="64" height="64">
+                <img class="media-object" src="{{group.image_url}}" alt="image" width="64" height="64">
             </div>
             <div class="media-body">
-                <h3 class="media-heading">グループ{{i}}</h3>
+                <h3 class="media-heading">{{group.name}}</h3>
                 グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明...
             </div>
         </div>

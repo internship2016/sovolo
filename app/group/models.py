@@ -33,6 +33,14 @@ class Group(AbstractBaseModel):
     def save(self, *args, **kwargs):
         return super(Group, self).save(*args, **kwargs)
 
+    def image_url(self):
+        print()
+        if self.image is not None:
+            return self.image
+        else:
+            #TODO: set default icon url
+            return "#"
+
 class GroupAdmin(admin.ModelAdmin):
     list_display = ('name', 'created', 'modified')
 

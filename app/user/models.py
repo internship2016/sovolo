@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
 from django.conf import settings
+from datetime import datetime
 
 from tag.models import Tag
 from base.models import AbstractBaseModel
@@ -13,7 +14,7 @@ try:
 except ImportError:
     from io import BytesIO as StringIO
 
-import sys, os
+import sys, os, math
 
 
 class UserManager(BaseUserManager):
@@ -43,6 +44,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
     telephone = models.CharField(max_length=11, null=True)
     emergency_contact = models.CharField(max_length=11, null=True)
     email = models.EmailField(unique=True, db_index=True)
+    sex = models.NullBooleanField()
     occupation = models.CharField(max_length=100, null=True)
 
     # regionは地方自治体コードで指定
@@ -55,6 +57,20 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    def image_url(self):
+        if self.image is not None:
+            return self.image.url
+        else:
+            #TODO: set default icon url
+            return "#"
+
+    def get_about_age(self):
+        today = datetime.today()
+        age = today.year - self.birthday.year
+        if (today.month, today.day) <= (self.birthday.month, self.birthday.day):
+            age -= 1
+        return math.floor(age / 10) * 10
 
     def get_full_name(self):
         return self.email
