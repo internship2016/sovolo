@@ -34,7 +34,7 @@ class Group(AbstractBaseModel):
     def save(self, *args, **kwargs):
         return super(Group, self).save(*args, **kwargs)
 
-    def image_url(self):
+    def get_image_url(self):
         if self.image is not None:
             return self.image
         else:
