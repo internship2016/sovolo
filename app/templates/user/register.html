@@ -38,5 +38,13 @@
             </div>
          </div>
     </div>
+    <div style="text-align:center;">
+        アカウントをお持ちの方</br>
+        <form method="get" action="{% url 'user:login' %}">
+            <button class="btn btn-secondary btn-sm">
+                Sign in
+            </button>
+        </form>
+    </div>
 
 {% endblock %}
