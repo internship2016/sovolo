@@ -46,7 +46,13 @@ class AbstractBaseModel(models.Model):
             output = StringIO()
             img_file.convert('RGB').save(output, format='JPEG', quality=60)
             output.seek(0)
-            self.image = InMemoryUploadedFile(output, 'ImageField', "%s.jpg" % self.image.name.split('.')[0],
-                                              'image/jpeg', sys.getsizeof(output), None)
+            self.image = InMemoryUploadedFile(
+                file=output,
+                field_name='ImageField',
+                name="%s.jpg" % self.image.name.split('.')[0],
+                content_type='image/jpeg',
+                size=sys.getsizeof(output),
+                charset=None,
+            )
 
         return super(AbstractBaseModel, self).save(*args, **kwargs)
