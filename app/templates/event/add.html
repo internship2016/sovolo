@@ -6,9 +6,19 @@
 {% endblock %}
 {% block content %}
 <!-- テスト用のForm -->
-<form action="" method="post" enctype="multipart/form-data">
+<div class="panel panel-default">
+    <div class="panel-heading">
+        イベント情報
+    </div>
+    <div class="panel-body">
+    <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {% include 'event/form_template.html' %}
-    <button type="submit">送信</button>
-</form>
+    </form>
+    </div>
+    <div class="panel-footer" style="text-align:center">
+         <button type="submit">送信</button>
+    </div>
+</div>
+
 {% endblock %}
