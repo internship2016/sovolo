@@ -32,7 +32,10 @@ class Event(AbstractBaseModel):
     ticket = models.BooleanField()
     hashtag = models.CharField(max_length=100, blank=True)
     share_message = models.CharField(max_length=100, blank=True)
-    host_user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='host_event')
+    host_user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        related_name='host_event',
+    )
     #regionは地方自治体コードで指定
     region = models.IntegerField()
 
