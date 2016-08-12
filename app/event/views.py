@@ -16,7 +16,19 @@ import re
 
 class EventCreate(CreateView):
     model = Event
-    fields = ['name', 'start_time', 'end_time', 'meeting_place', 'place', 'image', 'contact', 'details', 'notes', 'ticket', 'region']
+    fields = [
+        'name',
+        'start_time',
+        'end_time',
+        'meeting_place',
+        'place',
+        'image',
+        'contact',
+        'details',
+        'notes',
+        'ticket',
+        'region',
+    ]
 
     template_name = "event/add.html"
 
