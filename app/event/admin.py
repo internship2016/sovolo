@@ -1,5 +1,13 @@
 from django.contrib import admin
-from .models import Event, EventAdmin, Participation, ParticipationAdmin, Frame, FrameAdmin, Comment, Question, Answer
+from .models import Answer
+from .models import Comment
+from .models import Event
+from .models import EventAdmin
+from .models import Frame
+from .models import FrameAdmin
+from .models import Participation
+from .models import ParticipationAdmin
+from .models import Question
 # Register your models here.
 
 admin.site.register(Event, EventAdmin)

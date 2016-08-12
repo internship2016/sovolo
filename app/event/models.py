@@ -1,6 +1,4 @@
 # coding=utf-8
-from django.utils import timezone
-
 from django.db import models
 from django.core.urlresolvers import reverse
 from user.models import User
