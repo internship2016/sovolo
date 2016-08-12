@@ -8,11 +8,11 @@ from .models import Group
 
 
 class IndexView:
-    def view(request,group_id):
+    def view(request, group_id):
         data = {
-            "group_id":group_id
+            "group_id": group_id
             }
-        return render(request,"group/grouppage.html",data)
+        return render(request, "group/grouppage.html", data)
 
 
 class GroupCreate(CreateView):
