@@ -17,7 +17,7 @@ import sys, os
 
 
 class Event(AbstractBaseModel):
-    #Numbers are arbitrary
+    # Numbers are arbitrary
     name = models.CharField(max_length=100)
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
