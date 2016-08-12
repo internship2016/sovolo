@@ -102,6 +102,7 @@ class FrameAdmin(admin.ModelAdmin):
          'deadline',
     )
 
+
 class Participation(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
