@@ -40,7 +40,11 @@ class Event(AbstractBaseModel):
     # regionは地方自治体コードで指定
     region = models.IntegerField()
 
-    participant = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Participation', blank=True)
+    participant = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        through='Participation',
+        blank=True,
+    )
     admin = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='admin_event', blank=True)
 
     tag = models.ManyToManyField(Tag, blank=True)
