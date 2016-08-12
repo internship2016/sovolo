@@ -36,7 +36,8 @@ class Event(AbstractBaseModel):
         settings.AUTH_USER_MODEL,
         related_name='host_event',
     )
-    #regionは地方自治体コードで指定
+
+    # regionは地方自治体コードで指定
     region = models.IntegerField()
 
     participant = models.ManyToManyField(settings.AUTH_USER_MODEL, through='Participation', blank=True)
