@@ -28,6 +28,7 @@ class GroupDetailView(DetailView):
     template_name = 'group/detail.html'
     model = Group
     context_object_name = 'group'
+
     def get_context_data(self, **kwargs):
         context = super(GroupDetailView, self).get_context_data(**kwargs)
         context['now'] = timezone.now()
@@ -37,6 +38,7 @@ class GroupDetailView(DetailView):
 class GroupIndexView(ListView):
     template_name = 'group/index.html'
     context_object_name = 'all_groups'
+
     def get_queryset(self):
         return Group.objects.all()
 
