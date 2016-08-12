@@ -96,7 +96,7 @@ class ParticipationAdmin(admin.ModelAdmin):
 class Comment(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    username = models.TextField()
+    text = models.TextField()
     reply_to = models.ForeignKey('self', on_delete=models.CASCADE, related_name='replies',null=True)
 
     def __str__(self):
