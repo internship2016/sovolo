@@ -8,6 +8,7 @@ from django.db import IntegrityError
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 from .models import Event, Participation
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 from django.utils import timezone
 import re
@@ -56,10 +57,16 @@ class EventIndexView(ListView):
         return Event.objects.all()
 
 
-class EventEditView(UpdateView):
+class EventEditView(UserPassesTestMixin, UpdateView):
     model = Event
     fields = ['name', 'start_time','end_time','meeting_place', 'place', 'image', 'details', 'notes']
     template_name = 'event/edit.html'
+
+    def test_func(self):
+        return self.request.user.is_manager_for(self.get_object())
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden()
 
 
 class EventDeleteView(DeleteView):
