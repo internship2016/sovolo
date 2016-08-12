@@ -166,7 +166,11 @@ class Answer(AbstractBaseModel):
         on_delete=models.CASCADE,
         related_name='answer',
     )
-    participation = models.ForeignKey(Participation, on_delete=models.CASCADE, related_name='answer')
+    participation = models.ForeignKey(
+        Participation,
+        on_delete=models.CASCADE,
+        related_name='answer',
+    )
     text = models.TextField()
 
     def __str__(self):
