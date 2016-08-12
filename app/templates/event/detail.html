@@ -17,7 +17,7 @@
 <div class="event-display-content">
     <div class="media">
         <div class="media-left">
-           <img src={{ event.get_image_url }}>
+           <img src={{ event.get_image_url }} width="320" height="320">
         </div>
         <div class="media-body event-head-title">
             <h1 class="media-heading"><u>{{event}}</u></h1>
@@ -50,7 +50,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                        参加条件
+                        参加詳細
                 </div>
                 <div class="panel-body">
                         <li>集合場所：{{ event.meeting_place }}</li>
