@@ -91,6 +91,7 @@ class Frame(AbstractBaseModel):
     def __str__(self):
         return "Frame #%d" %(self.pk)
 
+
 class FrameAdmin(admin.ModelAdmin):
     list_display = ('pk', 'event', 'description', 'lower_limit', 'upper_limit', 'deadline')
 
