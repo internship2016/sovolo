@@ -11,6 +11,8 @@
 <script type="text/javascript" src="{% static 'js/moment.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}" />
+<link rel="stylesheet" href="{% static 'css/font-awesome.css' %}" />
 
 </head>
 <body>
@@ -42,12 +44,13 @@
             <li><a href="{% url 'user:login' %}">ログイン</a></li>
           {% else %}
             <li class="dropdown">
-              <a href="#" id="dUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                {{ request.user.nickname }}
+             <a href="#" id="dUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ user.get_image_url }}" width="24" height="24">
+                {{ request.user.username }}
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="dUser">
-                <li><a href="#">プロフィール</a></li>
+                <li><a href="{% url 'user:detail' user.id %}">プロフィール</a></li>
                 <li><a href="{% url 'user:logout' %}">ログアウト</a></li>
               </ul>
             </li>

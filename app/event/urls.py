@@ -35,9 +35,8 @@ urlpatterns = [
     url(r'^search/$',
         views.EventSearchResultsView.as_view(), name='search'),
 
-    # event/participate
-    url(r'^(?P<event_id>[0-9]+)/participate/$',
-        views.event_participate, name='participate'),
+    # event/id/participate/frame_id
+    url(r'^(?P<event_id>[0-9]+)/participate/(?P<frame_id>[0-9]+)$', views.EventJoinView.as_view(), name='participate'),
 
     # event/1/cancel
     url(r'^(?P<pk>[0-9]+)/cancel/$',

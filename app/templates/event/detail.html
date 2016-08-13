@@ -17,14 +17,14 @@
 <div class="event-display-content">
     <div class="media">
         <div class="media-left">
-           <img src={{ event.get_image_url }}>
+           <img src={{ event.get_image_url }} width="320" height="320">
         </div>
         <div class="media-body event-head-title">
             <h1 class="media-heading"><u>{{event}}</u></h1>
             {% if True %}
              <div class="btn pull-right cancel-btn">
                  <a class="btn btn-default" href="{% url 'event:add' %}" role="button">参加をキャンセル</a>
-                 <a href="{% url 'event:participate' event.id %}">参加する</a>
+                 <a href="{% url 'event:participate' event.id 1 %}">参加する</a>
              </div>
             {% endif %}
             <div class="btn pull-right btn-group .active">
@@ -50,7 +50,7 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                        参加条件
+                        参加詳細
                 </div>
                 <div class="panel-body">
                         <li>集合場所：{{ event.meeting_place }}</li>

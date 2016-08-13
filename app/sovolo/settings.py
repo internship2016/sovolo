@@ -149,6 +149,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/user/login/'
 
 AUTH_USER_MODEL = 'user.User'
 
@@ -167,3 +168,5 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'locale': 'ja_JP',
   'fields': 'id, name, email, age_range'
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
