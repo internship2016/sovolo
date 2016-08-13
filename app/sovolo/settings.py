@@ -168,3 +168,5 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'locale': 'ja_JP',
   'fields': 'id, name, email, age_range'
 }
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
