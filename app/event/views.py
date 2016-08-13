@@ -152,9 +152,24 @@ class EventSearchResultsView(ListView):
         return query
 
     def get_queryset(self):
+        #Free Word
         user_entry = self.request.GET['q']
-
         query = self.make_query_from_string(user_entry)
+
+        #Date
+        d = self.request.GET['date']
+        date_query = None
+        query = query & date_query
+
+        #Tag
+        t = self.request.GET['tag']
+        tag_query = Q(tag=t)
+        query = query & tag_query
+
+        #Place
+        place = self.request.GET['place']
+        place_query = None
+        query = query & place_query
 
         return Event.objects.filter(query)
 

@@ -233,6 +233,9 @@ class Command(BaseCommand):
             user.follow_tag.add(tag)
             user2 = User.objects.get(pk=tag.pk)
             user2.follow_tag.add(tag)
+        for event in Event.objects.all():
+            tag = Tag.objects.get(pk=event.pk)
+            event.tag.add(tag)
 
     def _create_questions_and_answers(self):
         for event in Event.objects.all():

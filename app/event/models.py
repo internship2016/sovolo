@@ -73,9 +73,12 @@ class Event(AbstractBaseModel):
                 "default_event_image.jpg",
             )
 
+    def get_tags_as_string(self):
+        return "\n".join([tag.name for tag in self.tag.all()])
+
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'created', 'modified')
+    list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
 
 
 class Frame(AbstractBaseModel):
