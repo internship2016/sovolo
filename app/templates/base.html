@@ -50,7 +50,7 @@
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="dUser">
-                <li><a href="#">プロフィール</a></li>
+                <li><a href="{% url 'user:detail' user.id %}">プロフィール</a></li>
                 <li><a href="{% url 'user:logout' %}">ログアウト</a></li>
               </ul>
             </li>
