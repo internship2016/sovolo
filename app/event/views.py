@@ -12,6 +12,8 @@ from .models import Event, Participation, Comment, Question, Answer
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils import timezone
+from django.apps import apps
+
 import re
 
 
@@ -160,17 +162,19 @@ class EventSearchResultsView(ListView):
         #Date
         d = self.request.GET['date']
         date_query = None
-        query = query & date_query
+        query = query
 
         #Tag
         t = self.request.GET['tag']
-        tag_query = Q(tag=t)
+        Tag = apps.get_model('tag', 'Tag')
+        tag = Tag.objects.get(name=t)
+        tag_query = Q(tag=tag)
         query = query & tag_query
 
         #Place
-        place = self.request.GET['place']
+        place = self.request.GET['area']
         place_query = None
-        query = query & place_query
+        query = query
 
         return Event.objects.filter(query)
 
