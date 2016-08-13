@@ -26,6 +26,7 @@ gulp.task('bower.copy', function () {
     fonts: gf([
       '**/*.eot',
       '**/*.woff',
+      '**/*.woff2',
       '**/*.svg',
       '**/*.ttf'
     ], {restore: true})
