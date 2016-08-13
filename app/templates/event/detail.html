@@ -24,7 +24,7 @@
             {% if True %}
              <div class="btn pull-right cancel-btn">
                  <a class="btn btn-default" href="{% url 'event:add' %}" role="button">参加をキャンセル</a>
-                 <a href="{% url 'event:participate' event.id %}">参加する</a>
+                 <a href="{% url 'event:participate' event.id 1 %}">参加する</a>
              </div>
             {% endif %}
             <div class="btn pull-right btn-group .active">

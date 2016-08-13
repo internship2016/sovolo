@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, RedirectView
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.db import IntegrityError
@@ -9,7 +9,8 @@ from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
 from .models import Event, Participation, Comment, Question, Answer
-
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.utils import timezone
 import re
 
@@ -159,18 +160,25 @@ class EventSearchResultsView(ListView):
         return Event.objects.filter(query)
 
 
-def event_participate(request, event_id):
-    event = Event.objects.get(pk=event_id)
+@method_decorator(login_required, name='dispatch')
+class EventJoinView(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        event_id = kwargs['event_id']
 
-    if request.user.is_authenticated:
         try:
-            event.participation_set.create(user=request.user, frame_id=1)
-            messages.success(request, "エントリーしました")
+            p = Participation.objects.create(
+                user=self.request.user,
+                event_id=kwargs['event_id'],
+                frame_id=kwargs['frame_id']
+            )
+            p.save()
+            messages.error(self.request, "参加しました。")
         except IntegrityError:
-            messages.error(request, "すでにエントリー済みです")
-        return redirect(event)
-    else:
-        return redirect(reverse('user:login'))
+            messages.error(self.request, "参加処理中にエラーが発生しました。")
+            pass
+
+        self.url = reverse_lazy('event:detail', kwargs={'pk':event_id})
+        return super(EventJoinView, self).get_redirect_url(*args, **kwargs)
 
 
 class ParticipationDeleteView(DeleteView):
