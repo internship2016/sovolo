@@ -28,6 +28,12 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+INTERNAL_IPS = ('127.0.0.1', '0.0.0.0',)
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda r: not r.is_ajax(),
+}
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -44,6 +50,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social.apps.django_app.default',
     'django_extensions',
+    'debug_toolbar',
     'bootstrap3',
 ]
 
@@ -64,6 +71,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'middleware.custom_debug_toolbar.AtopdedTo110DebugMiddleware',
 ]
 
 ROOT_URLCONF = 'sovolo.urls'
