@@ -207,7 +207,14 @@ class EventSearchResultsView(ListView):
 
         #TODO: Sort by Date, Newly Created
         results = Event.objects.filter(query)
-        results = results.order_by('start_time')
+
+        if 'order_by' in self.request.GET:
+            order_by = self.request.GET['order_by']
+            if 'desc' in self.request.GET and self.request.GET['desc'] == "on":
+                order_by = "-" + order_by
+                results = results.order_by(order_by)
+            else:
+                results = results.order_by(order_by)
 
         return results
 
