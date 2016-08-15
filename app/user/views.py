@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, View
 from django.core.urlresolvers import reverse_lazy
 from .models import User
 
@@ -37,3 +37,11 @@ class UserDeleteView(DeleteView):
     model = User
     success_url = reverse_lazy('event:index')
     template_name = 'user/check_delete.html'
+
+class AcquireEmail(View):
+    def get(self, request, *args, **kwargs):
+        """
+        Request email for the create user flow for logins that don't specify their email address.
+        """
+        backend = request.session['partial_pipeline']['backend']
+        return render(request, 'user/acquire_email.html', {"backend": backend})
