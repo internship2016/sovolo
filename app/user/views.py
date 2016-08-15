@@ -19,6 +19,7 @@ class UserCreateView(CreateView):
         self.object.save()
         return super(UserCreateView, self).form_valid(form)
 
+
 class UserDetailView(DetailView):
     template_name = 'user/detail.html'
     model = User
@@ -28,15 +29,15 @@ class UserDetailView(DetailView):
         context['now'] = timezone.now()
         return context
 
+
 class UserEditView(UpdateView):
     model = User
-    fields = ['username']
+    fields = ['username', 'email']
     template_name = 'user/edit.html'
 
-class UserDeleteView(DeleteView):
-    model = User
-    success_url = reverse_lazy('event:index')
-    template_name = 'user/check_delete.html'
+    def get_object(self, queryset=None):
+        return self.request.user
+
 
 class AcquireEmail(View):
     def get(self, request, *args, **kwargs):
