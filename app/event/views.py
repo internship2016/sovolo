@@ -203,7 +203,7 @@ class EventSearchResultsView(ListView):
 
         #Include events with no openings?
         if 'exclude_full_events' in self.request.GET and self.request.GET['exclude_full_events'] == "on":
-            results = [event for event in results if not event.is_full]
+            results = [event for event in results if not event.is_full()]
 
         if 'order_by' in self.request.GET:
             order_by = self.request.GET['order_by']

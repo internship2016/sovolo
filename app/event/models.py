@@ -80,7 +80,7 @@ class Event(AbstractBaseModel):
     def is_full(self):
         frames = Frame.objects.filter(event=self)
         for frame in frames:
-            if not frame.is_full:
+            if not frame.is_full():
                 return False
 
         return True
