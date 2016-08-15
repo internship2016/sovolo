@@ -18,7 +18,7 @@ gulp.task('bower.install', function () {
 });
 
 // TODO: minify/uglify/etc
-gulp.task('bower.copy', function () {
+gulp.task('bower.copy', ['bower.install'], function () {
   var filter = {
     js: gf('**/*.js', {restore: true}),
     css: gf('**/*.css', {restore: true}),
