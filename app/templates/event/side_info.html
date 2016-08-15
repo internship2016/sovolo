@@ -1,0 +1,30 @@
+<li>主催者：{{event.host_user_id}}</li>
+<li>グループ：{{event.host_group_id}}</li>
+<!-- <div class="panel panel-default">
+  <div class="panel-heading">
+    管理者
+  </div>
+  <div class="panel-body">
+    interlink
+  </div>
+</div> -->
+<div class="panel panel-default">
+  <div class="panel-heading">
+    参加者
+  </div>
+  <div class="panel-body">
+    student
+    <a href="{% url 'event:participants' event.id %}" class="pull-right">もっと見る</a>
+  </div>
+</div>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    参加状況
+  </div>
+  <div class="panel-body">
+    <div>
+      4人/4人
+      <a href="#" type="button" class="btn btn-default btn-sm pull-right">参加</a>
+    </div>
+  </div>
+</div>
