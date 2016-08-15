@@ -6,6 +6,7 @@ from base.models import AbstractBaseModel
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import Q
+from django.utils import timezone
 from tag.models import Tag
 
 from PIL import Image
@@ -143,6 +144,17 @@ class Event(AbstractBaseModel):
 
         return True
 
+    def is_closed(self):
+        frames = Frame.objects.filter(event=self)
+        for frame in frames:
+            if not frame.is_closed():
+                return False
+
+        return True
+
+    def is_over(self):
+        return timezone.now() > self.start_time
+
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
@@ -170,6 +182,9 @@ class Frame(AbstractBaseModel):
             return num_participants >= self.upper_limit
         else:
             return True
+
+    def is_closed(self):
+        return timezone.now() > self.deadline
 
 class FrameAdmin(admin.ModelAdmin):
     list_display = (
