@@ -77,6 +77,13 @@ class Event(AbstractBaseModel):
     def get_tags_as_string(self):
         return "\n".join([tag.name for tag in self.tag.all()])
 
+    def get_frames(self):
+        return Frame.objects.filter(event=self)
+
+    def get_participants(self):
+        participations = Participation.objects.filter(event=self)
+        return [participation.user for participation in participations]
+
     def is_full(self):
         frames = Frame.objects.filter(event=self)
         for frame in frames:
@@ -84,6 +91,7 @@ class Event(AbstractBaseModel):
                 return False
 
         return True
+
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
