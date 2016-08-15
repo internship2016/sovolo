@@ -1,76 +1,76 @@
 {% extends "base.html" %}
 {% block title %}
-ユーザ詳細: #{{user.username}}
+  ユーザ詳細: #{{ user.username }}
 {% endblock %}
 {% block content %}
 
 
-{% include "user/user_header.html" %}
+  {% include "user/user_header.html" %}
 
-<div class="panel panel-default">
+  <div class="panel panel-default">
     <div class="panel-heading">
-        <h1 class="panel-title">所属グループ一覧</h1>
+      <h1 class="panel-title">所属グループ一覧</h1>
     </div>
     <div class="panel-body">
-        {% for group in user.group_set.all %}
+      {% for group in user.group_set.all %}
         <div class="media">
-            <div class="media-left">
-                <img class="media-object" src="{{group.image_url}}" alt="image" width="64" height="64">
-            </div>
-            <div class="media-body">
-                <h3 class="media-heading">{{group.name}}</h3>
-                グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明...
-            </div>
+          <div class="media-left">
+            <img class="media-object" src="{{ group.image_url }}" alt="image" width="64" height="64">
+          </div>
+          <div class="media-body">
+            <h3 class="media-heading">{{ group.name }}</h3>
+            グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明...
+          </div>
         </div>
-        {% endfor %}
+      {% endfor %}
     </div>
-</div>
-<div class="panel panel-default">
+  </div>
+  <div class="panel panel-default">
     <div class="panel-heading">
-        <h1 class="panel-title">参加予定ボランティア一覧</h1>
+      <h1 class="panel-title">参加予定ボランティア一覧</h1>
     </div>
     <div class="panel-body">
-        {% for i in "ABC" %}
+      {% for i in "ABC" %}
         <div class="media">
-            <div class="media-left">
-                <img class="media-object" src="#" alt="ボランティアアイコン" width="64" height="64">
-            </div>
-            <div class="media-body">
-                <h3 class="media-heading">ボランティア{{i}}</h3>
-                2016/08/10 @東京都新宿区
-            </div>
+          <div class="media-left">
+            <img class="media-object" src="#" alt="ボランティアアイコン" width="64" height="64">
+          </div>
+          <div class="media-body">
+            <h3 class="media-heading">ボランティア{{ i }}</h3>
+            2016/08/10 @東京都新宿区
+          </div>
         </div>
-        {% endfor %}
+      {% endfor %}
     </div>
-</div>
-<div class="panel panel-default">
+  </div>
+  <div class="panel panel-default">
     <div class="panel-heading">
-        <h1 class="panel-title">ボランティア実績</h1>
+      <h1 class="panel-title">ボランティア実績</h1>
     </div>
     <div class="panel-body">
-        {% for i in "ABC" %}
+      {% for i in "ABC" %}
         <div class="media">
-            <div class="media-left">
-                <img class="media-object" src="#" alt="ボランティアアイコン" width="64" height="64">
-            </div>
-            <div class="media-body">
-                <h3 class="media-heading">ボランティア{{i}}</h3>
-                2016/08/10 @東京都新宿区
-            </div>
+          <div class="media-left">
+            <img class="media-object" src="#" alt="ボランティアアイコン" width="64" height="64">
+          </div>
+          <div class="media-body">
+            <h3 class="media-heading">ボランティア{{ i }}</h3>
+            2016/08/10 @東京都新宿区
+          </div>
         </div>
-        {% endfor %}
+      {% endfor %}
     </div>
-</div>
-<div class="panel panel-default">
+  </div>
+  <div class="panel panel-default">
     <div class="panel-heading">
-        <h1 class="panel-title">フォローしているタグ</h1>
+      <h1 class="panel-title">フォローしているタグ</h1>
     </div>
     <div class="panel-body">
-        <a class="btn btn-default" href="#">東京</a>
-        <a class="btn btn-default" href="#">ゴミ拾い</a>
-        <a class="btn btn-default" href="#">震災</a>
-        <a class="btn btn-default" href="#">昼食付き</a>
+      <a class="btn btn-default" href="#">東京</a>
+      <a class="btn btn-default" href="#">ゴミ拾い</a>
+      <a class="btn btn-default" href="#">震災</a>
+      <a class="btn btn-default" href="#">昼食付き</a>
     </div>
-</div>
+  </div>
 
 {% endblock %}
