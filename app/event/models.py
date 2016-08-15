@@ -5,6 +5,7 @@ from user.models import User
 from base.models import AbstractBaseModel
 from django.conf import settings
 from django.contrib import admin
+from django.db.models import Q
 from tag.models import Tag
 
 from PIL import Image
@@ -73,9 +74,19 @@ class Event(AbstractBaseModel):
                 "default_event_image.jpg",
             )
 
+    def get_tags_as_string(self):
+        return "\n".join([tag.name for tag in self.tag.all()])
+
+    def is_full(self):
+        frames = Frame.objects.filter(event=self)
+        for frame in frames:
+            if not frame.is_full():
+                return False
+
+        return True
 
 class EventAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'created', 'modified')
+    list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
 
 
 class Frame(AbstractBaseModel):
@@ -91,6 +102,15 @@ class Frame(AbstractBaseModel):
     def __str__(self):
         return "Frame #%d" % (self.pk)
 
+    def is_full(self):
+        if self.upper_limit:
+            participant_query = Q(frame=self)
+            status_query = Q(status="participating") | Q(status="admin")
+            num_participants = Participation.objects.filter(participant_query & status_query).count()
+
+            return num_participants >= self.upper_limit
+        else:
+            return True
 
 class FrameAdmin(admin.ModelAdmin):
     list_display = (

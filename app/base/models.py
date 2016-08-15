@@ -1,9 +1,10 @@
 # coding=utf-8
-from django.utils import timezone
 from django.db import models
 import sys
 
 from PIL import Image
+from django.utils import timezone
+
 try:
     from StringIO import StringIO
 except ImportError:

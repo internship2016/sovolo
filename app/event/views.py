@@ -12,8 +12,11 @@ from .models import Event, Participation, Comment, Question, Answer
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils import timezone
-import re
+from django.apps import apps
 
+import sys
+import re
+from datetime import datetime
 
 class EventCreate(CreateView):
     model = Event
@@ -145,19 +148,72 @@ class EventSearchResultsView(ListView):
                     term_query = q
                 else:
                     term_query = term_query | q
-        if query is None:
-            query = term_query
-        else:
-            query = query & term_query
+            if query is None:
+                query = term_query
+            else:
+                query = query & term_query
 
         return query
 
     def get_queryset(self):
-        user_entry = self.request.GET['q']
 
-        query = self.make_query_from_string(user_entry)
+        query = Q()
 
-        return Event.objects.filter(query)
+        #Free Word
+        if 'q' in self.request.GET:
+            user_entry = self.request.GET['q']
+            if user_entry is not None and user_entry != "":
+                freeword_query = self.make_query_from_string(user_entry)
+                query = query & freeword_query
+
+        #Date
+        if 'date' in self.request.GET:
+            begin_date_string = self.request.GET['date']
+            if begin_date_string is not None and begin_date_string != "":
+                date = datetime.strptime(begin_date_string, "%m/%d/%Y")
+                date_query = Q(start_time__gte=date)
+                query = query & date_query
+
+        if 'end_date' in self.request.GET:
+            end_date_string = self.request.GET['end_date']
+            if end_date_string is not None and end_date_string != "":
+                date = datetime.strptime(end_date_string, "%m/%d/%Y") + datetime.timedelta(days=1)
+                date_query = Q(start_time__lt=date)
+                query = query & date_query
+
+        #Tag
+        if 'tag' in self.request.GET:
+            t = self.request.GET['tag']
+
+            if t is not None and t!="":
+                Tag = apps.get_model('tag', 'Tag')
+                tag = Tag.objects.get(name=t)
+                tag_query = Q(tag=tag)
+                query = query & tag_query
+
+        #Place
+        if 'area' in self.request.GET:
+            place = self.request.GET['area']
+
+            if place is not None and place!="":
+                place_query = Q(place=place)
+                query = query & place_query
+
+        results = Event.objects.filter(query)
+
+        #Include events with no openings?
+        if 'exclude_full_events' in self.request.GET and self.request.GET['exclude_full_events'] == "on":
+            results = [event for event in results if not event.is_full()]
+
+        if 'order_by' in self.request.GET:
+            order_by = self.request.GET['order_by']
+            if 'desc' in self.request.GET and self.request.GET['desc'] == "on":
+                order_by = "-" + order_by
+                results = results.order_by(order_by)
+            else:
+                results = results.order_by(order_by)
+
+        return results
 
 
 @method_decorator(login_required, name='dispatch')
