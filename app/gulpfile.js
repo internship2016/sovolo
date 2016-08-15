@@ -6,6 +6,7 @@ var bower = require('gulp-bower');
 var gf = require('gulp-filter');
 var mainBowerFiles = require('main-bower-files');
 var debug = require('gulp-debug');
+var rimraf = require('rimraf');
 
 var conf = {
   sassPath: './static/sass',
@@ -91,4 +92,8 @@ gulp.task('watch', function () {
   gulp.watch(conf.scriptPath + '/**/*.js', ['js']);
 });
 
-gulp.task('default', ['bower', 'css', 'js']);
+gulp.task('clean', function (cb) {
+  return rimraf('./static/{js,css,fonts}', cb);
+});
+
+gulp.task('default', ['clean', 'bower', 'css', 'js']);
