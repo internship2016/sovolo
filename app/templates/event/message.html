@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}
+イベント(#{{event}})詳細
+{% endblock %}
+{% block content %}
+{% include "event/event_header" %}
+<div class="row">
+  <div class="col-md-9">
+    <form>
+    To
+    <select name="" required>
+      <option>参加予定者</option>
+      <option>参加希望者</option>
+      <option>興味のある人</option>
+      <option>グループメンバー</option>>
+    </select>
+     <input type="text">
+    <input type="button" class="btn" value="送信">
+    </form>
+  </div>
+  <div class="col-md-3">
+    {% include "event/side_info" %}
+  </div>
+</div>
+{% endblock %}
