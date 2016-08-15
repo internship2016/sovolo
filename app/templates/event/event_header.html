@@ -1,0 +1,29 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.7";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
+<div class="media">
+  <div class="media-left">
+    <img src={{ event.get_image_url }} width="240" height="240">
+  </div>
+  <div class="media-body event-head-title">
+    <h1 class="media-heading"><u>{{event}}</u></h1>
+    {% if True %}
+      <!--管理者-->
+      <a href="{% url 'event:add' %}" type="button" class="btn btn-default">メール一斉送信 </a>
+      <!--参加者 -->
+      <!--興味あり-->
+      <!--その他-->
+      <a href="{% url 'event:participate' event.id 1 %}" class="btn btn-default">参加する</a>
+    {% endif %}
+    <div class="btn pull-right btn-group .active">
+      <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://twitter.com" data-text="So volo!!">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
+    </div>
+  </div>
+</div>
