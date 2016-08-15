@@ -126,6 +126,58 @@ class Command(BaseCommand):
 
     def _create_events(self):
 
+        prefectures = {
+            "Hokkaido": "北海道",
+            "Aomori": "青森県",
+            "Iwate": "岩手県",
+            "Miyagi": "宮城県",
+            "Akita": "秋田県",
+            "Yamagata": "山形県",
+            "Fukushima": "福島県",
+            "Ibaraki": "茨城県",
+            "Tochigi": "栃木県",
+            "Gunnma": "群馬県",
+            "Saitama": "埼玉県",
+            "Chiba": "千葉県",
+            "Tokyo": "東京都",
+            "Kanagawa": "神奈川県",
+            "Niigata": "新潟県",
+            "Toyama": "富山県",
+            "Ishikawa": "石川県",
+            "Fukui": "福井県",
+            "Yamanashi": "山梨県",
+            "Nagano": "長野県",
+            "Gifu": "岐阜県",
+            "Shizuoka": "静岡県",
+            "Aichi": "愛知県",
+            "Mie": "三重県",
+            "Shiga": "滋賀県",
+            "Kyoto": "京都府",
+            "Osaka": "大阪府",
+            "Hyogo": "兵庫県",
+            "Nara": "奈良県",
+            "Wakayama": "和歌山県",
+            "Tottori": "鳥取県",
+            "Shimane": "島根県",
+            "Okayama": "岡山県",
+            "Hiroshima": "広島県",
+            "Yamaguchi": "山口県",
+            "Tokushima": "徳島県",
+            "Kagawa": "香川県",
+            "Ehime": "愛媛県",
+            "Kouchi": "高知県",
+            "Fukuoka": "福岡県",
+            "Saga": "佐賀県",
+            "Nagasaki": "長崎県",
+            "Kumamoto": "熊本県",
+            "Ooita": "大分県",
+            "Miyazaki": "宮崎県",
+            "Kagoshima": "鹿児島県",
+            "Okinawa": "沖縄県"
+        }
+
+        prefec_list = list(prefectures)
+
         for i in range(10):
             name = "Generic Event #%d" %(i)
             host_user = User.objects.all()[i]
@@ -140,7 +192,7 @@ class Command(BaseCommand):
                 details="This is a generic event.",
                 ticket=False,
                 host_user=host_user,
-                region=1,
+                region=prefec_list[i],
             )
             genericevent.save()
             genericevent.admin = User.objects.filter(pk=1)
@@ -151,7 +203,7 @@ class Command(BaseCommand):
             frame = Frame(
                 event=event,
                 lower_limit=0,
-                upper_limit=100,
+                upper_limit=3,
                 deadline="2100-12-25 00:00:00",
             )
             frame.save()
@@ -233,6 +285,9 @@ class Command(BaseCommand):
             user.follow_tag.add(tag)
             user2 = User.objects.get(pk=tag.pk)
             user2.follow_tag.add(tag)
+        for event in Event.objects.all():
+            tag = Tag.objects.get(pk=event.pk)
+            event.tag.add(tag)
 
     def _create_questions_and_answers(self):
         for event in Event.objects.all():
@@ -282,4 +337,6 @@ class Command(BaseCommand):
                 self._create_tags()
             if options['qanda']:
                 self._create_questions_and_answers()
+
+
 
