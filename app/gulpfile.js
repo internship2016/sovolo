@@ -50,6 +50,12 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
             './css/*.min.*',
             './fonts/*.*'
           ]
+        },
+        moment: {
+          main: [
+            './moment.js',
+            './min/moment-with-locales.js'
+          ]
         }
       }
     })
