@@ -6,7 +6,7 @@
         <h1 class="media-heading">
             {{ user.username }}
             {% if user.id == request.user.id %}
-                <a class="btn btn-default btn-sm" href="{% url 'user:edit' user.id %}" pk=user.pk %}">プロフィール編集</a>
+                <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}" pk=user.pk %}">プロフィール編集</a>
             {% endif %}
         </h1>
         <hr>
