@@ -199,14 +199,11 @@ class EventSearchResultsView(ListView):
                 place_query = Q(place=place)
                 query = query & place_query
 
-        #Include events with no openings?
-        if 'exclude_full_events' in self.request.GET:
-            exclude_full_events = self.request.GET['exclude_full_events']
-
-            #TODO: check whether event is full
-
-        #TODO: Sort by Date, Newly Created
         results = Event.objects.filter(query)
+
+        #Include events with no openings?
+        if 'exclude_full_events' in self.request.GET and self.request.GET['exclude_full_events'] == "on":
+            results = [event for event in results if not event.is_full]
 
         if 'order_by' in self.request.GET:
             order_by = self.request.GET['order_by']
