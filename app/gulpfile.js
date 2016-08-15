@@ -4,7 +4,7 @@ var less = require('gulp-less');
 var notify = require('gulp-notify');
 var bower = require('gulp-bower');
 var gf = require('gulp-filter');
-var mbf = require('main-bower-files');
+var mainBowerFiles = require('main-bower-files');
 var debug = require('gulp-debug');
 
 var conf = {
@@ -33,7 +33,9 @@ gulp.task('bower.copy', function () {
   };
 
   return gulp.src(
-    mbf({
+    mainBowerFiles({
+      debugging: true,
+      checkExistence: true,
       overrides: {
         bootstrap: {
           main: [
