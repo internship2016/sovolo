@@ -1,4 +1,4 @@
-var gulp = require('gulp');
+var gulp = require('gulp-help')(require('gulp'));
 var sass = require('gulp-sass');
 var less = require('gulp-less');
 var notify = require('gulp-notify');
@@ -14,12 +14,12 @@ var conf = {
   bowerDir: './bower_components'
 };
 
-gulp.task('bower.install', function () {
+gulp.task('bower.install', 'ネットからbower_componentsに持ってくる', function () {
   return bower().pipe(gulp.dest(conf.bowerDir));
 });
 
 // TODO: minify/uglify/etc
-gulp.task('bower.copy', ['bower.install'], function () {
+gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルをコピーする', ['bower.install'], function () {
   var filter = {
     js: gf('**/*.js', {restore: true}),
     css: gf('**/*.css', {restore: true}),
@@ -69,31 +69,31 @@ gulp.task('bower.copy', ['bower.install'], function () {
   ;
 });
 
-gulp.task('bower', [
+gulp.task('bower', 'ネットから依存パッケージ持ってきてstaticにコピー', [
   'bower.install',
   'bower.copy'
 ]);
 
 // Watch static/sass/style.scss,
 // Compress all sass files into css
-gulp.task('css', function () {
+gulp.task('css', 'scssファイルをstatic/cssに移す', function () {
   return gulp.src(conf.sassPath + '/*.scss')
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(gulp.dest('./static/css'));
 });
 
-gulp.task('js', function () {
+gulp.task('js', 'jsファイルをstatic/jsに移す', function () {
   return gulp.src(conf.scriptPath + '/*.js')
     .pipe(gulp.dest('./static/js'));
 });
 
-gulp.task('watch', function () {
+gulp.task('watch', 'scssとjsファイルを監視して適時コピーする', function () {
   gulp.watch(conf.sassPath + '/**/*.scss', ['css']);
   gulp.watch(conf.scriptPath + '/**/*.js', ['js']);
 });
 
-gulp.task('clean', function (cb) {
+gulp.task('clean', '全部消す', function (cb) {
   return rimraf('./static/{js,css,fonts}', cb);
 });
 
-gulp.task('default', ['clean', 'bower', 'css', 'js']);
+gulp.task('default', 'リビルド', ['clean', 'bower', 'css', 'js']);
