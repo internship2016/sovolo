@@ -44,6 +44,12 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
             './dist/css/*.min.*',
             './dist/fonts/*.*'
           ]
+        },
+        'font-awesome': {
+          main: [
+            './css/*.min.*',
+            './fonts/*.*'
+          ]
         }
       }
     })
