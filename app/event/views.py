@@ -16,7 +16,7 @@ from django.apps import apps
 
 import sys
 import re
-import datetime
+from datetime import datetime
 
 class EventCreate(CreateView):
     model = Event
