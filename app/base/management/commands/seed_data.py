@@ -151,7 +151,7 @@ class Command(BaseCommand):
             frame = Frame(
                 event=event,
                 lower_limit=0,
-                upper_limit=100,
+                upper_limit=3,
                 deadline="2100-12-25 00:00:00",
             )
             frame.save()
@@ -233,6 +233,9 @@ class Command(BaseCommand):
             user.follow_tag.add(tag)
             user2 = User.objects.get(pk=tag.pk)
             user2.follow_tag.add(tag)
+        for event in Event.objects.all():
+            tag = Tag.objects.get(pk=event.pk)
+            event.tag.add(tag)
 
     def _create_questions_and_answers(self):
         for event in Event.objects.all():
@@ -282,4 +285,6 @@ class Command(BaseCommand):
                 self._create_tags()
             if options['qanda']:
                 self._create_questions_and_answers()
+
+
 
