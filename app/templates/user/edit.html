@@ -43,7 +43,7 @@
         <div class="form-group">
           <label for="form-birthday" class="col-sm-3 col-lg-2 control-label">生年月日</label>
           <div class="col-sm-9 col-lg-9">
-            <input id="form-birthday" type="text" class="form-control" name="birthday" value="{{ user.birthday }}" />
+            <input id="form-birthday" type="text" class="form-control" name="birthday" value="{{ user.birthday|date:'Y-m-d' }}" />
           </div>
         </div>
       </div>
