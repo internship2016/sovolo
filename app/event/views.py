@@ -46,8 +46,21 @@ class EventCreate(CreateView):
 
     def form_valid(self, form):
         form.instance.host_user = self.request.user
+
         return super(EventCreate, self).form_valid(form)
 
+    def get_success_url(self):
+        self.object.admin.add(self.request.user)
+        sys.stderr.write("Added User")
+        p = Participation(
+            user=self.request.user,
+            event=self.object,
+            status="admin",
+        )
+        p.save()
+        self.object.participation_set.add(p)
+        sys.stderr.write("Added participation")
+        return super(EventCreate, self).get_success_url()
 
 class EventDetailView(DetailView):
     template_name = 'event/detail.html'
