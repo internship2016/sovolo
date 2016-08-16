@@ -11,6 +11,7 @@
 <script type="text/javascript" src="{% static 'js/moment.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/moment-with-locales.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/myjs.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}" />
 <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}" />
 <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
@@ -18,16 +19,6 @@
 
 </head>
 <body>
-<script type="text/javascript">
-  $('.dropdown-toggle').dropdown();
-  $(function () {
-    $('#searchform-date').datetimepicker({
-      inline: true,
-      locale: moment.locale('ja'),
-      format: "L"
-    });
-  });
-</script>
 <header>
   <nav class="navbar navbar-default">
     <div class="container">
