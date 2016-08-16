@@ -259,6 +259,33 @@ class EventJoinView(RedirectView):
         self.url = reverse_lazy('event:detail', kwargs={'pk': event_id})
         return super(EventJoinView, self).get_redirect_url(*args, **kwargs)
 
+@method_decorator(login_required, name='dispatch')
+class EventFollowView(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        event_id = kwargs['event_id']
+        event = Event.objects.get(pk=event_id)
+
+        if event.is_closed():
+            messages.error(self.request, "この枠はすでに締め切られています。")
+        else:
+            try:
+                p = Participation.objects.create(
+                    user=self.request.user,
+                    event_id=kwargs['event_id'],
+                    status="following",
+                )
+                p.save()
+                messages.error(self.request, "興味ありイベントに追加しました")
+            except IntegrityError:
+                event = Event.objects.get(pk=event_id)
+                if event in self.request.user.participating_event.all():
+                    messages.error(self.request, "参加済みです。")
+                else:
+                    messages.error(self.request, "参加処理中にエラーが発生しました。")
+
+
+        self.url = reverse_lazy('event:detail', kwargs={'pk': event_id})
+        return super(EventFollowView, self).get_redirect_url(*args, **kwargs)
 
 class ParticipationDeleteView(DeleteView):
     model = Participation
