@@ -6,6 +6,12 @@
     <h1 class="media-heading">
       <u>{{ group.name }}</u>
     </h1>
-    <a class="btn btn-default" href="#">グループに参加する or グループを抜ける</a>
+    {% if not group.membership_set.filter.exists %}
+      <a class="btn btn-default pull-right" href="#">グループに参加する</a>
+    {% elif group.membership_set.filter.first.role == 'Normal'%}
+      <a class="btn btn-default pull-right" href="#">グループから脱退</a>
+    {% elif group.membership_set.filter.first.role == 'admin' %}
+      <a class="btn btn-default pull-right" href="#">グループ編集</a>
+    {% endif %}
   </div>
 </div>
