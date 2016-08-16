@@ -189,14 +189,14 @@ class EventSearchResultsView(ListView):
         if 'date' in self.request.GET:
             begin_date_string = self.request.GET['date']
             if begin_date_string is not None and begin_date_string != "":
-                date = datetime.strptime(begin_date_string, "%m/%d/%Y")
+                date = datetime.strptime(begin_date_string, "%Y-%m-%d")
                 date_query = Q(start_time__gte=date)
                 query = query & date_query
 
         if 'end_date' in self.request.GET:
             end_date_string = self.request.GET['end_date']
             if end_date_string is not None and end_date_string != "":
-                date = datetime.strptime(end_date_string, "%m/%d/%Y") + datetime.timedelta(days=1)
+                date = datetime.strptime(end_date_string, "%Y-%m-%d") + datetime.timedelta(days=1)
                 date_query = Q(start_time__lt=date)
                 query = query & date_query
 
