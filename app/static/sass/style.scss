@@ -1,7 +1,17 @@
 /* TODO: SCSS files */
 
+$margin: 50px;
+
+
 html {
-    padding: 0;
+  padding: 0;
 }
 
+#user-header {
+  padding: 30px;
+}
 
+#user-detail-info {
+  margin-left: $margin;
+  margin-right: $margin;
+}

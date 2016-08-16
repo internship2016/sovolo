@@ -46,7 +46,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
     telephone = models.CharField(max_length=11, null=True)
     emergency_contact = models.CharField(max_length=11, null=True)
     email = models.EmailField(unique=True, db_index=True)
-    sex = models.NullBooleanField()
+    sex = models.NullBooleanField()  # True:Men, False:Women
     occupation = models.CharField(max_length=100, null=True)
 
     # regionは都道府県で指定
@@ -155,6 +155,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     def save(self, *args, **kwargs):
         return super(User, self).save(*args, **kwargs)
+
+    def get_region_kanji(self):
+        return self.prefectures.get(self.region)
 
 
 class UserAdmin(admin.ModelAdmin):
