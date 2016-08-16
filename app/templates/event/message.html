@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 
 {% block title %}
-イベント(#{{event}})詳細
+メール一斉送信
 {% endblock %}
 {% block content %}
 {% include "event/event_header.html" %}
@@ -20,7 +20,7 @@
         </select>
       </div>
       <div class="form-group">
-        <input type="text"  style="width:480px; height:320px;">
+        <textarea rows="20" cols="80"></textarea>
       </div>
       <button class="btn" type="submit">送信</button>
     </form>
