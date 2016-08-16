@@ -32,7 +32,7 @@ class UserDetailView(DetailView):
 
 class UserEditView(UpdateView):
     model = User
-    fields = ['username', 'email']
+    fields = ['username', 'email', 'image']
     template_name = 'user/edit.html'
 
     def get_object(self, queryset=None):

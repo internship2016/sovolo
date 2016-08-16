@@ -2,15 +2,21 @@
 
 {% block content %}
   {% include "user/user_header.html" %}
-  <form action="" class="form-horizontal" method="post">
+  <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
     <div id="user-detail-info" class="panel panel-default">
       <div class="panel-body">
         {% csrf_token %}
           <div class="form-group">
             <label for="username-form" class="col-sm-3 col-lg-2 control-label">ニックネーム</label>
             <div class="col-sm-9 col-lg-9"> <input id="username-form" class="form-control" name="username" value="{{ user.username }}"/> </div>
+          </div>
+          <div class="form-group">
             <label for="email-form" class="col-sm-3 col-lg-2 control-label">Email</label>
             <div class="col-sm-9 col-lg-9 "> <input id="email-form" class="form-control" name="email" value="{{ user.email }} "/> </div>
+          </div>
+          <div class="form-group">
+            <label for="icon-form" class="col-sm-3 col-lg-2 control-label">プロフィール画像</label>
+            <div class="col-sm-9 col-lg-9 "> <input id="icon-form" name="image" type="file" /> </div>
           </div>
       </div>
     </div>
