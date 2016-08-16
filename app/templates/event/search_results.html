@@ -1,9 +1,10 @@
 {% extends "base.html" %}
 {% block content %}
+{% load event_tags %}
 
 <div class="row">
   <div class="col-md-8">
-    {% for event in result_events %}
+    <!--{% for event in result_events %}
       <a href="{% url 'event:detail' event.id %}"><img src={{ event.get_image_url }}></a>
       <h2>Name: {{event}}</h2>
 
@@ -12,7 +13,8 @@
         <input type="submit" value ='DELETE'>
       </form>
 
-    {% endfor %}
+    {% endfor %}-->
+    {% event_list result_events %}
   </div>
   <div class="col-md-4">
     {% include 'event/search_form.html' %}
