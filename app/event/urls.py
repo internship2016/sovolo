@@ -25,7 +25,7 @@ urlpatterns = [
 
     # event/<id>/edit/message
     url(r'^(?P<pk>[0-9]+)/edit/message$',
-        views.SendMessage.as_view(), name='edit'),
+        views.SendMessage.as_view(), name='message'),
 
     # event/1/participants/
     url(r'^(?P<event_id>[0-9]+)/participants/$',
