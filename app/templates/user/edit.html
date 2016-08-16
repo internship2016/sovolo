@@ -1,15 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
-{% include "user/user_header.html" %}
-<form action="" class="form-horizontal" method="post">
-    {% csrf_token %}
-    {% for field in form %}
-        <div class="form-group">
-            <label class="col-sm-2"> {{field.label_tag}} </label>
-            <div class="col-sm-10"> {{field}} </div>
-        </div>
-    {% endfor %}
-    <input type="submit" value="Update" />
-</form>
+  {% include "user/user_header.html" %}
+  <form action="" class="form-horizontal" method="post">
+    <div id="user-detail-info" class="panel panel-default">
+      <div class="panel-body">
+        {% csrf_token %}
+          <div class="form-group">
+            <label for="username-form" class="col-sm-3 col-lg-2 control-label">ニックネーム</label>
+            <div class="col-sm-9 col-lg-9"> <input id="username-form" class="form-control" name="username" value="{{ user.username }}"/> </div>
+            <label for="email-form" class="col-sm-3 col-lg-2 control-label">Email</label>
+            <div class="col-sm-9 col-lg-9 "> <input id="email-form" class="form-control" name="email" value="{{ user.email }} "/> </div>
+          </div>
+      </div>
+    </div>
+    <div style="text-align: center">
+      <input type="submit" class="btn btn-default btn-lg" value="適用"/>
+    </div>
+  </form>
 {% endblock %}
