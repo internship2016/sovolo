@@ -23,6 +23,10 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/edit/$',
         views.EventEditView.as_view(), name='edit'),
 
+    # event/<id>/edit/message
+    url(r'^(?P<pk>[0-9]+)/edit/message$',
+        views.SendMessage.as_view(), name='edit'),
+
     # event/1/participants/
     url(r'^(?P<event_id>[0-9]+)/participants/$',
         views.EventParticipantsView.as_view(), name='participants'),
