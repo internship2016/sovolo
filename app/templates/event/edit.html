@@ -1,7 +1,20 @@
 {% extends "base.html" %}
+{% block content %}
+{% include "event/event_header.html" %}
+<div class="panel panel-default">
+  <div class="panel-heading">
+    ボランティア内容変更
+  </div>
+  <form class="form-horizontal" action="" method="post">
+    <!--    {{ form.as_ul }} -->
+    <div class="panel-body">
+      {% csrf_token %}
+      {% include 'event/form_template.html' %}
+    </div>
+    <div class="panel-footer" style="text-align:center">
+      <button type="submit">更新</button>
+    </div>
+  </form>
+</div>
 
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_ul }}
-    <input type="submit" value="Update" />
-</form>
+{% endblock %}
