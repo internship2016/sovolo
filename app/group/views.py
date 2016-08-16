@@ -18,7 +18,7 @@ class IndexView:
 class GroupCreate(CreateView):
     template_name = 'group/group_form.html'
     model = Group
-    fields = ['name', 'image']
+    fields = ['name','description','image']
 
     def form_valid(self, form):
         return super(GroupCreate, self).form_valid(form)

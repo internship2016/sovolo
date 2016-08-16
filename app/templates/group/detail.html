@@ -3,18 +3,7 @@
 グループ詳細(#{{group.id}})
 {% endblock %}
 {% block content %}
-<div class="media">
-    <div class="media-left">
-        <img class="media-object" src="#" alt="グループアイコン" width="160" height="160">
-    </div>
-    <div class="media-body">
-        <h1 class="media-heading">
-            グループ名{# comment group.name #}
-        </h1>
-        <a class="btn btn-default" href="#">グループに参加する or グループを抜ける</a>
-    </div>
-</div>
-
+{% include "group/group_header.html" %}
 <div class="row">
     <div class="col-md-9">
         <div class="panel panel-default">
@@ -45,26 +34,7 @@
         </div>
     </div>
     <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h1 class="panel-title">管理者</h1>
-            </div>
-            <div class="panel-body">
-                {% for i in "ABC" %}
-                    <img src="#" alt="{{i}}" width="30" height="30">
-                {% endfor %}
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h1 class="panel-title">参加者</h1>
-            </div>
-            <div class="panel-body">
-                {% for i in "ABCDEFGIHJKLMNOPQRSTUVWXYZ" %}
-                    <img src="#" alt="{{i}}" width="30" height="30">
-                {% endfor %}
-            </div>
-        </div>
+        {% include "group/side_info.html" %}
     </div>
 </div>
 
