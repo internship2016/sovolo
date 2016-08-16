@@ -2,24 +2,26 @@
 {% load bootstrap3 %}
 
 {% block title %}
-  イベント作成
+イベント作成
 {% endblock %}
 {% block content %}
 <!-- テスト用のForm -->
-<div class="panel panel-default">
-    <div class="panel-heading">
-        イベント情報
+<div class="row">
+  <div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        新規ボランティア作成
+      </div>
+      <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
+        <div class="panel-body">
+          {% csrf_token %}
+          {% include 'event/form_template.html' %}
+        </div>
+        <div class="panel-footer" style="text-align:center">
+          <button type="submit">送信</button>
+        </div>
+      </form>
     </div>
-    <div class="panel-body">
-        <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% include 'event/form_template.html' %}
-            <div class="panel-footer" style="text-align:center">
-                <button type="submit">送信</button>
-            </div>
-        </form>
-    </div>
-
+  </div>
 </div>
-
 {% endblock %}

@@ -11,7 +11,7 @@
     $ ( cd sovolo/app && npm install && gulp default )
     $ docker run -v $PWD/sovolo/app:/home/docker/code/app --name sovolo -p 80:80 -p 8000:8000 -p 443:443 -d webapp
     $ docker exec -it sovolo /bin/bash
-    # install-program
+    # install-project
     # migrate
 
 ## TESTING (port 8000)
