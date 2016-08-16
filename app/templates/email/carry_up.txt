@@ -1,0 +1,4 @@
+{{ event.name }}への参加ができるようになりました
+{{ user.username }}さん
+
+{{ event.name }}の参加枠が空きましたので、{{ user.username }}様をキャンセル待ちから参加に繰り上げました。
