@@ -50,6 +50,7 @@ class Command(BaseCommand):
                 message = content.split("\n", 1)[1]
                 send_mail(subject, message, self.from_email, [user.email])
 
+
         self.stdout.write("success...!")
 
     # def add_arguments(self, parser):

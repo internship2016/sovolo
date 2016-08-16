@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% load bootstrap3 %}
+
+{% block title %}
+イベント(#{{event}})詳細
+{% endblock %}
+{% block content %}
+{% include "event/event_header.html" %}
+<div class="row">
+  <div class="col-md-9 block-center">
+    <form action="" method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        To
+        <select name="" required>
+          <option>参加予定者</option>
+          <option>参加希望者</option>
+          <option>興味のある人</option>
+          <option>グループメンバー</option>>
+        </select>
+      </div>
+      <div class="form-group">
+        <input type="text"  style="width:480px; height:320px;">
+      </div>
+      <button class="btn" type="submit">送信</button>
+    </form>
+  </div>
+  <div class="col-md-3">
+    {% include "event/side_info.html" %}
+  </div>
+</div>
+{% endblock %}

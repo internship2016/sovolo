@@ -3,69 +3,39 @@
 グループ詳細(#{{group.id}})
 {% endblock %}
 {% block content %}
-<div class="media">
-    <div class="media-left">
-        <img class="media-object" src="#" alt="グループアイコン" width="160" height="160">
-    </div>
-    <div class="media-body">
-        <h1 class="media-heading">
-            グループ名{# comment group.name #}
-        </h1>
-        <a class="btn btn-default" href="#">グループに参加する or グループを抜ける</a>
-    </div>
-</div>
-
+{% include "group/group_header.html" %}
 <div class="row">
-    <div class="col-md-9">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h1 class="panel-title">説明</h1>
-            </div>
-            <div class="panel-body">
-                グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明...
-            </div>
-        </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h1 class="panel-title">参加予定ボランティア一覧</h1>
-            </div>
-            <div class="panel-body">
-                {% for i in "ABC" %}
-                <div class="media">
-                    <div class="media-left">
-                        <img class="media-object" src="#" alt="ボランティアアイコン" width="64" height="64">
-                    </div>
-                    <div class="media-body">
-                        <h3 class="media-heading">ボランティア{{i}}</h3>
-                        2016/08/10 @東京都新宿区
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
+  <div class="col-md-9">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">説明</h1>
+      </div>
+      <div class="panel-body">
+        グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明...
+      </div>
     </div>
-    <div class="col-md-3">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h1 class="panel-title">管理者</h1>
-            </div>
-            <div class="panel-body">
-                {% for i in "ABC" %}
-                    <img src="#" alt="{{i}}" width="30" height="30">
-                {% endfor %}
-            </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title">グループ主催のボランティア一覧</h1>
+      </div>
+      <div class="panel-body">
+        {% for i in "ABC" %}
+        <div class="media">
+          <div class="media-left">
+            <img class="media-object" src="#" alt="ボランティアアイコン" width="64" height="64">
+          </div>
+          <div class="media-body">
+            <h3 class="media-heading">ボランティア{{i}}</h3>
+            2016/08/10 @東京都新宿区
+          </div>
         </div>
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h1 class="panel-title">参加者</h1>
-            </div>
-            <div class="panel-body">
-                {% for i in "ABCDEFGIHJKLMNOPQRSTUVWXYZ" %}
-                    <img src="#" alt="{{i}}" width="30" height="30">
-                {% endfor %}
-            </div>
-        </div>
+        {% endfor %}
+      </div>
     </div>
+  </div>
+  <div class="col-md-3">
+    {% include "group/side_info.html" %}
+  </div>
 </div>
 
 {% endblock %}

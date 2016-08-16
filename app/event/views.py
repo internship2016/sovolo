@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import DetailView, ListView, RedirectView
+from django.views.generic.detail import SingleObjectMixin
+from django.views.generic import DetailView, ListView, RedirectView, View
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.db import IntegrityError
@@ -13,10 +14,17 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils import timezone
 from django.apps import apps
+from django.template.loader import get_template
+from django.template import Context
+from django.core.mail import send_mail
 
 import sys
 import re
 from datetime import datetime
+import sys
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 
 class EventCreate(CreateView):
     model = Event
@@ -128,6 +136,7 @@ class EventSearchResultsView(ListView):
     model = Event
     template_name = 'event/search_results.html'
     context_object_name = 'result_events'
+    paginate_by = 10
 
     def split_string_to_terms(self, string):
         findterms = re.compile(r'"([^"]+)"|(\S+)').findall
@@ -158,6 +167,8 @@ class EventSearchResultsView(ListView):
     def get_queryset(self):
 
         query = Q()
+
+        #TODO: handle DoesNotExist queries for tag and group
 
         #Free Word
         if 'q' in self.request.GET:
@@ -199,11 +210,25 @@ class EventSearchResultsView(ListView):
                 place_query = Q(place=place)
                 query = query & place_query
 
+        #Group
+        if 'group' in self.request.GET:
+            group = self.request.GET['group']
+
+            if group is not None and group!="":
+                Group = apps.get_model('group', 'Group')
+                g = Group.objects.get(pk=int(group))
+                group_list = [g]
+                group_query = Q(group__in=group_list)
+                query = query & group_query
+
         results = Event.objects.filter(query)
 
         #Include events with no openings?
         if 'exclude_full_events' in self.request.GET and self.request.GET['exclude_full_events'] == "on":
             results = [event for event in results if not event.is_full()]
+
+        if len(results)==0:
+            messages.error(self.request, "検索結果に一致するイベントが見つかりませんでした")
 
         if 'order_by' in self.request.GET:
             order_by = self.request.GET['order_by']
@@ -212,6 +237,12 @@ class EventSearchResultsView(ListView):
                 results = results.order_by(order_by)
             else:
                 results = results.order_by(order_by)
+
+        #Filter based on page and number per page
+        if 'numperpage' in self.request.GET:
+            num_per_page = self.request.GET["numperpage"]
+            if num_per_page is not None and num_per_page!="":
+                self.paginate_by = int(num_per_page)
 
         return results
 
@@ -236,7 +267,7 @@ class EventJoinView(RedirectView):
                     status=status,
                 )
                 p.save()
-                if status=="waiting_list":
+                if status == "waiting_list":
                     messages.error(self.request, "あなたはキャンセル待ちです")
                 else:
                     messages.error(self.request, "参加しました。")
@@ -251,11 +282,50 @@ class EventJoinView(RedirectView):
         self.url = reverse_lazy('event:detail', kwargs={'pk': event_id})
         return super(EventJoinView, self).get_redirect_url(*args, **kwargs)
 
+@method_decorator(login_required, name='dispatch')
+class EventFollowView(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        event_id = kwargs['event_id']
+        event = Event.objects.get(pk=event_id)
+
+        if event.is_closed():
+            messages.error(self.request, "この枠はすでに締め切られています。")
+        else:
+            try:
+                p = Participation.objects.create(
+                    user=self.request.user,
+                    event_id=kwargs['event_id'],
+                    status="following",
+                )
+                p.save()
+                messages.error(self.request, "興味ありイベントに追加しました")
+            except IntegrityError:
+                event = Event.objects.get(pk=event_id)
+                if event in self.request.user.participating_event.all():
+                    messages.error(self.request, "参加済みです。")
+                else:
+                    messages.error(self.request, "参加処理中にエラーが発生しました。")
+
+
+        self.url = reverse_lazy('event:detail', kwargs={'pk': event_id})
+        return super(EventFollowView, self).get_redirect_url(*args, **kwargs)
 
 class ParticipationDeleteView(DeleteView):
     model = Participation
 
     def get_success_url(self):
+        if self.object.status == "participating":
+            carry_up = self.object.frame.participation_set.filter(status="waiting_list").first()
+            carry_up.status = "participating"
+            #Send Email
+            template = get_template("email/carry_up.txt")
+            context = Context({'user': carry_up.user, 'event': carry_up.event})
+            content = template.render(context)
+            subject = content.split("\n", 1)[0]
+            message = content.split("\n", 1)[1]
+            send_mail(subject, message, "reminder@sovolo.earth", [carry_up.user.email])
+
+
         return reverse_lazy('event:index')
 
 
@@ -269,3 +339,21 @@ class CommentCreate(CreateView):
         event_id = self.kwargs['event_id']
         form.instance.event = Event.objects.get(pk=event_id)
         return super(EventCreate, self).form_valid(form)
+
+
+class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
+    model = Event
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'event/message.html', {'event': self.get_object()})
+
+    def post(self, request, *args, **kwargs):
+        messages.success(self.request, "メッセージの送信が完了しました。")
+        # TODO: send mail
+        return redirect(reverse_lazy('event:detail', kwargs={'pk':kwargs['pk']}))
+
+    def test_func(self):
+        return self.request.user.is_manager_for(self.get_object())
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden()

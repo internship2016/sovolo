@@ -15,7 +15,7 @@
     <h1 class="media-heading"><u>{{event}}</u></h1>
     {% if True %}
       <!--管理者-->
-      <a href="{% url 'event:add' %}" type="button" class="btn btn-default">メール一斉送信 </a>
+      <a href="{% url 'event:message' event.id %}" type="button" class="btn btn-default">メール一斉送信 </a>
       <!--参加者 -->
       <!--興味あり-->
       <!--その他-->
