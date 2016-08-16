@@ -128,21 +128,16 @@ class EventDeleteView(DeleteView):
         return super(DeleteView, self).dispatch(request, *args, **kwargs)
 
 
-class EventParticipantsView(ListView):
-    model = Participation
+class EventParticipantsView(DetailView):
+    model = Event
     template_name = 'event/participants.html'
-    context_object_name = 'all_participants'
+    context_object_name = 'event'
 
     def get_context_data(self, **kwargs):
         context = super(EventParticipantsView, self).get_context_data(**kwargs)
-        context['event_id'] = self.kwargs['event_id']
+        context['participants'] = [ p.user for p in self.object.participation_set.all() ]
+        context['admins'] = [ user for user in self.object.admin.all() ]
         return context
-
-    def get_queryset(self):
-        event_id = self.kwargs['event_id']
-        requested_event = Event.objects.get(pk=event_id)
-
-        return Participation.objects.filter(event=requested_event)
 
 
 class EventSearchResultsView(ListView):
@@ -290,7 +285,6 @@ class EventJoinView(RedirectView):
                     messages.error(self.request, "参加済みです。")
                 else:
                     messages.error(self.request, "参加処理中にエラーが発生しました。")
-
 
         self.url = reverse_lazy('event:detail', kwargs={'pk': event_id})
         return super(EventJoinView, self).get_redirect_url(*args, **kwargs)
