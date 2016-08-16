@@ -1,27 +1,33 @@
-<div class="media">
-    <div class="media-left">
-        <img class="media-object" src={{ user.get_image_url }} alt="ユーザーアイコン" width="240" height="240">
-    </div>
-    <div class="media-body">
-        <h1 class="media-heading">
-            {{ user.username }}
-            {% if user.id == request.user.id %}
-                <a class="btn btn-default btn-sm" href="{% url 'user:edit' user.id %}" pk=user.pk %}">プロフィール編集</a>
+<div id="user-header" class="row">
+  <div class="col-sm-4" style="text-align: center">
+    <img class="" src={{ user.get_image_url }} alt="ユーザーアイコン" width="240" height="240">
+  </div>
+  <div class="col-sm-8">
+    <div id="user-info" class="panel panel-default">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+          {{ user.username }}
+          {% if user.id == request.user.id %}
+            <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">プロフィール編集</a>
+          {% endif %}
+        </h3>
+      </div>
+      <div class="panel-body container-fluid">
+        <div class="col-xs-6">
+          <dl>
+            <dt>表示名</dt>
+            <dd>{{ user.username }}</dd>
+            {% if user.birthday != null %}
+              <dt>年齢</dt>
+              <dd>{{ user.get_about_age }}代</dd>
             {% endif %}
-        </h1>
-        <hr>
-        <div class="container-fluid">
-            <div class="col-xs-6">
-                <dl>
-                    <dt>表示名</dt><dd>{{ user.username }}</dd>
-                    {% if user.birthday != null %}
-                        <dt>年齢</dt><dd>{{ user.get_about_age }}代</dd>
-                    {% endif %}
-                    {% if user.sex != null %}
-                        <dt>性別</dt><dd>{{ user.sex|yesno:"男,女,秘密"}}</dd>
-                    {% endif %}
-                </dl>
-            </div>
+            {% if user.sex != null %}
+              <dt>性別</dt>
+              <dd>{{ user.sex|yesno:"男,女,秘密" }}</dd>
+            {% endif %}
+          </dl>
         </div>
+      </div>
     </div>
+  </div>
 </div>

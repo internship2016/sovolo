@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <form action="{% url 'event:search' %}" method="get">
-        <input type="text" name="q">
-        <input type="submit" value="検索">
-    </form>
+<form action="{% url 'event:search' %}" method="get">
+    <input type="text" name="q">
+    <input type="submit" value="検索">
+</form>
 
 {% for event in all_events %}
-    <a href="{% url 'event:detail' event.id %}"><img src={{ event.get_image_url }}></a>
-    <h2>Name: {{event}}</h2>
+<a href="{% url 'event:detail' event.id %}"><img src={{ event.get_image_url }}></a>
+<h2>Name: {{event}}</h2>
 
-    <form action="{% url 'event:delete' event.id %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value ='DELETE'>
-    </form>
+<form action="{% url 'event:delete' event.id %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value ='DELETE'>
+</form>
 
 {% endfor %}
 

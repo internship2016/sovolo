@@ -6,6 +6,7 @@ from base.models import AbstractBaseModel
 from django.conf import settings
 from django.contrib import admin
 from django.db.models import Q
+from django.utils import timezone
 from tag.models import Tag
 
 from PIL import Image
@@ -95,6 +96,7 @@ class Event(AbstractBaseModel):
 
     participant = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
+        related_name='participating_event',
         through='Participation',
         blank=True,
     )
@@ -128,13 +130,6 @@ class Event(AbstractBaseModel):
     def get_tags_as_string(self):
         return "\n".join([tag.name for tag in self.tag.all()])
 
-    def get_frames(self):
-        return Frame.objects.filter(event=self)
-
-    def get_participants(self):
-        participations = Participation.objects.filter(event=self)
-        return [participation.user for participation in participations]
-
     def is_full(self):
         frames = Frame.objects.filter(event=self)
         for frame in frames:
@@ -142,6 +137,17 @@ class Event(AbstractBaseModel):
                 return False
 
         return True
+
+    def is_closed(self):
+        frames = Frame.objects.filter(event=self)
+        for frame in frames:
+            if not frame.is_closed():
+                return False
+
+        return True
+
+    def is_over(self):
+        return timezone.now() > self.start_time
 
 
 class EventAdmin(admin.ModelAdmin):
@@ -164,12 +170,15 @@ class Frame(AbstractBaseModel):
     def is_full(self):
         if self.upper_limit:
             participant_query = Q(frame=self)
-            status_query = Q(status="participating") | Q(status="admin")
+            status_query = Q(status="participating")
             num_participants = Participation.objects.filter(participant_query & status_query).count()
 
             return num_participants >= self.upper_limit
         else:
             return True
+
+    def is_closed(self):
+        return timezone.now() > self.deadline
 
 class FrameAdmin(admin.ModelAdmin):
     list_display = (
