@@ -9,7 +9,7 @@ $color-pallet: (
 
 
 @function custom-color($key: 'primary') {
-    @return map-get($color-pallet, $key);
+  @return map-get($color-pallet, $key);
 }
 
 #user-header {
@@ -22,17 +22,17 @@ $color-pallet: (
 }
 
 footer {
-    color: custom-color('light');
-    background-color: custom-color('dark');
-    padding: 2rem 0;
-    border-top: solid 1px darken(custom-color('dark'), 10%);
+  color: custom-color('light');
+  background-color: custom-color('dark');
+  padding: 2rem 0;
+  border-top: solid 1px darken(custom-color('dark'), 10%);
 }
 
 
 /* Override Bootstrap 4 styling on Django Debug Toolbar */
 #djDebug[hidden], #djDebug [hidden] {
-    display: block !important;
+  display: block !important;
 }
 #djDebug [hidden][style='display: none;'] {
-    display: none !important;
+  display: none !important;
 }
