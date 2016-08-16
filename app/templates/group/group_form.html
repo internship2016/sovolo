@@ -1,6 +1,21 @@
+{% extends "base.html" %}
+{% block title %}
+グループ新規作成
+{% endblock %}
+{% block content %}
 <!-- テスト用のForm -->
-<form action="" method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% include 'event/form_template.html' %}
-    <button type="submit">送信</button>
-</form>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    新規グループ作成
+  </div>
+  <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
+    <div class="panel-body">
+      {% csrf_token %}
+      {% include 'event/form_template.html' %}
+    </div>
+    <div class="panel-footer" style="text-align:center">
+      <button type="submit">送信</button>
+    </div>
+  </form>
+</div>
+{% endblock %}
