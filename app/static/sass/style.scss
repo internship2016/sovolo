@@ -21,6 +21,11 @@ $color-pallet: (
   margin-right: $margin;
 }
 
+#search-area {
+  div {
+    margin: 0px;
+  }
+}
 footer {
   color: custom-color('light');
   background-color: custom-color('dark');
