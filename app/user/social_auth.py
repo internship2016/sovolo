@@ -1,6 +1,27 @@
 from django.shortcuts import redirect
 from social.pipeline.partial import partial
 from social.pipeline.user import USER_FIELDS
+from django.core.files import File
+from django.core.files.temp import NamedTemporaryFile
+import uuid
+import urllib
+
+
+@partial
+def get_profile_image(strategy, details, response, user=None, is_new=False, *args, **kwargs):
+    backend = kwargs.get('backend')
+    if is_new:
+        if backend.name == 'facebook':
+            url = "http://graph.facebook.com/%s/picture?type=large" % response['id']
+        elif backend.name == 'twitter':
+            url = response.get('profile_image_url', '').replace('_normal', '')
+        if url:
+            img_temp = NamedTemporaryFile(delete=True)
+            img_temp.write(urllib.request.urlopen(url).read())
+            img_temp.flush()
+
+            user.image.save(str(uuid.uuid4()), File(img_temp))
+            pass
 
 
 @partial
