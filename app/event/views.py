@@ -13,10 +13,17 @@ from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils import timezone
 from django.apps import apps
+from django.template.loader import get_template
+from django.template import Context
+from django.core.mail import send_mail
 
 import sys
 import re
 from datetime import datetime
+import sys
+import io
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 
 class EventCreate(CreateView):
     model = Event
@@ -236,7 +243,7 @@ class EventJoinView(RedirectView):
                     status=status,
                 )
                 p.save()
-                if status=="waiting_list":
+                if status == "waiting_list":
                     messages.error(self.request, "あなたはキャンセル待ちです")
                 else:
                     messages.error(self.request, "参加しました。")
@@ -256,6 +263,18 @@ class ParticipationDeleteView(DeleteView):
     model = Participation
 
     def get_success_url(self):
+        if self.object.status == "participating":
+            carry_up = self.object.frame.participation_set.filter(status="waiting_list").first()
+            carry_up.status = "participating"
+            #Send Email
+            template = get_template("email/carry_up.txt")
+            context = Context({'user': carry_up.user, 'event': carry_up.event})
+            content = template.render(context)
+            subject = content.split("\n", 1)[0]
+            message = content.split("\n", 1)[1]
+            send_mail(subject, message, "reminder@sovolo.earth", [carry_up.user.email])
+
+
         return reverse_lazy('event:index')
 
 
