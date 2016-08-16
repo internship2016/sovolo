@@ -4,20 +4,10 @@
 イベント参加者一覧
 {% endblock %}
 {% block content %}
-	{% include "event/event_header.html" %}
+    {% include "group/group_header.html" %}
     <div class="panel panel-default">
         <div class="panel-heading">管理者</div>
         <div class="panel-body">
-            <h3>主催者</h3>
-            <div class="row">
-                {% with event.host_user as user %}
-                    <div class="col-md-2">
-                        <img src="{{ user.get_image_url }}" width="100" height="100">
-                        <div>{{ user.username }}</div>
-                    </div>
-                {% endwith %}
-            </div>
-            <h3>管理者</h3>
             <div class="row">
                 {% for user in admins %}
                     <div class="col-md-2">
@@ -29,10 +19,10 @@
         </div>
     </div>
     <div class="panel panel-default">
-        <div class="panel-heading">参加者</div>
+        <div class="panel-heading">メンバー</div>
         <div class="panel-body">
             <div class="row">
-                {% for user in participants %}
+                {% for user in members %}
                     <div class="col-md-2">
                         <img src="{{ user.get_image_url }}" width="100" height="100">
                         <div>{{ user.username }}</div>

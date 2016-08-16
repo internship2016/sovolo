@@ -1,5 +1,10 @@
-<li>主催者：{{event.host_user_id}}</li>
-<li>グループ：{{event.host_group_id}}</li>
+<li>主催者：
+  <a href="{% url 'user:detail' event.host_user_id %}">
+    <img src="{{ event.host_user.get_image_url }}" width="24" height="24">
+  </a>
+  {{event.host_user.username}}
+</li>
+<li>グループ：{{event.host_group}}</li>
 <!-- <div class="panel panel-default">
   <div class="panel-heading">
     管理者
