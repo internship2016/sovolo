@@ -8,7 +8,7 @@ from django.db import IntegrityError
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
-from .models import Event, Participation, Comment, Question, Answer
+from .models import Event, Participation, Comment, Question, Answer, Frame
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils import timezone
@@ -220,20 +220,35 @@ class EventSearchResultsView(ListView):
 class EventJoinView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         event_id = kwargs['event_id']
+        frame_id = kwargs['frame_id']
 
-        try:
-            p = Participation.objects.create(
-                user=self.request.user,
-                event_id=kwargs['event_id'],
-                frame_id=kwargs['frame_id']
-            )
-            p.save()
-            messages.error(self.request, "参加しました。")
-        except IntegrityError:
-            messages.error(self.request, "参加処理中にエラーが発生しました。")
-            pass
+        frame = Frame.objects.get(pk=frame_id)
+        status = "waiting_list" if frame.is_full() else "participating"
 
-        self.url = reverse_lazy('event:detail', kwargs={'pk':event_id})
+        if frame.is_closed():
+            messages.error(self.request, "この枠はすでに締め切られています。")
+        else:
+            try:
+                p = Participation.objects.create(
+                    user=self.request.user,
+                    event_id=kwargs['event_id'],
+                    frame_id=kwargs['frame_id'],
+                    status=status,
+                )
+                p.save()
+                if status=="waiting_list":
+                    messages.error(self.request, "あなたはキャンセル待ちです")
+                else:
+                    messages.error(self.request, "参加しました。")
+            except IntegrityError:
+                event = Event.objects.get(pk=event_id)
+                if event in self.request.user.participating_event.all():
+                    messages.error(self.request, "参加済みです。")
+                else:
+                    messages.error(self.request, "参加処理中にエラーが発生しました。")
+
+
+        self.url = reverse_lazy('event:detail', kwargs={'pk': event_id})
         return super(EventJoinView, self).get_redirect_url(*args, **kwargs)
 
 
