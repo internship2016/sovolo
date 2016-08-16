@@ -1,10 +1,15 @@
-/* TODO: SCSS files */
-
 $margin: 50px;
 
+$color-pallet: (
+  'primary': #9BF4D5,  /* 見出し     */
+  'accent': #29CDB5,   /* ヘッダー色 */
+  'dark': #373331,     /* 字         */
+  'light': #FFF3E1,    /* 背景       */
+);
 
-html {
-  padding: 0;
+
+@function custom-color($key: 'primary') {
+    @return map-get($color-pallet, $key);
 }
 
 #user-header {
@@ -14,4 +19,20 @@ html {
 #user-detail-info {
   margin-left: $margin;
   margin-right: $margin;
+}
+
+footer {
+    color: custom-color('light');
+    background-color: custom-color('dark');
+    padding: 2rem 0;
+    border-top: solid 1px darken(custom-color('dark'), 10%);
+}
+
+
+/* Override Bootstrap 4 styling on Django Debug Toolbar */
+#djDebug[hidden], #djDebug [hidden] {
+    display: block !important;
+}
+#djDebug [hidden][style='display: none;'] {
+    display: none !important;
 }
