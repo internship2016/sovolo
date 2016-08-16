@@ -240,6 +240,10 @@ class EventSearchResultsView(ListView):
         if 'exclude_full_events' in self.request.GET and self.request.GET['exclude_full_events'] == "on":
             results = [event for event in results if not event.is_full()]
 
+        #Include events that are already over?
+        if 'exclude_over_events' in self.request.GET and self.request.GET['exclude_over_events'] == "on":
+            results = [event for event in results if not event.is_over()]
+
         if len(results)==0:
             messages.error(self.request, "検索結果に一致するイベントが見つかりませんでした")
 
