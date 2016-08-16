@@ -24,6 +24,7 @@ class UserDetailView(DetailView):
     template_name = 'user/detail.html'
     model = User
     context_object_name = 'user'
+
     def get_context_data(self, **kwargs):
         context = super(UserDetailView, self).get_context_data(**kwargs)
         context['now'] = timezone.now()
@@ -32,7 +33,7 @@ class UserDetailView(DetailView):
 
 class UserEditView(UpdateView):
     model = User
-    fields = ['username', 'email', 'image']
+    fields = ['username', 'email', 'image', 'region', 'sex', 'birthday']
     template_name = 'user/edit.html'
 
     def get_object(self, queryset=None):

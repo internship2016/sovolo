@@ -25,6 +25,8 @@
               <dt>性別</dt>
               <dd>{{ user.sex|yesno:"男,女,秘密" }}</dd>
             {% endif %}
+            <dt>住んでる都道府県</dt>
+            <dd>{{ user.get_region_kanji }}</dd>
           </dl>
         </div>
       </div>
