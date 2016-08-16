@@ -35,6 +35,18 @@ class GroupDetailView(DetailView):
         return context
 
 
+class GroupMembersView(DetailView):
+    template_name = 'group/members.html'
+    model = Group
+    context_object_name = 'group'
+
+    def get_context_data(self, **kwargs):
+        context = super(GroupMembersView, self).get_context_data(**kwargs)
+        context['admins']  = [ m.member for m in self.object.membership_set.all() if m.role == 'admin']
+        context['members'] = [ m.member for m in self.object.membership_set.all() if m.role == 'Normal']
+        return context
+
+
 class GroupIndexView(ListView):
     template_name = 'group/index.html'
     context_object_name = 'all_groups'
