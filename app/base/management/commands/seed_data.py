@@ -106,10 +106,10 @@ class Command(BaseCommand):
         testuser.set_password('pass1234')
         testuser.save()
 
-        for i in range(10):
+        for i in range(20):
             lastname = str(i)
-            username = "generic_user_%d" %(i)
-            email = "test@%d.com" %(i)
+            username = "generic_user_%d" %(i+1)
+            email = "test@%d.com" %(i+1)
             user = User(
                 first_name = 'genericuser',
                 last_name = lastname,
@@ -178,8 +178,8 @@ class Command(BaseCommand):
 
         prefec_list = list(prefectures)
 
-        for i in range(10):
-            name = "Generic Event #%d" %(i)
+        for i in range(20):
+            name = "Generic Event #%d" %(i+1)
             host_user = User.objects.all()[i]
             admin = host_user
             genericevent = Event(
@@ -245,14 +245,16 @@ class Command(BaseCommand):
 
 
     def _create_groups(self):
-        for i in range(10):
-            name = "generic group #%d" %(i)
+        for i in range(20):
+            name = "generic group #%d" %(i+1)
             description = "This is a generic group. Don't join."
             group = Group(
                 name=name,
                 description=description,
                 )
             group.save()
+            event = Event.objects.get(pk=1)
+            group.event.add(event)
 
     def _create_memberships(self):
         for group in Group.objects.all():
@@ -275,7 +277,7 @@ class Command(BaseCommand):
             membership.save()
 
     def _create_tags(self):
-        taglist = ('python', 'ruby', 'django', 'ohmygod', 'mddslkfjakl', 'global', 'ゴミ拾い', '環境保護', 'interlink', '子供')
+        taglist = ('python', 'ruby', 'django', 'aaaaa', 'mddslkfjakl', 'global', 'ゴミ拾い', '環境保護', 'interlink', '子供', 'bbbb', 'cccc', 'ddd', 'eee', 'fff', 'ggg', 'hhh', 'iii', 'jjj', 'kkk')
         user = User.objects.get(pk=1)
         for t in taglist:
             tag = Tag(

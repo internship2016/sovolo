@@ -43,7 +43,7 @@ urlpatterns = [
     url(r'^(?P<event_id>[0-9]+)/participate/(?P<frame_id>[0-9]+)$', views.EventJoinView.as_view(), name='participate'),
 
     # event/id/follow
-    url(r'(?P<event_id>[0-9]+)/follow$', views.EventFollowView.as_view() ,name='follow'),
+    url(r'(?P<event_id>[0-9]+)/follow$', views.EventFollowView.as_view(), name='follow'),
 
     # event/1/cancel
     url(r'^(?P<pk>[0-9]+)/cancel/$',

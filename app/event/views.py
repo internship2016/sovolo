@@ -136,6 +136,7 @@ class EventSearchResultsView(ListView):
     model = Event
     template_name = 'event/search_results.html'
     context_object_name = 'result_events'
+    paginate_by = 10
 
     def split_string_to_terms(self, string):
         findterms = re.compile(r'"([^"]+)"|(\S+)').findall
@@ -166,6 +167,8 @@ class EventSearchResultsView(ListView):
     def get_queryset(self):
 
         query = Q()
+
+        #TODO: handle DoesNotExist queries for tag and group
 
         #Free Word
         if 'q' in self.request.GET:
@@ -207,11 +210,25 @@ class EventSearchResultsView(ListView):
                 place_query = Q(place=place)
                 query = query & place_query
 
+        #Group
+        if 'group' in self.request.GET:
+            group = self.request.GET['group']
+
+            if group is not None and group!="":
+                Group = apps.get_model('group', 'Group')
+                g = Group.objects.get(pk=int(group))
+                group_list = [g]
+                group_query = Q(group__in=group_list)
+                query = query & group_query
+
         results = Event.objects.filter(query)
 
         #Include events with no openings?
         if 'exclude_full_events' in self.request.GET and self.request.GET['exclude_full_events'] == "on":
             results = [event for event in results if not event.is_full()]
+
+        if len(results)==0:
+            messages.error(self.request, "検索結果に一致するイベントが見つかりませんでした")
 
         if 'order_by' in self.request.GET:
             order_by = self.request.GET['order_by']
@@ -220,6 +237,12 @@ class EventSearchResultsView(ListView):
                 results = results.order_by(order_by)
             else:
                 results = results.order_by(order_by)
+
+        #Filter based on page and number per page
+        if 'numperpage' in self.request.GET:
+            num_per_page = self.request.GET["numperpage"]
+            if num_per_page is not None and num_per_page!="":
+                self.paginate_by = int(num_per_page)
 
         return results
 
