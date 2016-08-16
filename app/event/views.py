@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import DetailView, ListView, RedirectView
+from django.views.generic.detail import SingleObjectMixin
+from django.views.generic import DetailView, ListView, RedirectView, View
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.db import IntegrityError
@@ -288,3 +289,21 @@ class CommentCreate(CreateView):
         event_id = self.kwargs['event_id']
         form.instance.event = Event.objects.get(pk=event_id)
         return super(EventCreate, self).form_valid(form)
+
+
+class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
+    model = Event
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'event/message.html', {'event': self.get_object()})
+
+    def post(self, request, *args, **kwargs):
+        messages.success(self.request, "メッセージの送信が完了しました。")
+        # TODO: send mail
+        return redirect(reverse_lazy('event:detail', kwargs={'pk':kwargs['pk']}))
+
+    def test_func(self):
+        return self.request.user.is_manager_for(self.get_object())
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden()
