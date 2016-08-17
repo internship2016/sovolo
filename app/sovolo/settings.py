@@ -53,7 +53,6 @@ BOOTSTRAP3 = {
     'base_url': '/static',
     'css_url': '/static/css/bootstrap-custom.css',
     'javascript_url': '/static/js/bootstrap.js',
-    'theme_url': '/static/css/bootstrap-theme.min.css',
 }
 
 MIDDLEWARE = [
