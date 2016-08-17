@@ -1,20 +1,62 @@
 {% extends "base.html" %}
+{% load bootstrap3 %}
 {% block content %}
 {% load event_tags %}
 
 <div class="row">
   <div class="col-md-8">
-    <!--{% for event in result_events %}
-      <a href="{% url 'event:detail' event.id %}"><img src={{ event.get_image_url }}></a>
-      <h2>Name: {{event}}</h2>
-
-      <form action="{% url 'event:delete' event.id %}" method="post">
-        {% csrf_token %}
-        <input type="submit" value ='DELETE'>
-      </form>
-
-    {% endfor %}-->
+    <div id="results-header">
+      <span>並び順</span>
+      <select>
+        <option value="">開始日(昇順）</option>
+        <option>開始日（降順）</option>
+      </select>
+      <span>1ページあたりの表示件数</span>
+      <select>
+        <option value="10">10</option>
+        <option value="20">20</option>
+        <option value="50">50</option>
+      </select>
+      {% if request.GET.exclude_closed_events == 'on' %}
+        <a href="{% url 'event:search' %}?{% query_transform request exclude_closed_events='' %}">締め切られたイベントを表示する</a>
+      {% else %}
+        <a href="{% url 'event:search' %}?{% query_transform request exclude_closed_events='on' %}">締め切られたイベントを表示しない</a>
+      {% endif %}
+    </div>
     {% event_list result_events %}
+    <!--TODO: paginatorのページが増えすぎないようにする! -->
+    <ul class="pagination">
+      <li>
+        {% if page_obj.has_previous %}
+          <a href="{% url 'event:search' %}?{% query_transform request page=page_obj.previous_page_number %}">
+            前へ
+          </a>
+        {% endif %}
+      </li>
+
+      {% for page_number in paginator.page_range %}
+        {% if page_number == page_obj.number %}
+          <li class="active">
+            <span>{{ page_number }}</span>
+          </li>
+        {% else %}
+          <li>
+            <a href="{% url 'event:search' %}?{% query_transform request page=page_number %}">
+              {{ page_number }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      <li>
+        {% if page_obj.has_next %}
+          <a href="{% url 'event:search' %}?{% query_transform request page=page_obj.next_page_number %}">
+            次へ
+          </a>
+        {% endif %}
+      </li>
+    </ul>
+
   </div>
   <div class="col-md-4">
     {% include 'event/search_form.html' %}
