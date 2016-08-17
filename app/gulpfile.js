@@ -7,11 +7,28 @@ var gf = require('gulp-filter');
 var mainBowerFiles = require('main-bower-files');
 var debug = require('gulp-debug');
 var rimraf = require('rimraf');
+var cleanCSS = require('gulp-clean-css');
 
+var bowerDir = './bower_components';
 var conf = {
   sassPath: './static/sass',
   scriptPath: './static/script',
-  bowerDir: './bower_components'
+  bowerDir: bowerDir,
+  bootstrapDir: bowerDir + '/bootstrap-sass'
+};
+
+var filter = {
+  js: gf('**/*.js', {restore: true}),
+  css: gf('**/*.css', {restore: true}),
+  less: gf('**/*.less', {restore: true}),
+  scss: gf('**/*.scss', {restore: true}),
+  fonts: gf([
+    '**/*.eot',
+    '**/*.woff',
+    '**/*.woff2',
+    '**/*.svg',
+    '**/*.ttf'
+  ], {restore: true})
 };
 
 gulp.task('bower.install', 'ネットからbower_componentsに持ってくる', function () {
@@ -20,25 +37,12 @@ gulp.task('bower.install', 'ネットからbower_componentsに持ってくる', 
 
 // TODO: minify/uglify/etc
 gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルをコピーする', ['bower.install'], function () {
-  var filter = {
-    js: gf('**/*.js', {restore: true}),
-    css: gf('**/*.css', {restore: true}),
-    less: gf('**/*.less', {restore: true}),
-    fonts: gf([
-      '**/*.eot',
-      '**/*.woff',
-      '**/*.woff2',
-      '**/*.svg',
-      '**/*.ttf'
-    ], {restore: true})
-  };
-
   return gulp.src(
     mainBowerFiles({
       debugging: true,
       checkExistence: true,
       overrides: {
-        bootstrap: {
+        'bootstrap': {
           main: [
             './dist/js/bootstrap.js',
             './dist/css/*.min.*',
@@ -51,7 +55,7 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
             './fonts/*.*'
           ]
         },
-        moment: {
+        'moment': {
           main: [
             './moment.js',
             './min/moment-with-locales.js'
@@ -86,9 +90,18 @@ gulp.task('bower', 'ネットから依存パッケージ持ってきてstaticに
   'bower.copy'
 ]);
 
+gulp.task('css.bootstrap', 'カスタムbootstrapを作る', function () {
+  return gulp.src(conf.sassPath + '/bootstrap/*.scss/')
+    .pipe(sass({
+      includePaths: [conf.bootstrapDir + '/assets/stylesheets']
+    }))
+    .pipe(cleanCSS())
+    .pipe(gulp.dest('./static/css'));
+});
+
 // Watch static/sass/style.scss,
 // Compress all sass files into css
-gulp.task('css', 'scssファイルをstatic/cssに移す', function () {
+gulp.task('css', 'scssファイルをstatic/cssに移す', ['css.bootstrap'], function () {
   return gulp.src(conf.sassPath + '/*.scss')
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
     .pipe(gulp.dest('./static/css'));
