@@ -30,7 +30,7 @@
           <div class="form-group">
             <input type="text" class="form-control" placeholder="イベントを検索" name="q">
           </div>
-          <button type="submit" class="btn btn-default">検索</button>
+          <button type="submit" class="btn btn-primary">検索</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
           {% if request.user.is_anonymous %}
@@ -49,7 +49,7 @@
               </ul>
             </li>
           {% endif %}
-          <li><p class="navbar-btn"><a class="btn btn-default" href="{% url 'event:add' %}" role="button">イベント作成</a></p></li>
+          <li><p class="navbar-btn"><a class="btn btn-primary" href="{% url 'event:add' %}" role="button">イベント作成</a></p></li>
         </ul>
       </div>
     </div>
