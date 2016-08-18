@@ -14,7 +14,8 @@ var conf = {
   sassPath: './static/sass',
   scriptPath: './static/script',
   bowerDir: bowerDir,
-  bootstrapDir: bowerDir + '/bootstrap-sass'
+  bootstrapDir: bowerDir + '/bootstrap-sass',
+  bootstrapDatetimepickerDir: bowerDir + '/eonasdan-bootstrap-datetimepicker'
 };
 
 var filter = {
@@ -93,7 +94,10 @@ gulp.task('bower', 'ネットから依存パッケージ持ってきてstaticに
 gulp.task('css.bootstrap', 'カスタムbootstrapを作る', function () {
   return gulp.src(conf.sassPath + '/bootstrap/*.scss/')
     .pipe(sass({
-      includePaths: [conf.bootstrapDir + '/assets/stylesheets']
+      includePaths: [
+        conf.bootstrapDir + '/assets/stylesheets',
+        conf.bootstrapDatetimepickerDir + '/src/sass'
+      ]
     }))
     .pipe(cleanCSS())
     .pipe(gulp.dest('./static/css'));
