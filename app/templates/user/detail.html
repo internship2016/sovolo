@@ -1,7 +1,10 @@
 {% extends "base.html" %}
+{% load event_tags %}
+
 {% block title %}
   ユーザ詳細: #{{ user.username }}
 {% endblock %}
+
 {% block content %}
 
 
@@ -30,17 +33,7 @@
       <h1 class="panel-title">参加予定ボランティア一覧</h1>
     </div>
     <div class="panel-body">
-      {% for part in user.get_participating_events.all %}
-        <div class="media">
-          <div class="media-left">
-            <img class="media-object" src="{{ part.image_url }}" alt="ボランティアアイコン" width="64" height="64">
-          </div>
-          <div class="media-body">
-            <h3 class="media-heading">{{ part.name }}</h3>
-            2016/08/10 @東京都新宿区
-          </div>
-        </div>
-      {% endfor %}
+      {% event_list request.user.participating_event.all %}
     </div>
   </div>
   <div class="panel panel-primary">
