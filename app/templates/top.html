@@ -21,8 +21,7 @@
           <h3 class="panel-title">所属グループの新着</h3>
         </div>
         <div class="panel-body">
-           {% event_list request.user.get_new_group_events request.user %}
-        </div>
+          {% event_list request.user.get_new_group_events request.user %}
           <p class="text-right"><a href="#">もっと見る</a></p>
         </div>
       </div>
