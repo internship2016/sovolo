@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import DetailView, ListView, RedirectView, View
+from django import forms
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.db import IntegrityError
@@ -25,7 +26,6 @@ import sys
 import io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
-
 class EventCreate(CreateView):
     model = Event
     fields = [
@@ -33,7 +33,6 @@ class EventCreate(CreateView):
         'start_time',
         'end_time',
         'meeting_place',
-        'place',
         'image',
         'contact',
         'details',
@@ -44,10 +43,29 @@ class EventCreate(CreateView):
 
     template_name = "event/add.html"
 
-    def form_valid(self, form):
-        form.instance.host_user = self.request.user
+    def dispatch(self, request, *args, **kwargs):
+        print("****************************************", file=sys.stderr)
+        print("Dispatching Form...", file=sys.stderr)
+        print("****************************************", file=sys.stderr)
+        print(request.POST, file=sys.stderr)
 
+        return super(EventCreate, self).dispatch(request, *args, **kwargs)
+
+    def form_valid(self, form):
+        print("****************************************", file=sys.stderr)
+        print("Form was valid...", file=sys.stderr)
+        print("****************************************", file=sys.stderr)
+        print(self.request, file=sys.stderr)
+        form.instance.host_user = self.request.user
+        form.save()
         return super(EventCreate, self).form_valid(form)
+
+    def form_invalid(self, form):
+        print("****************************************", file=sys.stderr)
+        print("Form was invalid...shit...", file=sys.stderr)
+        print("****************************************", file=sys.stderr)
+
+        return super(EventCreate, self).form_invalid(form)
 
     def get_success_url(self):
         self.object.admin.add(self.request.user)

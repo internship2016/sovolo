@@ -25,7 +25,6 @@ class Event(AbstractBaseModel):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     meeting_place = models.CharField(max_length=400)
-    place = models.CharField(max_length=400)
     longitude = models.FloatField(blank=True, null=True)
     latitude = models.FloatField(blank=True, null=True)
     image = models.ImageField(upload_to='events/', null=True, blank=True)
