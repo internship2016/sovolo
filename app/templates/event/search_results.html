@@ -7,12 +7,14 @@
   <div class="col-md-8">
     <div id="results-header">
       <span>並び順</span>
-      <select>
-        <option value="">開始日(昇順）</option>
-        <option>開始日（降順）</option>
+      <select id="order-results">
+        <option>---------</option>
+        <option>開始日(昇順）</option>
+        <option>開始日(降順)</option>
       </select>
       <span>1ページあたりの表示件数</span>
-      <select>
+      <select id="result-number">
+        <option>---------</option>
         <option value="10">10</option>
         <option value="20">20</option>
         <option value="50">50</option>
@@ -24,38 +26,40 @@
       {% endif %}
     </div>
     {% event_list result_events %}
-    <!--TODO: paginatorのページが増えすぎないようにする! -->
-    <ul class="pagination">
-      <li>
-        {% if page_obj.has_previous %}
-          <a href="{% url 'event:search' %}?{% query_transform request page=page_obj.previous_page_number %}">
-            前へ
-          </a>
-        {% endif %}
-      </li>
 
-      {% for page_number in paginator.page_range %}
-        {% if page_number == page_obj.number %}
-          <li class="active">
-            <span>{{ page_number }}</span>
-          </li>
-        {% else %}
-          <li>
-            <a href="{% url 'event:search' %}?{% query_transform request page=page_number %}">
-              {{ page_number }}
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li class="page-item">
+          {% if page_obj.has_previous %}
+            <a class="page-link" href="{% url 'event:search' %}?{% query_transform request page=page_obj.previous_page_number %}">
+              前へ
             </a>
-          </li>
-        {% endif %}
-      {% endfor %}
+          {% endif %}
+        </li>
 
-      <li>
-        {% if page_obj.has_next %}
-          <a href="{% url 'event:search' %}?{% query_transform request page=page_obj.next_page_number %}">
-            次へ
-          </a>
-        {% endif %}
-      </li>
-    </ul>
+        {% for page_number in paginator.page_range %}
+          {% if page_number == page_obj.number %}
+            <li class="active page-item">
+              <span>{{ page_number }}</span>
+            </li>
+          {% else %}
+            <li class="page-item">
+              <a class="page-link" href="{% url 'event:search' %}?{% query_transform request page=page_number %}">
+                {{ page_number }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+
+        <li class="page-item">
+          {% if page_obj.has_next %}
+            <a class="page-link" href="{% url 'event:search' %}?{% query_transform request page=page_obj.next_page_number %}">
+              次へ
+            </a>
+          {% endif %}
+        </li>
+      </ul>
+    </nav>
 
   </div>
   <div class="col-md-4">

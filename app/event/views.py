@@ -251,8 +251,10 @@ class EventSearchResultsView(ListView):
                 results = results.order_by(order_by)
 
         #Filter based on page and number per page
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAA", file=sys.stderr)
         if 'numperpage' in self.request.GET:
             num_per_page = self.request.GET["numperpage"]
+            print(num_per_page, file=sys.stderr)
             if num_per_page is not None and num_per_page!="":
                 self.paginate_by = int(num_per_page)
 
