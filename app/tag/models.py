@@ -8,7 +8,7 @@ from django.contrib import admin
 
 
 class Tag(AbstractBaseModel):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
     def save(self, *args, **kwargs):
         return super(Tag, self).save(*args, **kwargs)
