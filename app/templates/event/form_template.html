@@ -7,6 +7,28 @@
 {% endfor %}
 -->
 
+<script type="text/javascript">
+    $(function () {
+        $('#start-date').datetimepicker({
+        inline:true,
+        locale: moment.locale('ja'),
+        format: 'YYYY-MM-DD',
+        sideBySide:true,
+        disabledHours: false
+        });
+    });
+    $(function () {
+        $('#end-date').datetimepicker({
+        inline:true,
+        locale: moment.locale('ja'),
+        format: 'YYYY-MM-DD'
+        });
+    });
+
+</script>
+
+
+
 <div class="form-group">
   <label for="id_name" class="col-sm-3">イベント名</label>
   <div class="col-sm-9">
@@ -17,16 +39,30 @@
 <div class="form-group">
   <label for="id_start_time" class="col-sm-3">開始</label>
   <div class="col-sm-9">
-    <input id="id_start_time" class="form-control" name="start_time" type="text" value="{{ event.start_time }}" required />
+    <div class='input-group date' id='start-date'>
+      <input id="id_start_time" class="form-control" name="start_time" type="text" value="{{ event.start_time }}" required />
+      <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar">
+      </span>
+    </span>
+    </div>
   </div>
 </div>
+
 
 <div class="form-group">
   <label for="id_end_time" class="col-sm-3">終了</label>
   <div class="col-sm-9">
-    <input id="id_end_time" class="form-control" name="end_time" type="text" value="{{ event.end_time }}" required />
+    <div class='input-group date' id='end-date'>
+      <input id="id_end_time" class="form-control" name="start_time" type="text" value="{{ event.end_time }}" required />
+      <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar">
+      </span>
+    </span>
+    </div>
   </div>
 </div>
+
 
 <div class="form-group">
   <label for="id_meeting_place" class="col-sm-3">集合場所</label>
