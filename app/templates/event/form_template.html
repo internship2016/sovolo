@@ -121,12 +121,50 @@
   </div>
 </div>
 
+
 <div class="form-group">
-  <label class="col-sm-3">関連付けるグループ</label>
-  <div class="col-sm-9">
-    {% for i in "ABCDEFG" %}
-      <!-- 自分が管理者のグループ -->
-      <input type="checkbox" name="#">グループ{{i}}
-    {% endfor %}
-  </div>
+    <label class="col-sm-3">管理者</label>
+    <div class="col-sm-9">
+        <div id="admins">
+            {% for admin in group.admins %}
+                <label><input name="admins" type="checkbox" value="{{ admin.username }}" checked>
+                    {{ admin.username }}
+                </label>
+            {% endfor %}
+        </div>
+        <div id="adder">
+            <input type="text" id="admin_name" placeholder="username">
+            <button id="add_admin" type="button">追加</button>
+        </div>
+        <script>
+            (function (){
+                var admins = document.querySelector("#admins");
+                var admin_name = document.querySelector('#admin_name');
+                var add_admin  = document.querySelector('#add_admin');
+                add_admin.addEventListener('click', function(e) {
+                    var label = document.createElement('label');
+                    var value = admin_name.value;
+                    label.innerHTML = "<input name='admins' type='checkbox' value="+value+" checked>"+value;
+                    admin_name.value = "";
+                    admins.appendChild(label);
+                });
+            })();
+        </script>
+    </div>
 </div>
+
+<div class="form-group">
+    <label class="col-sm-3">関連付けるグループ</label>
+    <div class="col-sm-9">
+        <div id="events">
+            {% for group in request.user.admin_group.all %}
+                <label><input type="checkbox" name="groups" value="{{ group.id }}">{{ group.name }}</label>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    #admins label { display: block; }
+    #groups label { display: block; }
+</style>
