@@ -75,8 +75,8 @@
   <label for="id_region" class="col-sm-3">開催地域</label>
   <div class="col-sm-9">
     <select id="id_region" name="region">
-      {% for key,value in user.prefectures.items %}
-        <option value="{{ key }}">{{ value }}</option>
+      {% for v,pref in user.region_list %}
+        <option value="{{ v }}">{{ pref }}</option>
       {% endfor %}
     </select>
   </div>
