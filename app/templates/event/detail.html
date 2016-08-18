@@ -2,7 +2,7 @@
 {% load bootstrap3 %}
 
 {% block title %}
-イベント(#{{event}})詳細
+{{ event.name}}
 {% endblock %}
 {% block content %}
 <div>
@@ -11,7 +11,7 @@
 		<div class="col-md-9">
 			<p>
 			<h2>日時： {{ event.start_time }} ～ {{ event.end_time }}</h2>
-			<h2>場所： {{ event.place }}</h2>
+			<h2>場所： {{ event.region }}</h2>
 			</p>
 			<div class="panel panel-primary">
 				<div class="panel-heading">
