@@ -12,7 +12,7 @@
 <script type="text/javascript" src="{% static 'js/moment-with-locales.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/bootstrap-datetimepicker.min.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/myjs.js' %}"></script>
-<link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker.min.css' %}" />
+<link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker-custom.css' %}" />
 <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}" />
 <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}" />
 <link rel="stylesheet" href="{% static 'css/style.css' %}" />
@@ -20,7 +20,7 @@
 </head>
 <body>
 <header>
-  <nav class="navbar navbar-default">
+  <nav class="navbar navbar-inverse">
     <div class="container">
       <div class="navbar-header">
         <a class="navbar-brand" href="{% url 'top' %}">Sovolo</a>
@@ -30,7 +30,7 @@
           <div class="form-group">
             <input type="text" class="form-control" placeholder="イベントを検索" name="q">
           </div>
-          <button type="submit" class="btn btn-default">検索</button>
+          <button type="submit" class="btn btn-primary">検索</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
           {% if request.user.is_anonymous %}
@@ -49,14 +49,14 @@
               </ul>
             </li>
           {% endif %}
-          <li><p class="navbar-btn"><a class="btn btn-default" href="{% url 'event:add' %}" role="button">イベント作成</a></p></li>
+          <li><p class="navbar-btn"><a class="btn btn-primary" href="{% url 'event:add' %}" role="button">イベント作成</a></p></li>
         </ul>
       </div>
     </div>
   </nav>
 </header>
 
-<div class="container">
+<div id="main-content" class="container">
   <!--Messages-->
   {% if messages %}
     <div class="messages">

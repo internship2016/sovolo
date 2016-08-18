@@ -5,7 +5,7 @@
 {% block content %}
   {% include "user/user_header.html" %}
   <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
-    <div id="user-detail-info" class="panel panel-default">
+    <div id="user-detail-info" class="panel panel-primary">
       <div class="panel-body">
         {% csrf_token %}
         <div class="form-group">
@@ -24,8 +24,8 @@
           <label for="form-region" class="col-sm-3 col-lg-2 control-label">住んでる都道府県</label>
           <div class="col-sm-9 col-lg-9">
             <select id="form-region" name="region">
-              {% for key,value in user.prefectures.items %}
-                <option value="{{ key }}">{{ value }}</option>
+              {% for v,pref in user.region_list %}
+                <option value="{{ v }}">{{ pref }}</option>
               {% endfor %}
             </select>
           </div>

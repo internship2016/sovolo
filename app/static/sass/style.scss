@@ -21,11 +21,26 @@ $color-pallet: (
   margin-right: $margin;
 }
 
+#search-area {
+  div {
+    margin: 0px;
+  }
+}
+
+#main-content {
+  padding-bottom: 70px;
+}
+
 footer {
   color: custom-color('light');
   background-color: custom-color('dark');
   padding: 2rem 0;
   border-top: solid 1px darken(custom-color('dark'), 10%);
+}
+
+/* bootstrap-datetimepicker tweak */
+td.day.weekend {
+  background-color: custom-color('primary');
 }
 
 
