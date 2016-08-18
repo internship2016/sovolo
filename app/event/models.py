@@ -149,6 +149,15 @@ class Event(AbstractBaseModel):
     def is_over(self):
         return timezone.now() > self.start_time
 
+    def get_status(self):
+        if self.is_over():
+            return "終了"
+        elif self.is_closed():
+            return "締め切り済み"
+        elif self.is_full():
+            return "満員"
+        else:
+            return "募集中"
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')

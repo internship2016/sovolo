@@ -25,7 +25,11 @@ class Group(AbstractBaseModel):
 
     event = models.ManyToManyField(Event, blank=True)
 
-    member = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    member = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        through='Membership',
+        blank=True,
+    )
 
     description = models.TextField()
 

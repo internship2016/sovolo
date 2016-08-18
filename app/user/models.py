@@ -157,7 +157,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return super(User, self).save(*args, **kwargs)
 
     def get_region_kanji(self):
-        return self.prefectures.get(self.region)
+        region = self.prefectures.get(self.region)
+        if not region:
+            return '未設定'  # XXX: regionがこない場合は未設定でいいのか
+        return region[0]
 
 
 class UserAdmin(admin.ModelAdmin):
