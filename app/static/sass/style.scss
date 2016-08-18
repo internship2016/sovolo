@@ -5,6 +5,7 @@ $color-pallet: (
   'accent': #29CDB5,   /* ヘッダー色 */
   'dark': #373331,     /* 字         */
   'light': #FFF3E1,    /* 背景       */
+  'hot': #FFD5D3,      /* ホット！   */
 );
 
 
@@ -56,7 +57,7 @@ footer {
 
 /* bootstrap-datetimepicker tweak */
 td.day.weekend {
-  background-color: custom-color('primary');
+  background-color: custom-color('hot');
 }
 
 .bootstrap-datetimepicker-widget.dropdown-menu {
