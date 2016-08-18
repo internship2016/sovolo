@@ -4,6 +4,7 @@ from django.db import models
 from user.models import User
 from event.models import Event
 from django.conf import settings
+from django.core.urlresolvers import reverse
 
 from PIL import Image
 try:
@@ -24,9 +25,19 @@ class Group(AbstractBaseModel):
 
     event = models.ManyToManyField(Event, blank=True)
 
-    member = models.ManyToManyField(settings.AUTH_USER_MODEL)
+    member = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        through='Membership',
+        blank=True,
+    )
 
     description = models.TextField()
+
+    def admins(self):
+        return [m.member for m in self.membership_set.filter(role='admin')]
+
+    def members(self):
+        return [m.member for m in self.membership_set.filter(role='Normal')]
 
     def __str__(self):
         return self.name
@@ -43,6 +54,9 @@ class Group(AbstractBaseModel):
                 'groups/',
                 "default_group_image.jpg",
             )
+
+    def get_absolute_url(self):
+        return reverse('group:detail', kwargs={'pk': self.id})
 
 
 class GroupAdmin(admin.ModelAdmin):

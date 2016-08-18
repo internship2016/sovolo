@@ -52,15 +52,22 @@ INSTALLED_APPS = [
     'django_extensions',
     'debug_toolbar',
     'bootstrap3',
+    'crispy_forms',
 ]
 
 BOOTSTRAP3 = {
     'include_jquery': False,
     'jquery_url': '/static/js/jquery.js',
     'base_url': '/static',
-    'css_url': '/static/css/bootstrap.min.css',
+    'css_url': '/static/css/bootstrap-custom.css',
     'javascript_url': '/static/js/bootstrap.js',
-    'theme_url': '/static/css/bootstrap-theme.min.css',
+}
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+from django.contrib.messages import constants as message_constants
+MESSAGE_TAGS = {
+    message_constants.ERROR: 'alert alert-danger',
 }
 
 MIDDLEWARE = [
