@@ -27,9 +27,13 @@
     参加状況
   </div>
   <div class="panel-body">
+    {% for frame in event.frame_set.all %}
     <div>
-      4人/4人
-      <a href="#" type="button" class="btn btn-default btn-sm pull-right">参加</a>
+      <h5>{{frame.description}}:(～{{frame.deadline}})</h5>
+      ??人
+      /{{frame.upper_limit}}人
+      <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default pull-right">参加</a>
     </div>
+    {% endfor %}
   </div>
 </div>
