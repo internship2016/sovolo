@@ -19,6 +19,12 @@ class UserCreateView(CreateView):
         self.object.save()
         return super(UserCreateView, self).form_valid(form)
 
+    def get_form(self):
+        from django import forms
+        form = super().get_form()
+        form.fields['password'].widget = forms.PasswordInput()
+        return form
+
 
 class UserDetailView(DetailView):
     template_name = 'user/detail.html'
