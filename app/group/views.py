@@ -13,14 +13,6 @@ from .models import Group, Membership
 # Create your views here.
 
 
-class IndexView:
-    def view(request, group_id):
-        data = {
-            "group_id": group_id
-            }
-        return render(request, "group/grouppage.html", data)
-
-
 class GroupCreate(CreateView):
     template_name = 'group/add.html'
     model = Group
