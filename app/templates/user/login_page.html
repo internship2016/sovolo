@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load crispy_forms_tags %}
 
 {% block title %}Login{% endblock %}
 
@@ -17,13 +18,11 @@
         <div class="panel-body">
           <form method="post" action="{% url 'user:login' %}">
             {% csrf_token %}
-            <div>
-              <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-              {{ form.username }}
+            <div class="form-group">
+              {{ form.username | as_crispy_field }}
             </div>
-            <div>
-              <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
-              {{ form.password }}
+            <div class="form-group">
+              {{ form.password | as_crispy_field }}
             </div>
 
             <div style="text-align: center"><button class="btn" type="submit">ログイン</button></div>

@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'social.apps.django_app.default',
     'django_extensions',
     'bootstrap3',
+    'crispy_forms',
 ]
 
 BOOTSTRAP3 = {
@@ -54,6 +55,8 @@ BOOTSTRAP3 = {
     'css_url': '/static/css/bootstrap-custom.css',
     'javascript_url': '/static/js/bootstrap.js',
 }
+
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
