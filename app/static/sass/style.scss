@@ -33,6 +33,11 @@ footer {
   border-top: solid 1px darken(custom-color('dark'), 10%);
 }
 
+/* bootstrap-datetimepicker tweak */
+td.day.weekend {
+  background-color: custom-color('primary');
+}
+
 
 /* Override Bootstrap 4 styling on Django Debug Toolbar */
 #djDebug[hidden], #djDebug [hidden] {
