@@ -1,19 +1,19 @@
 {% extends "base.html" %}
 {% block title %}
-    グループ編集
+グループ新規作成
 {% endblock %}
 {% block content %}
 <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="panel panel-default">
-            <div class="panel-heading">グループ編集</div>
+            <div class="panel-heading">新規グループ作成</div>
             <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
                 <div class="panel-body">
                     {% csrf_token %}
                     {% include 'group/form_template.html' %}
                 </div>
                 <div class="panel-footer" style="text-align:center">
-                    <button type="submit">編集</button>
+                    <button type="submit">作成</button>
                 </div>
             </form>
         </div>

@@ -1,0 +1,62 @@
+<div class="form-group">
+    <label id="id_name" class="col-sm-2">グループ名</label>
+    <div class="col-sm-10"><input id="id_name" maxlength="100" name="name" type="text" required="" value="{{ group.name }}"></div>
+</div>
+
+<div class="form-group">
+    <label id="id_description" class="col-sm-2">グループの説明:</label>
+    <div class="col-sm-10"><textarea cols="40" id="id_description" name="description" rows="10" required="">{{ group.description }}</textarea></div>
+</div>
+
+<div class="form-group">
+    <label id="id_image" class="col-sm-2">グループ画像:</label>
+    <img scr="{{ group.image_url }}" width="300">
+    <div class="col-sm-10"> <input id="id_image" name="image" type="file"> </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-2">管理者</label>
+    <div class="col-sm-10">
+        <div id="admins">
+            {% for admin in group.admins %}
+                <label><input name="admins" type="checkbox" value="{{ admin.username }}" checked>
+                    {{ admin.username }}
+                </label>
+            {% endfor %}
+        </div>
+        <div id="adder">
+            <input type="text" id="admin_name" placeholder="username">
+            <button id="add_admin" type="button">追加</button>
+        </div>
+        <script>
+            (function (){
+                var admins = document.querySelector("#admins");
+                var admin_name = document.querySelector('#admin_name');
+                var add_admin  = document.querySelector('#add_admin');
+                add_admin.addEventListener('click', function(e) {
+                    var label = document.createElement('label');
+                    var value = admin_name.value;
+                    label.innerHTML = "<input name='admins' type='checkbox' value="+value+" checked>"+value;
+                    admin_name.value = "";
+                    admins.appendChild(label);
+                });
+            })();
+        </script>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="col-sm-2">自分の管理ボランティアをグループに紐づける</label>
+    <div class="col-sm-10">
+        <div id="events">
+            {% for event in request.user.admin_event.all %}
+                <label><input type="checkbox" name="events" value="{{ event.id }}">{{ event.name }}</label>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    #admins label { display: block; }
+    #events label { display: block; }
+</style>
