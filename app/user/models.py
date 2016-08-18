@@ -132,6 +132,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
         # Simplest possible answer: Yes, always
         return True
 
+    def admin_group(self):
+        return self.group_set.filter(membership__role='admin')
+
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
@@ -157,7 +160,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return super(User, self).save(*args, **kwargs)
 
     def get_region_kanji(self):
-        return self.prefectures.get(self.region)[0]
+        region = self.prefectures.get(self.region)
+        if not region:
+            return '未設定'  # XXX: regionがこない場合は未設定でいいのか
+        return region[0]
 
 
 class UserAdmin(admin.ModelAdmin):
