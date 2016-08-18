@@ -132,6 +132,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
         # Simplest possible answer: Yes, always
         return True
 
+    def admin_group(self):
+        return self.group_set.filter(membership__role='admin')
+
     def has_module_perms(self, app_label):
         "Does the user have permissions to view the app `app_label`?"
         # Simplest possible answer: Yes, always
