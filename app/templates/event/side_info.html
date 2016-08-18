@@ -5,20 +5,28 @@
   {{event.host_user.username}}
 </li>
 <li>グループ：{{event.host_group}}</li>
-<!-- <div class="panel panel-primary">
+<div class="panel panel-primary">
   <div class="panel-heading">
     管理者
   </div>
   <div class="panel-body">
-    interlink
+    {% for administer in event.admin.all %}
+    <a href="{% url 'user:detail' administer.id %}">
+      <img src="{{ administer.get_image_url }}" width="24" height="24">
+    </a>
+    {% endfor%}
   </div>
-</div> -->
+</div>
 <div class="panel panel-primary">
   <div class="panel-heading">
     参加者
   </div>
   <div class="panel-body">
-    student
+    {% for participant in event.participant.all %}
+    <a href="{% url 'user:detail' participant.id %}">
+      <img src="{{ participant.get_image_url }}" width="24" height="24">
+    </a>
+    {% endfor %}
     <a href="{% url 'event:participants' event.id %}" class="pull-right">もっと見る</a>
   </div>
 </div>
