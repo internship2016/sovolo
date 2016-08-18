@@ -46,6 +46,14 @@
             <input id="form-birthday" type="text" class="form-control" name="birthday" value="{{ user.birthday|date:'Y-m-d' }}" />
           </div>
         </div>
+        <div class="form-group">
+            <div class="col-sm-3 col-lg-2 control-label">タグ</div>
+            <div class="">
+                {% for tag in all_tags %}
+                    <label><input type="checkbox" name="tags" value="{{ tag.id }}" {% if tag in request.user.follow_tag.all %}checked{% endif %}>{{ tag.name }}</label>
+                {% endfor %}
+            </div>
+        </div>
       </div>
     </div>
     <div style="text-align: center">
