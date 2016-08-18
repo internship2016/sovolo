@@ -165,6 +165,11 @@ class User(AbstractBaseModel, AbstractBaseUser):
             return '未設定'  # XXX: regionがこない場合は未設定でいいのか
         return region[0]
 
+    def get_new_group_events(self):
+        Event = apps.get_model('event', 'Event')
+        group_list = self.group_set.all()
+
+        return Event.objects.filter(group__in=group_list).distinct().order_by('-created')[:5]
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'created', 'modified')
