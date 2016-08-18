@@ -58,6 +58,11 @@ BOOTSTRAP3 = {
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
+from django.contrib.messages import constants as message_constants
+MESSAGE_TAGS = {
+    message_constants.ERROR: 'alert alert-danger',
+}
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
