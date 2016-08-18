@@ -1,6 +1,96 @@
+<!--
 {% for field in form %}
 <div class="form-group">
   <label id="{{ field.auto_id }}" class="col-sm-2">{{ field.label }}:</label>
     <div class="col-sm-10"> {{field}} </div>
 </div>
 {% endfor %}
+-->
+
+<div class="form-group">
+  <label for="id_name" class="col-sm-3">イベント名</label>
+  <div class="col-sm-9">
+    <input id="id_name" class="form-control" maxlength="100" name="name" type="text" value="{{ event.name }}" required />
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="id_start_time" class="col-sm-3">開始</label>
+  <div class="col-sm-9">
+    <input id="id_start_time" class="form-control" name="start_time" type="text" value="{{ event.start_time }}" required />
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="id_end_time" class="col-sm-3">終了</label>
+  <div class="col-sm-9">
+    <input id="id_end_time" class="form-control" name="end_time" type="text" value="{{ event.end_time }}" required />
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="id_meeting_place" class="col-sm-3">集合場所</label>
+  <div class="col-sm-9">
+    <input id="id_meeting_place" class="form-control" maxlength="400" name="meeting_place" type="text" value="{{ event.meeting_place }}" required />
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="id_region" class="col-sm-3">開催地域</label>
+  <div class="col-sm-9">
+    <select id="id_region" name="region">
+      {% for key,value in user.prefectures.items %}
+        <option value="{{ key }}">{{ value }}</option>
+      {% endfor %}
+    </select>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="id_image" class="col-sm-3">イベント画像</label>
+  <div class="col-sm-9">
+    <input id="id_image" name="image" type="file" />
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="id_contact" class="col-sm-3">主催者連絡先</label>
+  <div class="col-sm-9">
+    {% if event.contact != null %}
+    <input id="id_contact" class="form-control" maxlength="200" name="contact" type="text" value="{{ event.contact }}" required />
+    {% else %}
+    <input id="id_contact" class="form-control" maxlength="200" name="contact" type="text" value="{{ user.email }}" required />
+    {% endif %}
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="id_details" class="col-sm-3">詳細説明</label>
+  <div class="col-sm-9">
+    <textarea cols="40" id="id_details" class="form-control" name="details" rows="10" required>{{ event.details }}</textarea>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="id_notes" class="col-sm-3">注意事項</label>
+  <div class="col-sm-9">
+    <textarea cols="40" id="id_notes" class="form-control" name="notes" rows="10">{{ event.notes }}</textarea>
+  </div>
+</div>
+
+<div class="form-group">
+  <label for="id_ticket" class="col-sm-3">Ticket</label>
+  <div class="col-sm-9">
+    <input id="id_ticket" name="ticket" type="checkbox" value="{{ event.ticket }}">
+  </div>
+</div>
+
+<div class="form-group">
+  <label class="col-sm-3">関連付けるグループ</label>
+  <div class="col-sm-9">
+    {% for i in "ABCDEFG" %}
+      <!-- 自分が管理者のグループ -->
+      <input type="checkbox" name="#">グループ{{i}}
+    {% endfor %}
+  </div>
+</div>

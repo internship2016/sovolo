@@ -1,6 +1,7 @@
 django
 Pillow
 django-bootstrap3
+django-crispy-forms
 django-dotenv
 python-social-auth
 django-extensions
