@@ -60,11 +60,11 @@ footer {
 .datepicker-days {
   tr {
     /* すべての休みは青に */
-    td.day.weekend {
+    td.day.weekend:not(.active) {
       background-color: custom-color('cold');
     }
     /* 連休の二日目以降は赤に */
-    td.day.weekend + td.day.weekend {
+    td.day.weekend + td.day.weekend:not(.active) {
       background-color: custom-color('hot');
     }
   }
