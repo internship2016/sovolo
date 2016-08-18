@@ -26,6 +26,11 @@ $color-pallet: (
     margin: 0px;
   }
 }
+
+#main-content {
+  padding-bottom: 70px;
+}
+
 footer {
   color: custom-color('light');
   background-color: custom-color('dark');
