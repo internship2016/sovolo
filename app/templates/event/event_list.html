@@ -16,7 +16,7 @@
     <!--<p>{{ event.get_status }}</p>-->
     <p>
     {% if event.get_status == "募集中" %}
-      {% for participation in request.user.participation_set.all %}
+      {% for participation in user.participation_set.all %}
           {% if participation.event == event %}
             {{ participation.status }}
           {% endif %}

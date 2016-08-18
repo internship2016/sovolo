@@ -285,7 +285,7 @@ class EventJoinView(RedirectView):
         frame_id = kwargs['frame_id']
 
         frame = Frame.objects.get(pk=frame_id)
-        status = "waiting_list" if frame.is_full() else "participating"
+        status = "キャンセル待ち" if frame.is_full() else "参加中"
 
         if frame.is_closed():
             messages.error(self.request, "この枠はすでに締め切られています。")
