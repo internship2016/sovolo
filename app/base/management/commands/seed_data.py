@@ -184,10 +184,9 @@ class Command(BaseCommand):
             admin = host_user
             genericevent = Event(
                 name=name,
-                start_time=timezone.now(),
-                end_time=timezone.now(),
+                start_time=timezone.now() + timezone.timedelta(days=i) ,
+                end_time=timezone.now() + timezone.timedelta(days=i+1),
                 meeting_place="531 Page Street",
-                place="531 Page Street",
                 contact="interlink@interlink.com",
                 details="This is a generic event.",
                 ticket=False,
@@ -253,7 +252,7 @@ class Command(BaseCommand):
                 description=description,
                 )
             group.save()
-            event = Event.objects.get(pk=1)
+            event = Event.objects.get(pk=group.pk)
             group.event.add(event)
 
     def _create_memberships(self):

@@ -21,19 +21,8 @@
           <h3 class="panel-title">所属グループの新着</h3>
         </div>
         <div class="panel-body">
-          <div id="sample-event1" class="media">
-            <div class="media-left">
-              <a href="/event/1">
-                <img class="media-object" src="#" width="64" height="64" alt="画像">
-              </a>
-            </div>
-            <div class="media-body">
-              <div class="media-heading">
-                <h4>event1</h4>
-              </div>
-              <p>2016/8/10 531 Page st.</p>
-            </div>
-          </div>
+           {% event_list request.user.get_new_group_events %}
+        </div>
           <p class="text-right"><a href="#">もっと見る</a></p>
         </div>
       </div>
