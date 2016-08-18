@@ -9,7 +9,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseForbidden
 from event.models import Event
 from user.models import User
-from .models import Group
+from .models import Group, Membership
 # Create your views here.
 
 
@@ -27,7 +27,24 @@ class GroupCreate(CreateView):
     fields = ['name','description','image']
 
     def form_valid(self, form):
-        return super(GroupCreate, self).form_valid(form)
+        redirect = super(GroupCreate, self).form_valid(form)
+        group = form.save(commit=False)
+
+        group.membership_set.get_or_create(member=self.request.user, role='admin')
+        names = self.request.POST.getlist('admins')
+        for name in names:
+            try:
+                user = User.objects.get(username=name)
+                group.membership_set.get_or_create(member=user, role='admin')
+            except ObjectDoesNotExist:
+                messages.error(self.request, "ユーザ名 "+name+" に一致するユーザーはいませんでした。")
+
+        event_ids = self.request.POST.getlist('events')
+        events = list(map(lambda pk: Event.objects.get(pk=pk), event_ids))
+        group.event.add(*events)
+
+        messages.info(self.request, "グループを作成しました。")
+        return redirect
 
 
 class GroupDetailView(DetailView):
@@ -67,21 +84,26 @@ class GroupEditView(UserPassesTestMixin, UpdateView):
     fields = ['name', 'image', 'description']
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
+        group = form.save(commit=False)
 
-        names = self.request.POST.getlist('admins')
-        for name in names:
+        old_admins = set([u.username for u in group.admins()])
+        new_admins = set(self.request.POST.getlist('admins'))
+
+        Membership.objects.filter(group=group, member__username__in=list(old_admins - new_admins), role='admin').delete()
+
+        for name in new_admins - old_admins:
             try:
                 user = User.objects.get(username=name)
-                self.object.membership_set.get_or_create(member=user, role='admin')
+                group.membership_set.get_or_create(member=user, role='admin')
             except ObjectDoesNotExist:
                 messages.error(self.request, "ユーザ名 "+name+" に一致するユーザーはいませんでした。")
 
         event_ids = self.request.POST.getlist('events')
         events = list(map(lambda pk: Event.objects.get(pk=pk), event_ids))
-        self.object.event.add(*events)
+        if len(events) is not 0:
+            group.event.add(*events)
 
-        messages.info(self.request, "変種しました。")
+        messages.info(self.request, "グループを編集しました。")
         return super(GroupEditView, self).form_valid(form)
 
     def test_func(self):
