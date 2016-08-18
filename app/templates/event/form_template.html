@@ -11,15 +11,15 @@
     $(function () {
         $('#start-date').datetimepicker({
         locale: moment.locale('ja'),
-        format: 'YYYY-MM-DD',
+        format: 'YYYY-MM-DD HH:mm:00',
         sideBySide:true,
-        disabledHours: false
         });
     });
     $(function () {
         $('#end-date').datetimepicker({
         locale: moment.locale('ja'),
-        format: 'YYYY-MM-DD'
+        format: 'YYYY-MM-DD HH:mm:00',
+        sideBySide:true,
         });
     });
 
