@@ -6,6 +6,7 @@ $color-pallet: (
   'dark': #373331,     /* 字         */
   'light': #FFF3E1,    /* 背景       */
   'hot': #FFD5D3,      /* ホット！   */
+  'cold': #D5D3FF,     /* コールド！ */
 );
 
 
@@ -56,8 +57,17 @@ footer {
 }
 
 /* bootstrap-datetimepicker tweak */
-td.day.weekend {
-  background-color: custom-color('hot');
+.datepicker-days {
+  tr {
+    /* すべての休みは青に */
+    td.day.weekend {
+      background-color: custom-color('cold');
+    }
+    /* 連休の二日目以降は赤に */
+    td.day.weekend + td.day.weekend {
+      background-color: custom-color('hot');
+    }
+  }
 }
 
 .bootstrap-datetimepicker-widget.dropdown-menu {
