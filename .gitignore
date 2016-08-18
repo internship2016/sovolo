@@ -6,8 +6,16 @@ supervisor-app.conf
 uwsgi.ini
 uwsgi_params
 .idea/
+
+# Uploaded images
 app/media/*
 !app/media/.gitkeep
+!app/media/events/
+!app/media/users/
+!app/media/group/
+app/media/events/*
+app/media/users/*
+app/media/group/*
 !app/media/events/default_event_image.jpg
 !app/media/users/default_user_image.jpg
 !app/media/group/default_group_image.jpg
