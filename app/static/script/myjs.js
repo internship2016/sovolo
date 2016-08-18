@@ -1,10 +1,13 @@
 $('.dropdown-toggle').dropdown();
 
+moment.locale('ja', { week: { dow: 1 } });
+
 var DateFormat = 'YYYY-MM-DD';
 $(function () {
     $('#searchform-date').datetimepicker({
         inline: true,
         locale: moment.locale('ja'),
+        dayOfWeekStart: 1,
         format: DateFormat
     });
 
