@@ -31,6 +31,22 @@ $color-pallet: (
   padding-bottom: 70px;
 }
 
+/* Flush footer to the bottom */
+* {
+  margin: 0;
+}
+html, body {
+  height: 100%;
+}
+.main-wrapper {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  margin: 0 auto -70px;
+}
+footer, .footer-push {
+  height: 70px;
+}
 footer {
   color: custom-color('light');
   background-color: custom-color('dark');
@@ -41,6 +57,10 @@ footer {
 /* bootstrap-datetimepicker tweak */
 td.day.weekend {
   background-color: custom-color('primary');
+}
+
+.bootstrap-datetimepicker-widget.dropdown-menu {
+  display: block;
 }
 
 

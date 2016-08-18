@@ -7,6 +7,26 @@
 {% endfor %}
 -->
 
+<script type="text/javascript">
+    $(function () {
+        $('#start-date').datetimepicker({
+        locale: moment.locale('ja'),
+        format: 'YYYY-MM-DD HH:mm:00',
+        sideBySide:true,
+        });
+    });
+    $(function () {
+        $('#end-date').datetimepicker({
+        locale: moment.locale('ja'),
+        format: 'YYYY-MM-DD HH:mm:00',
+        sideBySide:true,
+        });
+    });
+
+</script>
+
+
+
 <div class="form-group">
   <label for="id_name" class="col-sm-3">イベント名</label>
   <div class="col-sm-9">
@@ -17,16 +37,30 @@
 <div class="form-group">
   <label for="id_start_time" class="col-sm-3">開始</label>
   <div class="col-sm-9">
-    <input id="id_start_time" class="form-control" name="start_time" type="text" value="{{ event.start_time }}" required />
+    <div class='input-group date' id='start-date'>
+      <input id="id_start_time" class="form-control" name="start_time" type="text" value="{{ event.start_time }}" required />
+      <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar">
+      </span>
+    </span>
+    </div>
   </div>
 </div>
+
 
 <div class="form-group">
   <label for="id_end_time" class="col-sm-3">終了</label>
   <div class="col-sm-9">
-    <input id="id_end_time" class="form-control" name="end_time" type="text" value="{{ event.end_time }}" required />
+    <div class='input-group date' id='end-date'>
+      <input id="id_end_time" class="form-control" name="start_time" type="text" value="{{ event.end_time }}" required />
+      <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar">
+      </span>
+    </span>
+    </div>
   </div>
 </div>
+
 
 <div class="form-group">
   <label for="id_meeting_place" class="col-sm-3">集合場所</label>
@@ -85,12 +119,50 @@
   </div>
 </div>
 
+
 <div class="form-group">
-  <label class="col-sm-3">関連付けるグループ</label>
-  <div class="col-sm-9">
-    {% for i in "ABCDEFG" %}
-      <!-- 自分が管理者のグループ -->
-      <input type="checkbox" name="#">グループ{{i}}
-    {% endfor %}
-  </div>
+    <label class="col-sm-3">管理者</label>
+    <div class="col-sm-9">
+        <div id="admins">
+            {% for admin in group.admins %}
+                <label><input name="admins" type="checkbox" value="{{ admin.username }}" checked>
+                    {{ admin.username }}
+                </label>
+            {% endfor %}
+        </div>
+        <div id="adder">
+            <input type="text" id="admin_name" placeholder="username">
+            <button id="add_admin" type="button">追加</button>
+        </div>
+        <script>
+            (function (){
+                var admins = document.querySelector("#admins");
+                var admin_name = document.querySelector('#admin_name');
+                var add_admin  = document.querySelector('#add_admin');
+                add_admin.addEventListener('click', function(e) {
+                    var label = document.createElement('label');
+                    var value = admin_name.value;
+                    label.innerHTML = "<input name='admins' type='checkbox' value="+value+" checked>"+value;
+                    admin_name.value = "";
+                    admins.appendChild(label);
+                });
+            })();
+        </script>
+    </div>
 </div>
+
+<div class="form-group">
+    <label class="col-sm-3">関連付けるグループ</label>
+    <div class="col-sm-9">
+        <div id="events">
+            {% for group in request.user.admin_group.all %}
+                <label><input type="checkbox" name="groups" value="{{ group.id }}">{{ group.name }}</label>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<style>
+    #admins label { display: block; }
+    #groups label { display: block; }
+</style>

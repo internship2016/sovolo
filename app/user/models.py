@@ -41,7 +41,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
     # Numbers are arbitrary
     first_name = models.CharField(max_length=100, null=True)
     last_name = models.CharField(max_length=100, null=True)
-    username = models.CharField(max_length=100, null=True)
+    username = models.CharField(max_length=100, null=True, unique=True)
     birthday = models.DateField(null=True)
     telephone = models.CharField(max_length=11, null=True)
     emergency_contact = models.CharField(max_length=11, null=True)
