@@ -7,7 +7,6 @@ $(function () {
     $('#searchform-date').datetimepicker({
         inline: true,
         locale: moment.locale('ja'),
-        dayOfWeekStart: 1,
         format: DateFormat
     });
 
