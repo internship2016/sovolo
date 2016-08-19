@@ -18,11 +18,13 @@
       {% for group in user.group_set.all %}
         <div class="media">
           <div class="media-left">
-            <img class="media-object" src="{{ group.image_url }}" alt="image" width="64" height="64">
+            <a href="{% url "group:detail" group.id %}">
+              <img class="media-object" src="{{ group.get_image_url }}" alt="image" width="64" height="64">
+            </a>
           </div>
           <div class="media-body">
-            <h3 class="media-heading">{{ group.name }}</h3>
-            グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明...
+            <h3 class="media-heading"><a href="{% url "group:detail" group.id %}">{{ group.name }}</a></h3>
+            {{ group.description }}
           </div>
         </div>
       {% endfor %}
