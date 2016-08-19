@@ -164,6 +164,12 @@ class Event(AbstractBaseModel):
             return '未設定'  # XXX: regionがこない場合は未設定でいいのか
         return region[0]
 
+    def start_time_format(self):
+        return self.start_time.strftime("%m/%d %H:%M")
+
+    def end_time_format(self):
+        return self.end_time.strftime("%m/%d %H:%M")
+
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
