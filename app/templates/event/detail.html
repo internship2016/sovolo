@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load event_tags %}
 
 {% block title %}
-{{ event.name}}
+{{ event.name }}
 {% endblock %}
 {% block content %}
 <div>
@@ -21,6 +22,17 @@
           </tr>
         </table>
       </div>
+
+      {% if event.private_notes and request.user in event.participant.all %}
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            参加者への連絡事項（応募していないユーザには見えません）
+          </div>
+          <div class="panel-body">
+            {{ event.private_notes }}
+          </div>
+        </div>
+      {% endif %}
       <div class="panel panel-primary">
         <div class="panel-heading">
           説明
@@ -50,9 +62,7 @@
       {% include "event/side_info.html" %}
     </div>
   </div>
-  <div>
-    <u>コメント</u>
-  </div>
+  {% comments event %}
 </div>
 
 {% endblock %}

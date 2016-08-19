@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 from user.models import User
 from base.models import AbstractBaseModel
 from django.conf import settings
@@ -31,7 +32,7 @@ class Event(AbstractBaseModel):
     contact = models.CharField(max_length=200)
     details = models.TextField()
     notes = models.TextField(blank=True)
-    ticket = models.BooleanField()
+    private_notes = models.TextField(blank=True)
     hashtag = models.CharField(max_length=100, blank=True)
     share_message = models.CharField(max_length=100, blank=True)
     host_user = models.ForeignKey(
@@ -226,6 +227,9 @@ class Participation(AbstractBaseModel):
     class Meta:
         unique_together = (('event', 'user'),)
 
+    def __str__(self):
+        return "Participant:" + self.user.username +", Status: " + self.status
+
     def save(self, *args, **kwargs):
         return super(Participation, self).save(*args, **kwargs)
 
@@ -250,13 +254,16 @@ class Comment(AbstractBaseModel):
             return ">> %s\n%s :\"%s" % (
                 str(self.reply_to),
                 self.user.username,
-                self.username,
+                self.text,
             )
         else:
-            return "%s: \"" % (
+            return "%s: \"%s\"" % (
                 self.user.username,
-                self.username,
+                self.text,
             )
+
+    def get_absolute_url(self):
+        return reverse('event:detail', kwargs={'pk': self.event.id})
 
     def save(self, *args, **kwargs):
         return super(Comment, self).save(*args, **kwargs)
