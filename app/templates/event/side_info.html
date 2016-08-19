@@ -38,7 +38,7 @@
     {% for frame in event.frame_set.all %}
     <div>
       <h5>{{frame.description}}:(～{{frame.deadline}})</h5>
-      ??人
+      {{frame.num_participants}}人
       /{{frame.upper_limit}}人
       <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default pull-right">参加</a>
     </div>
