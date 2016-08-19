@@ -194,6 +194,10 @@ class Frame(AbstractBaseModel):
     def is_closed(self):
         return timezone.now() > self.deadline
 
+    def num_participants(self):
+        status_query = Q(status="参加中")
+        return self.object.participation_set.filter(status_query).count()
+
 class FrameAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
