@@ -383,7 +383,7 @@ class Command(BaseCommand):
             user2 = User.objects.get(pk=tag.pk)
             user2.follow_tag.add(tag)
         for event in Event.objects.all():
-            tag = Tag.objects.get(pk=event.pk)
+            tag = Tag.objects.get(pk=(event.pk % len(taglist)+1))
             event.tag.add(tag)
 
     def _create_questions_and_answers(self):
