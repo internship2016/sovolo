@@ -2,10 +2,6 @@
 {% block content %}
 {% load event_tags %}
 
-<form action="{% url 'event:search' %}" method="get">
-    <input type="text" name="q">
-    <input type="submit" value="検索">
-</form>
 <div id="upcoming-events" class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">すべての開催予定のイベント</h3>

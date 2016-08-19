@@ -235,7 +235,7 @@ class EventEditView(UserPassesTestMixin, UpdateView):
 
 class EventDeleteView(UserPassesTestMixin, DeleteView):
     model = Event
-    success_url = reverse_lazy('event:index')
+    success_url = reverse_lazy('top')
     template_name = 'event/check_delete.html'
 
     def get_context_data(self, **kwargs):
