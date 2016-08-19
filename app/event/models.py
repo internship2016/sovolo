@@ -227,6 +227,9 @@ class Participation(AbstractBaseModel):
     class Meta:
         unique_together = (('event', 'user'),)
 
+    def __str__(self):
+        return "Participant:" + self.user.username +", Status: " + self.status
+
     def save(self, *args, **kwargs):
         return super(Participation, self).save(*args, **kwargs)
 

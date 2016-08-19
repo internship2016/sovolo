@@ -6,56 +6,64 @@
 {% endblock %}
 {% block content %}
 <div>
-	{% include "event/event_header.html" %}
-	<div class="row">
-		<div class="col-md-9">
-			<p>
-			<h2>日時： {{ event.start_time_format }} ～ {{ event.end_time_format }}</h2>
-			<h2>場所： {{ event.get_region_kanji }}</h2>
-			</p>
-            {% if event.private_notes and request.user in event.participant.all %}
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        参加者への連絡事項（応募していないユーザには見えません）
-                    </div>
-                    <div class="panel-body">
-                        {{ event.private_notes }}
-                    </div>
-                </div>
-            {% endif %}
+  {% include "event/event_header.html" %}
+  <div class="row">
+    <div class="col-md-9">
+      <div class="panel panel-primary">
+        <table class="table">
+          <tr>
+            <th>日時</th>
+            <td>{{ event.start_time_format }} ～ {{ event.end_time_format }}</td>
+          </tr>
+          <tr>
+            <th>場所</th>
+            <td>{{ event.get_region_kanji }}</td>
+          </tr>
+        </table>
+      </div>
 
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					説明
-				</div>
-				<div class="panel-body">
-					{{ event.details }}
-				</div>
-			</div>
+      {% if event.private_notes and request.user in event.participant.all %}
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            参加者への連絡事項（応募していないユーザには見えません）
+          </div>
+          <div class="panel-body">
+            {{ event.private_notes }}
+          </div>
+        </div>
+      {% endif %}
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          説明
+        </div>
+        <div class="panel-body">
+          {{ event.details }}
+        </div>
+      </div>
 
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					募集詳細
-				</div>
-				<div class="panel-body">
-					<li>集合場所 : {{ event.meeting_place }}</li>
-					<li>連絡先 : {{ event.contact }}</li>
-					<li>注意事項 : {{ event.notes }}</li>
-					<li>関連タグ :
-						{% for tags in event.tag.all %}
-							{{ tags.name }}
-						{% endfor %}
-					</li>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			{% include "event/side_info.html" %}
-		</div>
-	</div>
-	<div>
-		<u>コメント</u>
-	</div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          募集詳細
+        </div>
+        <div class="panel-body">
+          <li>集合場所 : {{ event.meeting_place }}</li>
+          <li>連絡先 : {{ event.contact }}</li>
+          <li>注意事項 : {{ event.notes }}</li>
+          <li>関連タグ :
+            {% for tags in event.tag.all %}
+              {{ tags.name }}
+            {% endfor %}
+          </li>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      {% include "event/side_info.html" %}
+    </div>
+  </div>
+  <div>
+    <u>コメント</u>
+  </div>
 </div>
 
 {% endblock %}
