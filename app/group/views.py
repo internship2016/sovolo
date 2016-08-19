@@ -10,10 +10,13 @@ from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseForbidden
 from event.models import Event
 from user.models import User
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from .models import Group, Membership
 # Create your views here.
 
 
+@method_decorator(login_required, name='dispatch')
 class GroupCreate(CreateView):
     template_name = 'group/add.html'
     model = Group
