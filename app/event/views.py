@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -321,7 +322,11 @@ class EventSearchResultsView(ListView):
 
             if t is not None and t!="":
                 Tag = apps.get_model('tag', 'Tag')
-                tag = Tag.objects.get(name=t)
+                try:
+                    tag = Tag.objects.get(name=t)
+                except ObjectDoesNotExist:
+                    messages.error(self.request, "検索結果に一致するイベントが見つかりませんでした")
+                    return Event.objects.none()
                 tag_query = Q(tag=tag)
                 query = query & tag_query
 
@@ -339,7 +344,11 @@ class EventSearchResultsView(ListView):
 
             if group is not None and group!="":
                 Group = apps.get_model('group', 'Group')
-                g = Group.objects.get(pk=int(group))
+                try:
+                    g = Group.objects.get(pk=int(group))
+                except ObjectDoesNotExist:
+                    messages.error(self.request, "検索結果に一致するイベントが見つかりませんでした")
+                    return Event.objects.none()
                 group_list = [g]
                 group_query = Q(group__in=group_list)
                 query = query & group_query
