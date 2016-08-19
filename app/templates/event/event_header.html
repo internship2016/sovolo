@@ -13,6 +13,7 @@
   </div>
   <div class="media-body event-head-title">
     <h1 class="media-heading"><u><a href="{{ event.get_absolute_url }}">{{ event }}</a></u></h1>
+    <h2 ><p>現在の応援数 ooo人 <button class="btn btn-primary">応援する/応援済み</button></p></h2>
       <!--管理者-->
     {% if request.user in event.admin.all %}
       <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">内容変更</a>
