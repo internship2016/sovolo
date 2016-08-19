@@ -9,10 +9,18 @@
   {% include "event/event_header.html" %}
   <div class="row">
     <div class="col-md-9">
-      <p>
-      <h2>日時： {{ event.start_time_format }} ～ {{ event.end_time_format }}</h2>
-      <h2>場所： {{ event.get_region_kanji }}</h2>
-      </p>
+      <div class="panel panel-primary">
+        <table class="table">
+          <tr>
+            <th>日時</th>
+            <td>{{ event.start_time_format }} ～ {{ event.end_time_format }}</td>
+          </tr>
+          <tr>
+            <th>場所</th>
+            <td>{{ event.get_region_kanji }}</td>
+          </tr>
+        </table>
+      </div>
       <div class="panel panel-primary">
         <div class="panel-heading">
           説明
