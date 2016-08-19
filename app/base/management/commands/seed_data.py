@@ -242,7 +242,6 @@ class Command(BaseCommand):
                 meeting_place="531 Page Street",
                 contact="interlink@interlink.com",
                 details="This is a generic event.",
-                ticket=False,
                 host_user=host_user,
                 region=prefec_list[i],
             )
@@ -268,6 +267,8 @@ class Command(BaseCommand):
                     user=User.objects.get(pk=1),
                     status='管理者',
                 )
+
+                participation.save()
 
                 if not frame.pk==1:
                     participation = Participation(
