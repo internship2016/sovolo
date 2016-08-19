@@ -41,12 +41,12 @@
           {% else %}
             <li class="dropdown">
              <a href="#" id="dUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <img src="{{ user.get_image_url }}" width="24" height="24">
+                <img src="{{ request.user.get_image_url }}" width="24" height="24">
                 {{ request.user.username }}
                 <span class="caret"></span>
               </a>
               <ul class="dropdown-menu" aria-labelledby="dUser">
-                <li><a href="{% url 'user:detail' user.id %}">プロフィール</a></li>
+                <li><a href="{% url 'user:detail' request.user.id %}">プロフィール</a></li>
                 <li><a href="{% url 'user:logout' %}">ログアウト</a></li>
               </ul>
             </li>
