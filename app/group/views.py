@@ -1,6 +1,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
-from django.shortcuts import render
+from django.http import Http404
+from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -43,6 +44,15 @@ class GroupDetailView(DetailView):
     template_name = 'group/detail.html'
     model = Group
     context_object_name = 'group'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            self.object = self.get_object()
+        except Http404:
+            messages.error(request, "そのグループは存在しません")
+            return redirect('top')
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super(GroupDetailView, self).get_context_data(**kwargs)

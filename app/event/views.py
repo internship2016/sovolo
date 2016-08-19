@@ -1,3 +1,4 @@
+from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
@@ -120,6 +121,15 @@ class EventDetailView(DetailView):
     template_name = 'event/detail.html'
     model = Event
     context_object_name = 'event'
+
+    def get(self, request, *args, **kwargs):
+        try:
+            self.object = self.get_object()
+        except Http404:
+            messages.error(request, "そのイベントは存在しません")
+            return redirect('top')
+        context = self.get_context_data(object=self.object)
+        return self.render_to_response(context)
 
     def get_context_data(self, **kwargs):
         context = super(EventDetailView, self).get_context_data(**kwargs)
