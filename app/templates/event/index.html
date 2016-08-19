@@ -1,20 +1,19 @@
 {% extends "base.html" %}
 {% block content %}
+{% load event_tags %}
 
 <form action="{% url 'event:search' %}" method="get">
     <input type="text" name="q">
     <input type="submit" value="検索">
 </form>
+<div id="upcoming-events" class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">すべての開催予定のイベント</h3>
+        </div>
+        <div class="panel-body">
+            {% event_list all_events request.user %}
+        </div>
+</div>
 
-{% for event in all_events %}
-<a href="{% url 'event:detail' event.id %}"><img src={{ event.get_image_url }}></a>
-<h2>Name: {{event}}</h2>
-
-<form action="{% url 'event:delete' event.id %}" method="post">
-    {% csrf_token %}
-    <input type="submit" value ='DELETE'>
-</form>
-
-{% endfor %}
 
 {% endblock %}

@@ -267,7 +267,7 @@ class Command(BaseCommand):
                     event=event,
                     frame=frame,
                     user=User.objects.get(pk=frame.pk),
-                    status='participating',
+                    status='参加中',
                 )
                 participation.save()
 

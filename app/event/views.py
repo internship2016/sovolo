@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
@@ -107,7 +108,8 @@ class EventIndexView(ListView):
     context_object_name = 'all_events'
 
     def get_queryset(self):
-        return Event.objects.all()
+        date = timezone.now()
+        return Event.objects.filter(start_time__gte=date).order_by('start_time')
 
 
 class EventEditView(UserPassesTestMixin, UpdateView):
@@ -407,7 +409,7 @@ class ParticipationDeleteView(DeleteView):
             send_mail(subject, message, "reminder@sovolo.earth", [carry_up.user.email])
 
 
-        return reverse_lazy('event:index')
+        return reverse_lazy('top')
 
 
 class CommentCreate(CreateView):

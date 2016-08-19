@@ -25,6 +25,9 @@
           {% endfor %}
         {% else %}
           {{ event.get_status }}
+          {% if event.get_status　==　"募集中" %}
+            <p><a href="{% url 'event:detail' event.id %}">応募する</a></p>
+          {% endif %}
         {% endif %}
       </p>
     </div>
