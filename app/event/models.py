@@ -179,11 +179,8 @@ class EventAdmin(admin.ModelAdmin):
 class Frame(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     description = models.TextField(default='通常参加枠')
-    upper_limit = models.IntegerField(blank=True)
+    upper_limit = models.IntegerField(blank=True, null=True)
     deadline = models.DateTimeField()
-
-    def save(self, *args, **kwargs):
-        return super(Frame, self).save(*args, **kwargs)
 
     def __str__(self):
         return "Frame #" + str(self.pk) + " in Event #" + str(self.event_id)

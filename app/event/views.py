@@ -50,11 +50,9 @@ class EventCreate(CreateView):
 
     template_name = "event/add.html"
 
-    def dispatch(self, request, *args, **kwargs):
-        return super(EventCreate, self).dispatch(request, *args, **kwargs)
-
     def form_valid(self, form):
         form.instance.host_user = self.request.user
+        form_redirect = super(EventCreate, self).form_valid(form)
         event = form.save()
 
         # Admins
@@ -90,13 +88,12 @@ class EventCreate(CreateView):
                 frame = Frame.objects.get(pk=frame_id)
 
             frame.description = self.request.POST.get('frame_' + number + '_description')
-            frame.upper_limit = self.request.POST.get('frame_' + number + '_upperlimit')
-            frame.deadline = self.request.POST.get('frame_' + number + '_deadline')
+            frame.upper_limit = self.request.POST.get('frame_' + number + '_upperlimit') or None
+            frame.deadline = self.request.POST.get('frame_' + number + '_deadline') or event.end_time
             frame.save()
 
         messages.info(self.request, "イベントを登録しました。")
-
-        return super(EventCreate, self).form_valid(form)
+        return form_redirect
 
     def form_invalid(self, form):
         return super(EventCreate, self).form_invalid(form)
@@ -176,6 +173,7 @@ class EventEditView(UserPassesTestMixin, UpdateView):
     template_name = 'event/edit.html'
 
     def form_valid(self, form):
+        form_redirect = super(EventEditView, self).form_valid(form)
         event = form.save(commit=False)
 
         # Admins
@@ -221,7 +219,7 @@ class EventEditView(UserPassesTestMixin, UpdateView):
             frame.save()
 
         messages.info(self.request, "イベント情報を編集しました。")
-        return super(EventEditView, self).form_valid(form)
+        return form_redirect
 
     def test_func(self):
         return self.request.user.is_manager_for(self.get_object())

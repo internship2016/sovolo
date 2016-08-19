@@ -56,7 +56,7 @@
   <div class="col-sm-9">
     <select id="id_region" name="region">
       {% for v,pref in user.region_list %}
-        <option value="{{ v }}">{{ pref }}</option>
+        <option value="{{ v }}" {% if v == event.region %}selected{% endif %}>{{ pref }}</option>
       {% endfor %}
     </select>
   </div>
