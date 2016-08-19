@@ -1,22 +1,28 @@
 <div class="form-group">
-    <label id="id_name" class="col-sm-2">グループ名</label>
-    <div class="col-sm-10"><input id="id_name" maxlength="100" name="name" type="text" required="" value="{{ group.name }}"></div>
+    <label id="id_name" class="col-sm-3">グループ名</label>
+    <div class="col-sm-9">
+      <input id="id_name" class="form-control" maxlength="100" name="name" type="text" required="" value="{{ group.name }}">
+    </div>
 </div>
 
 <div class="form-group">
-    <label id="id_description" class="col-sm-2">グループの説明:</label>
-    <div class="col-sm-10"><textarea cols="40" id="id_description" name="description" rows="10" required="">{{ group.description }}</textarea></div>
+    <label id="id_description" class="col-sm-3">グループの説明:</label>
+    <div class="col-sm-9">
+      <textarea cols="40" class="form-control" id="id_description" name="description" rows="10" required="">{{ group.description }}</textarea>
+    </div>
 </div>
 
 <div class="form-group">
-    <label id="id_image" class="col-sm-2">グループ画像:</label>
+    <label id="id_image" class="col-sm-3">グループ画像:</label>
     <img scr="{{ group.image_url }}" width="300">
-    <div class="col-sm-10"> <input id="id_image" name="image" type="file"> </div>
+    <div class="col-sm-9">
+      <input id="id_image" name="image" type="file">
+    </div>
 </div>
 
 <div class="form-group">
-    <label class="col-sm-2">管理者</label>
-    <div class="col-sm-10">
+    <label class="col-sm-3">管理者</label>
+    <div class="col-sm-9">
         <div id="admins">
             {% for admin in group.admins %}
                 <label><input name="admins" type="checkbox" value="{{ admin.username }}" checked>
@@ -46,8 +52,8 @@
 </div>
 
 <div class="form-group">
-    <label class="col-sm-2">自分の管理ボランティアをグループに紐づける</label>
-    <div class="col-sm-10">
+    <label class="col-sm-3">自分の管理ボランティアをグループに紐づける</label>
+    <div class="col-sm-9">
         <div id="events">
             {% for event in request.user.admin_event.all %}
                 <label><input type="checkbox" name="events" value="{{ event.id }}" {% if event in group.event.all %}checked{% endif %}>{{ event.name }}</label>
