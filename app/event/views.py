@@ -302,8 +302,6 @@ class EventSearchResultsView(ListView):
 
         query = Q()
 
-        #TODO: handle DoesNotExist queries for tag and group
-
         #Free Word
         if 'q' in self.request.GET:
             user_entry = self.request.GET['q']
@@ -365,6 +363,17 @@ class EventSearchResultsView(ListView):
 
         results = Event.objects.filter(query)
 
+        if 'order_by' in self.request.GET:
+            order_by = self.request.GET['order_by']
+            criterion = order_by.split("-")[0]
+            desc = order_by.split("-")[1]
+            if desc == "desc":
+                criterion = "-" + criterion
+            else:
+                pass
+
+            results = results.order_by(criterion)
+
         #Include events with no openings?
         if 'exclude_full_events' in self.request.GET and self.request.GET['exclude_full_events'] == "on":
             results = [event for event in results if not event.is_full()]
@@ -376,18 +385,9 @@ class EventSearchResultsView(ListView):
         if len(results)==0:
             messages.error(self.request, "検索結果に一致するイベントが見つかりませんでした")
 
-        if 'order_by' in self.request.GET:
-            order_by = self.request.GET['order_by']
-            if 'desc' in self.request.GET and self.request.GET['desc'] == "on":
-                order_by = "-" + order_by
-                results = results.order_by(order_by)
-            else:
-                results = results.order_by(order_by)
-
         #Filter based on page and number per page
         if 'numperpage' in self.request.GET:
             num_per_page = self.request.GET["numperpage"]
-            print(num_per_page, file=sys.stderr)
             if num_per_page is not None and num_per_page!="":
                 self.paginate_by = int(num_per_page)
 

@@ -2,30 +2,50 @@
   <div class="panel-heading">
     <h3 class="panel-title">イベント検索</h3>
   </div>
-  <div class="panel-body row">
-    <form class="form-horizontal" role="search" action="{% url 'event:search' %}" method="get">
-      <div class="form-group" id="search-calendar">
-        <input type="hidden" id="searchform-date" class="form-control" name="date" />
+  <form class="form-horizontal" role="search" action="{% url 'event:search' %}" method="get">
+    <div class="row">
+      <div class="panel-body">
+          <div class="form-group" id="search-calendar">
+            <input type="hidden" id="searchform-date" class="form-control" name="date" />
+          </div>
+          <div class="form-group" id="search-category">
+            <label for="searchform-tag" class="col-lg-4 control-label">タグ</label>
+            <div class="col-lg-8">
+              <input type="text" id="searchform-tag" class="form-control" name="tag" /> <!-- name は要確認-->
+            </div>
+          </div>
+          <div class="form-group" id="search-area">
+            <label for="searchform-area" class="col-lg-4 control-label">場所</label>
+            <div class="col-lg-8">
+              <input type="text" id="searchform-area" class="form-control" name="area" /> <!-- name は要確認-->
+            </div>
+          </div>
+          <div class="form-group" id="word-search">
+            <label for="searchform-keyword" class="col-lg-4 control-label">キーワード</label>
+            <div class="col-lg-8">
+              <input type="text" id="searchform-keyword" class="form-control"  name="q" />
+            </div>
+          </div>
+          <div class="form-group center-block search-ordering">
+            <label for="searchform-order_by" class="col-lg-4 control-label">並び順</label>
+            <select name="order_by" id="searchform-order_by">
+              <option value="start_time-asc">開始日(昇順）</option>
+              <option value="start_time-desc">開始日(降順)</option>
+            </select>
+            <label for="searchform-keyword" class="col-lg-4 control-label">1ページあたりの表示件数</label>
+            <select name="numperpage" id="searchform-numperpage">
+              <option value="10">10</option>
+              <option value="20">20</option>
+              <option value="50">50</option>
+            </select>
+            <label for="searchform-closed" class="col-lg-4 control-label">締め切られたイベントを表示する</label>
+              <input type="checkbox" name="exclude_closed_events" id="searchform-closed">
+          </div>
       </div>
-      <div class="form-group" id="search-category">
-        <label for="searchform-tag" class="col-lg-4 control-label">タグ</label>
-        <div class="col-lg-8">
-          <input type="text" id="searchform-tag" class="form-control" name="tag" /> <!-- name は要確認-->
-        </div>
+      <div class="panel-footer">
+        <button type="submit" class="btn btn-default center-block">検索</button>
       </div>
-      <div class="form-group" id="search-area">
-        <label for="searchform-area" class="col-lg-4 control-label">場所</label>
-        <div class="col-lg-8">
-          <input type="text" id="searchform-area" class="form-control" name="area" /> <!-- name は要確認-->
-        </div>
-      </div>
-      <div class="form-group" id="word-search">
-        <label for="searchform-keyword" class="col-lg-4 control-label">キーワード</label>
-        <div class="col-lg-8">
-          <input type="text" id="searchform-keyword" class="form-control"  name="q" />
-        </div>
-      </div>
-      <button type="submit" class="btn btn-default center-block">検索</button>
-    </form>
-  </div>
+    </div>
+  </form>
+
 </div>

@@ -15,21 +15,21 @@ $(function () {
         console.log(this.value)
         switch(this.value){
             case "開始日(昇順）":
-                var desc = "off";
+                var desc = "asc";
                 break;
             case "開始日(降順)":
-                var desc = "on";
+                var desc = "desc";
                 break;
             default:
                 var desc = "";
                 break;
         }
-        var regex = /\b(desc=)[^&]*/;
+        var regex = /\b(order_by=start_time-)[^&]*/;
         console.log(Url.match(regex));
         if(regex.test(Url)){
             var newUrl = Url.replace(regex, '$1' + desc);
         } else{
-            var newUrl = Url + "&desc=" + desc;
+            var newUrl = Url + "&order_by=start_time-" + desc;
         }
         newUrl = newUrl.replace(/\bpage=\d+/,"page=1");
         window.location.replace(newUrl);
