@@ -45,7 +45,6 @@ class EventCreate(CreateView):
         'details',
         'notes',
         'private_notes',
-        'ticket',
         'region',
     ]
 
