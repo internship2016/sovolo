@@ -268,6 +268,8 @@ class Command(BaseCommand):
                     status='管理者',
                 )
 
+                participation.save()
+
                 if not frame.pk==1:
                     participation = Participation(
                         event=event,
