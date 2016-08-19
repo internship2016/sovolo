@@ -3,8 +3,8 @@
     <h1 class="panel-title">管理者</h1>
   </div>
   <div class="panel-body">
-    {% for i in "ABC" %}
-    <img src="#" alt="{{i}}" width="30" height="30">
+    {% for user in group.admins %}
+      <img src="{{ user.get_image_url }}" alt="{{ user.username }}" width="30" height="30">
     {% endfor %}
   </div>
 </div>
@@ -13,8 +13,8 @@
     <h1 class="panel-title">参加者</h1>
   </div>
   <div class="panel-body">
-    {% for i in "ABCDEFGIHJKLMNOPQRSTUVWXYZ" %}
-    <img src="#" alt="{{i}}" width="30" height="30">
+    {% for user in group.members %}
+      <img src="{{ user.get_image_url }}" alt="{{ user.username }}" width="30" height="30">
     {% endfor %}
   </div>
 </div>
