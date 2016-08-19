@@ -165,7 +165,6 @@ class EventAdmin(admin.ModelAdmin):
 class Frame(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     description = models.TextField(default='通常参加枠')
-    lower_limit = models.IntegerField(blank=True)
     upper_limit = models.IntegerField(blank=True)
     deadline = models.DateTimeField()
 
@@ -193,7 +192,6 @@ class FrameAdmin(admin.ModelAdmin):
         'pk',
         'event',
         'description',
-        'lower_limit',
         'upper_limit',
         'deadline',
     )

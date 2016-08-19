@@ -9,6 +9,15 @@
 
 <script type="text/javascript">
     $(function () {
+        $('.datetimepicker').datetimepicker({
+         locale: moment.locale('ja'),
+        format: 'YYYY-MM-DD HH:mm:00',
+        sideBySide:true,
+        });
+    });
+
+    /*
+    $(function () {
         $('#start-date').datetimepicker({
         locale: moment.locale('ja'),
         format: 'YYYY-MM-DD HH:mm:00',
@@ -22,6 +31,7 @@
         sideBySide:true,
         });
     });
+    */
 
 </script>
 
@@ -37,13 +47,7 @@
 <div class="form-group">
   <label for="id_start_time" class="col-sm-3">開始</label>
   <div class="col-sm-9">
-    <div class='input-group date' id='start-date'>
-      <input id="id_start_time" class="form-control" name="start_time" type="text" value="{{ event.start_time }}" required />
-      <span class="input-group-addon">
-      <span class="glyphicon glyphicon-calendar">
-      </span>
-    </span>
-    </div>
+    <input id="id_start_time" class="form-control datetimepicker" name="start_time" type="text" value="{{ event.start_time }}" required />
   </div>
 </div>
 
@@ -51,13 +55,7 @@
 <div class="form-group">
   <label for="id_end_time" class="col-sm-3">終了</label>
   <div class="col-sm-9">
-    <div class='input-group date' id='end-date'>
-      <input id="id_end_time" class="form-control" name="end_time" type="text" value="{{ event.end_time }}" required />
-      <span class="input-group-addon">
-      <span class="glyphicon glyphicon-calendar">
-      </span>
-    </span>
-    </div>
+    <input id="id_end_time" class="form-control datetimepicker" name="end_time" type="text" value="{{ event.end_time }}" required />
   </div>
 </div>
 
@@ -101,7 +99,7 @@
 <div class="form-group">
   <label for="id_details" class="col-sm-3">詳細説明</label>
   <div class="col-sm-9">
-    <textarea cols="40" id="id_details" class="form-control" name="details" rows="10" required>{{ event.details }}</textarea>
+    <textarea cols="40" id="id_details" class="form-control" name="details" rows="10" placeholder="目安人数など" required>{{ event.details }}</textarea>
   </div>
 </div>
 
@@ -151,6 +149,107 @@
     </div>
 </div>
 
+
+<div class="form-group">
+  <label class="col-sm-3">参加枠(任意)</label>
+  <div class="col-sm-9">
+    <div id="frames">
+      {% for frame in event.frame_set.all %}
+        <div class="panel panel-default panel-body" style="margin:0">
+          <div class="row">
+            <input type="hidden" name="frame_number" value="{{ forloop.counter }}">
+            <input type="hidden" name="frame_{{ forloop.counter }}_id" value="{{ frame.id }}">
+            <label class="col-sm-3">仕事内容</label>
+            <div class="col-sm-9">
+              <textarea class="form-control" name="frame_{{ forloop.counter }}_description">{{frame.description}}</textarea>
+            </div>
+            <label class="col-sm-3">上限人数</label>
+            <div class="col-sm-9">
+              <input class="form-control" type="text" name="frame_{{ forloop.counter }}_upperlimit" value="{{ frame.upper_limit }}">
+            </div>
+            <label class="col-sm-3">応募締め切り</label>
+            <div class='col-sm-9'>
+              <input class="form-control datetimepicker" name="frame_{{ forloop.counter }}_deadline" type="text" value="{{ frame.deadline }}" >
+            </div>
+          </div>
+        </div>
+      {% empty %}
+        <div class="panel panel-default panel-body" style="margin:0">
+          <div class="row">
+            <input type="hidden" name="frame_number" value="1">
+            <!--<input type="hidden" name="frame_1_id" value="{{ frame.id }}">-->
+            <label class="col-sm-3">仕事内容</label>
+            <div class="col-sm-9">
+              <textarea class="form-control" name="frame_1_description"></textarea>
+            </div>
+            <label class="col-sm-3">上限人数</label>
+            <div class="col-sm-9">
+              <input class="form-control" type="text" name="frame_1_upperlimit">
+            </div>
+            <label class="col-sm-3">応募締め切り</label>
+            <div class='col-sm-9'>
+              <input class="form-control datetimepicker" name="frame_1_deadline" type="text">
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+    <button id="add_frame" type="button">参加枠追加</button>
+    <script>
+      $(function(){
+        $('#add_frame').on('click',function (event) {
+          var X = $('#frames>div').length+1;
+
+          var html = [
+            '<div class="panel panel-default panel-body" style="margin:0" id="frame_number_'+X+'">',
+            '  <div class="row">',
+            '    <input type="hidden" name="frame_number" value="'+X+'">',
+            // '    <input type="hidden" name="frame_'+X+'_id" value="{{ frame.id }}">',
+            '    <label class="col-sm-3">仕事内容</label>',
+            '    <div class="col-sm-9">',
+            '      <textarea class="form-control" name="frame_'+X+'_description"></textarea>',
+            '    </div>',
+            '    <label class="col-sm-3">上限人数</label>',
+            '    <div class="col-sm-9">',
+            '      <input class="form-control" type="text" name="frame_'+X+'_upperlimit">',
+            '    </div>',
+            '    <label class="col-sm-3">応募締め切り</label>',
+            '    <div class="col-sm-9">',
+            '      <input class="form-control datetimepicker" name="frame_'+X+'_deadline" type="text">',
+            '      <script>',
+            '        (function () {',
+            '            $("#frame_number_'+X+' .datetimepicker").datetimepicker({',
+            '              locale: moment.locale("ja"),',
+            '              format: "YYYY-MM-DD HH:mm:00",',
+            '              sideBySide:true,',
+            '            });',
+            '        })();',
+            '      <\/script>',
+            '    </div>',
+            '  </div>',
+            '</div>',
+          ].join("\n");
+
+          $wrapper = $('<div>');
+          $wrapper.html(html);
+          $('#frames').append($wrapper);
+        });
+      });
+    </script>
+  </div>
+</div>
+
+
+<div class="form-group">
+  <label class="col-sm-3">関連付けるタグ</label>
+  <div class="col-sm-9">
+    {% for tag in "ABCDEF" %}
+    <label><input type="checkbox" name="tags" value="#">{{tag}}</label>
+    {% endfor %}
+  </div>
+</div>
+
 <div class="form-group">
     <label class="col-sm-3">関連付けるグループ</label>
     <div class="col-sm-9">
@@ -163,6 +262,7 @@
 </div>
 
 <style>
+    #tags label { display:block; }
     #admins label { display: block; }
     #groups label { display: block; }
 </style>

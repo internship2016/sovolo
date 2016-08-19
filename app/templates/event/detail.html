@@ -38,14 +38,13 @@
 		</div>
 	</div>
 	{% if login_user_participating %}
-	<form method="post" action={% url 'event:cancel' participation.id %}>
+	<form method="post" action="{% url 'event:cancel' participation.id %}">
 		{% csrf_token %}
 		<input type="submit" value="CANCEL">
 	</form>
 	{% endif %}
 	<div>
 		<u>コメント</u>
-
 	</div>
 </div>
 

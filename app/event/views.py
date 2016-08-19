@@ -44,27 +44,62 @@ class EventCreate(CreateView):
     template_name = "event/add.html"
 
     def dispatch(self, request, *args, **kwargs):
-        print("****************************************", file=sys.stderr)
-        print("Dispatching Form...", file=sys.stderr)
-        print("****************************************", file=sys.stderr)
-        print(request.POST, file=sys.stderr)
-
         return super(EventCreate, self).dispatch(request, *args, **kwargs)
 
     def form_valid(self, form):
-        print("****************************************", file=sys.stderr)
-        print("Form was valid...", file=sys.stderr)
-        print("****************************************", file=sys.stderr)
-        print(self.request, file=sys.stderr)
         form.instance.host_user = self.request.user
-        form.save()
+        event = form.save()
+
+        # Admins
+        new_admins = set([int(t) for t in self.request.POST.getlist('admins')])
+        old_admins = set([t.id for t in event.admin.all()])
+
+        for admin_id in new_admins - old_admins:
+            event.admin.add(admin_id)
+
+        for admin_id in old_admins - new_admins:
+            event.admin.remove(admin_id)
+
+        # Groups
+        new_groups = set([int(g) for g in self.request.POST.getlist('groups')])
+        old_groups = set([t.id for t in self.request.user.group_set.filter(membership__role='admin')])
+
+        for group_id in new_groups - old_groups:
+            event.group_set.add(group_id)
+
+        for group_id in old_groups - new_groups:
+            event.group_set.remove(group_id)
+
+        # Tags
+        new_tags = set([int(t) for t in self.request.POST.getlist('tags')])
+        old_tags = set([t.id for t in event.tag.all()])
+
+        for tag_id in new_tags - old_tags:
+            event.tag.add(tag_id)
+
+        for tag_id in old_tags - new_tags:
+            event.tag.remove(tag_id)
+
+        # Frames
+        frame_numbers = self.request.POST.getlist('frame_number')
+
+        for number in frame_numbers:
+            frame_id = self.request.POST.get('frame_' + number + '_id')
+            if frame_id is None:
+                frame = Frame(event=event)
+            else:
+                frame = Frame.objects.get(pk=frame_id)
+
+            frame.description = self.request.POST.get('frame_' + number + '_description')
+            frame.upper_limit = self.request.POST.get('frame_' + number + '_upperlimit')
+            frame.deadline = self.request.POST.get('frame_' + number + '_deadline')
+            frame.save()
+
+        messages.info(self.request, "イベントを登録しました。")
+
         return super(EventCreate, self).form_valid(form)
 
     def form_invalid(self, form):
-        print("****************************************", file=sys.stderr)
-        print("Form was invalid...shit...", file=sys.stderr)
-        print("****************************************", file=sys.stderr)
-
         return super(EventCreate, self).form_invalid(form)
 
     def get_success_url(self):
@@ -117,7 +152,6 @@ class EventEditView(UserPassesTestMixin, UpdateView):
         'start_time',
         'end_time',
         'meeting_place',
-        'place',
         'image',
         'details',
         'notes',
