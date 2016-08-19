@@ -423,7 +423,7 @@ class EventJoinView(RedirectView):
                     status=status,
                 )
                 p.save()
-                if status == "waiting_list":
+                if status == "キャンセル待ち":
                     messages.error(self.request, "あなたはキャンセル待ちです")
                 else:
                     messages.error(self.request, "参加しました。")
@@ -444,13 +444,13 @@ class EventFollowView(RedirectView):
         event = Event.objects.get(pk=event_id)
 
         if event.is_closed():
-            messages.error(self.request, "この枠はすでに締め切られています。")
+            messages.error(self.request, "このイベントはすでに締め切られています。")
         else:
             try:
                 p = Participation.objects.create(
                     user=self.request.user,
                     event_id=kwargs['event_id'],
-                    status="following",
+                    status="興味あり",
                 )
                 p.save()
                 messages.error(self.request, "興味ありイベントに追加しました")

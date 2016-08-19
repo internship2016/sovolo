@@ -254,7 +254,6 @@ class Command(BaseCommand):
         for event in Event.objects.all():
             frame = Frame(
                 event=event,
-                lower_limit=0,
                 upper_limit=3,
                 deadline="2100-12-25 00:00:00",
             )

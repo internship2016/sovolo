@@ -184,7 +184,7 @@ class Frame(AbstractBaseModel):
     def is_full(self):
         if self.upper_limit:
             participant_query = Q(frame=self)
-            status_query = Q(status="participating")
+            status_query = Q(status="参加中")
             num_participants = Participation.objects.filter(participant_query & status_query).count()
 
             return num_participants >= self.upper_limit

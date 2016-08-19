@@ -21,14 +21,32 @@
     {% elif request.user in event.participant.all %}
       <form method="post" action="{% url 'event:cancel' participation.id %}">
       {% csrf_token %}
-      <button>参加をキャンセルする</button>
+        {% if participation.status == "参加中" %}
+          <button>参加をキャンセルする</button>
+        {% elif participation.status == "キャンセル待ち" %}
+          <button>キャンセル待ちリストから外れる</button>
+        {% else %}
+          <button>フォローを外す</button>
+              {% for frame in event.frame_set.all %}
+                <p>{{ frame }}</p>
+              {% if frame.is_full %}
+                <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default">キャンセル待ちリストに入る</a>
+              {% else %}
+                <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default">参加する</a>
+              {% endif %}
+              {% endfor %}
+        {% endif %}
       </form>
-      <!--興味あり-->
       <!--その他-->
     {% else %}
+      <a href="{% url 'event:follow' event.id %}" class="btn btn-default">興味あり</a>
       {% for frame in event.frame_set.all %}
       <p>{{ frame }}</p>
-      <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default">参加する</a>
+        {% if frame.is_full %}
+            <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default">キャンセル待ちリストに入る</a>
+        {% else %}
+            <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default">参加する</a>
+        {% endif %}
       {% endfor %}
     {% endif %}
     <div class="btn pull-right btn-group .active">
