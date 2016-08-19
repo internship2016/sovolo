@@ -1,10 +1,17 @@
 <li>主催者：
   <a href="{% url 'user:detail' event.host_user_id %}">
     <img src="{{ event.host_user.get_image_url }}" width="24" height="24">
+    {{event.host_user.username}}
   </a>
-  {{event.host_user.username}}
 </li>
-<li>グループ：{{event.host_group}}</li>
+<li>グループ：
+  {% for group in event.group_set.all %}
+  <a href="{% url 'group:detail' group.id %}">
+    <img src="{{ group.get_image_url }}" width="24" height="24">
+    {{ group.name }}
+  </a>
+  {% endfor %}
+</li>
 <div class="panel panel-primary">
   <div class="panel-heading">
     管理者
@@ -38,7 +45,7 @@
     {% for frame in event.frame_set.all %}
     <div>
       <h5>{{frame.description}}:(～{{frame.deadline}})</h5>
-      ??人
+      {{ frame.participation_set.count }}人
       /{{frame.upper_limit}}人
       <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default pull-right">参加</a>
     </div>

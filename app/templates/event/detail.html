@@ -27,9 +27,14 @@
 					募集詳細
 				</div>
 				<div class="panel-body">
-					<li>集合場所：{{ event.meeting_place }}</li>
-					<li>連絡先:{{ event.contact }}</li>
-					<li>注意事項:{{ event.notes }}</li>
+					<li>集合場所 : {{ event.meeting_place }}</li>
+					<li>連絡先 : {{ event.contact }}</li>
+					<li>注意事項 : {{ event.notes }}</li>
+					<li>関連タグ :
+						{% for tags in event.tag.all %}
+							{{ tags.name }}
+						{% endfor %}
+					</li>
 				</div>
 			</div>
 		</div>
