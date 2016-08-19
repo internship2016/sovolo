@@ -12,7 +12,7 @@
     <img src={{ event.get_image_url }} width="240" height="240">
   </div>
   <div class="media-body event-head-title">
-    <h1 class="media-heading"><u>{{event}}</u></h1>
+    <h1 class="media-heading"><u><a href="{{ event.get_absolute_url }}">{{ event }}</a></u></h1>
       <!--管理者-->
     {% if request.user in event.admin.all %}
       <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">内容変更</a>
