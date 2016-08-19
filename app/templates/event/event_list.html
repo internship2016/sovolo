@@ -6,25 +6,31 @@
     </a>
   </div>
   <div class="media-body">
-    <div class="media-heading">
-      <h4>{{event.name}}</h4>
-    </div>
-    <p>{{event.start_time}}</p>
-    <p>{{event.place}}</p>
-  </div>
-  <div class="media-right">
-    <!--<p>{{ event.get_status }}</p>-->
-    <p>
-    {% if event.get_status == "募集中" %}
-      {% for participation in request.user.participation_set.all %}
-          {% if participation.event == event %}
-            {{ participation.status }}
+    <div class="event-info pull-left">
+        <div class="media-heading">
+          <a href="/event/{{event.pk}}">
+            <h4>{{event.name}}</h4>
+          </a>
+        </div>
+          <p>{{event.start_time}}</p>
+          <p>{{event.place}}</p>
+        </div>
+    <div class="event-status pull-right">
+      <p>
+        {% if event in user.participating_event.all %}
+          {% for participation in user.participation_set.all %}
+            {% if participation.event == event %}
+                <p>{{ participation.status }}</p>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          {{ event.get_status }}
+          {% if event.get_status　==　"募集中" %}
+            <p><a href="{% url 'event:detail' event.id %}">応募する</a></p>
           {% endif %}
-      {% endfor %}
-    {% else %}
-      {{ event.get_status }}
-    {% endif %}
-    </p>
+        {% endif %}
+      </p>
+    </div>
   </div>
 </div>
 {% endfor %}

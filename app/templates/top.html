@@ -12,8 +12,9 @@
           <h3 class="panel-title">参加予定のボランティア</h3>
         </div>
         <div class="panel-body">
-          {% event_list request.user.participating_event.all %}
-{#          <p class="text-right"><a href="#">もっと見る</a></p>#}
+          {% event_list request.user.get_future_participating_events request.user %}
+        {#  <p class="text-right"><a href="#">もっと見る</a></p> #}
+
         </div>
       </div>
       <div id="mygroup-events" class="panel panel-primary">
@@ -21,8 +22,9 @@
           <h3 class="panel-title">所属グループの新着</h3>
         </div>
         <div class="panel-body">
-          {% event_list request.user.get_new_group_events %}
-{#          <p class="text-right"><a href="#">もっと見る</a></p>#}
+          {% event_list request.user.get_new_group_events request.user %}
+         {# <p class="text-right"><a href="#">もっと見る</a></p> #}
+
         </div>
       </div>
       <div id="myarea-events" class="panel panel-primary">
@@ -30,8 +32,9 @@
           <h3 class="panel-title">自分の地域の新着イベント</h3>
         </div>
         <div class="panel-body">
-          {% event_list request.user.get_new_region_events %}
-{#          <p class="text-right"><a href="#">もっと見る</a></p>#}
+          {% event_list request.user.get_new_region_events request.user %}
+       {#   <p class="text-right"><a href="#">もっと見る</a></p> #}
+
         </div>
       </div>
       <div id="mytag-events" class="panel panel-primary">
@@ -39,7 +42,7 @@
           <h3 class="panel-title">フォローしているタグの新着一覧</h3>
         </div>
         <div class="panel-body">
-          {% event_list request.user.get_new_tag_events %}
+          {% event_list request.user.get_new_tag_events request.user %}
 {#          <p class="text-right"><a href="#">もっと見る</a></p>#}
         </div>
       </div>

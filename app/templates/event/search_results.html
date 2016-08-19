@@ -25,8 +25,14 @@
         <a href="{% url 'event:search' %}?{% query_transform request exclude_closed_events='on' %}">締め切られたイベントを表示しない</a>
       {% endif %}
     </div>
-    {% event_list result_events %}
-
+    <div id="search-results" class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">検索結果</h3>
+        </div>
+        <div class="panel-body">
+          {% event_list result_events request.user %}
+        </div>
+    </div>
     <nav aria-label="Page navigation">
       <ul class="pagination">
         <li class="page-item">

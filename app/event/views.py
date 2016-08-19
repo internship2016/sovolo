@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
@@ -108,7 +109,7 @@ class EventCreate(CreateView):
         p = Participation(
             user=self.request.user,
             event=self.object,
-            status="admin",
+            status="管理者",
         )
         p.save()
         self.object.participation_set.add(p)
@@ -142,7 +143,8 @@ class EventIndexView(ListView):
     context_object_name = 'all_events'
 
     def get_queryset(self):
-        return Event.objects.all()
+        date = timezone.now()
+        return Event.objects.filter(start_time__gte=date).order_by('start_time')
 
 
 class EventEditView(UserPassesTestMixin, UpdateView):
@@ -370,7 +372,7 @@ class EventJoinView(RedirectView):
         frame_id = kwargs['frame_id']
 
         frame = Frame.objects.get(pk=frame_id)
-        status = "waiting_list" if frame.is_full() else "participating"
+        status = "キャンセル待ち" if frame.is_full() else "参加中"
 
         if frame.is_closed():
             messages.error(self.request, "この枠はすでに締め切られています。")
@@ -441,7 +443,7 @@ class ParticipationDeleteView(DeleteView):
             send_mail(subject, message, "reminder@sovolo.earth", [carry_up.user.email])
 
 
-        return reverse_lazy('event:index')
+        return reverse_lazy('top')
 
 
 class CommentCreate(CreateView):

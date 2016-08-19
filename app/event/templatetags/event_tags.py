@@ -7,8 +7,8 @@ register = template.Library()
 
 
 @register.inclusion_tag('event/event_list.html')
-def event_list(events):
-    return {'events': events}
+def event_list(events, user):
+    return {'events': events, 'user': user}
 
 @register.simple_tag
 def query_transform(request, **kwargs):
