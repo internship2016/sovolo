@@ -12,6 +12,14 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/$',
         views.GroupDetailView.as_view(), name='detail'),
 
+    # group/1/
+    url(r'^(?P<pk>[0-9]+)/join$',
+        views.GroupJoinView.as_view(), name='join'),
+
+    # group/1/
+    url(r'^(?P<pk>[0-9]+)/leave$',
+        views.GroupLeaveView.as_view(), name='leave'),
+
     # group/1/members/
     url(r'^(?P<pk>[0-9]+)/members$',
         views.GroupMembersView.as_view(), name='members'),
