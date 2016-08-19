@@ -24,8 +24,8 @@
           <label for="form-region" class="col-sm-3 col-lg-2 control-label">住んでる都道府県</label>
           <div class="col-sm-9 col-lg-9">
             <select id="form-region" name="region">
-              {% for v,pref in user.region_list %}
-                <option value="{{ v }}">{{ pref }}</option>
+              {% for v, pref in user.region_list %}
+                <option value="{{ v }}" {% if user.region == v %}selected{% endif %}>{{ pref }}</option>
               {% endfor %}
             </select>
           </div>
@@ -34,9 +34,9 @@
           <label for="form-sex" class="col-sm-3 col-lg-2 control-label">性別</label>
           <div class="col-sm-9 col-lg-9">
             <select id="form-sex" name="sex">
-              <option value="True">男性</option>
-              <option value="False">女性</option>
-              <option value="None">秘密</option>
+              <option value="True" {% if user.sex is True %}selected{% endif %}>男性</option>
+              <option value="False" {% if user.sex is False %}selected{% endif %}>女性</option>
+              <option value="None" {% if user.sex is None %}selected{% endif %}>秘密</option>
             </select>
           </div>
         </div>

@@ -22,6 +22,17 @@
           </tr>
         </table>
       </div>
+
+      {% if event.private_notes and request.user in event.participant.all %}
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            参加者への連絡事項（応募していないユーザには見えません）
+          </div>
+          <div class="panel-body">
+            {{ event.private_notes }}
+          </div>
+        </div>
+      {% endif %}
       <div class="panel panel-primary">
         <div class="panel-heading">
           説明

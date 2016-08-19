@@ -31,6 +31,7 @@ $(function () {
         } else{
             var newUrl = Url + "&desc=" + desc;
         }
+        newUrl = newUrl.replace(/\bpage=\d+/,"page=1");
         window.location.replace(newUrl);
     });
 
