@@ -6,45 +6,45 @@
 {% endblock %}
 {% block content %}
 <div>
-	{% include "event/event_header.html" %}
-	<div class="row">
-		<div class="col-md-9">
-			<p>
-			<h2>日時： {{ event.start_time_format }} ～ {{ event.end_time_format }}</h2>
-			<h2>場所： {{ event.get_region_kanji }}</h2>
-			</p>
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					説明
-				</div>
-				<div class="panel-body">
-					{{ event.details }}
-				</div>
-			</div>
+  {% include "event/event_header.html" %}
+  <div class="row">
+    <div class="col-md-9">
+      <p>
+      <h2>日時： {{ event.start_time_format }} ～ {{ event.end_time_format }}</h2>
+      <h2>場所： {{ event.get_region_kanji }}</h2>
+      </p>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          説明
+        </div>
+        <div class="panel-body">
+          {{ event.details }}
+        </div>
+      </div>
 
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					募集詳細
-				</div>
-				<div class="panel-body">
-					<li>集合場所 : {{ event.meeting_place }}</li>
-					<li>連絡先 : {{ event.contact }}</li>
-					<li>注意事項 : {{ event.notes }}</li>
-					<li>関連タグ :
-						{% for tags in event.tag.all %}
-							{{ tags.name }}
-						{% endfor %}
-					</li>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-3">
-			{% include "event/side_info.html" %}
-		</div>
-	</div>
-	<div>
-		<u>コメント</u>
-	</div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          募集詳細
+        </div>
+        <div class="panel-body">
+          <li>集合場所 : {{ event.meeting_place }}</li>
+          <li>連絡先 : {{ event.contact }}</li>
+          <li>注意事項 : {{ event.notes }}</li>
+          <li>関連タグ :
+            {% for tags in event.tag.all %}
+              {{ tags.name }}
+            {% endfor %}
+          </li>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      {% include "event/side_info.html" %}
+    </div>
+  </div>
+  <div>
+    <u>コメント</u>
+  </div>
 </div>
 
 {% endblock %}
