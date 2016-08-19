@@ -360,7 +360,19 @@ class Command(BaseCommand):
             membership.save()
 
     def _create_tags(self):
-        taglist = ('python', 'ruby', 'django', 'aaaaa', 'mddslkfjakl', 'global', 'ゴミ拾い', '環境保護', 'interlink', '子供', 'bbbb', 'cccc', 'ddd', 'eee', 'fff', 'ggg', 'hhh', 'iii', 'jjj', 'kkk')
+        taglist = (
+            '環境',
+            '地域',
+            '人権',
+            '教育',
+            '医療',
+            '介護',
+            '国際協力',
+            '文化',
+            'スポーツ',
+            '被災者支援',
+            '動物'
+        )
         user = User.objects.get(pk=1)
         for t in taglist:
             tag = Tag(

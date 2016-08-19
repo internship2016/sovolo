@@ -214,8 +214,8 @@ class EventEditView(UserPassesTestMixin, UpdateView):
                 frame = Frame.objects.get(pk=frame_id)
 
             frame.description = self.request.POST.get('frame_' + number + '_description')
-            frame.upper_limit = self.request.POST.get('frame_' + number + '_upperlimit')
-            frame.deadline = self.request.POST.get('frame_' + number + '_deadline')
+            frame.upper_limit = self.request.POST.get('frame_' + number + '_upperlimit') or None
+            frame.deadline = self.request.POST.get('frame_' + number + '_deadline') or event.end_time
             frame.save()
 
         messages.info(self.request, "イベント情報を編集しました。")

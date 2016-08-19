@@ -1,33 +1,55 @@
-<div id="user-header" class="row">
-  <div class="col-sm-5" style="text-align: center">
-    <img class="" src={{ user.get_image_url }} alt="ユーザーアイコン" width="240" height="240">
+<div id="user-header">
+  <div class="row">
+    <div class="col-sm-5" style="text-align: center">
+      <img class="" src={{ user.get_image_url }} alt="ユーザーアイコン" width="240" height="240">
+    </div>
+    <div class="col-sm-7">
+      <h1><u>{{ user.username }}</u></h1>
+      <h2> Lv. oo</h2>
+      <h2><span style="font-size: 50%;">次のレベルまでの貢献数</span> xxxx/oooo</h2>
+    </div>
   </div>
-  <div class="col-sm-7">
-    <div id="user-info" class="panel panel-primary">
-      <div class="panel-heading">
-        <h3 class="panel-title">
-          {{ user.username }}
-        </h3>
+  <div class="row">
+    <div class="col-sm-6">
+      <div id="user-info" class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            プロフィール
+          </h3>
+        </div>
+        <div class="panel-body container-fluid">
+          <dl>
+            <dt>表示名</dt>
+            <dd>{{ user.username }}</dd>
+            {% if user.birthday != null %}
+              <dt>年齢</dt>
+              <dd>{{ user.get_about_age }}代</dd>
+            {% endif %}
+            {% if user.sex != null %}
+              <dt>性別</dt>
+              <dd>{{ user.sex|yesno:"男,女,秘密" }}</dd>
+            {% endif %}
+            <dt>住んでる都道府県</dt>
+            <dd>{{ user.get_region_kanji }}</dd>
+          </dl>
+          <div style="text-align: right">
+            {% if user.id == request.user.id %}
+              <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">プロフィール編集</a>
+            {% endif %}
+          </div>
+        </div>
       </div>
-      <div class="panel-body container-fluid">
-        <dl>
-          <dt>表示名</dt>
-          <dd>{{ user.username }}</dd>
-          {% if user.birthday != null %}
-            <dt>年齢</dt>
-            <dd>{{ user.get_about_age }}代</dd>
-          {% endif %}
-          {% if user.sex != null %}
-            <dt>性別</dt>
-            <dd>{{ user.sex|yesno:"男,女,秘密" }}</dd>
-          {% endif %}
-          <dt>住んでる都道府県</dt>
-          <dd>{{ user.get_region_kanji }}</dd>
-        </dl>
-        <div style="text-align: right">
-          {% if user.id == request.user.id %}
-            <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">プロフィール編集</a>
-          {% endif %}
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">獲得トロフィー</h3>
+        </div>
+        <div class="panel-body">
+          <div class="trophy-box" style="width: 60px; text-align: center;">
+            <div class="trophy-hedding">ゴミ拾い</div>
+            <div class="trophy-icon" style="text-align: center;"><i class="fa fa-trophy fa-3x" style="color: #0000cd;"></i></div>
+          </div>
         </div>
       </div>
     </div>

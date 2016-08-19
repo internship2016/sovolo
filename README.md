@@ -1,6 +1,8 @@
 # sovolo
 そぼろ
 
+![ロゴ](https://cloud.githubusercontent.com/assets/343556/17825577/4d98d2b2-661e-11e6-99b4-24169f6fec60.png)
+
 ## INSTALL (port 80/443)
 
 注意: このリポジトリは[Dockerファイル](https://github.com/internship2016/django-uwsgi-nginx)と対になっています。
