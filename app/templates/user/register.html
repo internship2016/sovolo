@@ -25,10 +25,10 @@
       <div class="panel panel-primary Loginpanel">
         <div class="panel-heading">SNSアカウントで登録</div>
         <div class="panel-body">
-          <a class="btn btn-block btn-social btn-twitter" href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">
+          <a class="btn btn-block btn-social btn-twitter" href="{% url 'social:begin' 'twitter' %}">
             <span class="fa fa-twitter"></span> Register with Twitter
           </a>
-          <a class="btn btn-block btn-social btn-facebook" href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
+          <a class="btn btn-block btn-social btn-facebook" href="{% url 'social:begin' 'facebook' %}">
             <span class="fa fa-facebook"></span> Register with Facebook
           </a>
         </div>

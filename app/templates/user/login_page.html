@@ -36,11 +36,11 @@
         <div class="panel-heading">SNSアカウントでログイン</div>
         <div class="panel-body">
           <a class="btn btn-block btn-social btn-twitter"
-             href="{% url 'social:begin' 'twitter' %}?next={{ request.path }}">
+             href="{% url 'social:begin' 'twitter' %}">
             <span class="fa fa-twitter"></span> Login with Twitter
           </a>
           <a class="btn btn-block btn-social btn-facebook"
-             href="{% url 'social:begin' 'facebook' %}?next={{ request.path }}">
+             href="{% url 'social:begin' 'facebook' %}">
             <span class="fa fa-facebook"></span> Login with Facebook
           </a>
         </div>
