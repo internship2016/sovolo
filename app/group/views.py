@@ -27,27 +27,25 @@ class GroupCreate(CreateView):
         group = form.save(commit=False)
 
         # Events
-        new_events = set([int(e) for e in self.request.POST.getlist('events')])
-        old_events = set([e.id for e in self.request.user.admin_event.all()])
-
-        for event_id in set(new_events) - set(old_events):
+        group.event.clear()
+        for event_id in set(self.request.POST.getlist('events')):
             group.event.add(event_id)
-
-        for event_id in set(old_events) - set(new_events):
-            group.event.remove(event_id)
 
         # Admins
         raw_admins = self.request.POST.getlist('admins')
-        new_admins, new_admin_names = zip(*User.objects.filter(username__in=raw_admins).values_list('id','username'))
+        new_admins = User.objects.filter(username__in=raw_admins).values_list('id', flat=True)
         old_admins = group.admins().values_list('id', flat=True)
+        new_admin_names = User.objects.filter(username__in=raw_admins).values_list('username', flat=True)
 
-        for admin in set(new_admins) - set(old_admins) | {self.request.user.id}:
+        for admin in {self.request.user.id} | set(new_admins) - set(old_admins):
             membership = group.membership_set.get_or_create(member_id=admin)[0]
             membership.role = 'admin'
             membership.save()
 
         for admin in set(old_admins) - set(new_admins):
-            group.membership_set.get(member_id=admin).role = 'Normal'
+            membership.group.membership_set.get(member_id=admin)
+            membership.role = 'Normal'
+            membership.save()
 
         for name in set(raw_admins) - set(new_admin_names):
             messages.error(self.request, "ユーザ名 " + name + " に一致するユーザーはいませんでした。")
@@ -106,40 +104,30 @@ class GroupEditView(UserPassesTestMixin, UpdateView):
         group = form.save(commit=False)
 
         # Events
-        new_events = set([int(e) for e in self.request.POST.getlist('events')])
-        old_events = set(group.event.filter(admin__in=[self.request.user]).values_list('id', flat=True))
-
-        messages.info(self.request, new_events)
-        messages.info(self.request, old_events)
-
-        for event_id in set(new_events) - set(old_events):
+        group.event.clear()
+        for event_id in set(self.request.POST.getlist('events')):
             group.event.add(event_id)
-
-        for event_id in set(old_events) - set(new_events):
-            group.event.remove(event_id)
 
         # Admins
         raw_admins = self.request.POST.getlist('admins')
-        try:
-            new_admins, new_admin_names = zip(*User.objects.filter(username__in=raw_admins).values_list('id', 'username'))
-            old_admins = group.admins().values_list('id', flat=True)
+        new_admins = User.objects.filter(username__in=raw_admins).values_list('id', flat=True)
+        old_admins = group.admins().values_list('id', flat=True)
+        new_admin_names = User.objects.filter(username__in=raw_admins).values_list('username', flat=True)
 
-            for admin in set(new_admins) - set(old_admins):
-                membership.role = 'admin'
-                membership = group.membership_set.get_or_create(member_id=admin)[0]
-                membership.save()
+        for admin in set(new_admins) - set(old_admins):
+            membership = group.membership_set.get_or_create(member_id=admin)[0]
+            membership.role = 'admin'
+            membership.save()
 
-            for admin in set(old_admins) - set(new_admins):
-                group.membership_set.get(member_id=admin).role = 'Normal'
+        for admin in set(old_admins) - set(new_admins):
+            membership = group.membership_set.get(member_id=admin)
+            membership.role = 'Normal'
+            membership.save()
 
-            for name in set(raw_admins) - set(new_admin_names):
-                messages.error(self.request, "ユーザ名 " + name + " に一致するユーザーはいませんでした。")
+        for name in set(raw_admins) - set(new_admin_names):
+            messages.error(self.request, "ユーザ名 " + name + " に一致するユーザーはいませんでした。")
 
-            messages.info(self.request, "グループを作成しました。")
-        except ValueError:
-            messages.error(self.request, "管理者の変更に失敗しました。")
-            pass
-
+        messages.info(self.request, "グループ情報を修正しました。")
         return form_redirect
 
     def test_func(self):
