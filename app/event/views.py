@@ -469,9 +469,9 @@ class ParticipationDeleteView(DeleteView):
     model = Participation
 
     def get_success_url(self):
-        if self.object.status == "participating":
+        if self.object.status == "参加中":
             carry_up = self.object.frame.participation_set.filter(status="waiting_list").first()
-            carry_up.status = "participating"
+            carry_up.status = "参加中"
             #Send Email
             template = get_template("email/carry_up.txt")
             context = Context({'user': carry_up.user, 'event': carry_up.event})
