@@ -204,6 +204,9 @@ class Frame(AbstractBaseModel):
         status_query = Q(status="参加中")
         return self.participation_set.filter(status_query).count()
 
+    def deadline_format(self):
+        return self.deadline.strftime("%m/%d %H:%M")
+
 class FrameAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
