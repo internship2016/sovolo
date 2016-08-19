@@ -3,14 +3,14 @@
     <h4>コメント欄</h4>
   </div>
   <div class="panel-body">
-    {% for comment in comment_list reversed %}
+    {% for comment in comment_list %}
     <div id="comment#comment.id" class="media">
       <div class="media-left">
         <img class="media-object" src={{comment.user.get_image_url}} width="64" height="64" alt="画像">
       </div>
       <div class="media-body">
         <div class="media-heading">
-          <h4 style="display:inline-block">{{ comment.user.username }} <small><i>{{ comment.created }}</i></small></h4>
+          <h4 style="display:inline-block">{{ forloop.counter }}: {{ comment.user.username }} <small><i>{{ comment.created }}</i></small></h4>
         </div>
         <div>
           {{ comment.text }}
