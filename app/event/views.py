@@ -461,12 +461,15 @@ class EventFollowView(RedirectView):
                 else:
                     messages.error(self.request, "参加処理中にエラーが発生しました。")
 
-
         self.url = reverse_lazy('event:detail', kwargs={'pk': event_id})
         return super(EventFollowView, self).get_redirect_url(*args, **kwargs)
 
-class ParticipationDeleteView(DeleteView):
+
+class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
     model = Participation
+
+    def get_object(self, event_id=None, queryset=None):
+        return Participation.objects.get(event_id=self.kwargs['event_id'], user=self.request.user)
 
     def get_success_url(self):
         if self.object.status == "参加中":
@@ -482,7 +485,15 @@ class ParticipationDeleteView(DeleteView):
                 message = content.split("\n", 1)[1]
                 send_mail(subject, message, "reminder@sovolo.earth", [carry_up.user.email])
 
-        return reverse_lazy('top')
+        messages.info(self.request, "参加をキャンセルしました。")
+        return reverse_lazy('event:detail', kwargs={'pk': self.kwargs['event_id']})
+
+    def test_func(self):
+        return True
+        return self.request.user in Event.objects.get(pk=self.request.event_id).participant.all()
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden()
 
 
 class CommentCreate(CreateView):

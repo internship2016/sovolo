@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.utils import timezone
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.views.generic import DetailView, ListView
+from django.views.generic import DetailView, ListView, RedirectView
 from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseForbidden
 from event.models import Event
@@ -125,8 +125,8 @@ class GroupEditView(UserPassesTestMixin, UpdateView):
             old_admins = group.admins().values_list('id', flat=True)
 
             for admin in set(new_admins) - set(old_admins):
-                membership = group.membership_set.get_or_create(member_id=admin)[0]
                 membership.role = 'admin'
+                membership = group.membership_set.get_or_create(member_id=admin)[0]
                 membership.save()
 
             for admin in set(old_admins) - set(new_admins):
@@ -153,3 +153,34 @@ class GroupDeleteView(DeleteView):
     template_name = 'group/check_delete.html'
     model = Group
     success_url = reverse_lazy('group:index')
+
+
+@method_decorator(login_required, name='dispatch')
+class GroupJoinView(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        group = Group.objects.get(pk=kwargs['pk'])
+        group.membership_set.get_or_create(member=self.request.user, role='Normal')
+
+        messages.info(self.request, "グループに参加しました。")
+
+        self.url = reverse_lazy('group:detail', kwargs={'pk': kwargs['pk']})
+        return super(GroupJoinView, self).get_redirect_url(*args, **kwargs)
+
+
+@method_decorator(login_required, name='dispatch')
+class GroupLeaveView(RedirectView, UserPassesTestMixin):
+    def test_func(self):
+        return self.request.user in self.get_object().members()
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden()
+
+    def get_redirect_url(self, *args, **kwargs):
+        group = Group.objects.get(pk=kwargs['pk'])
+        group.membership_set.get(member=self.request.user, role='Normal').delete()
+
+        messages.info(self.request, "グループから脱退しました。")
+
+        self.url = reverse_lazy('group:detail', kwargs={'pk': kwargs['pk']})
+        return super(GroupLeaveView, self).get_redirect_url(*args, **kwargs)
+

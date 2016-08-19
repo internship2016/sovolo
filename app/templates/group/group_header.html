@@ -1,17 +1,17 @@
 <div class="media">
   <div class="media-left">
-    <img class="media-object" src="#" alt="グループアイコン" width="240" height="240">
+    <img class="media-object" src="{{ group.get_image_url }}" alt="グループアイコン" width="240" height="240">
   </div>
   <div class="media-body">
     <h1 class="media-heading">
       <u>{{ group.name }}</u>
     </h1>
-    {% if not group.membership_set.filter.exists %}
-      <a class="btn btn-default pull-right" href="#">グループに参加する</a>
-    {% elif group.membership_set.filter.first.role == 'Normal'%}
-      <a class="btn btn-default pull-right" href="#">グループから脱退</a>
-    {% elif group.membership_set.filter.first.role == 'admin' %}
-      <a class="btn btn-default pull-right" href="#">グループ編集</a>
+    {% if request.user in group.admins %}
+      <a class="btn btn-default pull-right" href="{% url 'group:edit' group.id %}">グループを編集</a>
+    {% elif request.user in group.members %}
+      <a class="btn btn-default pull-right" href="{% url 'group:leave' group.id %}">グループから脱退</a>
+    {% else  %}
+      <a class="btn btn-default pull-right" href="{% url 'group:join' group.id %}">グループに参加</a>
     {% endif %}
   </div>
 </div>

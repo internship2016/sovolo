@@ -19,7 +19,7 @@
       <a href="{% url 'event:message' event.id %}" type="button" class="btn btn-default">メール一斉送信 </a>
       <!--参加者 -->
     {% elif request.user in event.participant.all %}
-      <form method="post" action="{% url 'event:cancel' participation.id %}">
+      <form method="post" action="{% url 'event:cancel' event.id %}">
       {% csrf_token %}
         {% if participation.status == "参加中" %}
           <button>参加をキャンセルする</button>

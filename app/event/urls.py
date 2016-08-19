@@ -46,7 +46,7 @@ urlpatterns = [
     url(r'(?P<event_id>[0-9]+)/follow$', views.EventFollowView.as_view(), name='follow'),
 
     # event/1/cancel
-    url(r'^(?P<pk>[0-9]+)/cancel/$',
+    url(r'^(?P<event_id>[0-9]+)/cancel/$',
         views.ParticipationDeleteView.as_view(), name='cancel'),
 
     # event/1/comment

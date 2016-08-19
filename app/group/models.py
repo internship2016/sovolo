@@ -46,12 +46,12 @@ class Group(AbstractBaseModel):
         return super(Group, self).save(*args, **kwargs)
 
     def get_image_url(self):
-        if self.image is not None:
-            return self.image
+        if self.image:
+            return self.image.url
         else:
             return os.path.join(
                 settings.MEDIA_URL,
-                'groups/',
+                'group/',
                 "default_group_image.jpg",
             )
 
