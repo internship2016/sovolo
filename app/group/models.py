@@ -34,10 +34,10 @@ class Group(AbstractBaseModel):
     description = models.TextField()
 
     def admins(self):
-        return [m.member for m in self.membership_set.filter(role='admin')]
+        return self.member.filter(membership__role='admin')
 
     def members(self):
-        return [m.member for m in self.membership_set.filter(role='Normal')]
+        return self.member.filter(membership__role='Normal')
 
     def __str__(self):
         return self.name

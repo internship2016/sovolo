@@ -469,17 +469,18 @@ class ParticipationDeleteView(DeleteView):
     model = Participation
 
     def get_success_url(self):
-        if self.object.status == "participating":
-            carry_up = self.object.frame.participation_set.filter(status="waiting_list").first()
-            carry_up.status = "participating"
-            #Send Email
-            template = get_template("email/carry_up.txt")
-            context = Context({'user': carry_up.user, 'event': carry_up.event})
-            content = template.render(context)
-            subject = content.split("\n", 1)[0]
-            message = content.split("\n", 1)[1]
-            send_mail(subject, message, "reminder@sovolo.earth", [carry_up.user.email])
-
+        if self.object.status == "参加中":
+            waiting_list = self.object.frame.participation_set.filter(status="waiting_list").order_by('created')
+            if len(waiting_list) > 0:
+                carry_up = waiting_list.first()
+                carry_up.status = "参加中"
+                #Send Email
+                template = get_template("email/carry_up.txt")
+                context = Context({'user': carry_up.user, 'event': carry_up.event})
+                content = template.render(context)
+                subject = content.split("\n", 1)[0]
+                message = content.split("\n", 1)[1]
+                send_mail(subject, message, "reminder@sovolo.earth", [carry_up.user.email])
 
         return reverse_lazy('top')
 
