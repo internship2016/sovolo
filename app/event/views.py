@@ -22,6 +22,7 @@ from django.template.loader import get_template
 from django.template import Context
 from django.core.mail import send_mail
 from tag.models import Tag
+from user.models import User
 
 import sys
 import re
@@ -43,6 +44,7 @@ class EventCreate(CreateView):
         'contact',
         'details',
         'notes',
+        'private_notes',
         'ticket',
         'region',
     ]
@@ -57,34 +59,26 @@ class EventCreate(CreateView):
         event = form.save()
 
         # Admins
-        new_admins = set([int(t) for t in self.request.POST.getlist('admins')])
-        old_admins = set([t.id for t in event.admin.all()])
+        event.admin.clear()
+        raw_admins = self.request.POST.getlist('admins') or []
+        new_admins = User.objects.filter(username__in=raw_admins)
 
-        for admin_id in new_admins - old_admins:
+        for admin_id in new_admins.values_list('id', flat=True):
             event.admin.add(admin_id)
+        event.admin.add(event.host_user.id)
 
-        for admin_id in old_admins - new_admins:
-            event.admin.remove(admin_id)
+        for name in set(raw_admins) - set(new_admins.values_list('username', flat=True)):
+            messages.error(self.request, "ユーザ名 " + name + " に一致するユーザーはいませんでした。")
 
         # Groups
-        new_groups = set([int(g) for g in self.request.POST.getlist('groups')])
-        old_groups = set([t.id for t in self.request.user.group_set.filter(membership__role='admin')])
-
-        for group_id in new_groups - old_groups:
-            event.group_set.add(group_id)
-
-        for group_id in old_groups - new_groups:
-            event.group_set.remove(group_id)
+        event.group_set.clear()
+        for group_id in self.request.POST.getlist('groups'):
+            event.group_set.add(int(group_id))
 
         # Tags
-        new_tags = set([int(t) for t in self.request.POST.getlist('tags')])
-        old_tags = set([t.id for t in event.tag.all()])
-
-        for tag_id in new_tags - old_tags:
-            event.tag.add(tag_id)
-
-        for tag_id in old_tags - new_tags:
-            event.tag.remove(tag_id)
+        event.tag.clear()
+        for tag_id in self.request.POST.getlist('tags'):
+            event.tag.add(int(tag_id))
 
         # Frames
         frame_numbers = self.request.POST.getlist('frame_number')
@@ -126,6 +120,7 @@ class EventCreate(CreateView):
         self.object.participation_set.add(p)
         sys.stderr.write("Added participation")
         return super(EventCreate, self).get_success_url()
+
 
 class EventDetailView(DetailView):
     template_name = 'event/detail.html'
@@ -177,6 +172,7 @@ class EventEditView(UserPassesTestMixin, UpdateView):
         'image',
         'details',
         'notes',
+        'private_notes',
     ]
     template_name = 'event/edit.html'
 
@@ -184,24 +180,21 @@ class EventEditView(UserPassesTestMixin, UpdateView):
         event = form.save(commit=False)
 
         # Admins
-        new_admins = set([int(t) for t in self.request.POST.getlist('admins')])
-        old_admins = set([t.id for t in event.admin.all()])
+        event.admin.clear()
+        raw_admins = self.request.POST.getlist('admins') or []
+        new_admins = User.objects.filter(username__in=raw_admins)
 
-        for admin_id in new_admins - old_admins:
+        for admin_id in new_admins.values_list('id', flat=True):
             event.admin.add(admin_id)
+        event.admin.add(event.host_user.id)
 
-        for admin_id in old_admins - new_admins:
-            event.admin.remove(admin_id)
+        for name in set(raw_admins) - set(new_admins.values_list('username', flat=True)):
+            messages.error(self.request, "ユーザ名 " + name + " に一致するユーザーはいませんでした。")
 
         # Groups
-        new_groups = set([int(g) for g in self.request.POST.getlist('groups')])
-        old_groups = set([t.id for t in self.request.user.group_set.filter(membership__role='admin')])
-
-        for group_id in new_groups - old_groups:
+        event.group_set.clear()
+        for group_id in set([int(g) for g in self.request.POST.getlist('groups')]):
             event.group_set.add(group_id)
-
-        for group_id in old_groups - new_groups:
-            event.group_set.remove(group_id)
 
         # Tags
         new_tags = set([int(t) for t in self.request.POST.getlist('tags')])
@@ -241,7 +234,6 @@ class EventEditView(UserPassesTestMixin, UpdateView):
         context = super(EventEditView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
         return context
-
 
 
 class EventDeleteView(UserPassesTestMixin, DeleteView):
@@ -436,6 +428,7 @@ class EventJoinView(RedirectView):
 
         self.url = reverse_lazy('event:detail', kwargs={'pk': event_id})
         return super(EventJoinView, self).get_redirect_url(*args, **kwargs)
+
 
 @method_decorator(login_required, name='dispatch')
 class EventFollowView(RedirectView):

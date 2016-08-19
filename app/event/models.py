@@ -31,6 +31,7 @@ class Event(AbstractBaseModel):
     contact = models.CharField(max_length=200)
     details = models.TextField()
     notes = models.TextField(blank=True)
+    private_notes = models.TextField(blank=True)
     ticket = models.BooleanField()
     hashtag = models.CharField(max_length=100, blank=True)
     share_message = models.CharField(max_length=100, blank=True)
