@@ -14,7 +14,10 @@ $color-pallet: (
 }
 
 #user-header {
-  padding: 30px;
+  img {
+    padding: 10px;
+  }
+  padding: 10px;
 }
 
 #user-detail-info {
