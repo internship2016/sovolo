@@ -52,4 +52,8 @@ urlpatterns = [
     # event/1/comment
     url(r'^(?P<event_id>[0-9]+)/comment/$',
         views.CommentCreate.as_view(), name='comment'),
+
+    # event/comment/1/delete
+    url(r'^(?P<event_id>[0-9]+)/comment/(?P<pk>[0-9]+)/delete$',
+        views.CommentDeleteView.as_view(), name='comment_delete'),
 ]

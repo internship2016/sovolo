@@ -36,6 +36,15 @@ $color-pallet: (
   padding-bottom: 70px;
 }
 
+/* Comment Area */
+.comment-input-area{
+  width: 100%;
+}
+
+.comment-input-area textarea{
+  width: 100%;
+}
+
 /* Flush footer to the bottom */
 * {
   margin: 0;
