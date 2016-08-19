@@ -17,9 +17,12 @@ class UserCreateView(CreateView):
     template_name = 'user/register.html'
 
     def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.set_password(form.cleaned_data['password'])
-        self.object.save()
+        from django.contrib.auth import login
+        user = form.save(commit=False)
+        user.set_password(form.cleaned_data['password'])
+        user.save()
+        login(self.request, user, "django.contrib.auth.backends.ModelBackend")
+        messages.info(self.request, "ユーザー登録が完了しました。")
         return super(UserCreateView, self).form_valid(form)
 
     def get_form(self):
