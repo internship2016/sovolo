@@ -7,6 +7,7 @@ from django.conf import settings
 from django.apps import apps
 
 from datetime import datetime
+from django.utils import timezone
 
 from tag.models import Tag
 from base.models import AbstractBaseModel
@@ -176,6 +177,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
         group_list = self.group_set.all()
 
         return Event.objects.filter(region=self.region).distinct().order_by('-created')[:5]
+
+    def get_future_participating_events(self):
+        date = timezone.now()
+        return self.participating_event.all().filter(start_time__gte=date).order_by('start_time')
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'created', 'modified')

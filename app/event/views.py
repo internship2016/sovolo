@@ -73,7 +73,7 @@ class EventCreate(CreateView):
         p = Participation(
             user=self.request.user,
             event=self.object,
-            status="admin",
+            status="管理者",
         )
         p.save()
         self.object.participation_set.add(p)
