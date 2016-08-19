@@ -59,7 +59,7 @@
     <div id="events">
       {% for event in group.event.all %}
       {% if forloop.first %}
-        <h4>グループに紐づけされたイベント</h4>
+        <h4>グループに紐づけされたボランティア</h4>
       {% endif %}
         <label>
           <input type="checkbox" name="events" value="{{ event.id }}" {% if event in group.event.all %}checked{% endif %}>

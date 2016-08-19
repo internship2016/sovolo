@@ -8,28 +8,28 @@
 -->
 
 <script type="text/javascript">
-    $(function () {
-        $('.datetimepicker').datetimepicker({
-         locale: moment.locale('ja'),
-        format: 'YYYY-MM-DD HH:mm:00',
-        sideBySide:true,
-        });
+  $(function () {
+    $('.datetimepicker').datetimepicker({
+      locale: moment.locale('ja'),
+      format: 'YYYY-MM-DD HH:mm:00',
+      sideBySide: true,
     });
+  });
 </script>
-
 
 
 <div class="form-group">
   <label for="id_name" class="col-sm-3">イベント名</label>
   <div class="col-sm-9">
-    <input id="id_name" class="form-control" maxlength="100" name="name" type="text" value="{{ event.name }}" required />
+    <input id="id_name" class="form-control" maxlength="100" name="name" type="text" value="{{ event.name }}" required/>
   </div>
 </div>
 
 <div class="form-group">
   <label for="id_start_time" class="col-sm-3">開始</label>
   <div class="col-sm-9">
-    <input id="id_start_time" class="form-control datetimepicker" name="start_time" type="text" value="{{ event.start_time }}" required />
+    <input id="id_start_time" class="form-control datetimepicker" name="start_time" type="text"
+           value="{{ event.start_time }}" required/>
   </div>
 </div>
 
@@ -37,7 +37,8 @@
 <div class="form-group">
   <label for="id_end_time" class="col-sm-3">終了</label>
   <div class="col-sm-9">
-    <input id="id_end_time" class="form-control datetimepicker" name="end_time" type="text" value="{{ event.end_time }}" required />
+    <input id="id_end_time" class="form-control datetimepicker" name="end_time" type="text" value="{{ event.end_time }}"
+           required/>
   </div>
 </div>
 
@@ -45,7 +46,8 @@
 <div class="form-group">
   <label for="id_meeting_place" class="col-sm-3">集合場所</label>
   <div class="col-sm-9">
-    <input id="id_meeting_place" class="form-control" maxlength="400" name="meeting_place" type="text" value="{{ event.meeting_place }}" required />
+    <input id="id_meeting_place" class="form-control" maxlength="400" name="meeting_place" type="text"
+           value="{{ event.meeting_place }}" required/>
   </div>
 </div>
 
@@ -63,7 +65,7 @@
 <div class="form-group">
   <label for="id_image" class="col-sm-3">イベント画像</label>
   <div class="col-sm-9">
-    <input id="id_image" name="image" type="file" />
+    <input id="id_image" name="image" type="file"/>
   </div>
 </div>
 
@@ -71,9 +73,11 @@
   <label for="id_contact" class="col-sm-3">主催者連絡先</label>
   <div class="col-sm-9">
     {% if event.contact != null %}
-    <input id="id_contact" class="form-control" maxlength="200" name="contact" type="text" value="{{ event.contact }}" required />
+      <input id="id_contact" class="form-control" maxlength="200" name="contact" type="text" value="{{ event.contact }}"
+             required/>
     {% else %}
-    <input id="id_contact" class="form-control" maxlength="200" name="contact" type="text" value="{{ user.email }}" required />
+      <input id="id_contact" class="form-control" maxlength="200" name="contact" type="text" value="{{ user.email }}"
+             required/>
     {% endif %}
   </div>
 </div>
@@ -95,39 +99,40 @@
 <div class="form-group">
   <label for="id_notes" class="col-sm-3">注意事項<br>（応募者のみに表示）</label>
   <div class="col-sm-9">
-    <textarea cols="40" id="id_private_notes" class="form-control" name="private_notes" rows="10">{{ event.private_notes }}</textarea>
+    <textarea cols="40" id="id_private_notes" class="form-control" name="private_notes"
+              rows="10">{{ event.private_notes }}</textarea>
   </div>
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3">管理者</label>
-    <div class="col-sm-9">
-        <div id="admins">
-            {% for admin in event.admin.all %}
-                <label><input name="admins" type="checkbox" value="{{ admin.username }}" checked>
-                    {{ admin.username }}
-                </label>
-            {% endfor %}
-        </div>
-        <div id="adder">
-            <input type="text" id="admin_name" placeholder="username">
-            <button id="add_admin" type="button">追加</button>
-        </div>
-        <script>
-            (function (){
-                var admins = document.querySelector("#admins");
-                var admin_name = document.querySelector('#admin_name');
-                var add_admin  = document.querySelector('#add_admin');
-                add_admin.addEventListener('click', function(e) {
-                    var label = document.createElement('label');
-                    var value = admin_name.value;
-                    label.innerHTML = "<input name='admins' type='checkbox' value="+value+" checked>"+value;
-                    admin_name.value = "";
-                    admins.appendChild(label);
-                });
-            })();
-        </script>
+  <label class="col-sm-3">管理者</label>
+  <div class="col-sm-9">
+    <div id="admins">
+      {% for admin in event.admin.all %}
+        <label><input name="admins" type="checkbox" value="{{ admin.username }}" checked>
+          {{ admin.username }}
+        </label>
+      {% endfor %}
     </div>
+    <div id="adder">
+      <input type="text" id="admin_name" placeholder="username">
+      <button id="add_admin" type="button">追加</button>
+    </div>
+    <script>
+      (function () {
+        var admins = document.querySelector("#admins");
+        var admin_name = document.querySelector('#admin_name');
+        var add_admin = document.querySelector('#add_admin');
+        add_admin.addEventListener('click', function (e) {
+          var label = document.createElement('label');
+          var value = admin_name.value;
+          label.innerHTML = "<input name='admins' type='checkbox' value=" + value + " checked>" + value;
+          admin_name.value = "";
+          admins.appendChild(label);
+        });
+      })();
+    </script>
+  </div>
 </div>
 
 
@@ -142,19 +147,22 @@
             <input type="hidden" name="frame_{{ forloop.counter }}_id" value="{{ frame.id }}">
             <label class="col-sm-3">仕事内容</label>
             <div class="col-sm-9">
-              <textarea class="form-control" name="frame_{{ forloop.counter }}_description">{{frame.description}}</textarea>
+              <textarea class="form-control"
+                        name="frame_{{ forloop.counter }}_description">{{ frame.description }}</textarea>
             </div>
             <label class="col-sm-3">上限人数</label>
             <div class="col-sm-9">
-              <input class="form-control" type="text" name="frame_{{ forloop.counter }}_upperlimit" value="{{ frame.upper_limit }}">
+              <input class="form-control" type="text" name="frame_{{ forloop.counter }}_upperlimit"
+                     value="{{ frame.upper_limit }}">
             </div>
             <label class="col-sm-3">応募締め切り</label>
             <div class='col-sm-9'>
-              <input class="form-control datetimepicker" name="frame_{{ forloop.counter }}_deadline" type="text" value="{{ frame.deadline }}" >
+              <input class="form-control datetimepicker" name="frame_{{ forloop.counter }}_deadline" type="text"
+                     value="{{ frame.deadline }}">
             </div>
           </div>
         </div>
-      {% empty %}
+        {% empty %}
         <div class="panel panel-default panel-body" style="margin:0">
           <div class="row">
             <input type="hidden" name="frame_number" value="1">
@@ -178,18 +186,18 @@
     </div>
     <button id="add_frame" type="button">参加枠追加</button>
     <script>
-      $(function(){
-        $('#add_frame').on('click',function (event) {
-          var X = $('#frames>div').length+1;
+      $(function () {
+        $('#add_frame').on('click', function (event) {
+          var X = $('#frames>div').length + 1;
 
           var html = [
-            '<div class="panel panel-default panel-body" style="margin:0" id="frame_number_'+X+'">',
+            '<div class="panel panel-default panel-body" style="margin:0" id="frame_number_' + X + '">',
             '  <div class="row">',
-            '    <input type="hidden" name="frame_number" value="'+X+'">',
+            '    <input type="hidden" name="frame_number" value="' + X + '">',
             // '    <input type="hidden" name="frame_'+X+'_id" value="{{ frame.id }}">',
             '    <label class="col-sm-3">仕事内容<sup><font color="red">＊</font></sup></label>',
             '    <div class="col-sm-9">',
-            '      <textarea class="form-control" name="frame_'+X+'_description"></textarea>',
+            '      <textarea class="form-control" name="frame_' + X + '_description"></textarea>',
             '    </div>',
             '    <label class="col-sm-3">上限人数</label>',
             '    <div class="col-sm-9">',
@@ -200,7 +208,7 @@
             '      <input class="form-control datetimepicker" name="frame_'+X+'_deadline" type="text" placeholder="任意">',
             '      <script>',
             '        (function () {',
-            '            $("#frame_number_'+X+' .datetimepicker").datetimepicker({',
+            '            $("#frame_number_' + X + ' .datetimepicker").datetimepicker({',
             '              locale: moment.locale("ja"),',
             '              format: "YYYY-MM-DD HH:mm:00",',
             '              sideBySide:true,',
@@ -226,24 +234,50 @@
   <label class="col-sm-3">関連付けるタグ</label>
   <div class="col-sm-9">
     {% for tag in all_tags %}
-        <label><input type="checkbox" name="tags" value="{{ tag.id }}" {% if tag in event.tag.all %}checked{% endif %}>{{ tag.name }}</label>
+      <label><input type="checkbox" name="tags" value="{{ tag.id }}"
+                    {% if tag in event.tag.all %}checked{% endif %}>{{ tag.name }}</label>
     {% endfor %}
   </div>
 </div>
 
 <div class="form-group">
-    <label class="col-sm-3">関連付けるグループ</label>
-    <div class="col-sm-9">
-        <div id="events">
-            {% for group in request.user.admin_group.all %}
-                <label><input type="checkbox" name="groups" value="{{ group.id }}" {% if group in event.group_set.all %}checked{% endif %}>{{ group.name }}</label>
-            {% endfor %}
-        </div>
+  <label class="col-sm-3">グループの紐づけ</label>
+  <div class="col-sm-9">
+    <div id="events">
+      {% for group in event.group_set.all %}
+        {% if forloop.first %}
+          <h4>ボランティアに紐づけされたグループ</h4>
+        {% endif %}
+        <label>
+          <input type="checkbox" name="groups" value="{{ group.id }}" checked>
+          {{ group.name }}
+        </label>
+      {% endfor %}
+
+      <h4>自分の管理しているグループ</h4>
+      {% for group in request.user.admin_group.all %}
+        <label>
+          <input type="checkbox" name="groups" value="{{ group.id }}"
+                 {% if group in event.group_set.all %}checked{% endif %}>
+          {{ group.name }}
+        </label>
+        {% empty %}
+        <p>管理しているグループはありません。</p>
+      {% endfor %}
     </div>
+  </div>
 </div>
 
 <style>
-    #tags label { display:block; }
-    #admins label { display: block; }
-    #groups label { display: block; }
+  #tags label {
+    display: block;
+  }
+
+  #admins label {
+    display: block;
+  }
+
+  #groups label {
+    display: block;
+  }
 </style>

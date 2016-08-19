@@ -242,7 +242,6 @@ class Command(BaseCommand):
                 meeting_place="531 Page Street",
                 contact="interlink@interlink.com",
                 details="This is a generic event.",
-                ticket=False,
                 host_user=host_user,
                 region=prefec_list[i],
             )
