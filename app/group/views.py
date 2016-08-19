@@ -23,24 +23,37 @@ class GroupCreate(CreateView):
     fields = ['name','description','image']
 
     def form_valid(self, form):
-        redirect = super(GroupCreate, self).form_valid(form)
+        form_redirect = super(GroupCreate, self).form_valid(form)
         group = form.save(commit=False)
 
-        group.membership_set.get_or_create(member=self.request.user, role='admin')
-        names = self.request.POST.getlist('admins')
-        for name in names:
-            try:
-                user = User.objects.get(username=name)
-                group.membership_set.get_or_create(member=user, role='admin')
-            except ObjectDoesNotExist:
-                messages.error(self.request, "ユーザ名 "+name+" に一致するユーザーはいませんでした。")
+        # Events
+        new_events = set([int(e) for e in self.request.POST.getlist('events')])
+        old_events = set([e.id for e in self.request.user.admin_event.all()])
 
-        event_ids = self.request.POST.getlist('events')
-        events = list(map(lambda pk: Event.objects.get(pk=pk), event_ids))
-        group.event.add(*events)
+        for event_id in set(new_events) - set(old_events):
+            group.event.add(event_id)
+
+        for event_id in set(old_events) - set(new_events):
+            group.event.remove(event_id)
+
+        # Admins
+        raw_admins = self.request.POST.getlist('admins')
+        new_admins, new_admin_names = zip(*User.objects.filter(username__in=raw_admins).values_list('id','username'))
+        old_admins = group.admins().values_list('id', flat=True)
+
+        for admin in set(new_admins) - set(old_admins) | {self.request.user.id}:
+            membership = group.membership_set.get_or_create(member_id=admin)[0]
+            membership.role = 'admin'
+            membership.save()
+
+        for admin in set(old_admins) - set(new_admins):
+            group.membership_set.get(member_id=admin).role = 'Normal'
+
+        for name in set(raw_admins) - set(new_admin_names):
+            messages.error(self.request, "ユーザ名 " + name + " に一致するユーザーはいませんでした。")
 
         messages.info(self.request, "グループを作成しました。")
-        return redirect
+        return form_redirect
 
 
 class GroupDetailView(DetailView):
@@ -89,27 +102,45 @@ class GroupEditView(UserPassesTestMixin, UpdateView):
     fields = ['name', 'image', 'description']
 
     def form_valid(self, form):
+        form_redirect = super(GroupEditView, self).form_valid(form)
         group = form.save(commit=False)
 
-        old_admins = set([u.username for u in group.admins()])
-        new_admins = set(self.request.POST.getlist('admins'))
+        # Events
+        new_events = set([int(e) for e in self.request.POST.getlist('events')])
+        old_events = set(group.event.filter(admin__in=[self.request.user]).values_list('id', flat=True))
 
-        Membership.objects.filter(group=group, member__username__in=list(old_admins - new_admins), role='admin').delete()
+        messages.info(self.request, new_events)
+        messages.info(self.request, old_events)
 
-        for name in new_admins - old_admins:
-            try:
-                user = User.objects.get(username=name)
-                group.membership_set.get_or_create(member=user, role='admin')
-            except ObjectDoesNotExist:
-                messages.error(self.request, "ユーザ名 "+name+" に一致するユーザーはいませんでした。")
+        for event_id in set(new_events) - set(old_events):
+            group.event.add(event_id)
 
-        event_ids = self.request.POST.getlist('events')
-        events = list(map(lambda pk: Event.objects.get(pk=pk), event_ids))
-        if len(events) is not 0:
-            group.event.add(*events)
+        for event_id in set(old_events) - set(new_events):
+            group.event.remove(event_id)
 
-        messages.info(self.request, "グループを編集しました。")
-        return super(GroupEditView, self).form_valid(form)
+        # Admins
+        raw_admins = self.request.POST.getlist('admins')
+        try:
+            new_admins, new_admin_names = zip(*User.objects.filter(username__in=raw_admins).values_list('id', 'username'))
+            old_admins = group.admins().values_list('id', flat=True)
+
+            for admin in set(new_admins) - set(old_admins):
+                membership = group.membership_set.get_or_create(member_id=admin)[0]
+                membership.role = 'admin'
+                membership.save()
+
+            for admin in set(old_admins) - set(new_admins):
+                group.membership_set.get(member_id=admin).role = 'Normal'
+
+            for name in set(raw_admins) - set(new_admin_names):
+                messages.error(self.request, "ユーザ名 " + name + " に一致するユーザーはいませんでした。")
+
+            messages.info(self.request, "グループを作成しました。")
+        except ValueError:
+            messages.error(self.request, "管理者の変更に失敗しました。")
+            pass
+
+        return form_redirect
 
     def test_func(self):
         return self.request.user in self.get_object().admins()
