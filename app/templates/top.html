@@ -42,7 +42,7 @@
           <h3 class="panel-title">フォローしているタグの新着一覧</h3>
         </div>
         <div class="panel-body">
-          {% event_list request.user.get_new_tag_events %}
+          {% event_list request.user.get_new_tag_events request.user %}
 {#          <p class="text-right"><a href="#">もっと見る</a></p>#}
         </div>
       </div>
