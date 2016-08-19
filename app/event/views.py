@@ -124,6 +124,57 @@ class EventEditView(UserPassesTestMixin, UpdateView):
     ]
     template_name = 'event/edit.html'
 
+    def form_valid(self, form):
+        event = form.save(commit=False)
+
+        # Admins
+        new_admins = set([int(t) for t in self.request.POST.getlist('admins')])
+        old_admins = set([t.id for t in event.admin.all()])
+
+        for admin_id in new_admins - old_admins:
+            event.admin.add(admin_id)
+
+        for admin_id in old_admins - new_admins:
+            event.admin.remove(admin_id)
+
+        # Groups
+        new_groups = set([int(g) for g in self.request.POST.getlist('groups')])
+        old_groups = set([t.id for t in self.request.user.group_set.filter(membership__role='admin')])
+
+        for group_id in new_groups - old_groups:
+            event.group_set.add(group_id)
+
+        for group_id in old_groups - new_groups:
+            event.group_set.remove(group_id)
+
+        # Tags
+        new_tags = set([int(t) for t in self.request.POST.getlist('tags')])
+        old_tags = set([t.id for t in event.tag.all()])
+
+        for tag_id in new_tags - old_tags:
+            event.tag.add(tag_id)
+
+        for tag_id in old_tags - new_tags:
+            event.tag.remove(tag_id)
+
+        # Frames
+        frame_numbers = self.request.POST.getlist('frame_number')
+
+        for number in frame_numbers:
+            frame_id = self.request.POST.get('frame_' + number + '_id')
+            if frame_id is None:
+                frame = Frame(event=event)
+            else:
+                frame = Frame.objects.get(pk=frame_id)
+
+            frame.description = self.request.POST.get('frame_' + number + '_description')
+            frame.upper_limit = self.request.POST.get('frame_' + number + '_upperlimit')
+            frame.deadline = self.request.POST.get('frame_' + number + '_deadline')
+            frame.save()
+
+        messages.info(self.request, "イベント情報を編集しました。")
+        return super(EventEditView, self).form_valid(form)
+
     def test_func(self):
         return self.request.user.is_manager_for(self.get_object())
 
