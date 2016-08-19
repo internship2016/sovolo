@@ -7,11 +7,11 @@
       <u>{{ group.name }}</u>
     </h1>
     {% if request.user in group.admins %}
-      <a class="btn btn-default pull-right" href="#">グループを編集</a>
+      <a class="btn btn-default pull-right" href="{% url 'group:edit' group.id %}">グループを編集</a>
     {% elif request.user in group.members %}
-      <a class="btn btn-default pull-right" href="#">グループから脱退</a>
+      <a class="btn btn-default pull-right" href="{% url 'group:leave' group.id %}">グループから脱退</a>
     {% else  %}
-      <a class="btn btn-default pull-right" href="#">グループに参加</a>
+      <a class="btn btn-default pull-right" href="{% url 'group:join' group.id %}">グループに参加</a>
     {% endif %}
   </div>
 </div>
