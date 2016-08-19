@@ -196,7 +196,7 @@ class Frame(AbstractBaseModel):
 
     def num_participants(self):
         status_query = Q(status="参加中")
-        return self.object.participation_set.filter(status_query).count()
+        return self.participation_set.filter(status_query).count()
 
 class FrameAdmin(admin.ModelAdmin):
     list_display = (
