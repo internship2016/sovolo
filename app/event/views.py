@@ -498,16 +498,17 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
         return HttpResponseForbidden()
 
 
+@method_decorator(login_required, name='dispatch')
 class CommentCreate(CreateView):
     model = Comment
-    template_name = 'event/add_comment.html'
-    fields = ['text']
+    #template_name = 'top.html'
+    fields=['text']
 
     def form_valid(self, form):
         form.instance.user = self.request.user
         event_id = self.kwargs['event_id']
         form.instance.event = Event.objects.get(pk=event_id)
-        return super(EventCreate, self).form_valid(form)
+        return super(CommentCreate, self).form_valid(form)
 
 
 class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):

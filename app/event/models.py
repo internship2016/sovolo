@@ -1,6 +1,7 @@
 # coding=utf-8
 from django.db import models
 from django.core.urlresolvers import reverse
+from django.shortcuts import redirect
 from user.models import User
 from base.models import AbstractBaseModel
 from django.conf import settings
@@ -253,13 +254,16 @@ class Comment(AbstractBaseModel):
             return ">> %s\n%s :\"%s" % (
                 str(self.reply_to),
                 self.user.username,
-                self.username,
+                self.text,
             )
         else:
-            return "%s: \"" % (
+            return "%s: \"%s\"" % (
                 self.user.username,
-                self.username,
+                self.text,
             )
+
+    def get_absolute_url(self):
+        return reverse('event:detail', kwargs={'pk': self.event.id})
 
     def save(self, *args, **kwargs):
         return super(Comment, self).save(*args, **kwargs)

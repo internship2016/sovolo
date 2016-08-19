@@ -153,7 +153,7 @@ class Command(BaseCommand):
                 telephone = 123456789,
                 emergency_contact = 119,
                 email = 'test@test.com',
-                occupation = 'NEET',
+                occupation = '自宅警備員',
             )
         testuser.set_password('pass1234')
         testuser.save()
@@ -308,15 +308,23 @@ class Command(BaseCommand):
                 comment = Comment(
                     event=event,
                     user=participation.user,
-                    text="あああああああああああああああああああああああ",
+                    text="""ああああああああああああああああああああああああああああああああああああああああああああ
+                    ああああああああああああああああああああああああああああああああああああああああああああああああ
+                    あああああああああああああああああああああああああああああああああああああああああああああああ
+                    あああああああああああああああああああああああああああああああああああああああああああああああ
+                    あああああああああああああああああああああああああああああああああああああああああああああああ
+                    あああああああああああああああああああああああああああああああああああああああああああああああ
+                    """,
                 )
                 comment.save()
-
-        for comment in Comment.objects.all():
-            target = Comment.objects.get(pk=1)
-            comment.text = "黙れ"
-            comment.reply_to = target
-
+                reply_comment = Comment(
+                    event=event,
+                    user=participation.user,
+                    text="""すみませんでした。
+                        """,
+                    reply_to=comment,
+                )
+                reply_comment.save()
 
     def _create_groups(self):
         for i in range(20):

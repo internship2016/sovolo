@@ -1,8 +1,9 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load event_tags %}
 
 {% block title %}
-{{ event.name}}
+{{ event.name }}
 {% endblock %}
 {% block content %}
 <div>
@@ -50,9 +51,7 @@
       {% include "event/side_info.html" %}
     </div>
   </div>
-  <div>
-    <u>コメント</u>
-  </div>
+  {% comments event %}
 </div>
 
 {% endblock %}
