@@ -12,7 +12,7 @@
           <h3 class="panel-title">新着のボランティア</h3>
         </div>
         <div class="panel-body">
-          {% event_list new_events %}
+          {% event_list new_events request.user %}
 {#          <p class="text-right"><a href="#">もっと見る</a></p>#}
         </div>
       </div>
