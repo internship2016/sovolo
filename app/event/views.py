@@ -244,7 +244,7 @@ class EventEditView(UserPassesTestMixin, UpdateView):
 
 
 
-class EventDeleteView(DeleteView):
+class EventDeleteView(UserPassesTestMixin, DeleteView):
     model = Event
     success_url = reverse_lazy('event:index')
     template_name = 'event/check_delete.html'
@@ -254,9 +254,13 @@ class EventDeleteView(DeleteView):
         return context
 
     def dispatch(self, request, *args, **kwargs):
-        if self.request.user not in self.get_object().admin.all():
-            return HttpResponseForbidden()
         return super(DeleteView, self).dispatch(request, *args, **kwargs)
+
+    def test_func(self):
+        return self.request.user.is_manager_for(self.get_object())
+
+    def handle_no_permission(self):
+        return HttpResponseForbidden()
 
 
 class EventParticipantsView(DetailView):
