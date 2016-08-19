@@ -265,19 +265,42 @@ class Command(BaseCommand):
                 participation = Participation(
                     event=event,
                     frame=frame,
-                    user=User.objects.get(pk=frame.pk),
-                    status='参加中',
+                    user=User.objects.get(pk=1),
+                    status='管理者',
                 )
-                participation.save()
 
                 if not frame.pk==1:
                     participation = Participation(
                         event=event,
                         frame=frame,
-                        user=User.objects.get(pk=1),
+                        user=User.objects.get(pk=frame.pk),
                         status='参加中',
                     )
+                    participation.save()
+
                 participation.save()
+
+        e = Event.objects.get(pk=2)
+        f = e.frame_set.first()
+        i=3
+        while not f.is_full():
+            p = Participation(
+                event=e,
+                frame=f,
+                user=User.objects.get(pk=i),
+                status='参加中',
+            )
+            p.save()
+            i+=1
+
+        p = Participation(
+            event=e,
+            frame=f,
+            user=User.objects.get(pk=10),
+            status='キャンセル待ち',
+        )
+        p.save()
+
 
     def _create_comments(self):
         for event in Event.objects.all():
