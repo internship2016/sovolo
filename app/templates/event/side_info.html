@@ -1,21 +1,12 @@
-<li>主催者：
-  <a href="{% url 'user:detail' event.host_user_id %}">
-    <img src="{{ event.host_user.get_image_url }}" width="24" height="24">
-    {{event.host_user.username}}
-  </a>
-</li>
-<li>グループ：
-  {% for group in event.group_set.all %}
-  <a href="{% url 'group:detail' group.id %}">
-    <img src="{{ group.get_image_url }}" width="24" height="24">
-    {{ group.name }}
-  </a>
-  {% endfor %}
-</li>
 <div class="panel panel-primary">
-  <div class="panel-heading">
-    管理者
+  <div class="panel-heading">主催者</div>
+  <div class="panel-body">
+    <a href="{% url 'user:detail' event.host_user_id %}">
+      <img src="{{ event.host_user.get_image_url }}" width="24" height="24">
+      {{event.host_user.username}}
+    </a>
   </div>
+  <div class="panel-heading">管理者</div>
   <div class="panel-body">
     {% for administer in event.admin.all %}
     <a href="{% url 'user:detail' administer.id %}">
@@ -23,13 +14,9 @@
     </a>
     {% endfor%}
   </div>
-</div>
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    参加者
-  </div>
+  <div class="panel-heading">参加者</div>
   <div class="panel-body">
-    {% for participant in event.participant.all %}
+    {% for participant in event.participant.all|slice:":10" %}
     <a href="{% url 'user:detail' participant.id %}">
       <img src="{{ participant.get_image_url }}" width="24" height="24">
     </a>
@@ -37,18 +24,18 @@
     <a href="{% url 'event:participants' event.id %}" class="pull-right">もっと見る</a>
   </div>
 </div>
+
 <div class="panel panel-primary">
-  <div class="panel-heading">
-    参加状況
-  </div>
+  <div class="panel-heading">グループ</div>
   <div class="panel-body">
-    {% for frame in event.frame_set.all %}
-    <div>
-      <h5>{{frame.description}}　(締切：{{frame.deadline_format}})</h5>
-      {{ frame.num_participants }}人
-      /{{frame.upper_limit}}人
-      <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default pull-right">参加</a>
-    </div>
+    {% for group in event.group_set.all %}
+      <p><a href="{% url 'group:detail' group.id %}"><img src="{{ group.get_image_url }}" width="24" height="24">&nbsp;{{ group.name }}</a></p>
+    {% endfor %}
+  </div>
+  <div class="panel-heading">タグ</div>
+  <div class="panel-body">
+    {% for tags in event.tag.all %}
+      <a class="btn btn-primary">{{ tags.name }}</a>
     {% endfor %}
   </div>
 </div>

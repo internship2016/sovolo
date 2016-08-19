@@ -10,17 +10,21 @@
   {% include "event/event_header.html" %}
   <div class="row">
     <div class="col-md-9">
+
       <div class="panel panel-primary">
-        <table class="table">
-          <tr>
-            <th>日時</th>
-            <td>{{ event.start_time_format }} ～ {{ event.end_time_format }}</td>
-          </tr>
-          <tr>
-            <th>場所</th>
-            <td>{{ event.get_region_kanji }}</td>
-          </tr>
-        </table>
+        <div class="panel-heading">
+          参加状況
+        </div>
+        <div class="panel-body">
+          {% for frame in event.frame_set.all %}
+          <div>
+            <h5>{{frame.description}}　(締切：{{frame.deadline_format}})</h5>
+            {{ frame.num_participants }}人
+            /{{frame.upper_limit}}人
+            <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default pull-right">参加</a>
+          </div>
+          {% endfor %}
+        </div>
       </div>
 
       {% if event.private_notes and request.user in event.participant.all %}
@@ -33,28 +37,32 @@
           </div>
         </div>
       {% endif %}
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          説明
-        </div>
-        <div class="panel-body">
-          {{ event.details }}
-        </div>
-      </div>
 
       <div class="panel panel-primary">
-        <div class="panel-heading">
-          募集詳細
-        </div>
+        <div class="panel-heading">募集詳細</div>
         <div class="panel-body">
-          <li>集合場所 : {{ event.meeting_place }}</li>
-          <li>連絡先 : {{ event.contact }}</li>
-          <li>注意事項 : {{ event.notes }}</li>
-          <li>関連タグ :
-            {% for tags in event.tag.all %}
-              {{ tags.name }}
-            {% endfor %}
-          </li>
+          <table class="table">
+            <tr>
+              <th>日時</th>
+              <td>{{ event.start_time_format }} ～ {{ event.end_time_format }}</td>
+            </tr>
+            <tr>
+              <th>説明</th>
+              <td>{{ event.details }}</td>
+            </tr>
+            <tr>
+              <th>連絡事項</th>
+              <td>{{ event.notes }}</td>
+            </tr>
+            <tr>
+              <th>集合場所</th>
+              <td>{{ event.get_region_kanji }} {{ event.meeting_place }}</td>
+            </tr>
+            <tr>
+              <th>連絡先</th>
+              <td>{{ event.contact }}</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
