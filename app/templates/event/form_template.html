@@ -81,19 +81,19 @@
 <div class="form-group">
   <label for="id_details" class="col-sm-3">詳細説明</label>
   <div class="col-sm-9">
-    <textarea cols="40" id="id_details" class="form-control" name="details" rows="10" placeholder="目安人数など" required>{{ event.details }}</textarea>
+    <textarea cols="40" id="id_details" class="form-control" name="details" rows="10" required>{{ event.details }}</textarea>
   </div>
 </div>
 
 <div class="form-group">
-  <label for="id_notes" class="col-sm-3">注意事項</label>
+  <label for="id_notes" class="col-sm-3">注意事項<br> （全員に表示）</label>
   <div class="col-sm-9">
-    <textarea cols="40" id="id_notes" class="form-control" name="notes" rows="10">{{ event.notes }}</textarea>
+    <textarea cols="40" id="id_notes" class="form-control" name="notes" rows="10" placeholder="目安人数など">{{ event.notes }}</textarea>
   </div>
 </div>
 
 <div class="form-group">
-  <label for="id_notes" class="col-sm-3">注意事項（応募者のみに表示）</label>
+  <label for="id_notes" class="col-sm-3">注意事項<br>（応募者のみに表示）</label>
   <div class="col-sm-9">
     <textarea cols="40" id="id_private_notes" class="form-control" name="private_notes" rows="10">{{ event.private_notes }}</textarea>
   </div>
@@ -132,7 +132,7 @@
 
 
 <div class="form-group">
-  <label class="col-sm-3">参加枠(任意)</label>
+  <label class="col-sm-3">参加枠</label>
   <div class="col-sm-9">
     <div id="frames">
       {% for frame in event.frame_set.all %}
@@ -159,17 +159,17 @@
           <div class="row">
             <input type="hidden" name="frame_number" value="1">
             <!--<input type="hidden" name="frame_1_id" value="{{ frame.id }}">-->
-            <label class="col-sm-3">仕事内容</label>
+            <label class="col-sm-3">仕事内容<sup><font color="red">＊</font></sup></label>
             <div class="col-sm-9">
               <textarea class="form-control" name="frame_1_description"></textarea>
             </div>
             <label class="col-sm-3">上限人数</label>
             <div class="col-sm-9">
-              <input class="form-control" type="text" name="frame_1_upperlimit">
+              <input class="form-control" type="text" name="frame_1_upperlimit" placeholder="任意">
             </div>
             <label class="col-sm-3">応募締め切り</label>
             <div class='col-sm-9'>
-              <input class="form-control datetimepicker" name="frame_1_deadline" type="text">
+              <input class="form-control datetimepicker" name="frame_1_deadline" type="text" placeholder="任意">
             </div>
           </div>
         </div>
@@ -187,17 +187,17 @@
             '  <div class="row">',
             '    <input type="hidden" name="frame_number" value="'+X+'">',
             // '    <input type="hidden" name="frame_'+X+'_id" value="{{ frame.id }}">',
-            '    <label class="col-sm-3">仕事内容</label>',
+            '    <label class="col-sm-3">仕事内容<sup><font color="red">＊</font></sup></label>',
             '    <div class="col-sm-9">',
             '      <textarea class="form-control" name="frame_'+X+'_description"></textarea>',
             '    </div>',
             '    <label class="col-sm-3">上限人数</label>',
             '    <div class="col-sm-9">',
-            '      <input class="form-control" type="text" name="frame_'+X+'_upperlimit">',
+            '      <input class="form-control" type="text" name="frame_'+X+'_upperlimit" placeholder="任意">',
             '    </div>',
             '    <label class="col-sm-3">応募締め切り</label>',
             '    <div class="col-sm-9">',
-            '      <input class="form-control datetimepicker" name="frame_'+X+'_deadline" type="text">',
+            '      <input class="form-control datetimepicker" name="frame_'+X+'_deadline" type="text" placeholder="任意">',
             '      <script>',
             '        (function () {',
             '            $("#frame_number_'+X+' .datetimepicker").datetimepicker({',
