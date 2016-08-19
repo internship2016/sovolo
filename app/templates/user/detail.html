@@ -59,10 +59,9 @@
       <h1 class="panel-title">フォローしているタグ</h1>
     </div>
     <div class="panel-body">
-      <a class="btn btn-default" href="#">東京</a>
-      <a class="btn btn-default" href="#">ゴミ拾い</a>
-      <a class="btn btn-default" href="#">震災</a>
-      <a class="btn btn-default" href="#">昼食付き</a>
+      {% for tag in user.follow_tag.all %}
+        <button class="btn btn-default">{{ tag.name }}</button>
+      {% endfor %}
     </div>
   </div>
 

@@ -13,14 +13,23 @@
   </div>
   <div class="media-body event-head-title">
     <h1 class="media-heading"><u>{{event}}</u></h1>
-    {% if True %}
       <!--管理者-->
+    {% if request.user in event.admin.all %}
       <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">内容変更</a>
       <a href="{% url 'event:message' event.id %}" type="button" class="btn btn-default">メール一斉送信 </a>
       <!--参加者 -->
+    {% elif request.user in event.participant.all %}
+      <form method="post" action="{% url 'event:cancel' participation.id %}">
+      {% csrf_token %}
+      <button>参加をキャンセルする</button>
+      </form>
       <!--興味あり-->
       <!--その他-->
-      <a href="{% url 'event:participate' event.id 1 %}" class="btn btn-default">参加する</a>
+    {% else %}
+      {% for frame in event.frame_set.all %}
+      <p>{{ frame }}</p>
+      <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default">参加する</a>
+      {% endfor %}
     {% endif %}
     <div class="btn pull-right btn-group .active">
       <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>

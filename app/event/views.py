@@ -21,6 +21,7 @@ from django.apps import apps
 from django.template.loader import get_template
 from django.template import Context
 from django.core.mail import send_mail
+from tag.models import Tag
 
 import sys
 import re
@@ -104,6 +105,12 @@ class EventCreate(CreateView):
 
     def form_invalid(self, form):
         return super(EventCreate, self).form_invalid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super(EventCreate, self).get_context_data(**kwargs)
+        context['all_tags'] = Tag.objects.all
+        return context
+
 
     def get_success_url(self):
         self.object.admin.add(self.request.user)
@@ -227,6 +234,12 @@ class EventEditView(UserPassesTestMixin, UpdateView):
 
     def handle_no_permission(self):
         return HttpResponseForbidden()
+
+    def get_context_data(self, **kwargs):
+        context = super(EventEditView, self).get_context_data(**kwargs)
+        context['all_tags'] = Tag.objects.all
+        return context
+
 
 
 class EventDeleteView(DeleteView):

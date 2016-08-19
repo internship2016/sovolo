@@ -15,24 +15,6 @@
         sideBySide:true,
         });
     });
-
-    /*
-    $(function () {
-        $('#start-date').datetimepicker({
-        locale: moment.locale('ja'),
-        format: 'YYYY-MM-DD HH:mm:00',
-        sideBySide:true,
-        });
-    });
-    $(function () {
-        $('#end-date').datetimepicker({
-        locale: moment.locale('ja'),
-        format: 'YYYY-MM-DD HH:mm:00',
-        sideBySide:true,
-        });
-    });
-    */
-
 </script>
 
 
@@ -244,8 +226,8 @@
 <div class="form-group">
   <label class="col-sm-3">関連付けるタグ</label>
   <div class="col-sm-9">
-    {% for tag in "ABCDEF" %}
-    <label><input type="checkbox" name="tags" value="#">{{tag}}</label>
+    {% for tag in all_tags %}
+    <label><input type="checkbox" name="tags" value="{{ tag.id }}">{{ tag.name }}</label>
     {% endfor %}
   </div>
 </div>
