@@ -33,7 +33,7 @@
       <h1 class="panel-title">参加予定ボランティア一覧</h1>
     </div>
     <div class="panel-body">
-      {% event_list request.user.participating_event.all %}
+      {% event_list request.user.participating_event.all user.request %}
     </div>
   </div>
   <div class="panel panel-primary">
