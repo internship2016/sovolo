@@ -235,7 +235,6 @@ class EventEditView(UserPassesTestMixin, UpdateView):
 
 class EventDeleteView(UserPassesTestMixin, DeleteView):
     model = Event
-    success_url = reverse_lazy('top')
     template_name = 'event/check_delete.html'
 
     def get_context_data(self, **kwargs):
@@ -251,6 +250,9 @@ class EventDeleteView(UserPassesTestMixin, DeleteView):
     def handle_no_permission(self):
         return HttpResponseForbidden()
 
+    def get_success_url(self):
+        messages.info(self.request, "イベントを削除しました")
+        return reverse_lazy('top')
 
 class EventParticipantsView(DetailView):
     model = Event
@@ -413,9 +415,9 @@ class EventJoinView(RedirectView):
                 )
                 p.save()
                 if status == "キャンセル待ち":
-                    messages.error(self.request, "あなたはキャンセル待ちです")
+                    messages.success(self.request, "あなたはキャンセル待ちです")
                 else:
-                    messages.error(self.request, "参加しました。")
+                    messages.success(self.request, "参加しました。")
             except IntegrityError:
                 event = Event.objects.get(pk=event_id)
                 if event in self.request.user.participating_event.all():
@@ -477,7 +479,7 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
                 message = content.split("\n", 1)[1]
                 send_mail(subject, message, "reminder@sovolo.earth", [carry_up.user.email])
 
-        messages.info(self.request, "参加をキャンセルしました。")
+        messages.success(self.request, "参加をキャンセルしました。")
         return reverse_lazy('event:detail', kwargs={'pk': self.kwargs['event_id']})
 
     def test_func(self):
