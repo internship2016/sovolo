@@ -174,13 +174,17 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     def get_new_region_events(self):
         Event = apps.get_model('event', 'Event')
-        group_list = self.group_set.all()
 
         return Event.objects.filter(region=self.region).distinct().order_by('-created')[:5]
 
     def get_future_participating_events(self):
         date = timezone.now()
         return self.participating_event.all().filter(start_time__gte=date).order_by('start_time')
+    def get_new_tag_events(self):
+        Event = apps.get_model('event', 'Event')
+        tag_list = self.follow_tag.all()
+
+        return Event.objects.filter(tag__in=tag_list).distinct().order_by('-created')[:5]
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'created', 'modified')

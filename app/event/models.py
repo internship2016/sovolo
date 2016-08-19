@@ -173,7 +173,7 @@ class Frame(AbstractBaseModel):
         return super(Frame, self).save(*args, **kwargs)
 
     def __str__(self):
-        return "Frame #%d" % (self.pk)
+        return "Frame #" + str(self.pk) + " in Event #" + str(self.event_id)
 
     def is_full(self):
         if self.upper_limit:
