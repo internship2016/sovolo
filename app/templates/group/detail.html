@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load event_tags %}
 {% block title %}
 グループ詳細(#{{group.id}})
 {% endblock %}
@@ -10,26 +11,14 @@
       <div class="panel-heading">
         <h1 class="panel-title">説明</h1>
       </div>
-      <div class="panel-body">
-        グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明グループの説明...
-      </div>
+      <div class="panel-body">{{ group.description }}</div>
     </div>
     <div class="panel panel-primary">
       <div class="panel-heading">
         <h1 class="panel-title">グループ主催のボランティア一覧</h1>
       </div>
       <div class="panel-body">
-        {% for i in "ABC" %}
-        <div class="media">
-          <div class="media-left">
-            <img class="media-object" src="#" alt="ボランティアアイコン" width="64" height="64">
-          </div>
-          <div class="media-body">
-            <h3 class="media-heading">ボランティア{{i}}</h3>
-            2016/08/10 @東京都新宿区
-          </div>
-        </div>
-        {% endfor %}
+        {% event_list group.event.all request.user %}
       </div>
     </div>
   </div>
