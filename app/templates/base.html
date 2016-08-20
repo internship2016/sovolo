@@ -69,6 +69,9 @@
 
 <div id="main-content" class="container">
   <!--Messages-->
+  {% if form.errors %}
+    {{ form.errors }}
+  {% endif %}
   {% if messages %}
     <div class="messages">
         {% for message in messages %}
