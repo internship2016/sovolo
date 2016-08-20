@@ -435,6 +435,22 @@ class EventJoinView(RedirectView):
 
 
 @method_decorator(login_required, name='dispatch')
+class EventSupportView(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        event = Event.objects.get(pk=kwargs['event_id'])
+
+        if 'cancel' in kwargs:
+            messages.error(self.request, "応援のキャンセルはできません。")
+            # event.supporter.remove(self.request.user.id)
+        else:
+            messages.info(self.request, "応援しました。")
+            event.supporter.add(self.request.user.id)
+
+        self.url = reverse_lazy('event:detail', kwargs={'pk': event.id})
+        return super().get_redirect_url(*args, **kwargs)
+
+
+@method_decorator(login_required, name='dispatch')
 class EventFollowView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         event_id = kwargs['event_id']

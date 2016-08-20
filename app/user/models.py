@@ -122,6 +122,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def is_manager_for(self, event):
         return event in self.admin_event.all() or event in self.host_event.all()
 
+    def get_point(self):
+        return self.participating_event.filter(supporter__isnull=False).values_list('supporter', flat=True).count() 
+
     def get_full_name(self):
         return self.email
 
@@ -186,6 +189,24 @@ class User(AbstractBaseModel, AbstractBaseUser):
         tag_list = self.follow_tag.all()
 
         return Event.objects.filter(tag__in=tag_list).distinct().order_by('-created')[:5]
+
+    def trophy_list(self):
+        date = timezone.now()
+        participated = self.participating_event.all().filter(end_time__lte=date)
+
+        trophies = []
+        for tag in Tag.objects.all():
+            count = participated.filter(tag=tag).count()
+            if count >= 20:
+                trophies.append({'name': tag.name, 'type': 'trophy-master'})
+            elif count >= 10:
+                trophies.append({'name': tag.name, 'type': 'trophy-senior'})
+            elif count >= 3:
+                trophies.append({'name': tag.name, 'type': 'trophy-beginner'})
+            elif count >= 1:
+                trophies.append({'name': tag.name, 'type': 'trophy-rookie'})
+
+        return trophies
 
 
 class UserAdmin(admin.ModelAdmin):

@@ -30,19 +30,29 @@
     </h1>
 
     <h4><div>{{ event.start_time_format }} ～ {{ event.end_time_format }} @ {{ event.get_region_kanji }}</div></h4>
-  
+
     <div>
-      {% if request.user in event.admin.all or request.user == event.host_user %}
-        <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">内容変更</a>
-        <a href="{% url 'event:message' event.id %}" type="button" class="btn btn-default">メール一斉送信</a>
-      {% endif %}
-      <button class="btn btn-primary">応援する</button>&nbsp;現在の応援数 ooo人
+      <p>
+        現在の応援数 <span style="font-size: 200%;">{{ event.supporter.all|length }}人</span>
+        {% if request.user in event.supporter.all %}
+          <button class="btn btn-default">応援済み</button>
+        {% else %}
+          <a class="btn btn-primary" href="{% url 'event:support' event.id %}">応援する</a>
+        {% endif %}
+      </p>
+
 
       <div id="likes" class="pull-right">
         <style>.fb_iframe_widget > span { vertical-align: baseline !important; } .fb_iframe_widget { margin-right: 4px; }</style>
         <div style="display: inline-block;" class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div><div style="display: inline-block;"><a href="https://twitter.com/share" class="twitter-share-button" data-url="http://twitter.com" data-text="So volo!!">Tweet</a></div>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
       </div>
+    </div>
+    <div>
+      {% if request.user in event.admin.all or request.user == event.host_user %}
+        <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">内容変更</a>
+        <a href="{% url 'event:message' event.id %}" type="button" class="btn btn-default">メール一斉送信</a>
+      {% endif %}
     </div>
   </div>
 </div>
