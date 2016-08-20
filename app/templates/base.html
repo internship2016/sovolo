@@ -68,14 +68,18 @@
 </header>
 
 <div id="main-content" class="container">
-  <!--Messages-->
-  {% if messages %}
+  {% if form.errors %}
+    <div id="form-errors" class="alert alert-danger">
+        {{ form.errors }}
+    </div>
+  {% endif %}
     <div class="messages">
+      {% if messages %}
         {% for message in messages %}
           <p {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</p>
         {% endfor %}
+      {% endif %}
     </div>
-  {% endif %}
   {% block content %}{% endblock %}
 
 </div>

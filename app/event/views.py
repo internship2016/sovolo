@@ -325,17 +325,18 @@ class EventSearchResultsView(ListView):
                 query = query & date_query
 
         #Tag
-        if 'tag' in self.request.GET:
-            t = self.request.GET['tag']
+        if 'tags' in self.request.GET:
+            tags = [int(t) for t in self.request.GET.getlist('tags')]
 
-            if t is not None and t!="":
+            if len(tags)>0:
                 Tag = apps.get_model('tag', 'Tag')
-                try:
-                    tag = Tag.objects.get(name=t)
-                except ObjectDoesNotExist:
-                    messages.error(self.request, "検索結果に一致するイベントが見つかりませんでした")
-                    return Event.objects.none()
-                tag_query = Q(tag=tag)
+                tag_query = None
+                for t in tags:
+                    tag = Tag.objects.get(pk=t)
+                    if tag_query==None:
+                        tag_query = Q(tag=tag)
+                    else:
+                        tag_query = tag_query | Q(tag=tag)
                 query = query & tag_query
 
         #Place
@@ -393,6 +394,10 @@ class EventSearchResultsView(ListView):
 
         return results
 
+    def get_context_data(self, **kwargs):
+        context = super(EventSearchResultsView, self).get_context_data(**kwargs)
+        context["all_tags"] = Tag.objects.all()
+        return context
 
 @method_decorator(login_required, name='dispatch')
 class EventJoinView(RedirectView):
