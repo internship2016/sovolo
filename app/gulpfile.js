@@ -43,6 +43,12 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
       debugging: true,
       checkExistence: true,
       overrides: {
+        'Croppie': {
+          main: [
+            './croppie.min.js',
+            './croppie.css'
+          ]
+        },
         'bootstrap': {
           main: [
             './dist/js/bootstrap.js',
