@@ -68,11 +68,11 @@
 </header>
 
 <div id="main-content" class="container">
+  {% if form.errors %}
     <div id="form-errors" class="alert alert-danger">
-      {% if form.errors %}
         {{ form.errors }}
-      {% endif %}
     </div>
+  {% endif %}
     <div class="messages">
       {% if messages %}
         {% for message in messages %}
