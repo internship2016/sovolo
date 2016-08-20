@@ -122,6 +122,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def is_manager_for(self, event):
         return event in self.admin_event.all() or event in self.host_event.all()
 
+    def get_point(self):
+        return self.participating_event.filter(supporter__isnull=False).values_list('supporter', flat=True).count() 
+
     def get_full_name(self):
         return self.email
 
