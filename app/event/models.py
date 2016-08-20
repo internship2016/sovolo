@@ -210,6 +210,16 @@ class Frame(AbstractBaseModel):
     def deadline_format(self):
         return self.deadline.strftime("%m/%d %H:%M")
 
+    def participant_id_list(self):
+        return self.participation_set.all().values_list('user',flat=True)
+
+    def reserved_id_list(self):
+        return self.participation_set.filter(status="参加中").values_list('user',flat=True)
+
+    def waiting_id_list(self):
+        return self.participation_set.filter(status="キャンセル待ち").values_list('user',flat=True)
+
+
 class FrameAdmin(admin.ModelAdmin):
     list_display = (
         'pk',

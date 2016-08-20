@@ -16,26 +16,85 @@
           参加状況
         </div>
         <div class="panel-body">
-          {% for frame in event.frame_set.all %}
-          <div>
-            <h5>{{frame.description}}　(締切：{{frame.deadline_format}})</h5>
-            {{ frame.num_participants }}人
-            /{{frame.upper_limit}}人
-            <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-default pull-right">参加</a>
+          <div class="list-group">
+            {% for frame in event.frame_set.all %}
+            <li class="list-group-item">
+              <div class="row">
+                <div class="col-md-9">
+                  <h5>参加枠{{ forloop.counter }}: (締切: {{ frame.deadline_format }})
+                    {% if request.user in event.admin.all %}
+                    <!-- 管理者 -->
+                    {% elif request.user.id in frame.reserved_id_list %}
+                    <span class="label label-info">参加予定</span>
+                    {% elif request.user.id in frame.waiting_id_list %}
+                    <span class="label label-info">キャンセル待ち</span>
+                    {% else %}
+                    <!-- その他 -->
+                    {% endif %}
+                  </h5>
+                  {{ frame.description }}
+                </div>
+
+                <div class="col-md-3">
+                  <div>
+                    {% if frame.is_closed %}<!--締切後-->
+                    <form method="post" action="{% url 'event:cancel' event.id %}">
+                      {% csrf_token %}
+                      {% if request.user in event.admin.all %}<!-- 管理者 -->
+                      {% elif request.user.id in frame.reserved_id_list %}
+                      <button class="btn btn-primary">キャンセル</button>
+                      {% elif request.user.id in frame.waiting_id_list %}
+                      <button class="btn btn-primary disabled">締切</button>
+                      {% else %}<!-- その他 -->
+                      <button class="btn btn-primary disabled">締切</button>
+                      {% endif %}
+                    </form>
+                    {% else %}<!-- 締切前 -->
+                    <form method="post" action="{% url 'event:cancel' event.id %}">
+                      {% csrf_token %}
+                      {% if request.user in event.admin.all %}<!-- 管理者 -->
+                      {% elif request.user.id in frame.reserved_id_list %}
+                      <button class="btn btn-primary">キャンセル</button>
+                      {% elif request.user.id in frame.waiting_id_list %}
+                      <button class="btn btn-primary">キャンセル</button>
+                    </form>
+                    {% else %}<!-- その他 -->
+                    <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">参加</a>
+                    {% endif %}
+                    {% endif %}
+                  </div>
+                  <br>
+                  <div>
+                    {% if not frame.upper_limit is None %}
+                    <font size="4">
+                      {{ frame.num_participants }}人
+                      /{{frame.upper_limit}}人
+                    </font>
+                    {% else %}
+                    <font size="4">
+                      {{ frame.num_participants }}人
+                    </font>
+                    <span class="label label-warning">上限なし</span>
+                    {% endif %}
+                  </div>
+                </div>
+              </div>
+            </li>
+            {% endfor %}
           </div>
-          {% endfor %}
         </div>
       </div>
 
+
       {% if event.private_notes and request.user in event.participant.all %}
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            参加者への連絡事項（応募していないユーザには見えません）
-          </div>
-          <div class="panel-body">
-            {{ event.private_notes }}
-          </div>
+      <div class="panel panel-primary">
+        <div class="panel-heading">
+          参加者への連絡事項（応募していないユーザには見えません）
         </div>
+        <div class="panel-body">
+          {{ event.private_notes }}
+        </div>
+      </div>
       {% endif %}
 
       <div class="panel panel-primary">
