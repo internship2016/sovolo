@@ -4,7 +4,9 @@
   </div>
   <div class="panel-body">
     {% for user in group.admins %}
+    <a href="{% url 'user:detail' user.id %}">
       <img src="{{ user.get_image_url }}" alt="{{ user.username }}" width="30" height="30">
+    </a>
     {% endfor %}
   </div>
 </div>
@@ -14,7 +16,9 @@
   </div>
   <div class="panel-body">
     {% for user in group.members %}
+    <a href="{% url 'user:detail' user.id %}">
       <img src="{{ user.get_image_url }}" alt="{{ user.username }}" width="30" height="30">
+    </a>
     {% endfor %}
   </div>
 </div>
