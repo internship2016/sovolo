@@ -30,13 +30,19 @@
     </h1>
 
     <h4><div>{{ event.start_time_format }} ～ {{ event.end_time_format }} @ {{ event.get_region_kanji }}</div></h4>
-  
+
     <div>
       {% if request.user in event.admin.all or request.user == event.host_user %}
         <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">内容変更</a>
         <a href="{% url 'event:message' event.id %}" type="button" class="btn btn-default">メール一斉送信</a>
       {% endif %}
-      <button class="btn btn-primary">応援する</button>&nbsp;現在の応援数 ooo人
+      {% if request.user in event.supporter.all %}
+        <button class="btn btn-default">応援済み</button>
+      {% else %}
+        <a class="btn btn-primary" href="{% url 'event:support' event.id %}">応援する</a>
+      {% endif %}
+      現在の応援数 {{ event.supporter.all|length }}人
+
 
       <div id="likes" class="pull-right">
         <style>.fb_iframe_widget > span { vertical-align: baseline !important; } .fb_iframe_widget { margin-right: 4px; }</style>

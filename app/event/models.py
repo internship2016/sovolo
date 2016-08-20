@@ -39,6 +39,8 @@ class Event(AbstractBaseModel):
         settings.AUTH_USER_MODEL,
         related_name='host_event',
     )
+    supporter = models.ManyToManyField(User, related_name="support", blank=True)
+
 
     # regionは都道府県で指定
     prefectures = {
