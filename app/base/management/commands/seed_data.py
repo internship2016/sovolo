@@ -237,8 +237,8 @@ class Command(BaseCommand):
             admin = host_user
             genericevent = Event(
                 name=name,
-                start_time=timezone.now() + timezone.timedelta(days=i) ,
-                end_time=timezone.now() + timezone.timedelta(days=i+1),
+                start_time=timezone.now() - timezone.timedelta(days=i) ,
+                end_time=timezone.now() - timezone.timedelta(days=i+1),
                 meeting_place="531 Page Street",
                 contact="interlink@interlink.com",
                 details="This is a generic event.",
