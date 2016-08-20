@@ -187,6 +187,26 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
         return Event.objects.filter(tag__in=tag_list).distinct().order_by('-created')[:5]
 
+    def trophy_list(self):
+        date = timezone.now()
+        participated = self.participating_event.all().filter(end_time__lte=date)
+
+        trophies = []
+        for tag in Tag.objects.all():
+            count = participated.filter(tag=tag).count()
+            if count >= 20:
+                trophies.append((tag.name,'master'))
+            elif count >= 10:
+                trophies.append((tag.name, 'senior'))
+            elif count >= 3:
+                trophies.append((tag.name, 'beginner'))
+            elif count >= 1:
+                trophies.append((tag.name, 'rookie'))
+            else:
+                trophies.append((tag.name, ''))
+
+        return trophies
+
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'created', 'modified')
