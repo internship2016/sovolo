@@ -9,6 +9,7 @@ from django.contrib import admin
 from django.db.models import Q
 from django.utils import timezone
 from tag.models import Tag
+from datetime import datetime
 
 from PIL import Image
 try:
@@ -168,11 +169,13 @@ class Event(AbstractBaseModel):
         return region[0]
 
     def start_time_format(self):
-        return self.start_time.strftime("%m/%d %H:%M")
+        #return self.start_time.strftime("%m/%d %H:%M")
+        #return datetime.strptime(self.start_time, "%m/%d %H:%M")
+        return self.start_time
 
     def end_time_format(self):
-        return self.end_time.strftime("%m/%d %H:%M")
-
+        #return self.end_time.strftime("%m/%d %H:%M")
+        return self.end_time
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
