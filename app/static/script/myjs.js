@@ -52,5 +52,4 @@
       window.location.replace(newUrl);
     });
   });
-
 })(this);
