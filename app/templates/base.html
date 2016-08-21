@@ -22,22 +22,45 @@
 <body>
   <div class="main-wrapper">
 <header>
-  <nav class="navbar navbar-inverse">
+
+  <nav role="navigation" class="navbar navbar-inverse">
     <div class="container">
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
+      <div class="navbar-header navbar-left pull-left">
         <a class="navbar-brand" href="{% url 'top' %}">
           <img src="{% static 'img/logo.svg' %}" style="max-width:24px;height:auto;display:inline-block;vertical-align:middle;" />
           Sovolo
         </a>
       </div>
-      <div class="collapse navbar-collapse navbar-ex1-collapse">
-        <form class="navbar-form navbar-left" role="search" action="{% url 'event:search' %}" method="get">
+
+      <div class="navbar-header navbar-right pull-right">
+        {% if not request.user.is_anonymous %}
+          <ul class="nav navbar-nav pull-left">
+            <li class="dropdown">
+               <a href="#" id="dUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <img src="{{ request.user.get_image_url }}" width="24" height="24">
+                  {{ request.user.username }}
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dUser">
+                  <li><a href="{% url 'user:detail' request.user.id %}">プロフィール</a></li>
+                  <li><a href="{% url 'user:logout' %}">ログアウト</a></li>
+                </ul>
+            </li>
+          </ul>
+        {% endif %}
+
+        <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+
+      <div class="visible-xs-block clearfix"></div>
+
+      <div class="collapse navbar-collapse">
+        <form class="nav navbar-nav navbar-left navbar-form" role="search" action="{% url 'event:search' %}" method="get">
           <div class="input-group">
             <input type="text" class="form-control" placeholder="イベントを検索" name="q">
             <div class="input-group-btn">
@@ -45,28 +68,24 @@
             </div>
           </div>
         </form>
-        <ul class="nav navbar-nav navbar-right">
-          {% if request.user.is_anonymous %}
-            <li><a href="{% url 'user:register' %}">ユーザー登録</a></li>
-            <li><a href="{% url 'user:login' %}">ログイン</a></li>
-          {% else %}
-            <li class="dropdown">
-             <a href="#" id="dUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                <img src="{{ request.user.get_image_url }}" width="24" height="24">
-                {{ request.user.username }}
-                <span class="caret"></span>
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="dUser">
-                <li><a href="{% url 'user:detail' request.user.id %}">プロフィール</a></li>
-                <li><a href="{% url 'user:logout' %}">ログアウト</a></li>
-              </ul>
-            </li>
-          {% endif %}
-          <li><p class="navbar-btn"><a class="btn btn-primary" href="{% url 'event:add' %}" role="button">イベント作成</a></p></li>
+        <ul class="nav navbar-nav">
+          <li class="text-center">
+            <p class="navbar-btn">
+              <a class="btn btn-primary btn-block" href="{% url 'event:add' %}" role="button">イベント作成</a>
+            </p>
+          </li>
         </ul>
+
+        {% if request.user.is_anonymous %}
+          <ul class="nav navbar-nav navbar-right">
+            <li class="pull-left"><a href="{% url 'user:register' %}">ユーザー登録</a></li>
+            <li class="pull-left"><a href="{% url 'user:login' %}">ログイン</a></li>
+          </ul>
+        {% endif %}
       </div>
     </div>
   </nav>
+
 </header>
 
 <div id="main-content" class="container">
