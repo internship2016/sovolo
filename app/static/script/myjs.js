@@ -1,3 +1,7 @@
+(function (window) {
+  var $ = window.jQuery;
+  var moment = window.moment;
+
 $('.dropdown-toggle').dropdown();
 
 moment.locale('ja', { week: { dow: 1 } });
@@ -46,3 +50,4 @@ $(function () {
     });
 });
 
+})(this);
