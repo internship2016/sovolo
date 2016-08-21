@@ -8,6 +8,7 @@ var mainBowerFiles = require('main-bower-files');
 var debug = require('gulp-debug');
 var rimraf = require('rimraf');
 var cleanCSS = require('gulp-clean-css');
+var runSequence = require('run-sequence');
 
 var bowerDir = './bower_components';
 var conf = {
@@ -56,6 +57,11 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
             './dist/fonts/*.*'
           ]
         },
+        'bootstrap-filestyle': {
+          main: [
+            './src/*.min.js'
+          ]
+        },
         'font-awesome': {
           main: [
             './css/*.min.*',
@@ -92,10 +98,9 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
   ;
 });
 
-gulp.task('bower', 'ネットから依存パッケージ持ってきてstaticにコピー', [
-  'bower.install',
-  'bower.copy'
-]);
+gulp.task('bower', 'bower install and copy', function (cb) {
+  runSequence(['bower.install', 'bower.copy'], cb);
+});
 
 gulp.task('css.bootstrap', 'カスタムbootstrapを作る', function () {
   return gulp.src(conf.sassPath + '/bootstrap/*.scss/')
@@ -131,4 +136,6 @@ gulp.task('clean', '全部消す', function (cb) {
   return rimraf('./static/{js,css,fonts}', cb);
 });
 
-gulp.task('default', 'リビルド', ['clean', 'bower', 'css', 'js']);
+gulp.task('default', 'リビルド', function (cb) {
+  runSequence('clean', ['bower', 'css', 'js'], cb);
+});
