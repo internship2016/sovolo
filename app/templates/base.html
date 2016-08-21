@@ -38,10 +38,12 @@
       </div>
       <div class="collapse navbar-collapse navbar-ex1-collapse">
         <form class="navbar-form navbar-left" role="search" action="{% url 'event:search' %}" method="get">
-          <div class="form-group">
+          <div class="input-group">
             <input type="text" class="form-control" placeholder="イベントを検索" name="q">
+            <div class="input-group-btn">
+              <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary">検索</button>
         </form>
         <ul class="nav navbar-nav navbar-right">
           {% if request.user.is_anonymous %}
