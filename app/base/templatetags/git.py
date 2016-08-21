@@ -4,7 +4,7 @@ from django.template import Library
 register = Library()
 
 try:
-    head = subprocess.Popen("git rev-parse HEAD",
+    head = subprocess.Popen("git rev-parse --short HEAD",
         shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     VERSION = head.stdout.readline().strip()
 except:
