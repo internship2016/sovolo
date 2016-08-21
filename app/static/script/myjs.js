@@ -35,7 +35,7 @@
       } else {
         newUrl = Url + "&order_by=start_time-" + desc;
       }
-      newUrl = newUrl.replace(/\bpage=\d+/,"page=1");
+      newUrl = newUrl.replace(/\bpage=\d+/, "page=1");
       window.location.replace(newUrl);
     });
 
