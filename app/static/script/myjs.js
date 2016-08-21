@@ -16,7 +16,7 @@
 
     $('#order-results').change(function() {
       var Url = window.location.href;
-      switch(this.value){
+      switch (this.value) {
         case "開始日(昇順）":
           var desc = "asc";
           break;
@@ -28,9 +28,9 @@
           break;
       }
       var regex = /\b(order_by=start_time-)[^&]*/;
-      if(regex.test(Url)){
+      if (regex.test(Url)) {
         var newUrl = Url.replace(regex, '$1' + desc);
-      } else{
+      } else {
         var newUrl = Url + "&order_by=start_time-" + desc;
       }
       newUrl = newUrl.replace(/\bpage=\d+/,"page=1");
@@ -41,9 +41,9 @@
       var Url = window.location.href;
       num = this.value
       var regex = /\b(numperpage=)[^&]*/;
-      if(regex.test(Url)){
+      if (regex.test(Url)) {
         var newUrl = Url.replace(regex, '$1' + num);
-      } else{
+      } else {
         var newUrl = Url + "&numperpage=" + num;
       }
       window.location.replace(newUrl)
