@@ -4,7 +4,7 @@
 
   $('.dropdown-toggle').dropdown();
 
-  moment.locale('ja', { week: { dow: 1 } });
+  moment.locale('ja', {week: {dow: 1}});
 
   var DateFormat = 'YYYY-MM-DD';
   $(function () {
