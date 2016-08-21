@@ -12,7 +12,6 @@ $(function () {
 
     $('#order-results').change(function() {
         var Url = window.location.href;
-        console.log(this.value)
         switch(this.value){
             case "開始日(昇順）":
                 var desc = "asc";
@@ -25,7 +24,6 @@ $(function () {
                 break;
         }
         var regex = /\b(order_by=start_time-)[^&]*/;
-        console.log(Url.match(regex));
         if(regex.test(Url)){
             var newUrl = Url.replace(regex, '$1' + desc);
         } else{
