@@ -16,22 +16,24 @@
 
     $('#order-results').change(function() {
       var Url = window.location.href;
+      var desc;
       switch (this.value) {
         case "開始日(昇順）":
-          var desc = "asc";
+          desc = "asc";
           break;
         case "開始日(降順)":
-          var desc = "desc";
+          desc = "desc";
           break;
         default:
-          var desc = "";
+          desc = "";
           break;
       }
       var regex = /\b(order_by=start_time-)[^&]*/;
+      var newUrl;
       if (regex.test(Url)) {
-        var newUrl = Url.replace(regex, '$1' + desc);
+        newUrl = Url.replace(regex, '$1' + desc);
       } else {
-        var newUrl = Url + "&order_by=start_time-" + desc;
+        newUrl = Url + "&order_by=start_time-" + desc;
       }
       newUrl = newUrl.replace(/\bpage=\d+/,"page=1");
       window.location.replace(newUrl);
@@ -41,10 +43,11 @@
       var Url = window.location.href;
       num = this.value
       var regex = /\b(numperpage=)[^&]*/;
+      var newUrl;
       if (regex.test(Url)) {
-        var newUrl = Url.replace(regex, '$1' + num);
+        newUrl = Url.replace(regex, '$1' + num);
       } else {
-        var newUrl = Url + "&numperpage=" + num;
+        newUrl = Url + "&numperpage=" + num;
       }
       window.location.replace(newUrl)
     });
