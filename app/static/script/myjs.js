@@ -41,7 +41,7 @@
 
     $('#result-number').change(function() {
       var Url = window.location.href;
-      num = this.value
+      var num = this.value
       var regex = /\b(numperpage=)[^&]*/;
       var newUrl;
       if (regex.test(Url)) {
