@@ -111,7 +111,7 @@
 <div class="form-group">
   <label for="id_region" class="col-sm-3">開催地域</label>
   <div class="col-sm-9">
-    <select id="id_region" name="region">
+    <select class="form-control" id="id_region" name="region">
       {% for v,pref in user.region_list %}
         <option value="{{ v }}" {% if v == event.region %}selected{% endif %}>{{ pref }}</option>
       {% endfor %}
@@ -122,7 +122,7 @@
 <div class="form-group">
   <label for="id_image" class="col-sm-3">イベント画像</label>
   <div class="col-sm-9">
-    <input id="id_image" name="image" type="file"/>
+    <input class="filestyle" id="id_image" name="image" type="file"/>
   </div>
 </div>
 
@@ -171,9 +171,11 @@
         </label>
       {% endfor %}
     </div>
-    <div id="adder">
-      <input type="text" id="admin_name" placeholder="username">
-      <button id="add_admin" type="button">追加</button>
+    <div class="input-group" id="adder">
+      <input class="form-control" type="text" id="admin_name" placeholder="username">
+      <span class="input-group-btn">
+        <button class="btn btn-primary" id="add_admin" type="button">追加</button>
+      </span>
     </div>
     <script>
       (function () {
@@ -184,7 +186,7 @@
           if (admin_name.value == "") return;
           var label = document.createElement('label');
           var value = admin_name.value;
-          label.innerHTML = "<input name='admins' type='checkbox' value=" + value + " checked>" + value;
+          label.innerHTML = "<div class='checkbox'><span><input name='admins' type='checkbox' value=" + value + " checked>" + value + "<\/span><\/div>";
           admin_name.value = "";
           admins.appendChild(label);
         });
