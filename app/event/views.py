@@ -308,7 +308,11 @@ class EventSearchResultsView(ListView):
             user_entry = self.request.GET['q']
             if user_entry is not None and user_entry != "":
                 freeword_query = self.make_query_from_string(user_entry)
-                query = query & freeword_query
+                if freeword_query is None:
+                    messages.error(self.request, "検索結果に一致するイベントが見つかりませんでした")
+                    return Event.objects.none()
+                else:
+                    query = query & freeword_query
 
         #Date
         if 'date' in self.request.GET:
