@@ -11,15 +11,15 @@
       {% csrf_token %}
       <div class="form-group">
         To
-        <select name="" required>
-          <option>参加予定者</option>
-          <option>参加希望者</option>
-          <option>興味のある人</option>
-          <option>グループメンバー</option>>
+        <select name="target" required>
+          <option value="admin">管理者</option>
+          <option value="participants">管理者・参加者全員（キャンセル待ち含む）</option>
+          <option value="members">管理者・参加者（キャンセル待ち除く）</option>
+          <option value="waiting">管理者・キャンセル待ち</option>
         </select>
       </div>
       <div class="form-group">
-        <textarea rows="20" cols="80"></textarea>
+        <textarea name="message" rows="20" cols="80"></textarea>
       </div>
       <button class="btn" type="submit">送信</button>
     </form>
