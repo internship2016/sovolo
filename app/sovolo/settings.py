@@ -110,7 +110,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'sovolo',
         'USER': 'sovolo_admin',
-        'PASSWORD': 'pass',
+        'PASSWORD': os.environ.get('DATABASE_PASSWORD') or 'pass',
         'HOST': '127.0.0.1',
         'PORT': '5432',
     }
@@ -193,7 +193,12 @@ SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
   'fields': 'id, name, email, age_range'
 }
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND') or 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = None
+EMAIL_HOST_PASSWORD = None
+DEFAULT_FROM_EMAIL = 'Sovolo <noreply@sovolo.earth>'
 
 PREFECTURES = {
     "Hokkaido": ("北海道", 1),
