@@ -16,71 +16,109 @@
           <div class="panel-body">
             <div class="list-group">
               {% for frame in event.frame_set.all %}
-                <li class="list-group-item">
-                  <div class="row">
-                    <div class="col-md-9">
-                      <h5>参加枠{{ forloop.counter }}: (締切: {{ frame.deadline_format }})
-                        {% if request.user in event.admin.all %}
-                          <!-- 管理者 -->
-                        {% elif request.user.id in frame.reserved_id_list %}
+              <li class="list-group-item">
+                <div class="row">
+                  <div class="col-md-9">
+                    <h5>参加枠{{ forloop.counter }}: (締切: {{ frame.deadline_format }})
+                      {% if request.user in event.admin.all %}<!-- 管理者 -->
+                      {% elif request.user.id in frame.reserved_id_list %}<!--参加予定-->
+                        {% if frame.is_over %}<!--参加予定/終了-->
+                          <span class="label label-info">参加しました</span>
+                        {% elif frame.is_started %}<!--参加予定/開催中-->
+                          <span class="label label-info">参加中</span>
+                        {% elif frame.is_closed %}<!--参加予定/締切済-->
+                          <span class="label label-info">参加確定</span>
+                        {% else %}<!--参加予定/募集中-->
                           <span class="label label-info">参加予定</span>
-                        {% elif request.user.id in frame.waiting_id_list %}
-                          <span class="label label-info">キャンセル待ち</span>
-                        {% else %}
-                          <!-- その他 -->
                         {% endif %}
-                      </h5>
-                      {{ frame.description }}
-                    </div>
+                      {% elif request.user.id in frame.waiting_id_list %}<!--キャンセル待ち-->
+                        {% if frame.is_over %}<!--キャンセル待ち/終了-->
+                          <span class="label label-info">終了しました</span>
+                        {% elif frame.is_started %}<!--キャンセル待ち/開催中-->
+                          <span class="label label-info">参加不可</span>
+                        {% elif frame.is_closed %}<!--キャンセル待ち/締切済-->
+                          <span class="label label-info">参加不可</span>
+                        {% else %}<!--キャンセル待ち/募集中-->
+                          <span class="label label-info">キャンセル待ち</span>
+                        {% endif %}
+                      {% else %}<!--未応募 -->
+                        {% if frame.is_over %}<!--未応募/終了-->
+                          <span class="label label-info">終了しました</span>
+                        {% elif frame.is_started %}<!--未応募/開催中-->
+                          <span class="label label-info">開催中</span>
+                        {% elif frame.is_closed %}<!--未応募/締切済-->
+                          <span class="label label-info">参加不可</span>
+                        {% else %}<!--未応募/募集中-->
+                          {% if frame.is_full %}<!--未応募/募集中/参加枠満員-->
+                          {% else %}<!--未応募/募集中/参加枠満員-->
+                          {% endif %}
+                        {% endif %}
+                      {% endif %}
+                    </h5>
+                    {{ frame.description }}
+                  </div>
 
-                    <div class="col-md-3">
-                      <div>
-                        {% if frame.is_closed %}<!--締切後-->
+                  <div class="col-md-3">
+                    <div>
+                      {% if request.user in event.admin.all %}<!-- 管理者 -->
+                      {% elif request.user.id in frame.reserved_id_list %}<!--参加予定-->
+                        {% if frame.is_over %}<!--参加予定/終了-->
+                        {% elif frame.is_started %}<!--参加予定/開催中-->
+                        {% elif frame.is_closed %}<!--参加予定/締切済-->
                           <form method="post" action="{% url 'event:cancel' event.id %}">
                             {% csrf_token %}
-                            {% if request.user in event.admin.all %}<!-- 管理者 -->
-                            {% elif request.user.id in frame.reserved_id_list %}
-                              <button class="btn btn-primary">キャンセル</button>
-                            {% elif request.user.id in frame.waiting_id_list %}
-                              <button class="btn btn-danger disabled" disabled="True">締切済み</button>
-                            {% else %}<!-- その他 -->
-                              <button class="btn btn-danger disabled" disabled="True">締切済み</button>
-                            {% endif %}
+                            <button class="btn btn-primary">キャンセル</button>
                           </form>
-                          {% else %}<!-- 締切前 -->
-                            {% if request.user in event.admin.all %}<!-- 管理者 -->
-                            {% elif request.user.id in frame.reserved_id_list %}
-                              <form method="post" action="{% url 'event:cancel' event.id %}">
-                                {% csrf_token %}
-                                <button class="btn btn-primary">キャンセル</button>
-                              </form>
-                            {% elif request.user.id in frame.waiting_id_list %}
-                              <form method="post" action="{% url 'event:cancel' event.id %}">
-                                {% csrf_token %}
-                                <button class="btn btn-primary">キャンセル</button>
-                              </form>
-                            {% else %}<!-- その他 -->
-                              <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">参加</a>
-                            {% endif %}
+                        {% else %}<!--参加予定/募集中-->
+                          <form method="post" action="{% url 'event:cancel' event.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn-primary">キャンセル</button>
+                          </form>
                         {% endif %}
-                      </div>
-                      <br>
-                      <div>
-                        {% if not frame.upper_limit is None %}
-                          <font size="4">
-                            {{ frame.num_participants }}人
-                            /{{ frame.upper_limit }}人
-                          </font>
-                        {% else %}
-                          <font size="4">
-                            {{ frame.num_participants }}人
-                          </font>
-                          <span class="label label-warning">上限なし</span>
+                      {% elif request.user.id in frame.waiting_id_list %}<!--キャンセル待ち-->
+                        {% if frame.is_over %}<!--キャンセル待ち/終了-->
+                        {% elif frame.is_started %}<!--キャンセル待ち/開催中-->
+                          <button class="btn btn-primary" disabled>締切済</button>
+                        {% elif frame.is_closed %}<!--キャンセル待ち/締切済-->
+                          <button class="btn btn-primary" disabled>締切済</button>
+                        {% else %}<!--キャンセル待ち/募集中-->
+                          <form method="post" action="{% url 'event:cancel' event.id %}">
+                            {% csrf_token %}
+                            <button class="btn btn-primary">キャンセル</button>
+                          </form>
                         {% endif %}
-                      </div>
+                      {% else %}<!--未応募 -->
+                        {% if frame.is_over %}<!--未応募/終了-->
+                        {% elif frame.is_started %}<!--未応募/開催中-->
+                          <button class="btn btn-primary" disabled>締切済</button>
+                        {% elif frame.is_closed %}<!--未応募/締切済-->
+                          <button class="btn btn-primary" disabled>締切済</button>
+                        {% else %}<!--未応募/募集中-->
+                          {% if frame.is_full %}<!--未応募/募集中/参加枠満員-->
+                            <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">キャンセル待ち</a>
+                          {% else %}<!--未応募/募集中/参加枠空き有-->
+                            <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">参加</a>
+                          {% endif %}
+                        {% endif %}
+                      {% endif %}
+                    </div>
+                    <br>
+                    <div>
+                      {% if not frame.upper_limit is None %}
+                      <font size="4">
+                        {{ frame.num_participants }}人
+                        /{{ frame.upper_limit }}人
+                      </font>
+                      {% else %}
+                      <font size="4">
+                        {{ frame.num_participants }}人
+                      </font>
+                      <span class="label label-warning">上限なし</span>
+                      {% endif %}
                     </div>
                   </div>
-                </li>
+                </div>
+              </li>
               {% endfor %}
             </div>
           </div>
