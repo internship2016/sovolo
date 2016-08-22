@@ -254,7 +254,7 @@ class Command(BaseCommand):
             frame = Frame(
                 event=event,
                 upper_limit=3,
-                deadline="2100-12-25 00:00:00",
+                deadline=event.start_time,
             )
             frame.save()
 
