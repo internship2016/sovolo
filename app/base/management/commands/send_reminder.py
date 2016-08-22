@@ -4,6 +4,7 @@ from django.template.loader import get_template
 from django.template import Context
 from django.core.mail import send_mail
 from event.models import Event
+from base.utils import send_template_mail
 
 import sys
 import io
@@ -15,9 +16,7 @@ class Command(BaseCommand):
     以下の動作をします。毎日午前9時に一度実行されることを想定しています。
     - 翌日開催or翌日登録締切のイベント参加者にリマインダーを送る
     """
-    from_email = "reminder@sovolo.earth"
-    reminder_template = get_template("email/reminder.txt")
-    deadline_template = get_template("email/deadline.txt")
+    from_address = "reminder@sovolo.earth"
 
     def handle(self, *args, **options):
         # arg_exist = False
@@ -30,26 +29,29 @@ class Command(BaseCommand):
         #     pass
         self.stdout.write("running...")
 
+        reminder_template = get_template("email/reminder.txt")
         # TODO
         reminder_events = Event.objects.all()
         for event in reminder_events:
             for user in event.participant.all():
-                context = Context({'user': user, 'event': event})
-                content = self.reminder_template.render(context)
-                subject = content.split("\n", 1)[0]
-                message = content.split("\n", 1)[1]
-                send_mail(subject, message, self.from_email, [user.email])
+                send_template_mail(
+                    reminder_template,
+                    {'user': user, 'event': event},
+                    self.from_address,
+                    [user.email]
+                )
 
+        deadline_template = get_template("email/deadline.txt")
         # TODO
         deadline_events = Event.objects.all()
-        for event in reminder_events:
+        for event in deadline_events:
             for user in event.participant.all():
-                context = Context({'user': user, 'event': event})
-                content = self.reminder_template.render(context)
-                subject = content.split("\n", 1)[0]
-                message = content.split("\n", 1)[1]
-                send_mail(subject, message, self.from_email, [user.email])
-
+                send_template_mail(
+                    deadline_template,
+                    {'user': user, 'event': event},
+                    self.from_address,
+                    [user.email]
+                )
 
         self.stdout.write("success...!")
 

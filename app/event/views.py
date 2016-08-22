@@ -20,6 +20,7 @@ from django.utils import timezone
 from django.apps import apps
 from django.template.loader import get_template
 from django.template import Context
+from base.utils import send_template_mail
 from django.core.mail import send_mail
 from tag.models import Tag
 from user.models import User
@@ -538,12 +539,14 @@ class CommentCreate(RedirectView):
 
         return reverse_lazy('event:detail', kwargs={'pk': event_id})
 
+
 class CommentDeleteView(DeleteView):
     model = Comment
 
     def get_success_url(self):
         event_id = self.kwargs["event_id"]
         return reverse_lazy('event:detail', kwargs={'pk': event_id})
+
 
 class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
     model = Event
@@ -552,12 +555,35 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
         return render(request, 'event/message.html', {'event': self.get_object()})
 
     def post(self, request, *args, **kwargs):
+        target = request.POST.get('target')
+        message = request.POST.get('message')
+        event = self.get_object()
+
+        if target == "admin":
+            users = event.participant.filter(participation__status__in=["管理者"])
+        elif target == "participants":
+            users = event.participant.all()
+        elif target == "members":
+            users = event.participant.filter(participation__status__in=["管理者","参加中"])
+        elif target == "waiting":
+            users = event.participant.filter(participation__status__in=["管理者","キャンセル待ち"])
+        else:
+            messages.error(request, "不正な送信先です")
+            return redirect(reverse_lazy('event:message', kwargs={'pk': kwargs['pk']}))
+
+        for user in users:
+            send_template_mail(
+                "email/message.txt",
+                {"event": event, "user": user, "sender": request.user, "message": message},
+                "Sovol Info <info@sovolo.earth>",
+                [user.email],
+            )
+
         messages.success(self.request, "メッセージの送信が完了しました。")
-        # TODO: send mail
-        return redirect(reverse_lazy('event:detail', kwargs={'pk':kwargs['pk']}))
+        return redirect(reverse_lazy('event:message', kwargs={'pk':kwargs['pk']}))
 
     def test_func(self):
-        return self.request.user.is_manager_for(self.get_object())
+        return self.request.user.is_authenticated and self.request.user.is_manager_for(self.get_object())
 
     def handle_no_permission(self):
         return HttpResponseForbidden()
