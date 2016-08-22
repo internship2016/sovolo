@@ -64,7 +64,7 @@
     </div>
     <div class="panel-body">
       {% for tag in user.follow_tag.all %}
-        <button class="btn btn-default">{{ tag.name }}</button>
+        <a class="btn btn-default" href="{% url 'event:search' %}?tags={{ tag.id }}">{{ tag.name }}</a>
       {% empty %}
       <p>フォローしているタグがありません</p>
       {% endfor %}

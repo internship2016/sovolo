@@ -35,7 +35,7 @@
   <div class="panel-heading">タグ</div>
   <div class="panel-body">
     {% for tags in event.tag.all %}
-      <a class="btn btn-primary">{{ tags.name }}</a>
+      <a class="btn btn-primary" href="{% url 'event:search' %}?tags={{ tags.id }}">{{ tags.name }}</a>
     {% endfor %}
   </div>
 </div>
