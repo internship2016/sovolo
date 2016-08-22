@@ -17,10 +17,10 @@
       <button type="submit">更新</button>
     </div>
   </form>
-  <form method="post" action="{% url 'event:delete' event.id %}">
-    {% csrf_token %}
-    <button type="submit" class="center-block">イベントを削除する</button>
-  </form>
 </div>
+<form method="post" action="{% url 'event:delete' event.id %}">
+  {% csrf_token %}
+  <button type="submit" class="center-block">イベントを削除する</button>
+</form>
 
 {% endblock %}
