@@ -142,14 +142,14 @@ class Frame(AbstractBaseModel):
         return "Frame #" + str(self.pk) + " in Event #" + str(self.event_id)
 
     def is_full(self):
-        if self.upper_limit:
+        if self.upper_limit is None:
+            return False
+        else:
             participant_query = Q(frame=self)
             status_query = Q(status="参加中")
             num_participants = Participation.objects.filter(participant_query & status_query).count()
 
             return num_participants >= self.upper_limit
-        else:
-            return True
 
     def is_closed(self):
         return timezone.now() > self.deadline
