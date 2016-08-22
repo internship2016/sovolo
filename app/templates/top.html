@@ -13,8 +13,6 @@
         </div>
         <div class="panel-body">
           {% event_list request.user.get_future_participating_events request.user %}
-        {#  <p class="text-right"><a href="#">もっと見る</a></p> #}
-
         </div>
       </div>
       <div id="mygroup-events" class="panel panel-primary">
@@ -23,8 +21,8 @@
         </div>
         <div class="panel-body">
           {% event_list request.user.get_new_group_events request.user %}
-         {# <p class="text-right"><a href="#">もっと見る</a></p> #}
-
+          <a class="btn btn-default pull-right" href="{% url 'group:add' %}">グループを作成</a>
+          <a class="btn pull-right" href="{% url 'group:index' %}">グループ一覧</a>
         </div>
       </div>
       <div id="myarea-events" class="panel panel-primary">
@@ -33,8 +31,6 @@
         </div>
         <div class="panel-body">
           {% event_list request.user.get_new_region_events request.user %}
-       {#   <p class="text-right"><a href="#">もっと見る</a></p> #}
-
         </div>
       </div>
       <div id="mytag-events" class="panel panel-primary">
