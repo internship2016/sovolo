@@ -23,6 +23,7 @@ from django.template import Context
 from django.core.mail import send_mail
 from tag.models import Tag
 from user.models import User
+from django.conf import settings
 
 import sys
 import re
@@ -340,11 +341,11 @@ class EventSearchResultsView(ListView):
                 query = query & tag_query
 
         #Place
-        if 'area' in self.request.GET:
-            place = self.request.GET['area']
+        if 'region' in self.request.GET:
+            place = self.request.GET['region']
 
             if place is not None and place!="":
-                place_query = Q(place=place)
+                place_query = Q(region=place)
                 query = query & place_query
 
         #Group
@@ -397,6 +398,7 @@ class EventSearchResultsView(ListView):
     def get_context_data(self, **kwargs):
         context = super(EventSearchResultsView, self).get_context_data(**kwargs)
         context["all_tags"] = Tag.objects.all()
+        context['prefectures'] = [(key, value[0]) for key, value in sorted(settings.PREFECTURES.items(), key=lambda x:x[1][1])]
         return context
 
 @method_decorator(login_required, name='dispatch')

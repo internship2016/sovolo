@@ -26,7 +26,12 @@
       <div class="form-group" id="search-area">
         <label for="searchform-area" class="col-lg-4 control-label">場所</label>
         <div class="col-lg-8">
-          <input type="text" id="searchform-area" class="form-control" name="area" /> <!-- name は要確認-->
+          <select class="form-control" name="region">
+            <option value="">未選択</option>
+            {% for alphabet, kanji in prefectures %}
+              <option value="{{ alphabet }}">{{ kanji }}</option>
+            {% endfor %}
+          </select>
         </div>
       </div>
       <div class="form-group center-block search-ordering">
