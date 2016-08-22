@@ -47,7 +47,16 @@
         <div class="form-group">
           <label for="form-birthday" class="control-label col-sm-3 col-lg-2">生年月日</label>
           <div class="col-sm-9 col-lg-9">
-            <input id="form-birthday" class="form-control" type="date" name="birthday" value="{{ user.birthday|date:'Y-m-d' }}" >
+            <input id="form-birthday" class="form-control" name="birthday" value="{{ user.birthday|date:'Y-m-d' }}" >
+            <script>
+              $(function () {
+                $('#form-birthday').datetimepicker({
+                  viewMode: 'years',
+                  locale: moment.locale("ja"),
+                  format: "YYYY-MM-DD"
+                });
+              });
+            </script>
           </div>
         </div>
 
