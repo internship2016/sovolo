@@ -1,0 +1,3 @@
+Sovolのユーザ登録確認
+本登録は以下のURLから行ってください。
+{{ activation_url }}

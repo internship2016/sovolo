@@ -3,13 +3,17 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView, ListView, View
 from django.contrib  import messages
+from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse_lazy
 from .models import User
 from tag.models import Tag
+from base.utils import send_template_mail
 from django.contrib.auth import views as auth_views
+import uuid
+from django.contrib.auth import login
 
 from django.utils import timezone
-from .models import User
+from .models import User, UserActivation
 
 
 class UserCreateView(CreateView):
@@ -18,19 +22,49 @@ class UserCreateView(CreateView):
     template_name = 'user/register.html'
 
     def form_valid(self, form):
-        from django.contrib.auth import login
         user = form.save(commit=False)
-        user.set_password(form.cleaned_data['password'])
+        # user.set_password(form.cleaned_data['password'])
+        user.is_active = False
         user.save()
-        login(self.request, user, "django.contrib.auth.backends.ModelBackend")
-        messages.info(self.request, "ユーザー登録が完了しました。")
-        return super(UserCreateView, self).form_valid(form)
+
+        activation_key = self.create_activation_key()
+        activation = UserActivation(user=user, key=activation_key)
+        activation.save()
+
+        base_url = "/".join(self.request.build_absolute_uri().split("/")[:3])
+        activation_url = "{0}/user/activation/{1}".format(base_url, activation_key)
+
+        send_template_mail(
+            "email/activation.txt",
+            {"activation_url": activation_url},
+            "Sovol Info <info@sovolo.earth>",
+            [user.email],
+        )
+
+        messages.info(self.request, "記入したメールアドレス"+user.email+"に確認メールを送信しました。")
+        return redirect("top")
+
+    def create_activation_key(self):
+        key = uuid.uuid4().hex
+        return key
 
     def get_form(self):
         from django import forms
         form = super().get_form()
         form.fields['password'].widget = forms.PasswordInput()
         return form
+
+
+class UserActivationView(View):
+    def get(self, request, *args, **kwargs):
+        activation = get_object_or_404(UserActivation, key=kwargs['key'])
+        # TODO: 時間のバリデーション
+        user = activation.user
+        user.is_active = True
+        user.save()
+        login(request, user, "django.contrib.auth.backends.ModelBackend")
+        messages.info(request, "本登録が完了しました。")
+        return redirect("top")
 
 
 class UserDetailView(DetailView):
