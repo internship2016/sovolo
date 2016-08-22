@@ -22,7 +22,9 @@
               {{ form.password | as_crispy_field }}
             </div>
 
-            <div style="text-align: center"><button class="btn" type="submit">ログイン</button></div>
+            <div class="text-center">
+              <button class="btn btn-primary" type="submit">ログイン</button>
+            </div>
             <input type="hidden" name="next" value="{{ next }}"/>
           </form>
         </div>
@@ -44,10 +46,10 @@
       </div>
     </div>
   </div>
-  <div style="text-align:center;">
+  <div class="text-center">
     アカウントをお持ちでない方</br>
     <form method="get" action="{% url 'user:register' %}">
-      <button class="btn btn-secondary btn-sm">
+      <button class="btn btn-default btn-sm">
         新規登録
       </button>
     </form>
