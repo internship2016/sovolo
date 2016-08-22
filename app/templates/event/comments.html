@@ -37,9 +37,11 @@
             <div class="media-heading">
               <h4 style="display:inline-block">{{ request.user.username }}</h4>
             </div>
-            <div class="comment-input-area">
-              <textarea rows="10" name="text" placeholder="コメント"></textarea>
-                <button class="center-block">送信</button>
+            <div class="form-group">
+              <div class="comment-input-area">
+                <textarea class="form-control" rows="10" name="text" placeholder="コメント" style="resize:vertical;"></textarea>
+                <button class="center-block btn btn-primary">送信</button>
+              </div>
             </div>
           </div>
         </div>
