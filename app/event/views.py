@@ -411,30 +411,36 @@ class EventJoinView(RedirectView):
         event_id = kwargs['event_id']
         frame_id = kwargs['frame_id']
 
-        frame = Frame.objects.get(pk=frame_id)
-        status = "キャンセル待ち" if frame.is_full() else "参加中"
+        event = Event.objects.get(pk=event_id)
 
-        if frame.is_closed():
-            messages.error(self.request, "この枠はすでに締め切られています。")
+        if event.is_over():
+            messages.error(self.request, "このボランティアはすでに終了しています")
         else:
-            try:
-                p = Participation.objects.create(
-                    user=self.request.user,
-                    event_id=kwargs['event_id'],
-                    frame_id=kwargs['frame_id'],
-                    status=status,
-                )
-                p.save()
-                if status == "キャンセル待ち":
-                    messages.success(self.request, "あなたはキャンセル待ちです")
-                else:
-                    messages.success(self.request, "参加しました。")
-            except IntegrityError:
-                event = Event.objects.get(pk=event_id)
-                if event in self.request.user.participating_event.all():
-                    messages.error(self.request, "参加済みです。")
-                else:
-                    messages.error(self.request, "参加処理中にエラーが発生しました。")
+
+            frame = Frame.objects.get(pk=frame_id)
+            status = "キャンセル待ち" if frame.is_full() else "参加中"
+
+            if frame.is_closed():
+                messages.error(self.request, "この枠はすでに締め切られています。")
+            else:
+                try:
+                    p = Participation.objects.create(
+                        user=self.request.user,
+                        event_id=kwargs['event_id'],
+                        frame_id=kwargs['frame_id'],
+                        status=status,
+                    )
+                    p.save()
+                    if status == "キャンセル待ち":
+                        messages.success(self.request, "あなたはキャンセル待ちです")
+                    else:
+                        messages.success(self.request, "参加しました。")
+                except IntegrityError:
+                    event = Event.objects.get(pk=event_id)
+                    if event in self.request.user.participating_event.all():
+                        messages.error(self.request, "参加済みです。")
+                    else:
+                        messages.error(self.request, "参加処理中にエラーが発生しました。")
 
         self.url = reverse_lazy('event:detail', kwargs={'pk': event_id})
         return super(EventJoinView, self).get_redirect_url(*args, **kwargs)
