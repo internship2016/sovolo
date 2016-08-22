@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
-{% block title %}
-イベント参加者一覧
-{% endblock %}
+{% block title %}参加者一覧 | {{ event.name }} | Sovol{% endblock %}
 {% block content %}
 	{% include "event/event_header.html" %}
     <div class="panel panel-primary">
