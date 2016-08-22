@@ -92,7 +92,6 @@ class Event(AbstractBaseModel):
         for frame in frames:
             if not frame.is_full():
                 return False
-
         return True
 
     def is_closed(self):
@@ -100,14 +99,13 @@ class Event(AbstractBaseModel):
         for frame in frames:
             if not frame.is_closed():
                 return False
-
         return True
 
     def is_started(self):
         return timezone.now() > self.start_time
 
     def is_over(self):
-        return timezone.now() > self.end.time
+        return timezone.now() > self.end_time
 
     def get_status(self):
         if self.is_over():
@@ -115,7 +113,7 @@ class Event(AbstractBaseModel):
         elif self.is_started():
             return "開催中"
         elif self.is_closed():
-            return "締め切り済み"
+            return "締切済"
         elif self.is_full():
             return "満員"
         else:
