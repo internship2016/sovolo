@@ -10,6 +10,7 @@ from django.db.models import Q
 from django.utils import timezone
 from tag.models import Tag
 from datetime import datetime
+from datetime import timedelta
 
 from PIL import Image
 try:
@@ -65,7 +66,7 @@ class Event(AbstractBaseModel):
         ordering = ['-start_time']
 
     def __str__(self):
-        return self.name
+        return self.name + ": " + self.start_time.strftime("%Y-%m-%d") + " ~ " + self.end_time.strftime("%Y-%m-%d")
 
     def get_absolute_url(self):
         return reverse('event:detail', kwargs={'pk': self.id})
@@ -122,12 +123,9 @@ class Event(AbstractBaseModel):
         return region[0]
 
     def start_time_format(self):
-        #return self.start_time.strftime("%m/%d %H:%M")
-        #return datetime.strptime(self.start_time, "%m/%d %H:%M")
         return self.start_time
 
     def end_time_format(self):
-        #return self.end_time.strftime("%m/%d %H:%M")
         return self.end_time
 
 class EventAdmin(admin.ModelAdmin):

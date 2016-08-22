@@ -72,7 +72,7 @@
       {% for event in request.user.admin_event.all %}
         <label>
           <input type="checkbox" name="events" value="{{ event.id }}" {% if event in group.event.all %}checked{% endif %}>
-          {{ event.name }}
+          {{ event }}
         </label>
       {% empty %}
         <p>管理しているボランティア活動はありません。</p>
