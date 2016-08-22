@@ -42,9 +42,9 @@
                             {% elif request.user.id in frame.reserved_id_list %}
                               <button class="btn btn-primary">キャンセル</button>
                             {% elif request.user.id in frame.waiting_id_list %}
-                              <button class="btn btn-primary disabled">締切</button>
+                              <button class="btn btn-danger disabled" disabled="True">締切済み</button>
                             {% else %}<!-- その他 -->
-                              <button class="btn btn-primary disabled">締切</button>
+                              <button class="btn btn-danger disabled" disabled="True">締切済み</button>
                             {% endif %}
                           </form>
                           {% else %}<!-- 締切前 -->
