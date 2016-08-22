@@ -6,6 +6,7 @@ from django.contrib  import messages
 from django.core.urlresolvers import reverse_lazy
 from .models import User
 from tag.models import Tag
+from django.contrib.auth import views as auth_views
 
 from django.utils import timezone
 from .models import User
@@ -92,3 +93,8 @@ class AcquireEmail(View):
         """
         backend = request.session['partial_pipeline']['backend']
         return render(request, 'user/acquire_email.html', {"backend": backend})
+
+
+def logout(request):
+    messages.info(request, "ログアウトしました。")
+    return auth_views.logout(request, next_page="/")

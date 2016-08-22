@@ -7,7 +7,7 @@ app_name = 'user'
 
 urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': "user/login_page.html"}, name='login'),
-    url(r'^logout/$', auth_views.logout, {'template_name': "user/logout.html", 'redirect_field_name':'top'},  name='logout'),
+    url(r'^logout/$', views.logout,  name='logout'),
     url(r'^register/$', views.UserCreateView.as_view(), name='register'),
     url(r'^email_required/$', views.AcquireEmail.as_view(), name='acquire_email'),
     url(r'^edit/$', views.UserEditView.as_view(), name='edit'),
