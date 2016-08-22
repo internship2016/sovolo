@@ -80,11 +80,6 @@ class UserEditView(UpdateView):
         messages.info(self.request, "ユーザ情報を編集しました。")
         return super(UserEditView, self).form_valid(form)
 
-    def form_invalid(self, form):
-        for field, msg in form.errors.items():
-            messages.error(self.request, field + ': ' + '/'.join(msg))
-        return super().form_invalid(form)
-
 
 class AcquireEmail(View):
     def get(self, request, *args, **kwargs):
