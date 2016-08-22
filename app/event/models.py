@@ -103,12 +103,17 @@ class Event(AbstractBaseModel):
 
         return True
 
-    def is_over(self):
+    def is_started(self):
         return timezone.now() > self.start_time
+
+    def is_over(self):
+        return timezone.now() > self.end.time
 
     def get_status(self):
         if self.is_over():
             return "終了"
+        elif self.is_started():
+            return "開催中"
         elif self.is_closed():
             return "締め切り済み"
         elif self.is_full():
