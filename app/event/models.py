@@ -61,6 +61,9 @@ class Event(AbstractBaseModel):
 
     tag = models.ManyToManyField(Tag, blank=True)
 
+    class Meta:
+        ordering = ['-start_time']
+
     def __str__(self):
         return self.name
 
