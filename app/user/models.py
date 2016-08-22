@@ -166,3 +166,14 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('username', 'created', 'modified')
+
+
+class UserActivation(models.Model):
+    user = models.OneToOneField(User)
+    key = models.CharField(max_length=255, unique=True)
+    created = models.DateTimeField(editable=False)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super().save(*args, **kwargs)
