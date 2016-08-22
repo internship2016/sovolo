@@ -166,7 +166,7 @@ class Command(BaseCommand):
                 first_name = 'genericuser',
                 last_name = lastname,
                 username = username,
-                birthday = timezone.now(),
+                birthday = timezone.now() - timezone.timedelta(days=i*365),
                 telephone = 123456789,
                 emergency_contact = 119,
                 email = email,
