@@ -45,20 +45,23 @@
                               <button class="btn btn-primary">キャンセル</button>
                             {% elif request.user.id in frame.waiting_id_list %}
                               <button class="btn btn-primary disabled">締切</button>
-                              {% else %}<!-- その他 -->
+                            {% else %}<!-- その他 -->
                               <button class="btn btn-primary disabled">締切</button>
                             {% endif %}
                           </form>
                           {% else %}<!-- 締切前 -->
-                          <form method="post" action="{% url 'event:cancel' event.id %}">
-                            {% csrf_token %}
                             {% if request.user in event.admin.all %}<!-- 管理者 -->
                             {% elif request.user.id in frame.reserved_id_list %}
-                              <button class="btn btn-primary">キャンセル</button>
-                            {% elif request.user.id in frame.waiting_id_list %}
-                              <button class="btn btn-primary">キャンセル</button>
+                              <form method="post" action="{% url 'event:cancel' event.id %}">
+                                {% csrf_token %}
+                                <button class="btn btn-primary">キャンセル</button>
                               </form>
-                              {% else %}<!-- その他 -->
+                            {% elif request.user.id in frame.waiting_id_list %}
+                              <form method="post" action="{% url 'event:cancel' event.id %}">
+                                {% csrf_token %}
+                                <button class="btn btn-primary">キャンセル</button>
+                              </form>
+                            {% else %}<!-- その他 -->
                               <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">参加</a>
                             {% endif %}
                         {% endif %}
