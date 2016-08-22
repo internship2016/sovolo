@@ -30,12 +30,16 @@
   <div class="panel-body">
     {% for group in event.group_set.all %}
       <p><a href="{% url 'group:detail' group.id %}"><img src="{{ group.get_image_url }}" width="24" height="24">&nbsp;{{ group.name }}</a></p>
+    {% empty %}
+      <p>関連しているグループはありません</p>
     {% endfor %}
   </div>
   <div class="panel-heading">タグ</div>
   <div class="panel-body">
     {% for tags in event.tag.all %}
       <a class="btn btn-primary" href="{% url 'event:search' %}?tags={{ tags.id }}">{{ tags.name }}</a>
+    {% empty %}
+      <p>このボランティアはタグ付けされていません</p>
     {% endfor %}
   </div>
 </div>
