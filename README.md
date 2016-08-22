@@ -1,7 +1,7 @@
 # sovolo
 そぼろ
 
-![ロゴ](https://cloud.githubusercontent.com/assets/343556/17825577/4d98d2b2-661e-11e6-99b4-24169f6fec60.png)
+![ロゴ](https://cloud.githubusercontent.com/assets/343556/17840209/9a649c74-67b4-11e6-8d2c-83b2d48ee895.png)
 
 ## INSTALL (port 80/443)
 
