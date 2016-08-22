@@ -25,6 +25,8 @@
             {{ group.description }}
           </div>
         </div>
+      {% empty %}
+      <p>所属しているグループがありません</p>
       {% endfor %}
     </div>
   </div>
@@ -51,6 +53,8 @@
             2016/08/10 @東京都新宿区
           </div>
         </div>
+      {% empty %}
+      <p>ボランティア実績がありません</p>
       {% endfor %}
     </div>
   </div>
@@ -61,6 +65,8 @@
     <div class="panel-body">
       {% for tag in user.follow_tag.all %}
         <button class="btn btn-default">{{ tag.name }}</button>
+      {% empty %}
+      <p>フォローしているタグがありません</p>
       {% endfor %}
     </div>
   </div>
