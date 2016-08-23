@@ -16,6 +16,10 @@
     });
   });
 </script>
+<script type="text/javascript"
+  src="http://maps.googleapis.com/maps/api/js?key=AIzaSyB-l4OYwiUl-DcfMxY6A5F_xS7XmrtsBTM&sensor=false">
+  //keyを置き換えないと！！！！！！
+</script>
 
 
 <div class="form-group">
@@ -105,8 +109,58 @@
   <div class="col-sm-9">
     <input id="id_meeting_place" class="form-control" maxlength="400" name="meeting_place" type="text"
            value="{{ event.meeting_place }}" required/>
+    <input type="button" class="btn btn-primary" onClick="getlatlng()" value="Google Mapじょうほうを取得">
+
+    <input id="id_latitude" type="hidden" name="latitude">
+    <input id="id_longitude" type="hidden" name="longitude">
+
+  <div id="map_canvas" class="center-block"  style="width:300px; height:300px;">
+  </div>
+
   </div>
 </div>
+
+<script>
+
+  var gmap;
+  var geocoder;
+
+  function initialize(){
+    var latlng = new google.maps.LatLng(35.709984,139.810703);
+      var opts = {
+        zoom: 15,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
+      gmap = new google.maps.Map(document.getElementById("map_canvas"), opts);
+
+  }
+
+  function getlatlng(){
+    console.log("Working")
+    geocoder = new google.maps.Geocoder();
+    var address = document.getElementById("id_meeting_place").value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          console.log(results);
+          console.log(results[0].geometry.location.lat());
+          console.log(results[0].geometry.location.lng());
+          gmap.setCenter(results[0].geometry.location);
+          var marker = new google.maps.Marker({
+              map: gmap,
+              position: results[0].geometry.location
+          });
+          //set values of hidden inputs
+          $(('#id_latitude')).val(results[0].geometry.location.lat())
+          $(('#id_longitude')).val(results[0].geometry.location.lng())
+        } else {
+          alert("緯度経度情報を取得できませんでした。");
+        }
+      });
+  }
+
+  window.onload = initialize()
+</script>
 
 <div class="form-group">
   <label for="id_region" class="col-sm-3">開催地域</label>
