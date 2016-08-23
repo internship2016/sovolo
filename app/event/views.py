@@ -52,6 +52,18 @@ class EventCreate(CreateView):
 
     template_name = "event/add.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(EventCreate, self).get_context_data(**kwargs)
+        context['all_tags'] = Tag.objects.all
+
+        if 'copy_event_id' in self.request.GET:
+            copy_event_id = self.request.GET['copy_event_id']
+            copy_event = Event.objects.get(pk=copy_event_id)
+            copy_event.start_time = None
+            copy_event.end_time = None
+            context['event'] = copy_event
+        return context
+
     def form_valid(self, form):
         form.instance.host_user = self.request.user
         form_redirect = super(EventCreate, self).form_valid(form)
@@ -99,11 +111,6 @@ class EventCreate(CreateView):
 
     def form_invalid(self, form):
         return super(EventCreate, self).form_invalid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super(EventCreate, self).get_context_data(**kwargs)
-        context['all_tags'] = Tag.objects.all
-        return context
 
 
     def get_success_url(self):
@@ -404,6 +411,8 @@ class EventSearchResultsView(ListView):
         context = super(EventSearchResultsView, self).get_context_data(**kwargs)
         context["all_tags"] = Tag.objects.all()
         context['prefectures'] = [(key, value[0]) for key, value in sorted(settings.PREFECTURES.items(), key=lambda x:x[1][1])]
+        context['checked_tags'] = [int(t) for t in self.request.GET.getlist('tags')]
+
         return context
 
 @method_decorator(login_required, name='dispatch')
@@ -456,8 +465,11 @@ class EventSupportView(RedirectView):
             messages.error(self.request, "応援のキャンセルはできません。")
             # event.supporter.remove(self.request.user.id)
         else:
-            messages.info(self.request, "応援しました。")
-            event.supporter.add(self.request.user.id)
+            if event.is_over:
+                messages.error(self.request, "終了したイベントは応援できません")
+            else:
+                messages.info(self.request, "応援しました。")
+                event.supporter.add(self.request.user.id)
 
         self.url = reverse_lazy('event:detail', kwargs={'pk': event.id})
         return super().get_redirect_url(*args, **kwargs)
@@ -530,12 +542,13 @@ class CommentCreate(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         text = self.request.POST["text"]
         event_id = kwargs["event_id"]
-        comment = Comment(
-            user=self.request.user,
-            event=Event.objects.get(pk=event_id),
-            text=text,
-        )
-        comment.save()
+        if text.strip()!="":
+            comment = Comment(
+                user=self.request.user,
+                event=Event.objects.get(pk=event_id),
+                text=text,
+            )
+            comment.save()
 
         return reverse_lazy('event:detail', kwargs={'pk': event_id})
 

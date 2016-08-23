@@ -8,8 +8,8 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
   <div class="row">
-    <div class="col-sm-4">
-      <img class="img-responsive" src="{{ event.get_image_url }}" >
+    <div class="col-sm-4" style="max-height:200px;">
+      <img class="img-responsive" src="{{ event.get_image_url }}" style="display:block;max-height:100%;width:auto;margin:0 auto;">
     </div>
     <div class="col-sm-8">
 
@@ -35,25 +35,31 @@
       <a href="{{ event.get_absolute_url }}">{{ event.name }}</a>
     </h1>
 
-    <h4><div>{{ event.start_time_format }} ～ {{ event.end_time_format }} @ {{ event.get_region_kanji }}</div></h4>
-
     <div class="clearfix">
-      <p>
-        現在の応援数 <span style="font-size: 200%;">{{ event.supporter.all|length }}人</span>
-        {% if request.user in event.supporter.all %}
-          <button class="btn btn-default">応援済み</button>
-        {% else %}
-          <a class="btn btn-primary" href="{% url 'event:support' event.id %}">応援する</a>
-        {% endif %}
-      </p>
-
-
       <div id="likes" class="pull-right">
         <style>.fb_iframe_widget > span { vertical-align: baseline !important; } .fb_iframe_widget { margin-right: 4px; }</style>
         <div style="display: inline-block;" class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div><div style="display: inline-block;"><a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="SoVol">Tweet</a> <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script></div>
         <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');</script>
       </div>
     </div>
+
+    <h4>開始: {{ event.start_time_format }}</h4>
+    <h4>終了: {{ event.end_time_format }}</h4>
+    <h4>場所: {{ event.get_region_kanji }}</h4>
+
+    <div class="input-group">
+      <span class="input-group-btn">
+        {% if request.user in event.supporter.all %}
+          <button class="btn btn-default">応援済み<span class="badge">{{ event.supporter.all|length }}</span></button>
+        {% else %}
+          {% if not event.is_over %}
+          <a class="btn btn-primary" href="{% url 'event:support' event.id %}">応援する<span class="badge">{{ event.supporter.all|length }}</span></a>
+          {% endif %}
+        {% endif %}
+      </span>
+    </div>
+
+
     <div>
       {% if request.user in event.admin.all or request.user == event.host_user %}
         <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">内容変更</a>
