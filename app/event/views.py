@@ -404,6 +404,8 @@ class EventSearchResultsView(ListView):
         context = super(EventSearchResultsView, self).get_context_data(**kwargs)
         context["all_tags"] = Tag.objects.all()
         context['prefectures'] = [(key, value[0]) for key, value in sorted(settings.PREFECTURES.items(), key=lambda x:x[1][1])]
+        context['checked_tags'] = [int(t) for t in self.request.GET.getlist('tags')]
+
         return context
 
 @method_decorator(login_required, name='dispatch')
