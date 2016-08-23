@@ -88,16 +88,18 @@
                           </form>
                         {% endif %}
                       {% else %}<!--未応募 -->
-                        {% if frame.is_over %}<!--未応募/終了-->
-                        {% elif frame.is_started %}<!--未応募/開催中-->
-                          <button class="btn btn-primary" disabled>締切済</button>
-                        {% elif frame.is_closed %}<!--未応募/締切済-->
-                          <button class="btn btn-primary" disabled>締切済</button>
-                        {% else %}<!--未応募/募集中-->
-                          {% if frame.is_full %}<!--未応募/募集中/参加枠満員-->
-                            <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">キャンセル待ち</a>
-                          {% else %}<!--未応募/募集中/参加枠空き有-->
-                            <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">参加</a>
+                        {% if not request.user in event.participant.all %}<!--他の枠に参加中でなければ-->
+                          {% if frame.is_over %}<!--未応募/終了-->
+                          {% elif frame.is_started %}<!--未応募/開催中-->
+                            <button class="btn btn-primary" disabled>締切済</button>
+                          {% elif frame.is_closed %}<!--未応募/締切済-->
+                            <button class="btn btn-primary" disabled>締切済</button>
+                          {% else %}<!--未応募/募集中-->
+                            {% if frame.is_full %}<!--未応募/募集中/参加枠満員-->
+                              <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">キャンセル待ち</a>
+                            {% else %}<!--未応募/募集中/参加枠空き有-->
+                              <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">参加</a>
+                            {% endif %}
                           {% endif %}
                         {% endif %}
                       {% endif %}
