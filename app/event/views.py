@@ -106,6 +106,13 @@ class EventCreate(CreateView):
             frame.deadline = self.request.POST.get('frame_' + number + '_deadline') or event.end_time
             frame.save()
 
+        # Lng, Lat
+        if 'latitude' in self.request.POST and 'longitude' in self.request.POST:
+            if self.request.POST['latitude']!="" and self.request.POST['longitude']!="":
+                event.latitude = self.request.POST['latitude']
+                event.longitude = self.request.POST['longitude']
+                event.save()
+
         messages.info(self.request, "イベントを登録しました。")
         return form_redirect
 
@@ -226,6 +233,13 @@ class EventEditView(UserPassesTestMixin, UpdateView):
             frame.upper_limit = self.request.POST.get('frame_' + number + '_upperlimit') or None
             frame.deadline = self.request.POST.get('frame_' + number + '_deadline') or event.end_time
             frame.save()
+
+        # Lng, Lat
+        if 'latitude' in self.request.POST and 'longitude' in self.request.POST:
+            if self.request.POST['latitude'] != "" and self.request.POST['longitude'] != "":
+                event.latitude = self.request.POST['latitude']
+                event.longitude = self.request.POST['longitude']
+                event.save()
 
         messages.info(self.request, "イベント情報を編集しました。")
         return form_redirect
