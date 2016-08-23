@@ -136,8 +136,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return Event.objects.filter(region=self.region).distinct().order_by('-created')[:5]
 
     def get_future_participating_events(self):
-        date = timezone.now()
-        return self.participating_event.all().filter(start_time__gte=date).order_by('start_time')
+        return [event for event in self.participating_event.all().order_by('start_time') if not event.is_over()]
 
     def get_new_tag_events(self):
         Event = apps.get_model('event', 'Event')
