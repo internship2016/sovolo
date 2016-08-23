@@ -2,7 +2,7 @@
 <div id="sample-event{{event.pk}}" class="media">
   <div class="media-left">
     <a href="/event/{{event.pk}}">
-      <img class="media-object" src={{event.get_image_url}} width="64" height="64" alt="画像">
+      <div class="media-object thumbnail list-thumbnail" style="background-image:url({{ event.get_image_url }});"></div>
     </a>
   </div>
   <div class="media-body">

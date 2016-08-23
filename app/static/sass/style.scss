@@ -61,6 +61,32 @@ footer {
   border-top: solid 1px darken(custom-color('dark'), 10%);
 }
 
+/* images */
+.thumbnail{
+  background-position:center;
+  background-size:cover;
+}
+
+.list-thumbnail{
+  width:64px;
+  height:64px;
+}
+
+.event_detail-thumbnail{
+  width:200px;
+  height:200px;
+}
+
+.group_detail-thumbnail{
+  width:200px;
+  height:200px;
+}
+
+.user_detail-thumbnail{
+  width:200px;
+  height:200px;
+}
+
 /* bootstrap-datetimepicker tweak */
 .datepicker-days {
   tr {
