@@ -52,7 +52,9 @@
         {% if request.user in event.supporter.all %}
           <button class="btn btn-default">応援済み<span class="badge">{{ event.supporter.all|length }}</span></button>
         {% else %}
+          {% if not event.is_over %}
           <a class="btn btn-primary" href="{% url 'event:support' event.id %}">応援する<span class="badge">{{ event.supporter.all|length }}</span></a>
+          {% endif %}
         {% endif %}
       </span>
     </div>

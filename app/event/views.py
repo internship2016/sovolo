@@ -465,8 +465,11 @@ class EventSupportView(RedirectView):
             messages.error(self.request, "応援のキャンセルはできません。")
             # event.supporter.remove(self.request.user.id)
         else:
-            messages.info(self.request, "応援しました。")
-            event.supporter.add(self.request.user.id)
+            if event.is_over:
+                messages.error(self.request, "終了したイベントは応援できません")
+            else:
+                messages.info(self.request, "応援しました。")
+                event.supporter.add(self.request.user.id)
 
         self.url = reverse_lazy('event:detail', kwargs={'pk': event.id})
         return super().get_redirect_url(*args, **kwargs)
