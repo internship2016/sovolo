@@ -108,12 +108,12 @@
                     <div>
                       {% if not frame.upper_limit is None %}
                       <font size="4">
-                        {{ frame.num_participants }}人
+                        {{ frame.participation_set.count }}人
                         /{{ frame.upper_limit }}人
                       </font>
                       {% else %}
                       <font size="4">
-                        {{ frame.num_participants }}人
+                        {{ frame.participation_set.count }}人
                       </font>
                       <span class="label label-warning">上限なし</span>
                       {% endif %}
