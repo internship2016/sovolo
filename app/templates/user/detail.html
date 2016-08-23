@@ -17,7 +17,7 @@
         <div class="media">
           <div class="media-left">
             <a href="{% url "group:detail" group.id %}">
-              <img class="media-object" src="{{ group.get_image_url }}" alt="image" width="64" height="64">
+              <div class="thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
             </a>
           </div>
           <div class="media-body">
@@ -54,7 +54,7 @@
       {% for prev in user.get_previous_by_created.all %}
         <div class="media">
           <div class="media-left">
-            <img class="media-object" src="{{ prev.image_url }}" alt="ボランティアアイコン" width="64" height="64">
+            <div class="media-object thumbnail list-thumbnail" style="background-image:url({{ event.get_image_url }});"></div>
           </div>
           <div class="media-body">
             <h3 class="media-heading">{{ prev.name }}</h3>
