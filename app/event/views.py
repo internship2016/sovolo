@@ -530,12 +530,13 @@ class CommentCreate(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
         text = self.request.POST["text"]
         event_id = kwargs["event_id"]
-        comment = Comment(
-            user=self.request.user,
-            event=Event.objects.get(pk=event_id),
-            text=text,
-        )
-        comment.save()
+        if text.strip()!="":
+            comment = Comment(
+                user=self.request.user,
+                event=Event.objects.get(pk=event_id),
+                text=text,
+            )
+            comment.save()
 
         return reverse_lazy('event:detail', kwargs={'pk': event_id})
 
