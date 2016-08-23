@@ -292,7 +292,7 @@
 
 <div class="form-group">
   <label class="col-sm-3">関連付けるタグ</label>
-  <div class="col-sm-9">
+  <div class="checkbox col-sm-9">
     {% for tag in all_tags %}
       <label><input type="checkbox" name="tags" value="{{ tag.id }}"
                     {% if tag in event.tag.all %}checked{% endif %}>{{ tag.name }}</label>
@@ -303,7 +303,7 @@
 <div class="form-group">
   <label class="col-sm-3">グループの紐づけ</label>
   <div class="col-sm-9">
-    <div id="events">
+    <div class="checkbox" id="events">
       {% for group in event.group_set.all %}
         {% if forloop.first %}
           <h4>ボランティアに紐づけされたグループ</h4>

@@ -15,13 +15,13 @@
       {% include 'event/form_template.html' %}
     </div>
     <div class="panel-footer" style="text-align:center">
-      <button type="submit">更新</button>
+      <button class="btn btn-primary" type="submit">更新</button>
     </div>
   </form>
 </div>
 <form method="post" action="{% url 'event:delete' event.id %}">
   {% csrf_token %}
-  <button type="submit" class="center-block">イベントを削除する</button>
+  <button type="submit" class="center-block btn btn-danger">イベントを削除する</button>
 </form>
 
 {% endblock %}
