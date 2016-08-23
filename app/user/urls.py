@@ -11,8 +11,11 @@ urlpatterns = [
     url(r'^register/$', views.UserCreateView.as_view(), name='register'),
     url(r'^activation/(?P<key>\w+)/$', views.UserActivationView.as_view(), name='activation'),
     url(r'^email_required/$', views.AcquireEmail.as_view(), name='acquire_email'),
-    url(r'^edit/$', views.UserEditView.as_view(), name='edit'),
 
+    url(r'^request_password_reset/$', views.RequestPasswordReset.as_view(), name='request_password_reset'),
+    url(r'^reset_password/(?P<key>\w+)$', views.ResetPassword.as_view(), name='reset_password'),
+
+    url(r'^edit/$', views.UserEditView.as_view(), name='edit'),
     # user/1/detail
     url(r'^(?P<pk>[0-9]+)/$', views.UserDetailView.as_view(), name='detail'),
 ]

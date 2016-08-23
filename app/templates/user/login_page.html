@@ -23,7 +23,8 @@
             </div>
 
             <div class="text-center">
-              <button class="btn btn-primary" type="submit">ログイン</button>
+              <button class="btn btn-primary" type="submit">ログイン</button><br><br>
+              <a href="{% url 'user:request_password_reset' %}">パスワードを忘れた方はこちら</a>
             </div>
             <input type="hidden" name="next" value="{{ next }}"/>
           </form>

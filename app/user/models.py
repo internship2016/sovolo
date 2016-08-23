@@ -177,3 +177,14 @@ class UserActivation(models.Model):
         if not self.id:
             self.created = timezone.now()
         return super().save(*args, **kwargs)
+
+
+class UserPasswordResetting(models.Model):
+    user = models.OneToOneField(User)
+    key = models.CharField(max_length=255, unique=True)
+    created = models.DateTimeField(editable=False)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.created = timezone.now()
+        return super().save(*args, **kwargs)

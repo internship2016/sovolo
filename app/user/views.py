@@ -13,7 +13,7 @@ import uuid
 from django.contrib.auth import login
 
 from django.utils import timezone
-from .models import User, UserActivation
+from .models import User, UserActivation, UserPasswordResetting
 
 
 class UserCreateView(CreateView):
@@ -64,6 +64,61 @@ class UserActivationView(View):
         user.save()
         login(request, user, "django.contrib.auth.backends.ModelBackend")
         messages.info(request, "本登録が完了しました。")
+        return redirect("top")
+
+
+class RequestPasswordReset(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'user/request_password_reset.html')
+
+    def post(self, request, *args, **kwargs):
+        email = request.POST.get('email')
+        try:
+            user = User.objects.get(email=email)
+            reset_key = self.create_reset_key()
+            resetting = UserPasswordResetting(user=user, key=reset_key)
+            resetting.save()
+
+            base_url = "/".join(self.request.build_absolute_uri().split("/")[:3])
+            reset_url = "{0}/user/reset_password/{1}".format(base_url, reset_key)
+
+            send_template_mail(
+                "email/reset_password.txt",
+                {"reset_url": reset_url},
+                "Sovol Info<info@sovolo.earth>",
+                [user.email]
+            )
+        except:
+            pass
+
+        messages.info(request, "パスワード再設定のリンクを送信しました。")
+        return redirect("top")
+
+    def create_reset_key(self):
+        key = uuid.uuid4().hex
+        return key
+
+
+class ResetPassword(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'user/reset_password.html')
+
+    def post(self, request, *args, **kwargs):
+        password = request.POST.get('password')
+
+        resetting = UserPasswordResetting.objects.filter(key=kwargs['key'])
+        if resetting .exists():
+            resetting = resetting .first()
+        else:
+            messages.error(request, "パスワードの再設定に失敗しました。")
+            return redirect("top")
+
+        user = resetting.user
+        user.set_password(password)
+        user.save()
+        login(request, user, "django.contrib.auth.backends.ModelBackend")
+
+        messages.info(request, "パスワードを再設定しました。")
         return redirect("top")
 
 
