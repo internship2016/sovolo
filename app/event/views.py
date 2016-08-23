@@ -52,6 +52,18 @@ class EventCreate(CreateView):
 
     template_name = "event/add.html"
 
+    def get_context_data(self, **kwargs):
+        context = super(EventCreate, self).get_context_data(**kwargs)
+        context['all_tags'] = Tag.objects.all
+
+        if 'copy_event_id' in self.request.GET:
+            copy_event_id = self.request.GET['copy_event_id']
+            copy_event = Event.objects.get(pk=copy_event_id)
+            copy_event.start_time = None
+            copy_event.end_time = None
+            context['event'] = copy_event
+        return context
+
     def form_valid(self, form):
         form.instance.host_user = self.request.user
         form_redirect = super(EventCreate, self).form_valid(form)
@@ -99,11 +111,6 @@ class EventCreate(CreateView):
 
     def form_invalid(self, form):
         return super(EventCreate, self).form_invalid(form)
-
-    def get_context_data(self, **kwargs):
-        context = super(EventCreate, self).get_context_data(**kwargs)
-        context['all_tags'] = Tag.objects.all
-        return context
 
 
     def get_success_url(self):
