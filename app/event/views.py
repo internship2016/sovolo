@@ -113,7 +113,7 @@ class EventCreate(CreateView):
                 event.longitude = self.request.POST['longitude']
                 event.save()
 
-        messages.info(self.request, "イベントを登録しました。")
+        messages.info(self.request, "ボランティアを登録しました。")
         return form_redirect
 
     def form_invalid(self, form):
@@ -143,7 +143,7 @@ class EventDetailView(DetailView):
         try:
             self.object = self.get_object()
         except Http404:
-            messages.error(request, "そのイベントは存在しません")
+            messages.error(request, "そのボランティアは存在しません")
             return redirect('top')
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
@@ -241,7 +241,7 @@ class EventEditView(UserPassesTestMixin, UpdateView):
                 event.longitude = self.request.POST['longitude']
                 event.save()
 
-        messages.info(self.request, "イベント情報を編集しました。")
+        messages.info(self.request, "ボランティア情情報を編集しました。")
         return form_redirect
 
     def test_func(self):
@@ -274,7 +274,7 @@ class EventDeleteView(UserPassesTestMixin, DeleteView):
         return HttpResponseForbidden()
 
     def get_success_url(self):
-        messages.info(self.request, "イベントを削除しました")
+        messages.info(self.request, "ボランティアを削除しました")
         return reverse_lazy('top')
 
 class EventParticipantsView(DetailView):
@@ -331,7 +331,7 @@ class EventSearchResultsView(ListView):
             if user_entry is not None and user_entry != "":
                 freeword_query = self.make_query_from_string(user_entry)
                 if freeword_query is None:
-                    messages.error(self.request, "検索結果に一致するイベントが見つかりませんでした")
+                    messages.error(self.request, "検索結果に一致するボランティアが見つかりませんでした")
                     return Event.objects.none()
                 else:
                     query = query & freeword_query
@@ -383,7 +383,7 @@ class EventSearchResultsView(ListView):
                 try:
                     g = Group.objects.get(pk=int(group))
                 except ObjectDoesNotExist:
-                    messages.error(self.request, "検索結果に一致するイベントが見つかりませんでした")
+                    messages.error(self.request, "検索結果に一致するボランティアが見つかりませんでした")
                     return Event.objects.none()
                 group_list = [g]
                 group_query = Q(group__in=group_list)
@@ -411,7 +411,7 @@ class EventSearchResultsView(ListView):
             results = [event for event in results if not event.is_closed()]
 
         if len(results)==0:
-            messages.error(self.request, "検索結果に一致するイベントが見つかりませんでした")
+            messages.error(self.request, "検索結果に一致するボランティアが見つかりませんでした")
 
         #Filter based on page and number per page
         if 'numperpage' in self.request.GET:
@@ -480,7 +480,7 @@ class EventSupportView(RedirectView):
             # event.supporter.remove(self.request.user.id)
         else:
             if event.is_over():
-                messages.error(self.request, "終了したイベントは応援できません")
+                messages.error(self.request, "終了したボランティアは応援できません")
             else:
                 messages.info(self.request, "応援しました。")
                 event.supporter.add(self.request.user.id)
@@ -496,7 +496,7 @@ class EventFollowView(RedirectView):
         event = Event.objects.get(pk=event_id)
 
         if event.is_closed():
-            messages.error(self.request, "このイベントはすでに締め切られています。")
+            messages.error(self.request, "このボランティアはすでに締め切られています。")
         else:
             try:
                 p = Participation.objects.create(
@@ -505,7 +505,7 @@ class EventFollowView(RedirectView):
                     status="興味あり",
                 )
                 p.save()
-                messages.error(self.request, "興味ありイベントに追加しました")
+                messages.error(self.request, "興味ありボランティアに追加しました")
             except IntegrityError:
                 event = Event.objects.get(pk=event_id)
                 if event in self.request.user.participating_event.all():

@@ -14,7 +14,7 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 class Command(BaseCommand):
     help = """
     以下の動作をします。毎日午前9時に一度実行されることを想定しています。
-    - 翌日開催or翌日登録締切のイベント参加者にリマインダーを送る
+    - 翌日開催or翌日登録締切のボランティア参加者にリマインダーを送る
     """
     from_address = "reminder@sovolo.earth"
 

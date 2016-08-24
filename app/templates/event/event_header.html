@@ -16,7 +16,7 @@
   <div class="event-head-title panel panel-primary" style="padding: 1em;">
 
     {% if event.is_over %}
-      <div class="alert alert-danger">このイベントは終了しました</div>
+      <div class="alert alert-danger">このボランティアは終了しました</div>
     {% else %}
       {% if request.user in event.participant.all %}
           {% if participation.status == "参加中" %}

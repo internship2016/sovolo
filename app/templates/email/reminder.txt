@@ -1,4 +1,4 @@
-イベント{{event.name}}は明日開催です。
+ボランティア{{event.name}}は明日開催です。
 {{user.username}}さん
 
 こんにちは。
