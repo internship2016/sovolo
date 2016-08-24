@@ -4,6 +4,10 @@
 
 {% block title %}{{ event.name }} ボランティア詳細 | Sovol{% endblock %}
 {% block content %}
+<script type="text/javascript"
+  src="http://maps.googleapis.com/maps/api/js?key=&sensor=false">
+</script>
+
   <div>
     {% include "event/event_header.html" %}
     <div class="row">
@@ -155,22 +159,61 @@
                 <td>{{ event.notes | linebreaks }}</td>
               </tr>
               <tr>
-                <th>集合場所</th>
-                <td>{{ event.get_region_kanji }} {{ event.meeting_place }}</td>
-              </tr>
-              <tr>
                 <th>連絡先</th>
                 <td>{{ event.contact }}</td>
               </tr>
             </table>
           </div>
         </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">集合場所</div>
+          <div class="panel-body">
+            <p>{{ event.meeting_place }}</p>
+            {% if event.latitude and event.longitude %}
+              <input id="event_lat" type="hidden" value="{{ event.latitude }}">
+              <input id="event_lng" type="hidden" value="{{ event.longitude }}">
+              <div id="map_canvas" class="center-block"></div>
+            {% endif %}
+          </div>
+        </div>
       </div>
+
       <div class="col-md-3">
         {% include "event/side_info.html" %}
       </div>
     </div>
     {% comments event %}
   </div>
+
+<script>
+  var gmap;
+
+  function initialize(){
+
+    if ($('#event_lat').length > 0) {
+      var lat = $('#event_lat').val()
+      var lng = $('#event_lng').val()
+      console.log(lat)
+      console.log(lng)
+      var latlng = new google.maps.LatLng(lat,lng);
+        var opts = {
+          zoom: 15,
+          center: latlng,
+          mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+
+      gmap = new google.maps.Map(document.getElementById("map_canvas"), opts);
+
+      var marker = new google.maps.Marker({
+        map: gmap,
+        position: latlng
+      });
+    }
+
+  }
+
+  window.onload = initialize()
+
+</script>
 
 {% endblock %}
