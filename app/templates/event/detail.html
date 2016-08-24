@@ -19,7 +19,14 @@
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-md-9">
-                    <h5>参加枠{{ forloop.counter }}: (締切: {{ frame.deadline_format }})
+                    <h5>参加枠{{ forloop.counter }}:
+                      {% if frame.deadline %}
+                        (締切: {{ frame.deadline_format }})
+                      {% else %}
+                        (締切: {{ event.start_time_format }})
+                      {% endif %}
+
+                      <!-- 参加枠の状態のラベル -->
                       {% if request.user in event.admin.all %}<!-- 管理者 -->
                       {% elif request.user.id in frame.reserved_id_list %}<!--参加予定-->
                         {% if frame.is_over %}<!--参加予定/終了-->
