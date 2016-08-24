@@ -1,42 +1,54 @@
-{% for event in events %}
-<div id="sample-event{{event.pk}}" class="media">
-  <div class="media-left">
-    <a href="/event/{{event.pk}}">
-      <div class="media-object thumbnail list-thumbnail" style="background-image:url({{ event.get_image_url }});"></div>
-    </a>
-  </div>
-  <div class="media-body">
-    <div class="event-info pull-left">
-        <div class="media-heading">
-          <a href="/event/{{event.pk}}">
-            <h4>{{event.name}}</h4>
-          </a>
-        </div>
-          {{event.start_time_format | date:'n/j (D)' }}
-          {{event.get_region_kanji}}
-        </div>
-    <div class="event-status pull-right">
-      <p>
-        {% if event.is_over %}
-        <p>{{ event.get_status }}</p>
-        {% else %}
-          {% if event in user.participating_event.all %}
-            {% for participation in user.participation_set.all %}
-              {% if participation.event == event %}
-                  <p>{{ participation.status }}</p>
-              {% endif %}
-            {% endfor %}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+      <h1 class="panel-title">{{ title }}</h1>
+    </div>
+    <div class="panel-body">
+  {% for event in events %}
+  <div id="sample-event{{event.pk}}" class="media">
+    <div class="media-left">
+      <a href="/event/{{event.pk}}">
+        <div class="media-object thumbnail list-thumbnail" style="background-image:url({{ event.get_image_url }});"></div>
+      </a>
+    </div>
+    <div class="media-body">
+      <div class="event-info pull-left">
+          <div class="media-heading">
+            <a href="/event/{{event.pk}}">
+              <h4>{{event.name}}</h4>
+            </a>
+          </div>
+            {{event.start_time_format | date:'n/j (D)' }}
+            {{event.get_region_kanji}}
+          </div>
+      <div class="event-status pull-right">
+        <p>
+          {% if event.is_over %}
+          <p>{{ event.get_status }}</p>
           {% else %}
-            {{ event.get_status }}
-            {% if event.get_status　==　"募集中" %}
-              <p><a href="{% url 'event:detail' event.id %}">応募する</a></p>
+            {% if event in user.participating_event.all %}
+              {% for participation in user.participation_set.all %}
+                {% if participation.event == event %}
+                    <p>{{ participation.status }}</p>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              {{ event.get_status }}
+              {% if event.get_status　==　"募集中" %}
+                <p><a href="{% url 'event:detail' event.id %}">応募する</a></p>
+              {% endif %}
             {% endif %}
-          {% endif %}
-      {% endif %}
-      </p>
+        {% endif %}
+        </p>
+      </div>
     </div>
   </div>
+  {% empty %}
+  <p>ボランティアがありません</p>
+  {% endfor %}
+
+  {% if title == "所属グループの新着ボランティア" %}
+    <a class="btn btn-default pull-right" href="{% url 'group:add' %}">グループを作成</a>
+    <a class="btn pull-right" href="{% url 'group:index' %}">グループ一覧</a>
+  {% endif %}
+  </div>
 </div>
-{% empty %}
-<p>ボランティアがありません</p>
-{% endfor %}

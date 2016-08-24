@@ -6,9 +6,10 @@ import sys
 register = template.Library()
 
 
-@register.inclusion_tag('event/event_list.html')
-def event_list(events, user):
-    return {'events': events, 'user': user}
+@register.inclusion_tag('event/event_list.html', takes_context=True)
+def event_list(context, events, title):
+    request = context['request']
+    return {'events': events, 'title': title, 'user': request.user}
 
 @register.inclusion_tag('event/user_list.html')
 def user_list(users, title, event):

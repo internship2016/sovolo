@@ -5,78 +5,45 @@
 
 {% block content %}
 
+{% include "user/user_header.html" %}
 
-  {% include "user/user_header.html" %}
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">所属グループ一覧</h1>
+  </div>
+  <div class="panel-body">
+    {% for group in user.group_set.all %}
+      <div class="media">
+        <div class="media-left">
+          <a href="{% url "group:detail" group.id %}">
+            <div class="thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
+          </a>
+        </div>
+        <div class="media-body">
+          <h3 class="media-heading"><a href="{% url "group:detail" group.id %}">{{ group.name }}</a></h3>
+          {{ group.description }}
+        </div>
+      </div>
+    {% empty %}
+    <p>所属しているグループがありません</p>
+    {% endfor %}
+  </div>
+</div>
+{% event_list request.user.admin_event.all "管理しているボランティア一覧" %}
+{% event_list request.user.participating_event.all "参加予定ボランティア一覧"　%}
+{% event_list request.user.get_previous_by_created.all "ボランティア実績"　%}
 
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h1 class="panel-title">所属グループ一覧</h1>
-    </div>
-    <div class="panel-body">
-      {% for group in user.group_set.all %}
-        <div class="media">
-          <div class="media-left">
-            <a href="{% url "group:detail" group.id %}">
-              <div class="thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
-            </a>
-          </div>
-          <div class="media-body">
-            <h3 class="media-heading"><a href="{% url "group:detail" group.id %}">{{ group.name }}</a></h3>
-            {{ group.description }}
-          </div>
-        </div>
-      {% empty %}
-      <p>所属しているグループがありません</p>
-      {% endfor %}
-    </div>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">フォローしているタグ</h1>
   </div>
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h1 class="panel-title">管理しているボランティア一覧</h1>
-    </div>
-    <div class="panel-body">
-      {% event_list request.user.admin_event.all user.request %}
-    </div>
+  <div class="panel-body">
+    {% for tag in user.follow_tag.all %}
+      <a class="tag" href="{% url 'event:search' %}?tags={{ tags.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
+    {% empty %}
+    <p>フォローしているタグがありません</p>
+    {% endfor %}
   </div>
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h1 class="panel-title">参加予定ボランティア一覧</h1>
-    </div>
-    <div class="panel-body">
-      {% event_list request.user.participating_event.all user.request %}
-    </div>
-  </div>
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h1 class="panel-title">ボランティア実績</h1>
-    </div>
-    <div class="panel-body">
-      {% for prev in user.get_previous_by_created.all %}
-        <div class="media">
-          <div class="media-left">
-            <div class="media-object thumbnail list-thumbnail" style="background-image:url({{ event.get_image_url }});"></div>
-          </div>
-          <div class="media-body">
-            <h3 class="media-heading">{{ prev.name }}</h3>
-            2016/08/10 @東京都新宿区
-          </div>
-        </div>
-      {% empty %}
-      <p>ボランティア実績がありません</p>
-      {% endfor %}
-    </div>
-  </div>
-  <div class="panel panel-primary">
-    <div class="panel-heading">
-      <h1 class="panel-title">フォローしているタグ</h1>
-    </div>
-    <div class="panel-body">
-      {% for tag in user.follow_tag.all %}
-        <a class="tag" href="{% url 'event:search' %}?tags={{ tags.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
-      {% empty %}
-      <p>フォローしているタグがありません</p>
-      {% endfor %}
-    </div>
-  </div>
+</div>
 
 {% endblock %}

@@ -13,14 +13,8 @@
       </div>
       <div class="panel-body">{{ group.description }}</div>
     </div>
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-        <h1 class="panel-title">グループ主催のボランティア一覧</h1>
-      </div>
-      <div class="panel-body">
-        {% event_list group.event.all request.user %}
-      </div>
-    </div>
+    {% event_list group.event.all "グループ主催のボランティア一覧" %}
+
   </div>
   <div class="col-md-3">
     {% include "group/side_info.html" %}
