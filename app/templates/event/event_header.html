@@ -8,10 +8,10 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
   <div class="row">
-    <div class="col-sm-4" style="max-height:200px;">
+    <div class="col-sm-4 col-md-3" style="max-height:200px;">
       <div class="thumbnail event_detail-thumbnail" style="background-image:url({{ event.get_image_url }})"></div>
     </div>
-    <div class="col-sm-8">
+    <div class="col-sm-8 col-md-9">
 
   <div class="event-head-title panel panel-primary" style="padding: 1em;">
 
@@ -36,6 +36,16 @@
     </h1>
 
     <div class="clearfix">
+      <p>
+        応援数 <span class="support-num">{{ event.supporter.all|length }}</span>
+      </p>
+        {% if not event.is_over %}
+          {% if request.user in event.supporter.all %}
+            <button class="btn btn-default">応援済み</button>
+          {% else %}
+            <a class="btn btn-primary" href="{% url 'event:support' event.id %}">応援する</a>
+          {% endif %}
+        {% endif %}
       <div id="likes" class="pull-right">
         <style>.fb_iframe_widget > span { vertical-align: baseline !important; } .fb_iframe_widget { margin-right: 4px; }</style>
         <div class="fb-share-button" data-href="{{ event.get_absolute_url }}" data-layout="button" data-size="small" data-mobile-iframe="true">
@@ -51,24 +61,7 @@
       </div>
     </div>
 
-    <h4>開始: {{ event.start_time_format }}</h4>
-    <h4>終了: {{ event.end_time_format }}</h4>
-    <h4>場所: {{ event.get_region_kanji }}</h4>
-
-    <div class="input-group">
-      <span class="input-group-btn">
-        {% if request.user in event.supporter.all %}
-          <button class="btn btn-default">応援済み<span class="badge">{{ event.supporter.all|length }}</span></button>
-        {% else %}
-          {% if not event.is_over %}
-          <a class="btn btn-primary" href="{% url 'event:support' event.id %}">応援する<span class="badge">{{ event.supporter.all|length }}</span></a>
-          {% endif %}
-        {% endif %}
-      </span>
-    </div>
-
-
-    <div>
+    <div style="text-align: right; margin-top: 2px;">
       {% if request.user in event.admin.all or request.user == event.host_user %}
         <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">内容変更</a>
         <a href="{% url 'event:message' event.id %}" type="button" class="btn btn-default">メール一斉送信</a>
