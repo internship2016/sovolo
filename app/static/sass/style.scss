@@ -128,6 +128,18 @@ footer {
   display: block;
 }
 
+/* header, footer dropshadow */
+.navbar {
+  -webkit-box-shadow: 0 2px 2px 0 #999;
+     -moz-box-shadow: 0 2px 2px 0 #999;
+          box-shadow: 0 2px 2px 0 #999;
+}
+footer {
+  -webkit-box-shadow: 0 -2px 2px 0 #999;
+     -moz-box-shadow: 0 -2px 2px 0 #999;
+          box-shadow: 0 -2px 2px 0 #999;
+}
+
 
 /* Override Bootstrap 4 styling on Django Debug Toolbar */
 #djDebug[hidden], #djDebug [hidden] {
