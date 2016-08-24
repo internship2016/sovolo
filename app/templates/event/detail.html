@@ -5,7 +5,7 @@
 {% block title %}{{ event.name }} ボランティア詳細 | Sovol{% endblock %}
 {% block content %}
 <script type="text/javascript"
-  src="http://maps.googleapis.com/maps/api/js?key=&sensor=false">
+  src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAW5PZqv_tJA9Pd-il4UeG-Mk9622Ub7R0">
 </script>
 
   <div>
@@ -200,8 +200,6 @@
     if ($('#event_lat').length > 0) {
       var lat = $('#event_lat').val()
       var lng = $('#event_lng').val()
-      console.log(lat)
-      console.log(lng)
       var latlng = new google.maps.LatLng(lat,lng);
         var opts = {
           zoom: 15,

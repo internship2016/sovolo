@@ -17,7 +17,7 @@
   });
 </script>
 <script type="text/javascript"
-  src="http://maps.googleapis.com/maps/api/js?key=&sensor=false">
+  src="http://maps.googleapis.com/maps/api/js?key=AIzaSyAW5PZqv_tJA9Pd-il4UeG-Mk9622Ub7R0">
 </script>
 
 
@@ -136,14 +136,10 @@
   }
 
   function getlatlng(){
-    console.log("Working")
     geocoder = new google.maps.Geocoder();
     var address = document.getElementById("id_meeting_place").value;
     geocoder.geocode( { 'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
-          console.log(results);
-          console.log(results[0].geometry.location.lat());
-          console.log(results[0].geometry.location.lng());
           gmap.setCenter(results[0].geometry.location);
           var marker = new google.maps.Marker({
               map: gmap,
