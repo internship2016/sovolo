@@ -261,7 +261,7 @@
             </div>
             <label class="col-sm-3">上限人数</label>
             <div class="col-sm-9">
-              <input class="form-control" type="number" name="frame_{{ forloop.counter }}_upperlimit"
+              <input class="form-control" type="number" min="0" step="1" name="frame_{{ forloop.counter }}_upperlimit"
                      value="{{ frame.upper_limit|default_if_none:'' }}">
             </div>
             <label class="col-sm-3">応募締め切り</label>
