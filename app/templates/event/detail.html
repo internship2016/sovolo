@@ -67,9 +67,9 @@
                       <!-- 参加枠の状態のラベル -->
                       {% if request.user in event.admin.all %}<!-- 管理者 -->
                       {% elif request.user.id in frame.reserved_id_list %}<!--参加予定-->
-                        {% if frame.is_over %}<!--参加予定/終了-->
+                        {% if event.is_over %}<!--参加予定/終了-->
                           <span class="label label-info">参加しました</span>
-                        {% elif frame.is_started %}<!--参加予定/開催中-->
+                        {% elif event.is_started %}<!--参加予定/開催中-->
                           <span class="label label-info">参加中</span>
                         {% elif frame.is_closed %}<!--参加予定/締切済-->
                           <span class="label label-info">参加確定</span>
@@ -77,9 +77,9 @@
                           <span class="label label-info">参加予定</span>
                         {% endif %}
                       {% elif request.user.id in frame.waiting_id_list %}<!--キャンセル待ち-->
-                        {% if frame.is_over %}<!--キャンセル待ち/終了-->
+                        {% if event.is_over %}<!--キャンセル待ち/終了-->
                           <span class="label label-info">終了しました</span>
-                        {% elif frame.is_started %}<!--キャンセル待ち/開催中-->
+                        {% elif event.is_started %}<!--キャンセル待ち/開催中-->
                           <span class="label label-info">参加不可</span>
                         {% elif frame.is_closed %}<!--キャンセル待ち/締切済-->
                           <span class="label label-info">参加不可</span>
@@ -87,9 +87,9 @@
                           <span class="label label-info">キャンセル待ち</span>
                         {% endif %}
                       {% else %}<!--未応募 -->
-                        {% if frame.is_over %}<!--未応募/終了-->
+                        {% if event.is_over %}<!--未応募/終了-->
                           <span class="label label-info">終了しました</span>
-                        {% elif frame.is_started %}<!--未応募/開催中-->
+                        {% elif event.is_started %}<!--未応募/開催中-->
                           <span class="label label-info">開催中</span>
                         {% elif frame.is_closed %}<!--未応募/締切済-->
                           <span class="label label-info">参加不可</span>
@@ -107,8 +107,8 @@
                     <div>
                       {% if request.user in event.admin.all %}<!-- 管理者 -->
                       {% elif request.user.id in frame.reserved_id_list %}<!--参加予定-->
-                        {% if frame.is_over %}<!--参加予定/終了-->
-                        {% elif frame.is_started %}<!--参加予定/開催中-->
+                        {% if event.is_over %}<!--参加予定/終了-->
+                        {% elif event.is_started %}<!--参加予定/開催中-->
                         {% elif frame.is_closed %}<!--参加予定/締切済-->
                           <form method="post" action="{% url 'event:cancel' event.id %}">
                             {% csrf_token %}
@@ -121,8 +121,8 @@
                           </form>
                         {% endif %}
                       {% elif request.user.id in frame.waiting_id_list %}<!--キャンセル待ち-->
-                        {% if frame.is_over %}<!--キャンセル待ち/終了-->
-                        {% elif frame.is_started %}<!--キャンセル待ち/開催中-->
+                        {% if event.is_over %}<!--キャンセル待ち/終了-->
+                        {% elif event.is_started %}<!--キャンセル待ち/開催中-->
                           <button class="btn btn-primary" disabled>締切済</button>
                         {% elif frame.is_closed %}<!--キャンセル待ち/締切済-->
                           <button class="btn btn-primary" disabled>締切済</button>
@@ -134,8 +134,8 @@
                         {% endif %}
                       {% else %}<!--未応募 -->
                         {% if not request.user in event.participant.all %}<!--他の枠に参加中でなければ-->
-                          {% if frame.is_over %}<!--未応募/終了-->
-                          {% elif frame.is_started %}<!--未応募/開催中-->
+                          {% if event.is_over %}<!--未応募/終了-->
+                          {% elif event.is_started %}<!--未応募/開催中-->
                             <button class="btn btn-primary" disabled>締切済</button>
                           {% elif frame.is_closed %}<!--未応募/締切済-->
                             <button class="btn btn-primary" disabled>締切済</button>
