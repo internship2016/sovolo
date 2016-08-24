@@ -162,7 +162,7 @@ class Frame(AbstractBaseModel):
         return self.participation_set.filter(status_query).count()
 
     def deadline_format(self):
-        return self.deadline.strftime("%m/%d %H:%M")
+        return self.deadline
 
     def participant_id_list(self):
         return self.participation_set.all().values_list('user',flat=True)
