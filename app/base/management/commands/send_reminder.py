@@ -3,9 +3,10 @@ from django.core.management.base import BaseCommand
 from django.template.loader import get_template
 from django.template import Context
 from django.core.mail import send_mail
-from event.models import Event
+from event.models import Event, Frame
 from base.utils import send_template_mail
-
+from django.utils import timezone
+import datetime
 import sys
 import io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -19,19 +20,17 @@ class Command(BaseCommand):
     from_address = "reminder@sovolo.earth"
 
     def handle(self, *args, **options):
-        # arg_exist = False
-        # for attr in self.attributes:
-        #     arg_exist = arg_exist or options[attr]
-        #
-        # if not arg_exist:
-        #     pass
-        # else:
-        #     pass
         self.stdout.write("running...")
+        today = datetime.datetime.combine(
+            datetime.date.today(),
+            datetime.time(0, 0, tzinfo=timezone.LocalTimezone())
+        )
 
         reminder_template = get_template("email/reminder.txt")
-        # TODO
-        reminder_events = Event.objects.all()
+        reminder_events = Event.objects.filter(
+            start_time__gte= today + datetime.timedelta(days=1),
+            start_time__lt = today + datetime.timedelta(days=2),
+        )
         for event in reminder_events:
             for user in event.participant.all():
                 send_template_mail(
@@ -42,23 +41,19 @@ class Command(BaseCommand):
                 )
 
         deadline_template = get_template("email/deadline.txt")
-        # TODO
-        deadline_events = Event.objects.all()
-        for event in deadline_events:
-            for user in event.participant.all():
-                send_template_mail(
-                    deadline_template,
-                    {'user': user, 'event': event},
-                    self.from_address,
-                    [user.email]
-                )
+        deadline_frames = Frame.objects.filter(
+            deadline__gte=today + datetime.timedelta(days=1),
+            deadline__lt=today + datetime.timedelta(days=2),
+        )
+
+        for frame in deadline_frames:
+            if not frame.event in reminder_events:
+                for user in frame.participant.all():
+                    send_template_mail(
+                        deadline_template,
+                        {'user': user, 'event': frame.event},
+                        self.from_address,
+                        [user.email]
+                    )
 
         self.stdout.write("success...!")
-
-    # def add_arguments(self, parser):
-    #     parser.add_argument(
-    #         '-user',
-    #         dest='user',
-    #         action='store_true',
-    #         default=False,
-    #     )
