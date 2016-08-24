@@ -465,7 +465,7 @@ class EventSupportView(RedirectView):
             messages.error(self.request, "応援のキャンセルはできません。")
             # event.supporter.remove(self.request.user.id)
         else:
-            if event.is_over:
+            if event.is_over():
                 messages.error(self.request, "終了したイベントは応援できません")
             else:
                 messages.info(self.request, "応援しました。")
