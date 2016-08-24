@@ -9,6 +9,10 @@ var debug = require('gulp-debug');
 var rimraf = require('rimraf');
 var cleanCSS = require('gulp-clean-css');
 var runSequence = require('run-sequence');
+var uglify = require('gulp-uglify');
+var sourcemaps = require('gulp-sourcemaps');
+var concat = require('gulp-concat');
+var minifyCSS = require('gulp-minify-css');
 
 var bowerDir = './bower_components';
 var conf = {
@@ -118,12 +122,20 @@ gulp.task('css.bootstrap', 'カスタムbootstrapを作る', function () {
 // Compress all sass files into css
 gulp.task('css', 'scssファイルをstatic/cssに移す', ['css.bootstrap'], function () {
   return gulp.src(conf.sassPath + '/*.scss')
+    .pipe(sourcemaps.init())
+    .pipe(concat('style.css'))
     .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(minifyCSS({advanced: false}))
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./static/css'));
 });
 
-gulp.task('js', 'jsファイルをstatic/jsに移す', function () {
+gulp.task('js', 'jsファイルをstatic/js/script.min.jsに', function () {
   return gulp.src(conf.scriptPath + '/*.js')
+    .pipe(sourcemaps.init())
+    .pipe(concat('script.min.js'))
+    .pipe(uglify())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./static/js'));
 });
 
