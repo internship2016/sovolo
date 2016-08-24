@@ -17,7 +17,7 @@
       </div>
       <div id="mygroup-events" class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">所属グループの新着</h3>
+          <h3 class="panel-title">所属グループの新着ボランティア</h3>
         </div>
         <div class="panel-body">
           {% event_list request.user.get_new_group_events request.user %}
@@ -27,7 +27,7 @@
       </div>
       <div id="myarea-events" class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">自分の地域の新着イベント</h3>
+          <h3 class="panel-title">自分の地域の新着ボランティア</h3>
         </div>
         <div class="panel-body">
           {% event_list request.user.get_new_region_events request.user %}
@@ -35,7 +35,7 @@
       </div>
       <div id="mytag-events" class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">フォローしているタグの新着一覧</h3>
+          <h3 class="panel-title">フォローしているタグの新着ボランティア</h3>
         </div>
         <div class="panel-body">
           {% event_list request.user.get_new_tag_events request.user %}

@@ -22,14 +22,15 @@ class UserCreateView(CreateView):
     template_name = 'user/register.html'
 
     def form_valid(self, form):
-        user = form.save(commit=False)
+        # user = form.save(commit=False)
         # user.set_password(form.cleaned_data['password'])
-        user.is_active = False
-        user.save()
+        # user.is_active = False
+        # user.save()
 
-        activation_key = self.create_activation_key()
-        activation = UserActivation(user=user, key=activation_key)
-        activation.save()
+        # if
+        # activation_key = self.create_activation_key()
+        # activation = UserActivation(user=user, key=activation_key)
+        # activation.save()
 
         base_url = "/".join(self.request.build_absolute_uri().split("/")[:3])
         activation_url = "{0}/user/activation/{1}".format(base_url, activation_key)
@@ -73,23 +74,25 @@ class RequestPasswordReset(View):
 
     def post(self, request, *args, **kwargs):
         email = request.POST.get('email')
-        try:
-            user = User.objects.get(email=email)
-            reset_key = self.create_reset_key()
-            resetting = UserPasswordResetting(user=user, key=reset_key)
-            resetting.save()
+        # try:
+        user = User.objects.get(email=email)
+        reset_key = self.create_reset_key()
 
-            base_url = "/".join(self.request.build_absolute_uri().split("/")[:3])
-            reset_url = "{0}/user/reset_password/{1}".format(base_url, reset_key)
+        if hasattr(user, "userpasswordresetting"):
+            user.userpasswordresetting.key = reset_key
+            user.userpasswordresetting.save()
+        else:
+            UserPasswordResetting(user=user, key=reset_key).save()
 
-            send_template_mail(
-                "email/reset_password.txt",
-                {"reset_url": reset_url},
-                "Sovol Info<info@sovolo.earth>",
-                [user.email]
-            )
-        except:
-            pass
+        base_url = "/".join(self.request.build_absolute_uri().split("/")[:3])
+        reset_url = "{0}/user/reset_password/{1}".format(base_url, reset_key)
+
+        send_template_mail(
+            "email/reset_password.txt",
+            {"reset_url": reset_url},
+            "Sovol Info<info@sovolo.earth>",
+            [user.email]
+        )
 
         messages.info(request, "パスワード再設定のリンクを送信しました。")
         return redirect("top")
@@ -101,7 +104,12 @@ class RequestPasswordReset(View):
 
 class ResetPassword(View):
     def get(self, request, *args, **kwargs):
-        return render(request, 'user/reset_password.html')
+        resetting = UserPasswordResetting.objects.filter(key=kwargs['key'])
+        if not resetting.exists():
+            messages.error(request, "無効なURLです")
+            return redirect("top")
+        else:
+            return render(request, 'user/reset_password.html')
 
     def post(self, request, *args, **kwargs):
         password = request.POST.get('password')

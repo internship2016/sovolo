@@ -7,7 +7,7 @@
   <div class="panel-heading">
     ボランティア内容変更
   </div>
-  <div class="alert" style="box-shadow: none;"><a class="btn btn-default pull-right" href="{% url 'event:add' %}?copy_event_id={{ event.id }}">このイベントを雛形に新しいイベントを作成する</a></div>
+  <div class="alert" style="box-shadow: none;"><a class="btn btn-default pull-right" href="{% url 'event:add' %}?copy_event_id={{ event.id }}">このボランティアを雛形に新しいボランティアを作成する</a></div>
   <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
     <!--    {{ form.as_ul }} -->
     <div class="panel-body">
@@ -21,7 +21,7 @@
 </div>
 <form method="post" action="{% url 'event:delete' event.id %}">
   {% csrf_token %}
-  <button type="submit" class="center-block btn btn-danger">イベントを削除する</button>
+  <button type="submit" class="center-block btn btn-danger">ボランティアを削除する</button>
 </form>
 
 {% endblock %}

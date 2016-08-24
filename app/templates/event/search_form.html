@@ -1,6 +1,6 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h3 class="panel-title">イベント検索</h3>
+    <h3 class="panel-title">ボランティア検索</h3>
   </div>
   <div class="panel-body">
     <form class="form-horizontal" role="search" action="{% url 'event:search' %}" method="get">
@@ -59,7 +59,7 @@
       <div class="form-group center-block search-ordering">
         <label for="searchform-closed" class="col-lg-4 control-label">ステータス</label>
         <div class="checkbox col-lg-8">
-          <input type="checkbox" name="exclude_closed_events" id="searchform-closed" {% if request.GET.exclude_closed_events == 'on' %}checked{% endif %}>締め切られたイベントを表示
+          <input type="checkbox" name="exclude_closed_events" id="searchform-closed" {% if request.GET.exclude_closed_events == 'on' %}checked{% endif %}>締め切られたボランティアを表示
         </div>
       </div>
       <div class="row">
