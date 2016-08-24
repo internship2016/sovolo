@@ -45,7 +45,7 @@ class AbstractBaseModel(models.Model):
                 img_file = background
 
             output = StringIO()
-            img_file.convert('RGB').save(output, format='JPEG', quality=60)
+            img_file.convert('RGB').save(output, format='JPEG', quality=100)
             output.seek(0)
             self.image = InMemoryUploadedFile(
                 file=output,
