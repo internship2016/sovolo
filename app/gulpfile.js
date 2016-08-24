@@ -61,6 +61,11 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
             './dist/fonts/*.*'
           ]
         },
+        'bootstrap-confirmation2': {
+          main: [
+            './*.min.js'
+          ]
+        },
         'bootstrap-filestyle': {
           main: [
             './src/*.min.js'

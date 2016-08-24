@@ -20,6 +20,7 @@
     "eonasdan-bootstrap-datetimepicker": "^4.17.37",
     "bootstrap-sass": "^3.3.7",
     "Croppie": "croppie#^2.3.0",
-    "bootstrap-filestyle": "^1.2.1"
+    "bootstrap-filestyle": "^1.2.1",
+    "bootstrap-confirmation2": "^2.3.1"
   }
 }
