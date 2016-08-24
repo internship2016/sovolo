@@ -1,6 +1,13 @@
-ボランティア{{event.name}}は明日開催です。
+{{event.name}}は明日開催です
 {{user.username}}さん
 
 こんにちは。
-表記の通りです。
+ボランティア「{{ event.name }}」が、明日開催されます。
+
+開始時刻: {{ event.start_time|date:"Y年m月d日 H時i分" }}
+集合場所: {{ event.meeting_place }}
+
+詳細は以下のURLからご覧ください。
+https://sovolo.earth/{% url 'event:detail' event.id %}
+
 よろしくお願いいたします。
