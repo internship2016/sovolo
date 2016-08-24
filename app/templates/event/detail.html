@@ -30,14 +30,21 @@
                 <td>{{ event.notes | linebreaks }}</td>
               </tr>
               <tr>
-                <th>集合場所</th>
-                <td>{{ event.get_region_kanji }} {{ event.meeting_place }}</td>
-              </tr>
-              <tr>
                 <th>連絡先</th>
                 <td>{{ event.contact }}</td>
               </tr>
             </table>
+          </div>
+        </div>
+        <div class="panel panel-primary">
+          <div class="panel-heading">集合場所</div>
+          <div class="panel-body">
+            <p>{{ event.meeting_place }}</p>
+            {% if event.latitude and event.longitude %}
+              <input id="event_lat" type="hidden" value="{{ event.latitude }}">
+              <input id="event_lng" type="hidden" value="{{ event.longitude }}">
+              <div id="map_canvas" class="center-block"></div>
+            {% endif %}
           </div>
         </div>
         <div class="panel panel-primary">
@@ -176,40 +183,6 @@
           </div>
         {% endif %}
 
-        <div class="panel panel-primary">
-          <div class="panel-heading">募集詳細</div>
-          <div class="panel-body">
-            <table class="table">
-              <tr>
-                <th>日時</th>
-                <td>{{ event.start_time_format }} ～ {{ event.end_time_format }}</td>
-              </tr>
-              <tr>
-                <th>説明</th>
-                <td>{{ event.details | linebreaks }}</td>
-              </tr>
-              <tr>
-                <th>連絡事項</th>
-                <td>{{ event.notes | linebreaks }}</td>
-              </tr>
-              <tr>
-                <th>連絡先</th>
-                <td>{{ event.contact }}</td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="panel panel-primary">
-          <div class="panel-heading">集合場所</div>
-          <div class="panel-body">
-            <p>{{ event.meeting_place }}</p>
-            {% if event.latitude and event.longitude %}
-              <input id="event_lat" type="hidden" value="{{ event.latitude }}">
-              <input id="event_lng" type="hidden" value="{{ event.longitude }}">
-              <div id="map_canvas" class="center-block"></div>
-            {% endif %}
-          </div>
-        </div>
       </div>
       <div class="col-md-3">
         {% include "event/side_info.html" %}
