@@ -152,15 +152,15 @@
                     <br>
                     <div>
                       {% if not frame.upper_limit is None %}
-                      <font size="4">
-                        {{ frame.participation_set.count }}人
-                        /{{ frame.upper_limit }}人
-                      </font>
+                        <p>
+                          <span style="font-size: 200%;">{{ frame.participation_set.count }}</span>
+                          /{{ frame.upper_limit }}人
+                        </p>
                       {% else %}
-                      <font size="4">
-                        {{ frame.participation_set.count }}人
-                      </font>
-                      <span class="label label-warning">上限なし</span>
+                        <p>
+                          <span style="font-size: 200%;">{{ frame.participation_set.count }}</span>人
+                          <span class="label label-warning">上限なし</span>
+                        </p>
                       {% endif %}
                     </div>
                   </div>

@@ -37,7 +37,7 @@
 
     <div class="clearfix">
       <p>
-        応援数 <span class="support-num">{{ event.supporter.all|length }}</span>
+        応援数 <span class="emphasis">{{ event.supporter.all|length }}</span>
       </p>
         {% if not event.is_over %}
           {% if request.user in event.supporter.all %}

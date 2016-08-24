@@ -1,11 +1,12 @@
  <div id="user-header">
   <div class="row">
-    <div class="col-sm-5" style="text-align: center">
+    <div class="col-sm-4 col-md-3" style="text-align: center">
       <div class="media-object thumbnail user_detail-thumbnail" style="background-image:url({{ user.get_image_url }});"></div>
     </div>
-    <div class="col-sm-7">
+    <div class="col-sm-8 col-md-9">
       <h1>{{ user.username }}</h1>
-      <h2> Lv. {{ user.get_level }} <span class="small">({{ user.get_point }} contribution)</span></h2>
+      <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
+      <p> ソボレージ<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
     </div>
   </div>
   <div class="row">
