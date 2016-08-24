@@ -146,6 +146,12 @@ class Frame(AbstractBaseModel):
     description = models.TextField(default='通常参加枠')
     upper_limit = models.IntegerField(blank=True, null=True)
     deadline = models.DateTimeField()
+    participant = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='participating_frame',
+        through='Participation',
+        blank=True,
+    )
 
     def __str__(self):
         return "Frame #" + str(self.pk) + " in Event #" + str(self.event_id)
