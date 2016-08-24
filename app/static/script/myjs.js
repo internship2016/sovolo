@@ -55,6 +55,20 @@
 })(this);
 
 /**
+ * bootstrap-confirmation2
+ */
+(function (global) {
+  global.jQuery(function ($) {
+    $('[data-toggle=confirmation]').confirmation({
+      rootSelector: '[data-toggle=confirmation]',
+      title: '本当によろしいですか？',
+      btnOkLabel: 'はい',
+      btnCancelLabel: 'いいえ'
+    });
+  });
+})(this);
+
+/**
  * croppie-upload - use croppie.js to crop uploaded images
  */
 (function (global) {

@@ -21,7 +21,7 @@
 </div>
 <form method="post" action="{% url 'event:delete' event.id %}">
   {% csrf_token %}
-  <button type="submit" class="center-block btn btn-danger">ボランティアを削除する</button>
+  <button type="submit" class="center-block btn btn-danger" data-toggle="confirmation">ボランティアを削除する</button>
 </form>
 
 {% endblock %}
