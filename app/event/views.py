@@ -185,6 +185,7 @@ class EventEditView(UserPassesTestMixin, UpdateView):
         'details',
         'notes',
         'private_notes',
+        'region'
     ]
     template_name = 'event/edit.html'
 
