@@ -38,6 +38,12 @@ $color-pallet: (
   width: 100%;
 }
 
+/* Google Maps */
+#map_canvas{
+  height:300px;
+  width:300px;
+}
+
 /* Flush footer to the bottom */
 * {
   margin: 0;
