@@ -131,6 +131,12 @@ class Event(AbstractBaseModel):
     def end_time_format(self):
         return self.end_time
 
+    def get_reserved_users(self):
+        return [participation.user for participation in self.participation_set.filter(status="参加中")]
+
+    def get_waiting_users(self):
+        return [participation.user for participation in self.participation_set.filter(status="キャンセル待ち").order_by('created')]
+
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
 

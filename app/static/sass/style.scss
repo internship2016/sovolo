@@ -70,6 +70,7 @@ footer {
 
 /* images */
 .thumbnail{
+  display: inline-block;
   background-position:center;
   background-size:cover;
 }
@@ -92,6 +93,11 @@ footer {
 .user_detail-thumbnail{
   width:200px;
   height:200px;
+}
+
+.user-list-thumbnail{
+  width:24px;
+  height:24px;
 }
 
 /* bootstrap-datetimepicker tweak */
