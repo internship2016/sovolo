@@ -27,7 +27,7 @@
   <div class="panel-heading">タグ</div>
   <div class="panel-body">
     {% for tags in event.tag.all %}
-      <a href="{% url 'event:search' %}?tags={{ tags.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tags.name }}</a>
+      <a class="tag" href="{% url 'event:search' %}?tags={{ tags.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tags.name }}</a>
     {% empty %}
       <p>このボランティアはタグ付けされていません</p>
     {% endfor %}

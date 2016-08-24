@@ -5,7 +5,7 @@ $color-pallet: (
   'light': #FFF3E1,    /* 背景       */
   'hot': #FFD5D3,      /* ホット！   */
   'cold': #D5D3FF,     /* コールド！ */
-        'emphasis': #FF4500, /* 強調 */
+        'red': #FF4500, /* 赤 */
 );
 
 
@@ -37,6 +37,15 @@ $color-pallet: (
 
 .comment-input-area textarea{
   width: 100%;
+}
+
+.emphasis {
+  font-size: 200%;
+  color: custom-color('red');
+}
+
+.tag {
+  font-size: 150%;
 }
 
 /* Google Maps */
@@ -129,9 +138,11 @@ footer {
 }
 
 /* support */
-.support-num {
-  font-size: 200%;
-  color: custom-color('emphasis');
+
+.sovolage-point {
+  font-size:large;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .trophy-master {
