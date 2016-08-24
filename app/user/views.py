@@ -22,15 +22,14 @@ class UserCreateView(CreateView):
     template_name = 'user/register.html'
 
     def form_valid(self, form):
-        # user = form.save(commit=False)
+        user = form.save(commit=False)
         # user.set_password(form.cleaned_data['password'])
-        # user.is_active = False
-        # user.save()
+        user.is_active = False
+        user.save()
 
-        # if
-        # activation_key = self.create_activation_key()
-        # activation = UserActivation(user=user, key=activation_key)
-        # activation.save()
+        activation_key = self.create_activation_key()
+        activation = UserActivation(user=user, key=activation_key)
+        activation.save()
 
         base_url = "/".join(self.request.build_absolute_uri().split("/")[:3])
         activation_url = "{0}/user/activation/{1}".format(base_url, activation_key)
@@ -59,7 +58,6 @@ class UserCreateView(CreateView):
 class UserActivationView(View):
     def get(self, request, *args, **kwargs):
         activation = get_object_or_404(UserActivation, key=kwargs['key'])
-        # TODO: 時間のバリデーション
         user = activation.user
         user.is_active = True
         user.save()
