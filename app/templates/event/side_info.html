@@ -1,3 +1,5 @@
+{% load event_tags %}
+
 <div class="panel panel-primary">
   <div class="panel-heading">主催者</div>
   <div class="panel-body">
@@ -6,23 +8,11 @@
       {{event.host_user.username}}
     </a>
   </div>
-  <div class="panel-heading">管理者</div>
-  <div class="panel-body">
-    {% for administer in event.admin.all %}
-    <a href="{% url 'user:detail' administer.id %}" title="{{ administer.username }}">
-      <img src="{{ administer.get_image_url }}" width="24" height="24">
-    </a>
-    {% endfor%}
-  </div>
-  <div class="panel-heading">参加者</div>
-  <div class="panel-body">
-    {% for participant in event.participant.all|slice:":10" %}
-    <a href="{% url 'user:detail' participant.id %}" title="{{ participant.username }}">
-      <img src="{{ participant.get_image_url }}" width="24" height="24">
-    </a>
-    {% endfor %}
-    <a href="{% url 'event:participants' event.id %}" class="pull-right">もっと見る</a>
-  </div>
+  {% user_list event.admin.all "管理者" event %}
+  {% user_list event.get_reserved_users "参加者" event %}
+  {% if event.is_full %}
+    {% user_list event.get_waiting_users "キャンセル待ち" event %}
+  {% endif %}
 </div>
 
 <div class="panel panel-primary">
@@ -37,7 +27,7 @@
   <div class="panel-heading">タグ</div>
   <div class="panel-body">
     {% for tags in event.tag.all %}
-      <a class="btn btn-primary" href="{% url 'event:search' %}?tags={{ tags.id }}">{{ tags.name }}</a>
+      <a href="{% url 'event:search' %}?tags={{ tags.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tags.name }}</a>
     {% empty %}
       <p>このボランティアはタグ付けされていません</p>
     {% endfor %}

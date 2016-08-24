@@ -5,6 +5,7 @@ $color-pallet: (
   'light': #FFF3E1,    /* 背景       */
   'hot': #FFD5D3,      /* ホット！   */
   'cold': #D5D3FF,     /* コールド！ */
+        'emphasis': #FF4500, /* 強調 */
 );
 
 
@@ -70,6 +71,7 @@ footer {
 
 /* images */
 .thumbnail{
+  display: inline-block;
   background-position:center;
   background-size:cover;
 }
@@ -92,6 +94,11 @@ footer {
 .user_detail-thumbnail{
   width:200px;
   height:200px;
+}
+
+.user-list-thumbnail{
+  width:24px;
+  height:24px;
 }
 
 /* bootstrap-datetimepicker tweak */
@@ -119,6 +126,12 @@ footer {
 }
 #djDebug [hidden][style='display: none;'] {
   display: none !important;
+}
+
+/* support */
+.support-num {
+  font-size: 200%;
+  color: custom-color('emphasis');
 }
 
 .trophy-master {

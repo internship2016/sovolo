@@ -10,6 +10,10 @@ register = template.Library()
 def event_list(events, user):
     return {'events': events, 'user': user}
 
+@register.inclusion_tag('event/user_list.html')
+def user_list(users, title, event):
+    return {'users': users, 'title': title, 'event':event}
+
 @register.simple_tag
 def query_transform(request, **kwargs):
     updated = request.GET.copy()
