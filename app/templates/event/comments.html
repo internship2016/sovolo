@@ -6,7 +6,7 @@
     {% for comment in comment_list %}
     <div id="comment#comment.id" class="media">
       <div class="media-left">
-        <img class="media-object" src={{comment.user.get_image_url}} width="64" height="64" alt="画像">
+        <div class="media-object thumbnail list-thumbnail" style="background-image: url({{ comment.user.get_image_url }});"></div>
       </div>
       <div class="media-body">
         <div class="media-heading">
@@ -31,7 +31,7 @@
         {% csrf_token %}
         <div class="media">
           <div class="media-left">
-            <img class="media-object" src={{ request.user.get_image_url}} width="64" height="64" alt="画像">
+            <div class="media-object thumbnail list-thumbnail" style="background-image: url({{ request.user.get_image_url }});"></div>
           </div>
           <div class="media-body">
             <div class="media-heading">
