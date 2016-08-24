@@ -165,12 +165,12 @@
   <label for="id_image" class="col-sm-3">ボランティア画像</label>
   <div class="col-sm-9">
     {% if event.image %}
-    <div class="thumbnail list-thumbnail" style="background-image: url({{event.get_image_url}});"></div>
-    <input id="id_image" type="file" name="image" value="{{ event.image_url }}" style="display:none;">
-    <p>画像を再設定する：</p>
-    {% else %}
-    <input class="filestyle" id="id_image" name="image" type="file" data-buttonName="btn-primary" data-buttonText="選択..." />
+      <p>現在の画像：</p>
+      <div class="thumbnail event_detail-thumbnail" style="background-image: url({{event.get_image_url}});"></div>
+      <input id="id_image_url" type="hidden" name="image_url" value="{{ event.get_image_url }}">
+      <p>画像を再設定する：</p>
     {% endif %}
+      <input class="filestyle" id="id_image" name="image" type="file" data-buttonName="btn-primary" data-buttonText="選択..." />
   </div>
 </div>
 
