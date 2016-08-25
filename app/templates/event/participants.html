@@ -1,13 +1,14 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
 {% load event_tags %}
+{% load user_tags %}
 {% block title %}参加者一覧 | {{ event.name }} | Sovol{% endblock %}
 {% block content %}
-	{% include "event/event_header.html" %}
+{% include "event/event_header.html" %}
 
-    {% user_list_large event.get_host_user_as_list "主催者"　event %}
-    {% user_list_large event.admin.all "管理者"　event %}
-    {% user_list_large event.get_reserved_users "参加者"　event %}
-    {% user_list_large event.get_waiting_users "キャンセル待ち"　event %}
+    {% user_list_large event.get_host_user_as_list "主催者" %}
+    {% user_list_large event.admin.all "管理者" %}
+    {% user_list_large event.get_reserved_users "参加者" %}
+    {% user_list_large event.get_waiting_users "キャンセル待ち" %}
 
 {% endblock %}

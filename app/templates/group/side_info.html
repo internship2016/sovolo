@@ -1,24 +1,4 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h1 class="panel-title">管理者</h1>
-  </div>
-  <div class="panel-body">
-    {% for user in group.admins %}
-    <a href="{% url 'user:detail' user.id %}">
-      <img src="{{ user.get_image_url }}" alt="{{ user.username }}" width="30" height="30">
-    </a>
-    {% endfor %}
-  </div>
-</div>
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h1 class="panel-title">参加者</h1>
-  </div>
-  <div class="panel-body">
-    {% for user in group.members %}
-    <a href="{% url 'user:detail' user.id %}">
-      <img src="{{ user.get_image_url }}" alt="{{ user.username }}" width="30" height="30">
-    </a>
-    {% endfor %}
-  </div>
-</div>
+{% load event_tags %}
+{% load user_tags %}
+{% user_list group.admin.all "管理者" %}
+{% user_list group.members "メンバー" %}
