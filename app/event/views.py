@@ -69,20 +69,9 @@ class EventCreate(CreateView):
         return context
 
     def form_valid(self, form):
-        print("*"*20, file=sys.stderr)
-        print(self.request.POST, file=sys.stderr)
-        print("*"*20, file=sys.stderr)
         form.instance.host_user = self.request.user
         form_redirect = super(EventCreate, self).form_valid(form)
         event = form.save()
-
-        print("*" * 20, file=sys.stderr)
-        print("EVENT:", file=sys.stderr)
-        print(event, file=sys.stderr)
-        print(event.pk, file=sys.stderr)
-        print("IMAGE IS NONE: ", file=sys.stderr)
-        print(event.image is None, file=sys.stderr)
-        print("*" * 20, file=sys.stderr)
 
         # Admins
         event.admin.clear()
