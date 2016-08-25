@@ -33,17 +33,4 @@
 {% event_list request.user.get_future_participating_events "参加予定ボランティア一覧"　%}
 {% event_list request.user.get_past_participated_events "ボランティア実績"　%}
 
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h1 class="panel-title">フォローしているタグ</h1>
-  </div>
-  <div class="panel-body">
-    {% for tag in user.follow_tag.all %}
-      <a class="tag" href="{% url 'event:search' %}?tags={{ tag.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
-    {% empty %}
-    <p>フォローしているタグがありません</p>
-    {% endfor %}
-  </div>
-</div>
-
 {% endblock %}

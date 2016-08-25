@@ -29,6 +29,14 @@
             {% endif %}
             <dt>住んでる都道府県</dt>
             <dd>{{ user.get_region_kanji }}</dd>
+            <dt>フォローしているタグ</dt>
+            <dd>
+              {% for tag in user.follow_tag.all %}
+                <a class="tag" href="{% url 'event:search' %}?tags={{ tag.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
+              {% empty %}
+                <p>フォローしているタグがありません</p>
+              {% endfor %}
+            </dd>
           </dl>
           <div style="text-align: right">
             {% if user.id == request.user.id %}
