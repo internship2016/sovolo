@@ -156,13 +156,13 @@ class User(AbstractBaseModel, AbstractBaseUser):
         for tag in Tag.objects.all():
             count = participated.filter(tag=tag).count()
             if count >= 20:
-                trophies.append({'name': tag.name, 'type': 'trophy-master'})
+                trophies.append({'name': tag.name, 'type': 'master'})
             elif count >= 10:
-                trophies.append({'name': tag.name, 'type': 'trophy-senior'})
+                trophies.append({'name': tag.name, 'type': 'senior'})
             elif count >= 3:
-                trophies.append({'name': tag.name, 'type': 'trophy-beginner'})
+                trophies.append({'name': tag.name, 'type': 'beginner'})
             elif count >= 1:
-                trophies.append({'name': tag.name, 'type': 'trophy-rookie'})
+                trophies.append({'name': tag.name, 'type': 'rookie'})
 
         return trophies
 

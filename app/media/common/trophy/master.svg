@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 20.1.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="レイヤー_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px"
+	 y="0px" viewBox="0 0 1792 1792" style="enable-background:new 0 0 1792 1792;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:url(#SVGID_1_);}
+	.st1{fill:url(#SVGID_2_);}
+	.st2{fill:url(#SVGID_3_);}
+	.st3{fill:url(#SVGID_4_);}
+	.st4{fill:url(#SVGID_5_);}
+</style>
+<linearGradient id="SVGID_2_" gradientUnits="userSpaceOnUse" x1="64" y1="896" x2="1728" y2="896">
+	<stop  offset="0" style="stop-color:#FFBB00"/>
+	<stop  offset="0.3092" style="stop-color:#FFBD00"/>
+	<stop  offset="0.4206" style="stop-color:#FFC400"/>
+	<stop  offset="0.5" style="stop-color:#FFCF00"/>
+	<stop  offset="0.5637" style="stop-color:#FFE000"/>
+	<stop  offset="0.6181" style="stop-color:#FFF600"/>
+	<stop  offset="0.6205" style="stop-color:#FFF700"/>
+	<stop  offset="0.6428" style="stop-color:#FFEE00"/>
+	<stop  offset="0.7156" style="stop-color:#FFD800"/>
+	<stop  offset="0.7944" style="stop-color:#FFC800"/>
+	<stop  offset="0.8827" style="stop-color:#FFBE00"/>
+	<stop  offset="1" style="stop-color:#FFBB00"/>
+</linearGradient>
+<path class="st1" d="M522,883c-49.3-108-74-231.7-74-371H192v96c0,52,31.5,106,94.5,162S428,863.7,522,883z M1600,608v-96h-256
+	c0,139.3-24.7,263-74,371c94-19.3,172.5-57,235.5-113S1600,660,1600,608z M1728,480v128c0,47.3-13.8,95-41.5,143s-65,91.3-112,130
+	s-104.7,71.2-173,97.5s-140.2,41.2-215.5,44.5c-28,36-59.7,67.7-95,95c-25.3,22.7-42.8,46.8-52.5,72.5S1024,1246,1024,1280
+	c0,36,10.2,66.3,30.5,91s52.8,37,97.5,37c50,0,94.5,15.2,133.5,45.5S1344,1522,1344,1568v64c0,9.3-3,17-9,23s-13.7,9-23,9H480
+	c-9.3,0-17-3-23-9s-9-13.7-9-23v-64c0-46,19.5-84.2,58.5-114.5S590,1408,640,1408c44.7,0,77.2-12.3,97.5-37s30.5-55,30.5-91
+	c0-34-4.8-63.8-14.5-89.5s-27.2-49.8-52.5-72.5c-35.3-27.3-67-59-95-95c-75.3-3.3-147.2-18.2-215.5-44.5s-126-58.8-173-97.5
+	s-84.3-82-112-130S64,655.3,64,608V480c0-26.7,9.3-49.3,28-68s41.3-28,68-28h288v-96c0-44,15.7-81.7,47-113s69-47,113-47h576
+	c44,0,81.7,15.7,113,47s47,69,47,113v96h288c26.7,0,49.3,9.3,68,28S1728,453.3,1728,480z"/>
+</svg>
