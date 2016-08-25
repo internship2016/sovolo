@@ -62,6 +62,7 @@
       format: fmt,
       sideBySide: true,
       minDate: moment(),
+      stepping: 15,
     });
   });
 
@@ -140,15 +141,7 @@
     {% if event.latitude and event.longitude %}
       latlng = new google.maps.LatLng({{ event.latitude }},{{ event.longitude }});
       gmap.setCenter(latlng);
-      marker = new google.maps.Marker({
-        map: gmap,
-        position: latlng,
-        draggable: true
-      });
-      marker.addListener('dragend',function () {
-        $(('#id_latitude')).val(marker.position.lat())
-        $(('#id_longitude')).val(marker.position.lng())
-      })
+      setPin(latlng);
     {% endif %}
   }
 
@@ -158,15 +151,7 @@
     geocoder.geocode( { 'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           gmap.setCenter(results[0].geometry.location);
-            marker = new google.maps.Marker({
-              map: gmap,
-              position: results[0].geometry.location,
-              draggable: true
-          });
-          marker.addListener('dragend',function () {
-            $(('#id_latitude')).val(marker.position.lat())
-            $(('#id_longitude')).val(marker.position.lng())
-          })
+          setPin(results[0].geometry.location);
           //set values of hidden inputs
           $(('#id_latitude')).val(results[0].geometry.location.lat())
           $(('#id_longitude')).val(results[0].geometry.location.lng())
@@ -174,6 +159,20 @@
           alert("緯度経度情報を取得できませんでした。");
         }
       });
+  }
+
+  function setPin(pos) {
+    if (!marker) {
+      marker = new google.maps.Marker({
+        map: gmap,
+        draggable: true
+      })
+      marker.addListener('dragend',function () {
+        $(('#id_latitude')).val(marker.position.lat())
+        $(('#id_longitude')).val(marker.position.lng())
+      })
+    }
+    marker.setPosition(pos);
   }
 
   window.onload = initialize()
