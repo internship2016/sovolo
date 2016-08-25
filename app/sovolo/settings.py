@@ -198,7 +198,7 @@ EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = None
 EMAIL_HOST_PASSWORD = None
-DEFAULT_FROM_EMAIL = 'Sovolo <noreply@sovolo.earth>'
+DEFAULT_FROM_EMAIL = 'Sovol <noreply@sovol.earth>'
 
 PREFECTURES = {
     "Hokkaido": ("北海道", 1),

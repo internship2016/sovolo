@@ -4,7 +4,7 @@
 ボランティア「{{ event.name }}」の参加枠が空きましたので、キャンセル待ちから参加に繰り上がりました。
 
 ボランティアの詳細は以下のURLからご覧ください。
-https://sovolo.earth/{% url 'event:detail' event.id %}
+https://sovol.earth/{% url 'event:detail' event.id %}
 キャンセルもこちらのURLから行うことができます。
 
 よろしくお願いいたします。
