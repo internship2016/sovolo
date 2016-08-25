@@ -4,9 +4,9 @@
 
 
 <div class="form-group">
-  <label for="id_name" class="col-sm-3">ボランティア名</label>
+  <label for="id_name" class="col-sm-3">ボランティア名<br><small><i>(20文字以内)</i></small></label>
   <div class="col-sm-9">
-    <input id="id_name" class="form-control" maxlength="100" name="name" type="text" value="{{ event.name }}" required/>
+    <input id="id_name" class="form-control" maxlength="20" name="name" type="text" value="{{ event.name }}" required/>
   </div>
 </div>
 
