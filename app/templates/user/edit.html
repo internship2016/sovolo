@@ -61,7 +61,7 @@
         </div>
 
         <div class="form-group">
-            <label class="col-sm-3 col-lg-2 control-label">タグ</label>
+            <label class="col-sm-3 col-lg-2 control-label">フォローしているタグ</label>
             <div class="">
                 {% for tag in all_tags %}
                     <label><input type="checkbox" name="tags" value="{{ tag.id }}" {% if tag in request.user.follow_tag.all %}checked{% endif %}>{{ tag.name }}</label>

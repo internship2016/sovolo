@@ -39,7 +39,7 @@
   </div>
   <div class="panel-body">
     {% for tag in user.follow_tag.all %}
-      <a class="tag" href="{% url 'event:search' %}?tags={{ tags.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
+      <a class="tag" href="{% url 'event:search' %}?tags={{ tag.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
     {% empty %}
     <p>フォローしているタグがありません</p>
     {% endfor %}
