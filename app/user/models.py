@@ -138,6 +138,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def get_future_participating_events(self):
         return [event for event in self.participating_event.all().order_by('start_time') if not event.is_over()]
 
+    def get_past_participated_events(self):
+        return [event for event in self.participating_event.all().order_by('start_time') if event.is_over()]
+
+
     def get_new_tag_events(self):
         Event = apps.get_model('event', 'Event')
         tag_list = self.follow_tag.all()
