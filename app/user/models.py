@@ -138,6 +138,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def get_future_participating_events(self):
         return [event for event in self.participating_event.all().order_by('start_time') if not event.is_over()]
 
+    def get_past_participated_events(self):
+        return [event for event in self.participating_event.all().order_by('start_time') if event.is_over()]
+
+
     def get_new_tag_events(self):
         Event = apps.get_model('event', 'Event')
         tag_list = self.follow_tag.all()
@@ -152,13 +156,13 @@ class User(AbstractBaseModel, AbstractBaseUser):
         for tag in Tag.objects.all():
             count = participated.filter(tag=tag).count()
             if count >= 20:
-                trophies.append({'name': tag.name, 'type': 'trophy-master'})
+                trophies.append({'name': tag.name, 'type': 'master'})
             elif count >= 10:
-                trophies.append({'name': tag.name, 'type': 'trophy-senior'})
+                trophies.append({'name': tag.name, 'type': 'senior'})
             elif count >= 3:
-                trophies.append({'name': tag.name, 'type': 'trophy-beginner'})
+                trophies.append({'name': tag.name, 'type': 'beginner'})
             elif count >= 1:
-                trophies.append({'name': tag.name, 'type': 'trophy-rookie'})
+                trophies.append({'name': tag.name, 'type': 'rookie'})
 
         return trophies
 

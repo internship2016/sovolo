@@ -10,4 +10,4 @@
 - - - - - - - - - - - - - - - -
 
 ボランティアの詳細は以下のURLからご覧ください。
-https://sovolo.earth/{% url 'event:detail' event.id %}
+https://sovol.earth/{% url 'event:detail' event.id %}

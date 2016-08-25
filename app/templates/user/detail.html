@@ -30,8 +30,8 @@
   </div>
 </div>
 {% event_list request.user.admin_event.all "管理しているボランティア一覧" %}
-{% event_list request.user.participating_event.all "参加予定ボランティア一覧"　%}
-{% event_list request.user.get_previous_by_created.all "ボランティア実績"　%}
+{% event_list request.user.get_future_participating_events "参加予定ボランティア一覧"　%}
+{% event_list request.user.get_past_participated_events "ボランティア実績"　%}
 
 <div class="panel panel-primary">
   <div class="panel-heading">

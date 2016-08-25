@@ -47,7 +47,7 @@
           {% for trophy in user.trophy_list %}
             <div class="trophy-box">
               <div class="trophy-hedding">{{ trophy.name }}</div>
-              <div class="trophy-icon"><i class="fa fa-trophy fa-4x {{ trophy.type }}"></i></div>
+              <div class="trophy-icon"><img src="/media/common/trophy/{{ trophy.type }}.svg" style="padding: 0;"></div>
             </div>
           {% endfor %}
         </div>

@@ -39,8 +39,8 @@ eventname_sample=[
     {"name":"「ココロをシェアする」コミュニティスペースの看板スタッフ募集","description":"コミュニティスペースの看板作成のスタッフを募集します。だれでも可能ですが日曜大工の経験のある方など歓迎します"},
     {"name":"ダイビングを通してサンゴ礁の保全活動に貢献しませんか？","description":"沖縄の海でダイビングをしてみませんか？ダイビングを通して経験したサンゴ礁保護活動をメディアに発表します"},
     {"name":"御船町ボランティア本部より⬛ 炊き出しプロジェクト","description":"御船町で炊き出しをします。"},
-    {"name":" 【PC作業ができる方！・仙台】「人と地域を元気に」生活習慣改善センターがボラ募集","description":"仙台でＰＣ作業のできる方を募集します。具体的にはＨＰ作成やエクセルの簡単な操作を手伝っていただきます。仕事内容によっては報酬もあります。"},
-    {"name":"【随時募集！気仙沼市】子ども好きの方歓迎！ピースジャムがボランティア募集！","description":""},
+    {"name":" 【PC作業ができる方！】「人と地域を元気に」生活習慣改善センターがボラ募集","description":"仙台でＰＣ作業のできる方を募集します。具体的にはＨＰ作成やエクセルの簡単な操作を手伝っていただきます。仕事内容によっては報酬もあります。"},
+    {"name":"【随時募集！】子ども好きの方歓迎！ピースジャムがボランティア募集！","description":""},
     {"name":"おばあちゃんとお化粧&おしゃべりを楽しむ！エステ！@東あずま","description":""},
     {"name":"いつでも、一回でも！気軽にボランティア【登録制】～サッカー、お化粧、革細工、野菜作りe.t.c","description":""},
     {"name":"子どもの遊びと学びを支える学生・若手社会人ボランティア募集！","description":""},
@@ -56,7 +56,12 @@ eventname_sample=[
     {"name":" 【シンポジウム】『すべての子どもを社会で支える！』","description":""},
     {"name":"「悩みを話せる友達が見つかる」がコンセプト。悩み相談サイトのメンバー募集！","description":""},
     {"name":"PLAS事務局インターン説明会を開催します！","description":""},
-    {"name":" 第１２回 住まいとコミュニティづくりNPO交流会－助成事業活動報告会－","description":""},
+    {"name":"住まいとコミュニティづくりNPO交流会－助成事業活動報告会－","description":""},
+    {"name":"施設の子供たちと遊んでくれる学生募集！","description":""},
+    {"name":"あなたのアイデアを活かして地域活性化に取り組みませんか？【地域活性化ハッカソン】","description":""},
+    {"name":"失われた木々を取り戻すための植林作業～あなたの手で森を守りませんか～","description":""},
+    {"name":"子供たちの避難訓練を手伝っていただけるかた募集【昼食付き】","description":""},
+    {"name":"介護施設のレクリエーションにご参加いただける団体募集【個人も可】","description":""},
     ]
 
 groupname_sample=[
@@ -364,7 +369,7 @@ class Command(BaseCommand):
 
         for i in range(1,30):
             for j in [1,2]:
-                name = "Demo Event past ver.%d-%d"%(i,j)
+                name = "【第%d回】"%j + eventname_sample[i%len(eventname_sample)]["name"]
                 host_user = User.objects.get(username="demo_user_%d"%i)
                 demoevent = Event(
                     name=name,
@@ -379,9 +384,9 @@ class Command(BaseCommand):
                 demoevent.save()
                 demoevent.admin = User.objects.filter(pk=i)
 
-        for i in range(1, 5):
+        for i in range(1, 4):
             for j in [1,2]:
-                name = "Demo Event executing ver.%d-%d" % (i, j)
+                name = eventname_sample[(i+(j-1)*3)%len(eventname_sample)]["name"]
                 host_user = User.objects.get(username="demo_user_%d" % i)
                 demoevent = Event(
                     name=name,
@@ -396,7 +401,7 @@ class Command(BaseCommand):
                 demoevent.save()
                 demoevent.admin = User.objects.filter(pk=i)
 
-                name = "Demo Event future ver.%d-%d"%(i,j)
+                name = eventname_sample[(6+i+(j-1)*3)%len(eventname_sample)]["name"]
                 host_user = User.objects.get(username="demo_user_%d"%i)
                 demoevent = Event(
                     name=name,
