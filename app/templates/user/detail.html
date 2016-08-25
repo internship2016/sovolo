@@ -29,8 +29,11 @@
     {% endfor %}
   </div>
 </div>
-{% event_list request.user.admin_event.all "管理しているボランティア一覧" %}
-{% event_list request.user.get_future_participating_events "参加予定ボランティア一覧"　%}
-{% event_list request.user.get_past_participated_events "ボランティア実績"　%}
+
+{% if user.admin_event.all %}
+{% event_list user.admin_event.all "管理しているボランティア一覧" %}
+{% endif %}
+{% event_list user.get_future_participating_events "参加予定ボランティア一覧"　%}
+{% event_list user.get_past_participated_events "ボランティア実績"　%}
 
 {% endblock %}

@@ -64,6 +64,9 @@ eventname_sample=[
     {"name":"介護施設のレクリエーションにご参加いただける団体募集【個人も可】","description":""},
     ]
 
+eventdetail_sample = """これから、はじめてボランティア活動をしようという個人を対象にした基本的なオリエンテーションです。
+「ボランティアってなに？」「どうやって活動を始めるの？」などの、素朴な質問にお答えします。お気軽にご参加ください。"""
+
 groupname_sample=[
     "早稲田大学キッズラブ同好会",
     "ボランティアビジネス会VBG",
@@ -262,12 +265,12 @@ class Command(BaseCommand):
         for i in range(20):
             lastname = str(i)
             username = username_sample[i]
-            email = "test%d@sovolo.earth" %(i+1)
+            email = "test%d@sovol.earth" %(i+1)
             user = User(
                 first_name = 'genericuser',
                 last_name = lastname,
                 username = username,
-                birthday = timezone.now() - timezone.timedelta(days=4000+i*365),
+                birthday = timezone.now() - timezone.timedelta(days=6000+i*600),
                 telephone = 123456789,
                 emergency_contact = 119,
                 email = email,
@@ -281,12 +284,12 @@ class Command(BaseCommand):
             firstname = 'demo_user'
             lastname = str(i)
             username = 'demo_user_'+str(i)
-            email = "demo%d@sovolo.earth"%i
+            email = "demo%d@sovol.earth"%i
             user = User(
                 first_name=firstname,
                 last_name=lastname,
                 username=username,
-                birthday=timezone.now() - timezone.timedelta(days=4000+i*365),
+                birthday=timezone.now() - timezone.timedelta(days=6000+i*600),
                 telephone=123456789,
                 emergency_contact=119,
                 email=email,
@@ -358,9 +361,9 @@ class Command(BaseCommand):
                 name=name,
                 start_time=timezone.now() - timezone.timedelta(days=i) ,
                 end_time=timezone.now() - timezone.timedelta(days=i+1),
-                meeting_place="531 Page Street",
+                meeting_place="下條駅駅前ポストの前",
                 contact="interlink@interlink.com",
-                details="This is a generic event.",
+                details=eventdetail_sample,
                 host_user=host_user,
                 region=prefec_list[i],
             )
@@ -377,7 +380,7 @@ class Command(BaseCommand):
                     end_time = timezone.now() - timezone.timedelta(days=i) - timezone.timedelta(hours=j),
                     meeting_place="池袋駅東口母子像前",
                     contact="interlink@interlink.com",
-                    details="デモ用の過去のイベントです。",
+                    details="過去のイベントです。",
                     host_user=host_user,
                     region=prefec_list[i%47],
                 )
@@ -394,7 +397,7 @@ class Command(BaseCommand):
                     end_time=timezone.now() + timezone.timedelta(days=i) + timezone.timedelta(hours=j),
                     meeting_place="池袋駅東口母子像前",
                     contact="interlink@interlink.com",
-                    details="デモ用の開催中のイベントです。",
+                    details="開催中のイベントです。",
                     host_user=host_user,
                     region=prefec_list[i % 47],
                 )
@@ -409,7 +412,7 @@ class Command(BaseCommand):
                     end_time = timezone.now() + timezone.timedelta(days=i+1) + timezone.timedelta(hours=j*3),
                     meeting_place="池袋駅東口母子像前",
                     contact="interlink@interlink.com",
-                    details="デモ用の未来のイベントです。",
+                    details="未来のイベントです。",
                     host_user=host_user,
                     region=prefec_list[i%47],
                 )
@@ -422,13 +425,14 @@ class Command(BaseCommand):
                 event=event,
                 upper_limit=3,
                 deadline=event.start_time,
+                description='運営スタッフ'
             )
             frame.save()
 
             frame2 = Frame(
                 event = event,
                 deadline=event.start_time - timezone.timedelta(days=1),
-                description='no_limit',
+                description='上限はありません',
             )
             frame2.save()
 
@@ -437,8 +441,7 @@ class Command(BaseCommand):
 
     def _create_participants(self):
         for event in Event.objects.all():
-            frame = event.frame_set.get(description='no_limit')
-
+            frame = event.frame_set.get(description='運営スタッフ')
             participation = Participation(
                 event=event,
                 frame=frame,
@@ -458,6 +461,15 @@ class Command(BaseCommand):
                     )
                     participation.save()
 
+            frame = event.frame_set.get(description='上限はありません')
+            for i in range(1,21):
+                participation = Participation(
+                    event=event,
+                    frame=frame,
+                    user=User.objects.get(username='demo_user_%d'%i),
+                    status='参加中',
+                )
+                participation.save()
 
     def _create_comments(self):
         for event in Event.objects.all():
