@@ -13,13 +13,6 @@ $color-pallet: (
   @return map-get($color-pallet, $key);
 }
 
-#user-header {
-  img {
-    padding: 10px;
-  }
-  padding: 10px;
-}
-
 #search-area {
   div {
     margin: 0px;
