@@ -5,7 +5,7 @@
       <div class="thumbnail user-list-thumbnail" style="background-image: url({{ user.get_image_url }});"></div>
     </a>
   {% empty %}
-    <p>ユーザーがいません</p>
+    <p>{{ title }}はいません</p>
   {% endfor %}
   {% if title == "参加者" %}
     <a href="{% url 'event:participants' event.id %}" class="pull-right">もっと見る</a>
