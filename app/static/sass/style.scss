@@ -111,6 +111,24 @@ footer {
   height:24px;
 }
 
+.group_list-element{
+  display:block;
+  height:24px;
+}
+
+.group_list-thumbnail{
+  width:24px;
+  height:24px;
+  margin-bottom: 0;
+}
+
+.group_list-description{
+  position:absolute;
+  display:inline-block;
+  height:24px;
+  margin-left: 2px;
+}
+
 .user_list_large-thumbnail{
   width:100px;
   height:100px;
