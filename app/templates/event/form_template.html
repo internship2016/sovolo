@@ -27,7 +27,6 @@
   </div>
 </div>
 
-
 <div class="form-group">
   <label for="id_end_time" class="col-sm-3">終了</label>
   <div class="col-sm-9">
@@ -45,53 +44,6 @@
   </div>
 </div>
 
-<script type="text/javascript">
-(function (global) {
-  var $ = global.jQuery;
-  var moment = global.moment;
-
-  var fmt = 'YYYY-MM-DD HH:mm';
-  var jq_start = $('#id_start_time');
-  var jq_end = $('#id_end_time');
-  var start = function () { return jq_start.val(); };
-  var end = function () { return jq_end.val(); };
-
-  $(function () {
-    $('.datetimepicker').datetimepicker({
-      locale: moment.locale('ja'),
-      format: fmt,
-      sideBySide: true,
-      minDate: moment(),
-    });
-  });
-
-  var overwrap = function () {
-    var s_start = start();
-    var s_end = end();
-    if (s_start.length === 0 || s_end.length === 0) {
-      return true;
-    }
-
-    var m_start = moment(s_start, fmt);
-    var m_end = moment(s_end, fmt);
-    return m_start.diff(m_end) > 0;
-  };
-
-  jq_start.closest('.datetimepicker').on('dp.change', function () {
-    if (overwrap()) {
-      jq_end.val(jq_start.val());
-    }
-    return true;
-  });
-
-  jq_end.closest('.datetimepicker').on('dp.change', function () {
-    if (overwrap()) {
-      jq_start.val(jq_end.val());
-    }
-    return true;
-  });
-})(this);
-</script>
 
 <div class="form-group">
   <label for="id_region" class="col-sm-3">開催地域</label>
@@ -306,7 +258,7 @@
             </div>
             <label class="col-sm-3">応募締め切り</label>
             <div class='col-sm-9'>
-              <input class="form-control datetimepicker" name="frame_1_deadline" type="text" placeholder="任意">
+              <input class="form-control datetimepicker deadend" name="frame_1_deadline" type="text" placeholder="任意">
             </div>
           </div>
         </div>
@@ -334,12 +286,12 @@
             '    </div>',
             '    <label class="col-sm-3">応募締め切り</label>',
             '    <div class="col-sm-9">',
-            '      <input class="form-control datetimepicker" name="frame_'+X+'_deadline" type="text" placeholder="任意">',
+            '      <input class="form-control datetimepicker deadend" name="frame_'+X+'_deadline" type="text" placeholder="任意">',
             '      <script>',
             '        (function () {',
             '            $("#frame_number_' + X + ' .datetimepicker").datetimepicker({',
             '              locale: moment.locale("ja"),',
-            '              format: "YYYY-MM-DD HH:mm:00",',
+            '              format: "YYYY-MM-DD HH:mm",',
             '              sideBySide:true,',
             '            });',
             '        })();',
@@ -431,3 +383,110 @@
     display: block;
   }
 </style>
+
+<script type="text/javascript">
+(function (global) {
+  var $ = global.jQuery;
+  var moment = global.moment;
+
+  var fmt = 'YYYY-MM-DD HH:mm';
+  var jq_start = $('#id_start_time');
+  var jq_end = $('#id_end_time');
+  var jq_frames = $('#frames');
+
+  var start = function () { return jq_start.val(); };
+  var end = function () { return jq_end.val(); };
+
+  $(function () {
+    $('.datetimepicker').datetimepicker({
+      locale: moment.locale('ja'),
+      format: fmt,
+      sideBySide: true,
+      minDate: moment(),
+    });
+  });
+
+  var overwrap = function (s_start, s_end) {
+    if (s_start.length === 0) {
+      return true;
+    }
+    if (s_end.length === 0) {
+      return true;
+    }
+
+    var m_start = moment(s_start, fmt);
+    var m_end = moment(s_end, fmt);
+    return m_start.diff(m_end) > 0;
+  };
+
+  $.fn.extend({
+    reduce: function (cb, init) {
+      this.each(function (i) {
+        if (i === 0 && typeof init === 'undefined') {
+          init = $(this);
+        } else {
+          init = cb.call($(this), init);
+        }
+      });
+      return init;
+    }
+  });
+
+  var deadend = function () {
+    return jq_frames.find('.deadend')
+      .reduce(function (e) { // minimum date
+        return overwrap(this.val(), e.val()) ? e : this;
+      })
+      .val();
+  };
+
+  $(function () {
+    jq_frames.on('dp.change', '.deadend', function () {
+      var de = deadend();
+      if (overwrap(de, start())) {
+        jq_start.val(de);
+      }
+
+      if (overwrap(de, end())) {
+        jq_end.val(de);
+      }
+
+      return true;
+    })
+
+    jq_start.closest('.datetimepicker').on('dp.change', function () {
+      var st = start();
+      if (overwrap(st, end())) {
+        jq_end.val(st);
+      }
+
+      jq_frames.find('.deadend').each(function () {
+        var self = $(this);
+        if (overwrap(self.val(), st)) {
+          self.val(st);
+        }
+        return true;
+      });
+
+      return true;
+    });
+
+    jq_end.closest('.datetimepicker').on('dp.change', function () {
+      var en = end();
+      if (overwrap(start(), en)) {
+        jq_start.val(en);
+      }
+
+      jq_frames.find('.deadend').each(function () {
+        var self = $(this);
+        if (overwrap(self.val(), en)) {
+          self.val(en);
+        }
+        return true;
+      });
+
+      return true;
+    });
+  });
+})(this);
+</script>
