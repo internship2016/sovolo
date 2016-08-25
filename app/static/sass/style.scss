@@ -27,12 +27,13 @@ $color-pallet: (
 #event_header .row{
   display:flex;
   align-items: stretch;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 #event_header-left{
   display:inline-block;
   max-height:1000000px;
+  flex-basis: 250px;
 }
 
 #event_header-right{
@@ -125,8 +126,9 @@ footer {
 }
 
 .user_detail-thumbnail{
-  width:100%;
+  width:200px;
   height:100%;
+  flex-shrink:0;
 }
 
 .user-list-thumbnail{

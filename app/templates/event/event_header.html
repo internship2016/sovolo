@@ -9,29 +9,28 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 <div id="event_header">
+ {% if event.is_over %}
+  <div class="alert alert-danger">このボランティアは終了しました</div>
+  {% else %}
+  {% if request.user in event.participant.all %}
+  {% if participation.status == "参加中" %}
+  <div class="alert alert-info">
+    参加しています
+  </div>
+  {% elif participation.status == "キャンセル待ち" %}
+  <div class="alert alert-info">
+    キャンセル待ちです
+  </div>
+  {% endif %}
+  {% endif %}
+  {% endif %}
   <div class="row">
     <div id="event_header-left" class="col-sm-4 col-md-3">
-      <div class="thumbnail event_detail-thumbnail center-block" style="background-image:url({{ event.get_image_url }})"></div>
+      <div class="thumbnail event_detail-thumbnail" style="background-image:url({{ event.get_image_url }})"></div>
     </div>
     <div id="event_header-right" class="col-sm-8 col-md-9">
 
       <div class="event-head-title panel panel-primary" style="padding: 1em;">
-
-        {% if event.is_over %}
-        <div class="alert alert-danger">このボランティアは終了しました</div>
-        {% else %}
-        {% if request.user in event.participant.all %}
-        {% if participation.status == "参加中" %}
-        <div class="alert alert-info">
-          参加しています
-        </div>
-        {% elif participation.status == "キャンセル待ち" %}
-        <div class="alert alert-info">
-          キャンセル待ちです
-        </div>
-        {% endif %}
-        {% endif %}
-        {% endif %}
 
         <h1>
           <a class="break-word" href="{{ event.get_absolute_url }}">{{ event.name }}</a>
@@ -87,7 +86,6 @@
           {% endif %}
         </div>
       </div>
-
     </div>
   </div>
 </div>
