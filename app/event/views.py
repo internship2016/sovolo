@@ -76,6 +76,14 @@ class EventCreate(CreateView):
         form_redirect = super(EventCreate, self).form_valid(form)
         event = form.save()
 
+        print("*" * 20, file=sys.stderr)
+        print("EVENT:", file=sys.stderr)
+        print(event, file=sys.stderr)
+        print(event.pk, file=sys.stderr)
+        print("IMAGE IS NONE: ", file=sys.stderr)
+        print(event.image is None, file=sys.stderr)
+        print("*" * 20, file=sys.stderr)
+
         # Admins
         event.admin.clear()
         raw_admins = self.request.POST.getlist('admins') or []
@@ -121,7 +129,7 @@ class EventCreate(CreateView):
                 event.save()
 
         # Image
-        if 'image_url' in self.request.POST and event.image is None:
+        if 'image_url' in self.request.POST and not event.image:
             url = self.request.POST['image_url']
             new_url = os.path.join(settings.BASE_DIR, url[1:])
             print(new_url, file=sys.stderr)
