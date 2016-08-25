@@ -1,3 +1,6 @@
+# seed events
+seed_events/*
+
 Dockerfile
 app/db.sqlite3
 app.sock
