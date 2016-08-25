@@ -5,6 +5,102 @@ from group.models import Group, Membership
 from user.models import User
 from tag.models import Tag
 
+username_sample=[
+"koshiba_takahiro"
+,"yusuke0803"
+,"_daisuke_"
+,"sugiyama_xxx"
+,"yasunori_abe"
+,"tesitesi2"
+,"apple_love"
+,"windows_love"
+,"lovesf531"
+,"miyagawa_daisuke"
+,"urasima_tarou"
+,"gold_tarou"
+,"peach_tarou"
+,"issunn_bo-shi"
+,"nakashima_atushi"
+,"haraguti_joji"
+,"ai_sakamoto2929"
+,"_mami_takahashi_"
+,"daiki_kobayashi"
+,"xi-fuen"
+,"rao-xien1849"
+,"ReportsInformer"
+,"Robinessa"
+,"Sellbreets"
+,"Showerzoff"
+,"Spotexpeat"
+]
+
+eventname_sample=[
+    {"name":"TOKYO DESIGN WEEK 2016 会場運営ボランティア","description":"Tokyo Design Weekの会場運営ボランティアを募集します。動きやすい服装でお越しください"},
+    {"name":"「ココロをシェアする」コミュニティスペースの看板スタッフ募集","description":"コミュニティスペースの看板作成のスタッフを募集します。だれでも可能ですが日曜大工の経験のある方など歓迎します"},
+    {"name":"ダイビングを通してサンゴ礁の保全活動に貢献しませんか？","description":"沖縄の海でダイビングをしてみませんか？ダイビングを通して経験したサンゴ礁保護活動をメディアに発表します"},
+    {"name":"御船町ボランティア本部より⬛ 炊き出しプロジェクト","description":"御船町で炊き出しをします。"},
+    {"name":" 【PC作業ができる方！・仙台】「人と地域を元気に」生活習慣改善センターがボラ募集","description":"仙台でＰＣ作業のできる方を募集します。具体的にはＨＰ作成やエクセルの簡単な操作を手伝っていただきます。仕事内容によっては報酬もあります。"},
+    {"name":"【随時募集！気仙沼市】子ども好きの方歓迎！ピースジャムがボランティア募集！","description":""},
+    {"name":"おばあちゃんとお化粧&おしゃべりを楽しむ！エステ！@東あずま","description":""},
+    {"name":"いつでも、一回でも！気軽にボランティア【登録制】～サッカー、お化粧、革細工、野菜作りe.t.c","description":""},
+    {"name":"子どもの遊びと学びを支える学生・若手社会人ボランティア募集！","description":""},
+    {"name":"「子ども食堂」運営ボランティア募集","description":""},
+    {"name":"入院加療中のこどもへのスポーツ・文化活動をサポートするボランティア募集","description":""},
+    {"name":"【国際協力団体ADRA】マーケティングで国際協力。NGOインターン募集","description":""},
+    {"name":"ビジネスの手法で社会貢献しよう！社会起業家について学べる無料セミナー","description":""},
+    {"name":" 【市民とNPOの交流サロン】『障害を持つ人が地域で安心して生活できる社会の実現をめざして』","description":""},
+    {"name":"「きっと見つかるあなたの国際協力のカタチ！ ～NGO×企業トーク&ミャンマーお食事会～」を開催","description":""},
+    {"name":" 「NPOの組織マネジメント　強くあたたかい組織のつくり方」 〜NPO22団体の事例・ノウハウから見えてきた３つの観点〜","description":""},
+    {"name":"国際協力NGOシャプラニー会報発送ボランティア募集","description":""},
+    {"name":"4泊５日の農山村ボランティア「若葉のふるさと協力隊」参加者募集","description":""},
+    {"name":" 【シンポジウム】『すべての子どもを社会で支える！』","description":""},
+    {"name":"「悩みを話せる友達が見つかる」がコンセプト。悩み相談サイトのメンバー募集！","description":""},
+    {"name":"PLAS事務局インターン説明会を開催します！","description":""},
+    {"name":" 第１２回 住まいとコミュニティづくりNPO交流会－助成事業活動報告会－","description":""},
+    ]
+
+groupname_sample=[
+    "早稲田大学キッズラブ同好会",
+    "ボランティアビジネス会VBG",
+    "奥多摩の自然を守る会",
+    "立命館高校落語研究会ボランティア",
+    "キッズボランティアいんたーりんく",
+    "PLO児童支援団体",
+    "御徒町地域清掃ＮＰＯ団体",
+    "自閉症児支援団体",
+    "上川町自治体",
+    "としま区わくわくボランティア",
+    "ボランティア団体ＳＯＶＯＬ",
+    "国際協力ＮＧＯシャプラニー",
+    "児童教育団体",
+    "寝屋川市活性化団体",
+    "シルバー支援会温故知新",
+    "東京大学情報理工学系研究科ITボランティアサークル UT-VOLIT",
+    "被災地支援総合ボランティア団体",
+    "地震研究会支援支部",
+    "海外青年協力隊プラットフォーム",
+    "ＮＰＯ法人キャピタルアース",
+    "ＮＰＯ法人山口組",
+    "動物愛護団体スワローズ",
+]
+
+comment_sample=[
+    """Samsung Z2は、“世界初の4G LTE通信対応Tizenスマートフォン” という肩書きを除けば、非常に平凡なローエンド端末であると言えます。
+    しかしながら、4590インドルピー（約6850円）という価格設定や、兄弟端末「Samsung Z1」よりも確実に強化されたスペックに加え、
+    投入される市場のニーズを抑えた機能を実装することにより、新興成長市場においては魅力的な選択肢となり得る端末に仕上げられている模様です。
+    """,
+    """
+    米グーグルがアプリ開発者向けに提供している「Google Play Developer Console」上においては、
+    アプリ上で発生したクラッシュやANR（アプリが応答しない）エラーのデータを確認することができますが、
+    Android Policeによると、今回そのページ上にあるフィルタリング用の項目の中に、「Android 7.1」という記述が確認されたとのことです。
+    """,
+    """
+    コメント（英: comment）とは、コンピュータ言語（プログラミング言語やデータ記述言語）によって書かれたソースコードのうち、
+    人間のために覚えとして挿入された注釈のことである。この部分はコンピュータが処理を行うときにはないものとして無視されるため、自由に文を挿入することができる。
+    """
+]
+
+
 class Command(BaseCommand):
     help = """
     This is a custom command created to seed the database with test data.
@@ -160,13 +256,13 @@ class Command(BaseCommand):
 
         for i in range(20):
             lastname = str(i)
-            username = "generic_user_%d" %(i+1)
-            email = "test@%d.com" %(i+1)
+            username = username_sample[i]
+            email = "test%d@sovolo.earth" %(i+1)
             user = User(
                 first_name = 'genericuser',
                 last_name = lastname,
                 username = username,
-                birthday = timezone.now() - timezone.timedelta(days=i*365),
+                birthday = timezone.now() - timezone.timedelta(days=4000+i*365),
                 telephone = 123456789,
                 emergency_contact = 119,
                 email = email,
@@ -176,6 +272,24 @@ class Command(BaseCommand):
             user.set_password('pass1234')
             user.save()
 
+        for i in range(1,30):
+            firstname = 'demo_user'
+            lastname = str(i)
+            username = 'demo_user_'+str(i)
+            email = "demo%d@sovolo.earth"%i
+            user = User(
+                first_name=firstname,
+                last_name=lastname,
+                username=username,
+                birthday=timezone.now() - timezone.timedelta(days=4000+i*365),
+                telephone=123456789,
+                emergency_contact=119,
+                email=email,
+                occupation='BUG_TEST',
+                region=self.prefec_list[i%47],
+            )
+            user.set_password('pass1234')
+            user.save()
 
     def _create_events(self):
 
@@ -232,7 +346,7 @@ class Command(BaseCommand):
         prefec_list = list(prefectures)
 
         for i in range(20):
-            name = "Generic Event #%d" %(i+1)
+            name = eventname_sample[i]["name"]
             host_user = User.objects.all()[i]
             admin = host_user
             genericevent = Event(
@@ -248,6 +362,54 @@ class Command(BaseCommand):
             genericevent.save()
             genericevent.admin = User.objects.filter(pk=1)
 
+        for i in range(1,30):
+            for j in [1,2]:
+                name = "Demo Event past ver.%d-%d"%(i,j)
+                host_user = User.objects.get(username="demo_user_%d"%i)
+                demoevent = Event(
+                    name=name,
+                    start_time=timezone.now() - timezone.timedelta(days=i+1) - timezone.timedelta(hours=j),
+                    end_time = timezone.now() - timezone.timedelta(days=i) - timezone.timedelta(hours=j),
+                    meeting_place="池袋駅東口母子像前",
+                    contact="interlink@interlink.com",
+                    details="デモ用の過去のイベントです。",
+                    host_user=host_user,
+                    region=prefec_list[i%47],
+                )
+                demoevent.save()
+                demoevent.admin = User.objects.filter(pk=i)
+
+        for i in range(1, 5):
+            for j in [1,2]:
+                name = "Demo Event executing ver.%d-%d" % (i, j)
+                host_user = User.objects.get(username="demo_user_%d" % i)
+                demoevent = Event(
+                    name=name,
+                    start_time=timezone.now() - timezone.timedelta(days=i) - timezone.timedelta(hours=j),
+                    end_time=timezone.now() + timezone.timedelta(days=i) + timezone.timedelta(hours=j),
+                    meeting_place="池袋駅東口母子像前",
+                    contact="interlink@interlink.com",
+                    details="デモ用の開催中のイベントです。",
+                    host_user=host_user,
+                    region=prefec_list[i % 47],
+                )
+                demoevent.save()
+                demoevent.admin = User.objects.filter(pk=i)
+
+                name = "Demo Event future ver.%d-%d"%(i,j)
+                host_user = User.objects.get(username="demo_user_%d"%i)
+                demoevent = Event(
+                    name=name,
+                    start_time=timezone.now() + timezone.timedelta(days=i) + timezone.timedelta(hours=j*3),
+                    end_time = timezone.now() + timezone.timedelta(days=i+1) + timezone.timedelta(hours=j*3),
+                    meeting_place="池袋駅東口母子像前",
+                    contact="interlink@interlink.com",
+                    details="デモ用の未来のイベントです。",
+                    host_user=host_user,
+                    region=prefec_list[i%47],
+                )
+                demoevent.save()
+                demoevent.admin = User.objects.filter(pk=i)
 
     def _create_frames(self):
         for event in Event.objects.all():
@@ -258,79 +420,54 @@ class Command(BaseCommand):
             )
             frame.save()
 
+            frame2 = Frame(
+                event = event,
+                deadline=event.start_time - timezone.timedelta(days=1),
+                description='no_limit',
+            )
+            frame2.save()
+
+            for i in range(1,30):
+                event.supporter.add(User.objects.get(pk=i))
+
     def _create_participants(self):
         for event in Event.objects.all():
-            for frame in Frame.objects.filter(event=event):
-                participation = Participation(
-                    event=event,
-                    frame=frame,
-                    user=User.objects.get(pk=1),
-                    status='管理者',
-                )
+            frame = event.frame_set.get(description='no_limit')
 
-                participation.save()
+            participation = Participation(
+                event=event,
+                frame=frame,
+                user=User.objects.get(pk=1),
+                status='管理者',
+            )
+            participation.save()
 
-                if not frame.pk==1:
+            for i in range(1,21):
+                if event.pk%i==0:
+                    user = User.objects.get(username=username_sample[i-1])
                     participation = Participation(
                         event=event,
                         frame=frame,
-                        user=User.objects.get(pk=frame.pk),
+                        user=user,
                         status='参加中',
                     )
                     participation.save()
 
-                participation.save()
-
-        e = Event.objects.get(pk=2)
-        f = e.frame_set.first()
-        i=3
-        while not f.is_full():
-            p = Participation(
-                event=e,
-                frame=f,
-                user=User.objects.get(pk=i),
-                status='参加中',
-            )
-            p.save()
-            i+=1
-
-        p = Participation(
-            event=e,
-            frame=f,
-            user=User.objects.get(pk=10),
-            status='キャンセル待ち',
-        )
-        p.save()
-
 
     def _create_comments(self):
         for event in Event.objects.all():
-            for participation in Participation.objects.filter(event=event):
+            for i,participation in enumerate(Participation.objects.filter(event=event)):
                 comment = Comment(
                     event=event,
                     user=participation.user,
-                    text="""ああああああああああああああああああああああああああああああああああああああああああああ
-                    ああああああああああああああああああああああああああああああああああああああああああああああああ
-                    あああああああああああああああああああああああああああああああああああああああああああああああ
-                    あああああああああああああああああああああああああああああああああああああああああああああああ
-                    あああああああああああああああああああああああああああああああああああああああああああああああ
-                    あああああああああああああああああああああああああああああああああああああああああああああああ
-                    """,
+                    text=comment_sample[i%len(comment_sample)],
                 )
                 comment.save()
-                reply_comment = Comment(
-                    event=event,
-                    user=participation.user,
-                    text="""すみませんでした。
-                        """,
-                    reply_to=comment,
-                )
-                reply_comment.save()
 
     def _create_groups(self):
         for i in range(20):
-            name = "generic group #%d" %(i+1)
-            description = "This is a generic group. Don't join."
+            name = groupname_sample[i]
+            description = "完全非営利活動法人のボランティア団体です。詳しい団体説明はホームページをご覧ください。http://google.com"
             group = Group(
                 name=name,
                 description=description,
@@ -341,12 +478,14 @@ class Command(BaseCommand):
 
     def _create_memberships(self):
         for group in Group.objects.all():
-            member = User.objects.get(pk=group.pk)
-            membership = Membership(
-                member=member,
-                group=group,
-            )
-            membership.save()   
+            for i in range(1,21):
+                if group.pk in [1, 2] or group.pk==i:
+                    member = User.objects.get(username=username_sample[i-1])
+                    membership = Membership(
+                        member=member,
+                        group=group,
+                    )
+                    membership.save()
 
             if group.pk==1:
                 continue
@@ -370,7 +509,7 @@ class Command(BaseCommand):
             '国際協力',
             '文化',
             'スポーツ',
-            '被災者支援',
+            '災害',
             '動物'
         )
         user = User.objects.get(pk=1)
@@ -379,12 +518,15 @@ class Command(BaseCommand):
                 name=t,
             )
             tag.save()
+
+        for user in User.objects.all():
+            tag = Tag.objects.get(pk=(user.pk % len(taglist) + 1))
             user.follow_tag.add(tag)
-            user2 = User.objects.get(pk=tag.pk)
-            user2.follow_tag.add(tag)
+
         for event in Event.objects.all():
-            tag = Tag.objects.get(pk=(event.pk % len(taglist)+1))
-            event.tag.add(tag)
+            for tag in Tag.objects.all():
+                if event.pk/len(taglist)<=tag.pk:
+                    event.tag.add(tag)
 
     def _create_questions_and_answers(self):
         for event in Event.objects.all():
