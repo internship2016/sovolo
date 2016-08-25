@@ -48,6 +48,11 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
       debugging: true,
       checkExistence: true,
       overrides: {
+        'jquery-migrate': {
+          main: [
+            './jquery-migrate.min.js'
+          ]
+        },
         'Croppie': {
           main: [
             './croppie.min.js',
@@ -69,6 +74,11 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
         'bootstrap-filestyle': {
           main: [
             './src/*.min.js'
+          ]
+        },
+        'webshim': {
+          main: [
+            './js-webshim/minified/*'
           ]
         },
         'font-awesome': {
@@ -107,8 +117,16 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
   ;
 });
 
+gulp.task('bower.webshim', 'webshimのファイルをコピーする', function () {
+  return gulp.src(
+    conf.bowerDir + '/webshim/js-webshim/minified/**',
+    {base: conf.bowerDir + '/webshim/js-webshim/minified'}
+  )
+  .pipe(gulp.dest('./static/js/'));
+});
+
 gulp.task('bower', 'bower install and copy', function (cb) {
-  runSequence(['bower.install', 'bower.copy'], cb);
+  runSequence(['bower.install', 'bower.copy', 'bower.webshim'], cb);
 });
 
 gulp.task('css.bootstrap', 'カスタムbootstrapを作る', function () {

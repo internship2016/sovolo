@@ -4,6 +4,12 @@
 
   $('.dropdown-toggle').dropdown();
 
+  $(function () {
+    webshim.activeLang('ja');
+    $.webshims.setOptions('extendNative', true);
+    $.webshims.polyfill('forms');
+  });
+
   moment.locale('ja', {week: {dow: 1}});
 
   var DateFormat = 'YYYY-MM-DD';
