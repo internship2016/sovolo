@@ -378,18 +378,39 @@
         {% endif %}
         <label>
           <input type="checkbox" name="groups" value="{{ group.id }}" checked>
-          {{ group.name }}
+          <div class="media">
+            <div class="media-left">
+              <a href="{% url "group:detail" group.id %}">
+                <div class="thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
+              </a>
+            </div>
+            <div class="media-body">
+              <h3 class="media-heading"><a href="{% url "group:detail" group.id %}">{{ group.name }}</a></h3>
+              {{ group.description }}
+            </div>
+          </div>
         </label>
       {% endfor %}
 
       <h4>自分の管理しているグループ</h4>
       {% for group in request.user.admin_group.all %}
-        <label>
-          <input type="checkbox" name="groups" value="{{ group.id }}"
-                 {% if group in event.group_set.all %}checked{% endif %}>
-          {{ group.name }}
-        </label>
-        {% empty %}
+        {% if group not in event.group_set.all %}
+          <label>
+            <input type="checkbox" name="groups" value="{{ group.id }}">
+            <div class="media">
+              <div class="media-left">
+                <a href="{% url "group:detail" group.id %}">
+                  <div class="thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
+                </a>
+              </div>
+              <div class="media-body">
+                <h3 class="media-heading"><a href="{% url "group:detail" group.id %}">{{ group.name }}</a></h3>
+                {{ group.description }}
+              </div>
+            </div>
+          </label>
+        {% endif %}
+      {% empty %}
         <p>管理しているグループはありません。</p>
       {% endfor %}
     </div>

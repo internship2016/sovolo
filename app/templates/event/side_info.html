@@ -12,11 +12,14 @@
   <div class="panel-heading">グループ</div>
   <div class="panel-body">
     {% for group in event.group_set.all %}
-      <p><a href="{% url 'group:detail' group.id %}"><img src="{{ group.get_image_url }}" width="24" height="24">&nbsp;{{ group.name }}</a></p>
+      <a class="group_list-element" href="{% url 'group:detail' group.id %}"><div class="thumbnail group_list-thumbnail" style="background-image:url({{group.get_image_url}});"></div><div class="group_list-description">{{ group.name }}</div></a>
     {% empty %}
       <p>関連しているグループはありません</p>
     {% endfor %}
   </div>
+</div>
+
+<div class="panel panel-primary">
   <div class="panel-heading">タグ</div>
   <div class="panel-body">
     {% for tags in event.tag.all %}
