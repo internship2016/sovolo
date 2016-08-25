@@ -35,9 +35,8 @@
         <h1>
           <a class="break-word" href="{{ event.get_absolute_url }}">{{ event.name }}</a>
         </h1>
-
         <div class="clearfix">
-          <p>{{ event.start_time_format }} 〜 {{ event.end_time_format }} @ {{ event.get_region_kanji }}</p>
+          <p> <i class="fa fa-calendar" aria-hidden="true"></i> {{ event.start_time_format }} 〜 {{ event.end_time_format }} <i class="fa fa-map-marker" aria-hidden="true"></i> {{ event.get_region_kanji }}</p>
           <p>
             応援数 <span class="emphasis">{{ event.supporter.all|length }}</span>
           </p>
