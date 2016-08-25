@@ -103,8 +103,8 @@
     <input id="id_latitude" type="hidden" name="latitude">
     <input id="id_longitude" type="hidden" name="longitude">
 
-  <div id="map_canvas" class="center-block">
-  </div>
+    <p>詳細な位置はピンで指定してください</p>
+    <div id="map_canvas" class="center-block"></div>
 
   </div>
 </div>
@@ -113,16 +113,32 @@
 
   var gmap;
   var geocoder;
+  var marker;
 
   function initialize(){
-    var latlng = new google.maps.LatLng(35.709984,139.810703);
-      var opts = {
-        zoom: 15,
-        center: latlng,
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-      };
-      gmap = new google.maps.Map(document.getElementById("map_canvas"), opts);
+    var default_lat = 35.709984;
+    var default_lng = 139.810703;
+    var latlng = new google.maps.LatLng(default_lat,default_lng);
+    var opts = {
+      zoom: 15,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    gmap = new google.maps.Map(document.getElementById("map_canvas"), opts);
 
+    {% if event.latitude and event.longitude %}
+      latlng = new google.maps.LatLng({{ event.latitude }},{{ event.longitude }});
+      gmap.setCenter(latlng);
+      marker = new google.maps.Marker({
+        map: gmap,
+        position: latlng,
+        draggable: true
+      });
+      marker.addListener('dragend',function () {
+        $(('#id_latitude')).val(marker.position.lat())
+        $(('#id_longitude')).val(marker.position.lng())
+      })
+    {% endif %}
   }
 
   function getlatlng(){
@@ -131,10 +147,15 @@
     geocoder.geocode( { 'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           gmap.setCenter(results[0].geometry.location);
-          var marker = new google.maps.Marker({
+            marker = new google.maps.Marker({
               map: gmap,
-              position: results[0].geometry.location
+              position: results[0].geometry.location,
+              draggable: true
           });
+          marker.addListener('dragend',function () {
+            $(('#id_latitude')).val(marker.position.lat())
+            $(('#id_longitude')).val(marker.position.lng())
+          })
           //set values of hidden inputs
           $(('#id_latitude')).val(results[0].geometry.location.lat())
           $(('#id_longitude')).val(results[0].geometry.location.lng())
