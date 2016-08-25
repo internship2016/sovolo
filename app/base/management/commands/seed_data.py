@@ -265,7 +265,7 @@ class Command(BaseCommand):
         for i in range(20):
             lastname = str(i)
             username = username_sample[i]
-            email = "test%d@sovolo.earth" %(i+1)
+            email = "test%d@sovol.earth" %(i+1)
             user = User(
                 first_name = 'genericuser',
                 last_name = lastname,
@@ -284,7 +284,7 @@ class Command(BaseCommand):
             firstname = 'demo_user'
             lastname = str(i)
             username = 'demo_user_'+str(i)
-            email = "demo%d@sovolo.earth"%i
+            email = "demo%d@sovol.earth"%i
             user = User(
                 first_name=firstname,
                 last_name=lastname,
