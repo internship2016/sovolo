@@ -13,35 +13,6 @@ $color-pallet: (
   @return map-get($color-pallet, $key);
 }
 
-#user-header {
-  img {
-    padding: 10px;
-  }
-}
-
-#event_header{
-  margin-bottom: 10px;
-}
-
-#event_header .row{
-  display:flex;
-  align-items: stretch;
-  flex-wrap: nowrap;
-}
-
-#event_header-left{
-  display:inline-block;
-  max-height:1000000px;
-  flex-basis: 250px;
-}
-
-#event_header-right{
-  display: inline-block;
-}
-
-#event_header-right .panel{
-  margin-bottom: 0;
-}
 
 #search-area {
   div {
@@ -128,8 +99,8 @@ footer {
 }
 
 .user_detail-thumbnail{
-  width:200px;
-  height:200px;
+  width:100%;
+  height:100%;
 }
 
 .user-list-thumbnail{
@@ -158,6 +129,33 @@ footer {
 .user_list_large-thumbnail{
   width:100px;
   height:100px;
+}
+
+/* Details Page Headers */
+#user-header {
+  img {
+    padding: 10px;
+  }
+}
+
+.detail-header{
+  display:flex;
+  align-items: stretch;
+  flex-wrap: nowrap;
+  margin-bottom: 10px;
+}
+
+.detail-header-left{
+  display:inline-block;
+  flex-basis: 250px;
+}
+
+.detail-header-right{
+  display: inline-block;
+}
+
+.detail-header-right .panel{
+  margin-bottom: 0;
 }
 
 /* Event Details page */

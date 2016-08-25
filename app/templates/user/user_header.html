@@ -1,52 +1,44 @@
  <div id="user-header">
-  <div class="row">
-    <div class="col-sm-4 col-md-3" style="text-align: center">
+  <div class="detail-header row">
+    <div class="detail-header-left col-sm-4 col-md-3" style="text-align: center">
       <div class="media-object custom_thumbnail user_detail-thumbnail" style="background-image:url({{ user.get_image_url }});"></div>
     </div>
-    <div class="col-sm-8 col-md-9">
-      <h1>{{ user.username }}</h1>
-      <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
-      <p> ソボレージ<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-sm-6" >
-      <div id="user-info" class="panel panel-primary">
+    <div class="detail-header-right col-sm-8 col-md-9">
+      <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">
             プロフィール
           </h3>
+      </div>
+        <div class="row"  style="padding-left:1em; padding-right: 1em;">
+        <div class="panel-body col-sm-6 col-md-5">
+          <h1>{{ user.username }}</h1>
+
+          {% if user.birthday != null %}
+          <p>年齢： {{ user.get_about_age }}代</p>
+          {% endif %}
+          {% if user.sex != null %}
+          <p>性別: {{ user.sex|yesno:"男,女,秘密" }}</p>
+          {% endif %}
+          <p>住んでる都道府県: {{ user.get_region_kanji }}</p>
         </div>
-        <div class="panel-body container-fluid">
-          <dl>
-            {% if user.birthday != null %}
-              <dt>年齢</dt>
-              <dd>{{ user.get_about_age }}代</dd>
-            {% endif %}
-            {% if user.sex != null %}
-              <dt>性別</dt>
-              <dd>{{ user.sex|yesno:"男,女,秘密" }}</dd>
-            {% endif %}
-            <dt>住んでる都道府県</dt>
-            <dd>{{ user.get_region_kanji }}</dd>
-            <dt>フォローしているタグ</dt>
-            <dd>
-              {% for tag in user.follow_tag.all %}
-                <a class="tag" href="{% url 'event:search' %}?tags={{ tag.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
-              {% empty %}
-                <p>フォローしているタグがありません</p>
-              {% endfor %}
-            </dd>
-          </dl>
+
+        <div class="panel-body col-sm-6 col-md-7">
+          <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
+          <p> ソボレージ<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
           <div style="text-align: right">
-            {% if user.id == request.user.id %}
-              <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">プロフィール編集</a>
-            {% endif %}
-          </div>
+          {% if user.id == request.user.id %}
+            <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">プロフィール編集</a>
+          {% endif %}
+        </div>
         </div>
       </div>
+
+      </div>
+
     </div>
-    <div class="col-sm-6" >
+  </div>
+   <div>
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">獲得トロフィー</h3>
@@ -61,5 +53,23 @@
         </div>
       </div>
     </div>
+  <div>
+      <div id="user-info" class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            フォローしているタグ
+          </h3>
+        </div>
+        <div class="panel-body container-fluid">
+          <div>
+              {% for tag in user.follow_tag.all %}
+                <a class="tag" href="{% url 'event:search' %}?tags={{ tag.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
+              {% empty %}
+                <p>フォローしているタグがありません</p>
+              {% endfor %}
+            </div>
+
+        </div>
+      </div>
   </div>
 </div>
