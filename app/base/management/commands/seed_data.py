@@ -423,7 +423,7 @@ class Command(BaseCommand):
         for event in Event.objects.all():
             frame = Frame(
                 event=event,
-                upper_limit=3,
+                upper_limit=7,
                 deadline=event.start_time,
                 description='運営スタッフ'
             )
