@@ -1,42 +1,13 @@
 {% extends "base.html" %}
 {% load bootstrap3 %}
+{% load event_tags %}
 {% block title %}参加者一覧 | {{ event.name }} | Sovol{% endblock %}
 {% block content %}
 	{% include "event/event_header.html" %}
-    <div class="panel panel-primary">
-        <div class="panel-heading">管理者</div>
-        <div class="panel-body">
-            <h3>主催者</h3>
-            <div class="row">
-                {% with event.host_user as user %}
-                    <div class="col-md-2">
-                        <img src="{{ user.get_image_url }}" width="100" height="100">
-                        <div>{{ user.username }}</div>
-                    </div>
-                {% endwith %}
-            </div>
-            <h3>管理者</h3>
-            <div class="row">
-                {% for user in admins %}
-                    <div class="col-md-2">
-                        <img src="{{ user.get_image_url }}" width="100" height="100">
-                        <div>{{ user.username }}</div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-    <div class="panel panel-primary">
-        <div class="panel-heading">参加者</div>
-        <div class="panel-body">
-            <div class="row">
-                {% for user in participants %}
-                    <div class="col-md-2">
-                        <img src="{{ user.get_image_url }}" width="100" height="100">
-                        <div>{{ user.username }}</div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
+
+    {% user_list_large event.get_host_user_as_list "主催者"　event %}
+    {% user_list_large event.admin.all "管理者"　event %}
+    {% user_list_large event.get_reserved_users "参加者"　event %}
+    {% user_list_large event.get_waiting_users "キャンセル待ち"　event %}
+
 {% endblock %}

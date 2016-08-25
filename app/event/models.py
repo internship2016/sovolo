@@ -137,6 +137,9 @@ class Event(AbstractBaseModel):
     def get_waiting_users(self):
         return [participation.user for participation in self.participation_set.filter(status="キャンセル待ち").order_by('created')]
 
+    def get_host_user_as_list(self):
+        return [self.host_user]
+
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
 
