@@ -21,27 +21,27 @@
             {{event.start_time_format | date:'n/j (D)' }}
             <i class="fa fa-map-marker" aria-hidden="true"></i>
             {{event.get_region_kanji}}
-          </div>
-      <div class="event-status pull-right">
-        <p>
-          {% if event.is_over %}
-          <p>{{ event.get_status }}</p>
-          {% else %}
-            {% if event in user.participating_event.all %}
-              {% for participation in user.participation_set.all %}
-                {% if participation.event == event %}
-                    <p>{{ participation.status }}</p>
-                {% endif %}
-              {% endfor %}
-            {% else %}
-              {{ event.get_status }}
-              {% if event.get_status　==　"募集中" %}
-                <p><a href="{% url 'event:detail' event.id %}">応募する</a></p>
-              {% endif %}
-            {% endif %}
-        {% endif %}
-        </p>
       </div>
+        <div class="event-status pull-right">
+          <p>
+            {% if event.is_over %}
+            <p>{{ event.get_status }}</p>
+            {% else %}
+              {% if event in user.participating_event.all %}
+                {% for participation in user.participation_set.all %}
+                  {% if participation.event == event %}
+                      <p>{{ participation.status }}</p>
+                  {% endif %}
+                {% endfor %}
+              {% else %}
+                {{ event.get_status }}
+                {% if event.get_status　==　"募集中" %}
+                  <span>: </span><a href="{% url 'event:detail' event.id %}">応募する</a>
+                {% endif %}
+              {% endif %}
+          {% endif %}
+          </p>
+        </div>
     </div>
   </div>
   {% empty %}
