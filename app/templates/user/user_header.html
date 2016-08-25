@@ -19,8 +19,6 @@
         </div>
         <div class="panel-body container-fluid">
           <dl>
-            <dt>表示名</dt>
-            <dd>{{ user.username }}</dd>
             {% if user.birthday != null %}
               <dt>年齢</dt>
               <dd>{{ user.get_about_age }}代</dd>
