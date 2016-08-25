@@ -66,7 +66,26 @@
       {% endif %}
         <label>
           <input type="checkbox" name="events" value="{{ event.id }}" {% if event in group.event.all %}checked{% endif %}>
-          {{ event.name }}
+          <div class="media">
+            <div class="media-left">
+              <a href="/event/{{event.pk}}">
+                <div class="media-object thumbnail list-thumbnail" style="background-image:url({{ event.get_image_url }});"></div>
+              </a>
+            </div>
+            <div class="media-body">
+              <div class="event-info pull-left">
+                  <div class="media-heading">
+                    <a href="/event/{{event.pk}}">
+                      <h4>{{event.name}}</h4>
+                    </a>
+                  </div>
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    {{event.start_time_format | date:'n/j (D)' }}
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    {{event.get_region_kanji}}
+                  </div>
+              </div>
+           </div>
         </label>
       {% endfor %}
 
@@ -74,7 +93,26 @@
       {% for event in request.user.admin_event.all %}
         <label>
           <input type="checkbox" name="events" value="{{ event.id }}" {% if event in group.event.all %}checked{% endif %}>
-          {{ event }}
+          <div class="media">
+            <div class="media-left">
+              <a href="/event/{{event.pk}}">
+                <div class="media-object thumbnail list-thumbnail" style="background-image:url({{ event.get_image_url }});"></div>
+              </a>
+            </div>
+            <div class="media-body">
+              <div class="event-info pull-left">
+                  <div class="media-heading">
+                    <a href="/event/{{event.pk}}">
+                      <h4>{{event.name}}</h4>
+                    </a>
+                  </div>
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                    {{event.start_time_format | date:'n/j (D)' }}
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    {{event.get_region_kanji}}
+                  </div>
+              </div>
+           </div>
         </label>
       {% empty %}
         <p>管理しているボランティア活動はありません。</p>
