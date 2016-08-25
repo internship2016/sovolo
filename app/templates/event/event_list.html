@@ -12,36 +12,37 @@
     </div>
     <div class="media-body">
       <div class="event-info pull-left">
-          <div class="media-heading">
-            <a href="/event/{{event.pk}}">
-              <h4>{{event.name}}</h4>
-            </a>
-          </div>
-            <i class="fa fa-calendar" aria-hidden="true"></i>
-            {{event.start_time_format | date:'n/j (D)' }}
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
-            {{event.get_region_kanji}}
-      </div>
-        <div class="event-status pull-right">
-          <p>
-            {% if event.is_over %}
-            <p>{{ event.get_status }}</p>
-            {% else %}
-              {% if event in user.participating_event.all %}
-                {% for participation in user.participation_set.all %}
-                  {% if participation.event == event %}
-                      <p>{{ participation.status }}</p>
-                  {% endif %}
-                {% endfor %}
-              {% else %}
-                {{ event.get_status }}
-                {% if event.get_status　==　"募集中" %}
-                  <span>: </span><a href="{% url 'event:detail' event.id %}">応募する</a>
+        <div>
+          {% if event.is_over %}
+            <span class="label label-default" style="margin-right: 1em;">
+              {{ event.get_status }}
+            </span>
+          {% else %}
+            {% if event in user.participating_event.all %}
+              {% for participation in user.participation_set.all %}
+                {% if participation.event == event %}
+                  <span class="label label-warning" style="margin-right: 1em;">
+                    {{ participation.status }}
+                  </span>
                 {% endif %}
-              {% endif %}
+              {% endfor %}
+            {% else %}
+              <span class="label label-info" style="margin-right: 1em;">
+                {{ event.get_status }}
+              </span>
+            {% endif %}
           {% endif %}
-          </p>
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+          {{event.start_time_format | date:'n/j (D)' }}
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          {{event.get_region_kanji}}
         </div>
+        <div class="media-heading">
+          <a href="/event/{{event.pk}}">
+            <h4>{{event.name}}</h4>
+          </a>
+        </div>
+      </div>
     </div>
   </div>
   {% empty %}
