@@ -10,8 +10,8 @@
     <form action="" method="post">
       {% csrf_token %}
       <div class="form-group">
-        To
-        <select name="target" required>
+        <label for="target" class="control-label">宛先</label>
+        <select id="target" name="target" required class="form-control">
           <option value="admin">管理者</option>
           <option value="participants">管理者・参加者全員（キャンセル待ち含む）</option>
           <option value="members">管理者・参加者（キャンセル待ち除く）</option>
@@ -19,9 +19,12 @@
         </select>
       </div>
       <div class="form-group">
-        <textarea name="message" rows="20" cols="80"></textarea>
+        <label for="message" class="control-label">本文</label>
+        <textarea id="message" class="form-control" name="message" rows="20" cols="80"></textarea>
       </div>
-      <button class="btn" type="submit">送信</button>
+      <div class="form-group" style="text-align: center;">
+        <button class="btn btn-primary" type="submit">送信</button>
+      </div>
     </form>
   </div>
   <div class="col-md-3">
