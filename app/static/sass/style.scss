@@ -46,6 +46,7 @@ $color-pallet: (
 
 .tag {
   font-size: 150%;
+  display: inline-block;
 }
 
 /* Google Maps */
@@ -181,4 +182,6 @@ footer {
 .trophy-box {
   display: inline-block;
   text-align: center;
+  width: 80px;
 }
+
