@@ -52,7 +52,7 @@ class Group(AbstractBaseModel):
             return os.path.join(
                 settings.MEDIA_URL,
                 'group/',
-                "default_group_image.jpg",
+                "default_group_image.png",
             )
 
     def get_absolute_url(self):

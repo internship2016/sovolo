@@ -103,7 +103,7 @@ footer {
 }
 
 /* images */
-.thumbnail{
+.custom_thumbnail{
   display: inline-block;
   background-position:center;
   background-size:cover;
@@ -126,8 +126,7 @@ footer {
 
 .user_detail-thumbnail{
   width:200px;
-  height:100%;
-  flex-shrink:0;
+  height:200px;
 }
 
 .user-list-thumbnail{

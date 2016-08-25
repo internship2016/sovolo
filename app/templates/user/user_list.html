@@ -3,7 +3,7 @@
   <div class="panel-body">
     {% for user in users|slice:":10" %}
       <a href="{% url 'user:detail' user.id %}" title="{{ user.username }}">
-        <div class="thumbnail user-list-thumbnail" style="background-image: url({{ user.get_image_url }});"></div>
+        <div class="custom_thumbnail user-list-thumbnail" style="background-image: url({{ user.get_image_url }});"></div>
       </a>
     {% empty %}
       <p>{{ title }}はいません</p>

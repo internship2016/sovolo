@@ -4,7 +4,7 @@
     <div class="row">
       {% for user in users %}
           <div class="col-md-2">
-            <div class="thumbnail user_list_large-thumbnail" style="background-image: url({{ user.get_image_url }});"></div>
+            <div class="custom_thumbnail user_list_large-thumbnail" style="background-image: url({{ user.get_image_url }});"></div>
             <div>{{ user.username }}</div>
           </div>
       {% empty %}

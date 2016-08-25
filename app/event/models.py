@@ -81,7 +81,7 @@ class Event(AbstractBaseModel):
             return os.path.join(
                 settings.MEDIA_URL,
                 'events/',
-                "default_event_image.jpg",
+                "default_event_image.svg",
             )
 
     def get_tags_as_string(self):

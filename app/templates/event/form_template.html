@@ -184,7 +184,7 @@
   <div class="col-sm-9">
     {% if event.image %}
       <p>現在の画像：</p>
-      <div class="thumbnail event_detail-thumbnail" style="background-image: url({{event.get_image_url}});"></div>
+      <div class="custom_thumbnail event_detail-thumbnail" style="background-image: url({{event.get_image_url}});"></div>
       <input id="id_image_url" type="hidden" name="image_url" value="{{ event.get_image_url }}">
       <p>画像を再設定する：</p>
     {% endif %}
@@ -381,7 +381,7 @@
           <div class="media">
             <div class="media-left">
               <a href="{% url "group:detail" group.id %}">
-                <div class="thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
+                <div class="custom_thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
               </a>
             </div>
             <div class="media-body">
@@ -400,7 +400,7 @@
             <div class="media">
               <div class="media-left">
                 <a href="{% url "group:detail" group.id %}">
-                  <div class="thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
+                  <div class="custom_thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
                 </a>
               </div>
               <div class="media-body">

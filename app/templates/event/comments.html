@@ -4,7 +4,7 @@
     {% for comment in comment_list %}
     <div id="comment#comment.id" class="media">
       <div class="media-left">
-        <div class="media-object thumbnail list-thumbnail" style="background-image: url({{ comment.user.get_image_url }});"></div>
+        <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{ comment.user.get_image_url }});"></div>
       </div>
       <div class="media-body">
         <div class="media-heading">
@@ -29,7 +29,7 @@
         {% csrf_token %}
         <div class="media">
           <div class="media-left">
-            <div class="media-object thumbnail list-thumbnail" style="background-image: url({{ request.user.get_image_url }});"></div>
+            <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{ request.user.get_image_url }});"></div>
           </div>
           <div class="media-body">
             <div class="media-heading">

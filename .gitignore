@@ -19,6 +19,9 @@ app/media/group/*
 !app/media/events/default_event_image.jpg
 !app/media/users/default_user_image.jpg
 !app/media/group/default_group_image.jpg
+!app/media/events/default_event_image.svg
+!app/media/users/default_user_image.png
+!app/media/group/default_group_image.png
 !app/media/common/
 
 

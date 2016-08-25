@@ -113,7 +113,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
         if self.image:
             return self.image.url
         else:
-            return os.path.join(settings.MEDIA_URL, 'users/', "default_user_image.jpg")
+            return os.path.join(settings.MEDIA_URL, 'users/', "default_user_image.png")
 
     def save(self, *args, **kwargs):
         return super(User, self).save(*args, **kwargs)
