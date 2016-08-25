@@ -1,3 +1,5 @@
+import os
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.http import HttpResponseRedirect
@@ -25,6 +27,7 @@ from django.core.mail import send_mail
 from tag.models import Tag
 from user.models import User
 from django.conf import settings
+from django.core.files import File
 
 import sys
 import re
@@ -32,7 +35,8 @@ from datetime import datetime
 import sys
 import io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
-
+import uuid
+import urllib
 
 @method_decorator(login_required, name='dispatch')
 class EventCreate(CreateView):
@@ -65,9 +69,20 @@ class EventCreate(CreateView):
         return context
 
     def form_valid(self, form):
+        print("*"*20, file=sys.stderr)
+        print(self.request.POST, file=sys.stderr)
+        print("*"*20, file=sys.stderr)
         form.instance.host_user = self.request.user
         form_redirect = super(EventCreate, self).form_valid(form)
         event = form.save()
+
+        print("*" * 20, file=sys.stderr)
+        print("EVENT:", file=sys.stderr)
+        print(event, file=sys.stderr)
+        print(event.pk, file=sys.stderr)
+        print("IMAGE IS NONE: ", file=sys.stderr)
+        print(event.image is None, file=sys.stderr)
+        print("*" * 20, file=sys.stderr)
 
         # Admins
         event.admin.clear()
@@ -113,7 +128,16 @@ class EventCreate(CreateView):
                 event.longitude = self.request.POST['longitude']
                 event.save()
 
-        messages.info(self.request, "ボランティアを登録しました。")
+        # Image
+        if 'image_url' in self.request.POST and not event.image:
+            url = self.request.POST['image_url']
+            new_url = os.path.join(settings.BASE_DIR, url[1:])
+            print(new_url, file=sys.stderr)
+            reopen = open(new_url, "rb")
+            django_file = File(reopen)
+            event.image.save(new_url, django_file, save=True)
+
+            messages.info(self.request, "ボランティアを登録しました。")
         return form_redirect
 
     def form_invalid(self, form):

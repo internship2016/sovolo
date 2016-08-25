@@ -100,8 +100,8 @@
            value="{{ event.meeting_place }}" required/>
     <input type="button" class="btn btn-primary" onClick="getlatlng()" value="Google Map情報を取得">
 
-    <input id="id_latitude" type="hidden" name="latitude">
-    <input id="id_longitude" type="hidden" name="longitude">
+    <input id="id_latitude" type="hidden" name="latitude" value="{{ event.latitude }}">
+    <input id="id_longitude" type="hidden" name="longitude" value="{{ event.longitude }}">
 
   <div id="map_canvas" class="center-block">
   </div>
@@ -115,7 +115,10 @@
   var geocoder;
 
   function initialize(){
-    var latlng = new google.maps.LatLng(35.709984,139.810703);
+    var lat = $('#id_latitude').length > 0 && $('#id_latitude').val() ? $('#id_latitude').val() : 35.709984;
+    var lng = $('#id_longitude').length > 0 && $('#id_longitude').val() ? $('#id_longitude').val() : 139.810703;
+
+    var latlng = new google.maps.LatLng(lat, lng);
       var opts = {
         zoom: 15,
         center: latlng,
@@ -161,7 +164,13 @@
 <div class="form-group">
   <label for="id_image" class="col-sm-3">ボランティア画像</label>
   <div class="col-sm-9">
-    <input class="filestyle" id="id_image" name="image" type="file" data-buttonName="btn-primary" data-buttonText="選択..." />
+    {% if event.image %}
+      <p>現在の画像：</p>
+      <div class="thumbnail event_detail-thumbnail" style="background-image: url({{event.get_image_url}});"></div>
+      <input id="id_image_url" type="hidden" name="image_url" value="{{ event.get_image_url }}">
+      <p>画像を再設定する：</p>
+    {% endif %}
+      <input class="filestyle" id="id_image" name="image" type="file" data-buttonName="btn-primary" data-buttonText="選択..." />
   </div>
 </div>
 
@@ -243,7 +252,9 @@
         <div class="panel panel-default panel-body" style="margin:0">
           <div class="row">
             <input type="hidden" name="frame_number" value="{{ forloop.counter }}">
-            <input type="hidden" name="frame_{{ forloop.counter }}_id" value="{{ frame.id }}">
+            {% if not request.GET.copy_event_id %}
+              <input type="hidden" name="frame_{{ forloop.counter }}_id" value="{{ frame.id }}">
+            {% endif %}
             <label class="col-sm-3">仕事内容</label>
             <div class="col-sm-9">
               <textarea class="form-control"
