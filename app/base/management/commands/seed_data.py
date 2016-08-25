@@ -380,7 +380,7 @@ class Command(BaseCommand):
                     end_time = timezone.now() - timezone.timedelta(days=i) - timezone.timedelta(hours=j),
                     meeting_place="池袋駅東口母子像前",
                     contact="interlink@interlink.com",
-                    details="過去のイベントです。",
+                    details="過去のボランティアです。",
                     host_user=host_user,
                     region=prefec_list[i%47],
                 )
@@ -397,7 +397,7 @@ class Command(BaseCommand):
                     end_time=timezone.now() + timezone.timedelta(days=i) + timezone.timedelta(hours=j),
                     meeting_place="池袋駅東口母子像前",
                     contact="interlink@interlink.com",
-                    details="開催中のイベントです。",
+                    details="開催中のボランティアです。",
                     host_user=host_user,
                     region=prefec_list[i % 47],
                 )
@@ -412,7 +412,7 @@ class Command(BaseCommand):
                     end_time = timezone.now() + timezone.timedelta(days=i+1) + timezone.timedelta(hours=j*3),
                     meeting_place="池袋駅東口母子像前",
                     contact="interlink@interlink.com",
-                    details="未来のイベントです。",
+                    details="未来のボランティアです。",
                     host_user=host_user,
                     region=prefec_list[i%47],
                 )
