@@ -172,7 +172,7 @@ class UserEditView(UpdateView):
         for tag_id in old_tags - new_tags:
             user.follow_tag.remove(tag_id)
 
-        messages.info(self.request, "ユーザ情報を編集しました。")
+        messages.info(self.request, "ユーザー情報を編集しました。")
         return super(UserEditView, self).form_valid(form)
 
 

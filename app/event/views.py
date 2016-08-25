@@ -83,7 +83,7 @@ class EventCreate(CreateView):
         event.admin.add(event.host_user.id)
 
         for name in set(raw_admins) - set(new_admins.values_list('username', flat=True)):
-            messages.error(self.request, "ユーザ名 " + name + " に一致するユーザーはいませんでした。")
+            messages.error(self.request, "ユーザー名 " + name + " に一致するユーザーはいませんでした。")
 
         # Groups
         event.group_set.clear()
@@ -216,7 +216,7 @@ class EventEditView(UserPassesTestMixin, UpdateView):
         event.admin.add(event.host_user.id)
 
         for name in set(raw_admins) - set(new_admins.values_list('username', flat=True)):
-            messages.error(self.request, "ユーザ名 " + name + " に一致するユーザーはいませんでした。")
+            messages.error(self.request, "ユーザー名 " + name + " に一致するユーザーはいませんでした。")
 
         # Groups
         event.group_set.clear()

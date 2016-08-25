@@ -48,7 +48,7 @@ class GroupCreate(CreateView):
             membership.save()
 
         for name in set(raw_admins) - set(new_admin_names):
-            messages.error(self.request, "ユーザ名 " + name + " に一致するユーザーはいませんでした。")
+            messages.error(self.request, "ユーザー名 " + name + " に一致するユーザーはいませんでした。")
 
         messages.info(self.request, "グループを作成しました。")
         return form_redirect
@@ -125,7 +125,7 @@ class GroupEditView(UserPassesTestMixin, UpdateView):
             membership.save()
 
         for name in set(raw_admins) - set(new_admin_names):
-            messages.error(self.request, "ユーザ名 " + name + " に一致するユーザーはいませんでした。")
+            messages.error(self.request, "ユーザー名 " + name + " に一致するユーザーはいませんでした。")
 
         messages.info(self.request, "グループ情報を修正しました。")
         return form_redirect
