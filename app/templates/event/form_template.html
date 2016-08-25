@@ -232,8 +232,8 @@
   <div class="col-sm-9">
     <div id="admins">
       {% for admin in event.admin.all %}
-        <label><input name="admins" type="checkbox" value="{{ admin.username }}" checked>
-          {{ admin.username }}
+        <label>
+          <div class="checkbox"><span><input name="admins" type="checkbox" value="{{ admin.username }}" checked>{{ admin.username }}</span></div>
         </label>
       {% endfor %}
     </div>
