@@ -52,6 +52,8 @@ class UserCreateView(CreateView):
         from django import forms
         form = super().get_form()
         form.fields['password'].widget = forms.PasswordInput()
+        form.fields['username'].maxlength = 15
+        form.fields['username'].label = "ニックネーム（15文字以内)"
         return form
 
 
