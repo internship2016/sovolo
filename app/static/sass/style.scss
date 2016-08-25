@@ -13,6 +13,37 @@ $color-pallet: (
   @return map-get($color-pallet, $key);
 }
 
+#user-header {
+  img {
+    padding: 10px;
+  }
+  padding: 10px;
+}
+
+#event_header{
+  margin-bottom: 10px;
+}
+
+#event_header .row{
+  display:flex;
+  align-items: stretch;
+  flex-wrap: nowrap;
+}
+
+#event_header-left{
+  display:inline-block;
+  max-height:1000000px;
+  flex-basis: 250px;
+}
+
+#event_header-right{
+  display: inline-block;
+}
+
+#event_header-right .panel{
+  margin-bottom: 0;
+}
+
 #search-area {
   div {
     margin: 0px;
@@ -84,8 +115,8 @@ footer {
 }
 
 .event_detail-thumbnail{
-  width:200px;
-  height:200px;
+  width:100%;
+  height:100%;
 }
 
 .group_detail-thumbnail{
@@ -95,7 +126,8 @@ footer {
 
 .user_detail-thumbnail{
   width:200px;
-  height:200px;
+  height:100%;
+  flex-shrink:0;
 }
 
 .user-list-thumbnail{

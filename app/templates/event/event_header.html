@@ -1,74 +1,91 @@
 <div id="fb-root"></div>
-<script>(function(d, s, id) {
+<script>(function (d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
+  js = d.createElement(s);
+  js.id = id;
   js.src = "//connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v2.7";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
+<div id="event_header">
+ {% if event.is_over %}
+  <div class="alert alert-danger">このボランティアは終了しました</div>
+  {% else %}
+  {% if request.user in event.participant.all %}
+  {% if participation.status == "参加中" %}
+  <div class="alert alert-info">
+    参加しています
+  </div>
+  {% elif participation.status == "キャンセル待ち" %}
+  <div class="alert alert-info">
+    キャンセル待ちです
+  </div>
+  {% endif %}
+  {% endif %}
+  {% endif %}
   <div class="row">
-    <div class="col-sm-4 col-md-3" style="max-height:200px;">
+    <div id="event_header-left" class="col-sm-4 col-md-3">
       <div class="thumbnail event_detail-thumbnail" style="background-image:url({{ event.get_image_url }})"></div>
     </div>
-    <div class="col-sm-8 col-md-9">
+    <div id="event_header-right" class="col-sm-8 col-md-9">
 
-  <div class="event-head-title panel panel-primary" style="padding: 1em;">
+      <div class="event-head-title panel panel-primary" style="padding: 1em;">
 
-    {% if event.is_over %}
-      <div class="alert alert-danger">このボランティアは終了しました</div>
-    {% else %}
-      {% if request.user in event.participant.all %}
-          {% if participation.status == "参加中" %}
-            <div class="alert alert-info">
-              参加しています
-            </div>
-          {% elif participation.status == "キャンセル待ち" %}
-            <div class="alert alert-info">
-              キャンセル待ちです
-            </div>
-          {% endif %}
-      {% endif %}
-    {% endif %}
+        <h1>
+          <a class="break-word" href="{{ event.get_absolute_url }}">{{ event.name }}</a>
+        </h1>
 
-    <h1>
-      <a class="break-word" href="{{ event.get_absolute_url }}">{{ event.name }}</a>
-    </h1>
-
-    <div class="clearfix">
-      <p>{{ event.start_time_format }} 〜 {{ event.end_time_format }} @ {{ event.get_region_kanji }}</p>
-      <p>
-        応援数 <span class="emphasis">{{ event.supporter.all|length }}</span>
-      </p>
-        {% if not event.is_over %}
+        <div class="clearfix">
+          <p>{{ event.start_time_format }} 〜 {{ event.end_time_format }} @ {{ event.get_region_kanji }}</p>
+          <p>
+            応援数 <span class="emphasis">{{ event.supporter.all|length }}</span>
+          </p>
+          {% if not event.is_over %}
           {% if request.user in event.supporter.all %}
-            <button class="btn btn-default">応援済み</button>
+          <button class="btn btn-default">応援済み</button>
           {% else %}
-            <a class="btn btn-primary" href="{% url 'event:support' event.id %}">応援する</a>
+          <a class="btn btn-primary" href="{% url 'event:support' event.id %}">応援する</a>
           {% endif %}
-        {% endif %}
-      <div id="likes" class="pull-right">
-        <style>.fb_iframe_widget > span { vertical-align: baseline !important; } .fb_iframe_widget { margin-right: 4px; }</style>
-        <div class="fb-share-button" data-href="{{ event.get_absolute_url }}" data-layout="button" data-size="small" data-mobile-iframe="true">
-          <a class="fb-xfbml-parse-ignore" target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsovol.earth%2F&amp;src=sdkpreparse">
-            シェア
-          </a>
+          {% endif %}
+          <div id="likes" class="pull-right">
+            <style>.fb_iframe_widget > span {
+              vertical-align: baseline !important;
+            }
+
+            .fb_iframe_widget {
+              margin-right: 4px;
+            }</style>
+            <div class="fb-share-button" data-href="{{ event.get_absolute_url }}" data-layout="button" data-size="small"
+                 data-mobile-iframe="true">
+              <a class="fb-xfbml-parse-ignore" target="_blank"
+                 href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsovol.earth%2F&amp;src=sdkpreparse">
+                シェア
+              </a>
+            </div>
+            <div style="display: inline-block;">
+              <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="SoVol">Tweet</a>
+              <script>!function (d, s, id) {
+                var js, fjs = d.getElementsByTagName(s)[0], p = /^http:/.test(d.location) ? 'http' : 'https';
+                if (!d.getElementById(id)) {
+                  js = d.createElement(s);
+                  js.id = id;
+                  js.src = p + '://platform.twitter.com/widgets.js';
+                  fjs.parentNode.insertBefore(js, fjs);
+                }
+              }(document, 'script', 'twitter-wjs');
+              </script>
+            </div>
+          </div>
         </div>
-        <div style="display: inline-block;">
-          <a href="https://twitter.com/share" class="twitter-share-button" data-hashtags="SoVol">Tweet</a>
-          <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+'://platform.twitter.com/widgets.js';fjs.parentNode.insertBefore(js,fjs);}}(document, 'script', 'twitter-wjs');
-          </script>
+
+        <div style="text-align: right; margin-top: 2px;">
+          {% if request.user in event.admin.all or request.user == event.host_user %}
+          <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">内容変更</a>
+          <a href="{% url 'event:message' event.id %}" type="button" class="btn btn-default">メール一斉送信</a>
+          {% endif %}
         </div>
       </div>
     </div>
-
-    <div style="text-align: right; margin-top: 2px;">
-      {% if request.user in event.admin.all or request.user == event.host_user %}
-        <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">内容変更</a>
-        <a href="{% url 'event:message' event.id %}" type="button" class="btn btn-default">メール一斉送信</a>
-      {% endif %}
-    </div>
   </div>
-
-    </div>
-  </div>
+</div>
