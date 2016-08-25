@@ -68,6 +68,10 @@ $color-pallet: (
   color: custom-color('red');
 }
 
+.event-status {
+  text-align: right;
+}
+
 .tag {
   display: inline-block;
 }
