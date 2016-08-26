@@ -74,27 +74,28 @@ class RequestPasswordReset(View):
 
     def post(self, request, *args, **kwargs):
         email = request.POST.get('email')
-        # try:
-        user = User.objects.get(email=email)
-        reset_key = self.create_reset_key()
+        user = User.objects.filter(email=email)
+        if user.exists():
+            user = user.first()
+            reset_key = self.create_reset_key()
 
-        if hasattr(user, "userpasswordresetting"):
-            user.userpasswordresetting.key = reset_key
-            user.userpasswordresetting.save()
-        else:
-            UserPasswordResetting(user=user, key=reset_key).save()
+            if hasattr(user, "userpasswordresetting"):
+                user.userpasswordresetting.key = reset_key
+                user.userpasswordresetting.save()
+            else:
+                UserPasswordResetting(user=user, key=reset_key).save()
 
-        base_url = "/".join(self.request.build_absolute_uri().split("/")[:3])
-        reset_url = "{0}/user/reset_password/{1}".format(base_url, reset_key)
+            base_url = "/".join(self.request.build_absolute_uri().split("/")[:3])
+            reset_url = "{0}/user/reset_password/{1}".format(base_url, reset_key)
 
-        send_template_mail(
-            "email/reset_password.txt",
-            {"reset_url": reset_url},
-            "Sovol Info<info@sovol.earth>",
-            [user.email]
-        )
+            send_template_mail(
+                "email/reset_password.txt",
+                {"reset_url": reset_url},
+                "Sovol Info<info@sovol.earth>",
+                [user.email]
+            )
 
-        messages.info(request, "パスワード再設定のリンクを送信しました。")
+        messages.info(request, "リクエストを受け付けました。メールアドレスが登録されている場合、アドレスにパスワード再設定のリンクが送信されます。")
         return redirect("top")
 
     def create_reset_key(self):
