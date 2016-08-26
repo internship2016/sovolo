@@ -76,6 +76,11 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
             './src/*.min.js'
           ]
         },
+        'handlebars': {
+          main: [
+            './handlebars.min.js'
+          ]
+        },
         'webshim': {
           main: [
             './js-webshim/minified/*'
