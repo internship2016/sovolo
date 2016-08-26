@@ -1,5 +1,5 @@
 # seed events
-seed_events/*
+app/media/seed_events/*
 
 Dockerfile
 app/db.sqlite3
