@@ -8,7 +8,17 @@
 
     {% user_list_large event.get_host_user_as_list "主催者" %}
     {% user_list_large event.admin.all "管理者" %}
-    {% user_list_large event.get_reserved_users "参加者" %}
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">参加者</div>
+        <div class="panel-body">
+            {% for frame in event.frame_set.all %}
+                {% user_list_large frame.get_reserved_users frame.description %}
+            {% empty %}
+                <p>参加者がいません</p>
+            {% endfor %}
+        </div>
+    </div>
     {% user_list_large event.get_waiting_users "キャンセル待ち" %}
 
 {% endblock %}
