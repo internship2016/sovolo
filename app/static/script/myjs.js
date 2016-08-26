@@ -159,12 +159,14 @@
           .then(function (resp) {
             formData.set(name, base64ToBlob(resp), 'cropped');
             $.ajax({
+              cache: true,
+              async: false,
               url: form.attr('action'),
               type: form.attr('method'),
               cache: false,
               processData: false,
               contentType: false,
-              data: formData
+              data: formData,
             })
             .done(function () {
               global.location.reload();

@@ -71,7 +71,7 @@
         value="{{ event.meeting_place }}"
         required/>
       <span class="input-group-btn">
-        <button class="btn btn-primary" onClick="getlatlng()">
+        <button type="button" class="btn btn-primary" onClick="getlatlng()">
           <span class="glyphicon glyphicon-map-marker"></span>
         </button>
       </span>
@@ -437,7 +437,7 @@
       stepping: 15
     });
 
-    if(!start()){
+    if(start_blank){
       jq_start.val(start_blank);
       jq_end.val(end_blank);
     }
