@@ -308,6 +308,41 @@ class Command(BaseCommand):
     def _create_events(self):
 
         prefec_list = list(self.prefectures)
+
+        for i in range(20):
+            name = eventname_sample[i]["name"]
+            host_user = User.objects.all()[i]
+            admin = host_user
+            genericevent = Event(
+                name=name,
+                start_time=timezone.now() - timezone.timedelta(days=i*30),
+                end_time=timezone.now() - timezone.timedelta(days=i*30-1),
+                meeting_place="下條駅駅前ポストの前",
+                contact="interlink@interlink.com",
+                details=eventdetail_sample,
+                host_user=host_user,
+                region=prefec_list[i],
+            )
+            genericevent.save()
+            genericevent.admin = User.objects.filter(pk=1)
+
+        for i in range(1,30):
+            for j in range(1,5):
+                name = "【第%d回】"%j + eventname_sample[i%len(eventname_sample)]["name"]
+                host_user = User.objects.get(username="demo_user_%d"%i)
+                demoevent = Event(
+                    name=name,
+                    start_time=timezone.now() - timezone.timedelta(days=i*30) - timezone.timedelta(hours=j),
+                    end_time = timezone.now() - timezone.timedelta(days=i*30-1) - timezone.timedelta(hours=j),
+                    meeting_place="池袋駅東口母子像前",
+                    contact="interlink@interlink.com",
+                    details="過去のイベントです。",
+                    host_user=host_user,
+                    region=prefec_list[i%47],
+                )
+                demoevent.save()
+                demoevent.admin = User.objects.filter(pk=i)
+
         dir = os.path.join(settings.BASE_DIR, 'media', 'events','seed_events')
 
         with open(os.path.join(dir, 'data.csv'), newline='', encoding='utf-8') as csvfile:
@@ -316,8 +351,8 @@ class Command(BaseCommand):
             for d in reader:
                  e = Event(
                      name=d[0],
-                     start_time=timezone.now() - timezone.timedelta(days=reader.line_num+1),
-                     end_time=timezone.now() - timezone.timedelta(days=reader.line_num),
+                     start_time=timezone.now() + timezone.timedelta(days=reader.line_num%3-1, hours=-4),
+                     end_time=timezone.now() + timezone.timedelta(days=reader.line_num%3-1, hours=4),
                      meeting_place=d[4],
                      contact="interlink@interlink.com",
                      details=d[6],
@@ -330,74 +365,6 @@ class Command(BaseCommand):
                  imgfile = open(img_path, 'rb')
                  django_file = File(imgfile)
                  e.image.save(img_path, django_file, save=True)
-
-
-
-        for i in range(20):
-            name = eventname_sample[i]["name"]
-            host_user = User.objects.all()[i]
-            admin = host_user
-            genericevent = Event(
-                name=name,
-                start_time=timezone.now() - timezone.timedelta(days=i) ,
-                end_time=timezone.now() - timezone.timedelta(days=i+1),
-                meeting_place="下條駅駅前ポストの前",
-                contact="interlink@interlink.com",
-                details=eventdetail_sample,
-                host_user=host_user,
-                region=prefec_list[i],
-            )
-            genericevent.save()
-            genericevent.admin = User.objects.filter(pk=1)
-
-        for i in range(1,30):
-            for j in [1,2]:
-                name = "【第%d回】"%j + eventname_sample[i%len(eventname_sample)]["name"]
-                host_user = User.objects.get(username="demo_user_%d"%i)
-                demoevent = Event(
-                    name=name,
-                    start_time=timezone.now() - timezone.timedelta(days=i+1) - timezone.timedelta(hours=j),
-                    end_time = timezone.now() - timezone.timedelta(days=i) - timezone.timedelta(hours=j),
-                    meeting_place="池袋駅東口母子像前",
-                    contact="interlink@interlink.com",
-                    details="過去のイベントです。",
-                    host_user=host_user,
-                    region=prefec_list[i%47],
-                )
-                demoevent.save()
-                demoevent.admin = User.objects.filter(pk=i)
-
-        for i in range(1, 4):
-            for j in [1,2]:
-                name = eventname_sample[(i+(j-1)*3)%len(eventname_sample)]["name"]
-                host_user = User.objects.get(username="demo_user_%d" % i)
-                demoevent = Event(
-                    name=name,
-                    start_time=timezone.now() - timezone.timedelta(days=i) - timezone.timedelta(hours=j),
-                    end_time=timezone.now() + timezone.timedelta(days=i) + timezone.timedelta(hours=j),
-                    meeting_place="池袋駅東口母子像前",
-                    contact="interlink@interlink.com",
-                    details="開催中のイベントです。",
-                    host_user=host_user,
-                    region=prefec_list[i % 47],
-                )
-                demoevent.save()
-                demoevent.admin = User.objects.filter(pk=i)
-
-                name = eventname_sample[(6+i+(j-1)*3)%len(eventname_sample)]["name"]
-                host_user = User.objects.get(username="demo_user_%d"%i)
-                demoevent = Event(
-                    name=name,
-                    start_time=timezone.now() + timezone.timedelta(days=i) + timezone.timedelta(hours=j*3),
-                    end_time = timezone.now() + timezone.timedelta(days=i+1) + timezone.timedelta(hours=j*3),
-                    meeting_place="池袋駅東口母子像前",
-                    contact="interlink@interlink.com",
-                    details="未来のイベントです。",
-                    host_user=host_user,
-                    region=prefec_list[i%47],
-                )
-                demoevent.save()
-                demoevent.admin = User.objects.filter(pk=i)
 
     def _create_frames(self):
         for event in Event.objects.all():
