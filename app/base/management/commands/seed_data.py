@@ -248,28 +248,34 @@ class Command(BaseCommand):
                 birthday = timezone.now(),
                 telephone = 123456789,
                 emergency_contact = 119,
-                email = 'admin@admin.com',
+                email = 'admin@sovol.earth',
                 occupation = 'ADMIN',
                 is_admin = True
             )
         default_admin.set_password('pass1234')
         default_admin.save()
 
+        icondir = os.path.join(settings.BASE_DIR, 'media', 'users', 'seed_icons')
+
+        #デモで使うユーザー
         testuser = User(
                 first_name = 'インター',
                 last_name = 'リンク',
-                username = 'interlink',
+                username = 'ページ531',
                 birthday = timezone.now() - timezone.timedelta(days=10000),
                 telephone = 123456789,
                 emergency_contact = 119,
-                email = 'test@test.com',
+                email = 'demo@sovol.earth',
                 occupation = '会社員',
+                region="Tokyo",
             )
         testuser.set_password('pass1234')
         testuser.save()
+        path = os.path.join(icondir, 'demo.jpg')
+        django_file = File(open(path, 'rb'))
+        testuser.image.save(path, django_file, save=True)
 
         #ちゃんとしたユーザー
-        icondir = os.path.join(settings.BASE_DIR, 'media', 'users', 'seed_icons')
         for i in range(20):
             lastname = str(i)
             username = username_sample[i]
@@ -325,7 +331,7 @@ class Command(BaseCommand):
                     start_time=timezone.now() - timezone.timedelta(days=301),
                     end_time = timezone.now() - timezone.timedelta(days=300),
                     meeting_place="池袋駅東口母子像前",
-                    contact="test@test.com",
+                    contact="testvol@sovol.earth",
                     details=eventdetail_sample,
                     host_user=host_user,
                     region=prefec_list[i%47],
@@ -342,10 +348,10 @@ class Command(BaseCommand):
             for d in reader:
                  e = Event(
                      name=d[0],
-                     start_time=timezone.now() + timezone.timedelta(days=reader.line_num%3-1, hours=-4),
-                     end_time=timezone.now() + timezone.timedelta(days=reader.line_num%3-1, hours=4),
+                     start_time=timezone.now() + timezone.timedelta(days=reader.line_num%5-1, hours=-4),
+                     end_time=timezone.now() + timezone.timedelta(days=reader.line_num%5-1, hours=4),
                      meeting_place=d[4],
-                     contact="test@interlink.ad.jp",
+                     contact="vol@sovol.earth",
                      details=d[6],
                      host_user=User.objects.get(email="test{}@sovol.earth".format(reader.line_num%20+1)),
                      region=d[3],
@@ -389,7 +395,7 @@ class Command(BaseCommand):
             )
             participation.save()
 
-        for event in Event.objects.all():
+        for event in Event.objects.filter(contact='testvol@sovol.earth'):
             frame = event.frame_set.get(description='上限はありません')
             for u in User.objects.filter(first_name='user'):
                 participation = Participation(
@@ -399,6 +405,36 @@ class Command(BaseCommand):
                     status='参加中',
                 )
                 participation.save()
+
+            u = User.objects.get(username="ページ531")
+            participation = Participation(
+                event=event,
+                frame=frame,
+                user=u,
+                status='参加中',
+            )
+            participation.save()
+
+        for event in Event.objects.filter(contact='vol@sovol.earth'):
+            frame = event.frame_set.get(description='上限はありません')
+            for u in User.objects.filter(first_name='user'):
+                participation = Participation(
+                    event=event,
+                    frame=frame,
+                    user=u,
+                    status='参加中',
+                )
+                participation.save()
+
+            for u in User.objects.filter(first_name='demo_user'):
+                participation = Participation(
+                    event=event,
+                    frame=frame,
+                    user=u,
+                    status='参加中',
+                )
+                participation.save()
+
 
     def _create_comments(self):
         for event in Event.objects.all():
@@ -469,7 +505,7 @@ class Command(BaseCommand):
             tag = Tag.objects.get(pk=(user.pk % len(taglist) + 1))
             user.follow_tag.add(tag)
 
-        for i,event in enumerate(Event.objects.filter(contact="test@test.com")):
+        for i, event in enumerate(Event.objects.filter(contact="testvol@sovol.earth")):
             if i < 20:
                 event.tag.add(Tag.objects.get(name='環境'))
             elif i < 30:

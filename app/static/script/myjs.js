@@ -157,7 +157,7 @@
             size: 'viewport'
           })
           .then(function (resp) {
-            formData.set(name, base64ToBlob(resp), 'cropped');
+            formData.append(name, base64ToBlob(resp), 'cropped');
             $.ajax({
               cache: true,
               async: false,
