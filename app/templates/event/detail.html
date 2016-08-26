@@ -20,6 +20,9 @@
           </div>
           <div class="panel-body">
             <div class="list-group">
+
+              {# FRAME INFO #}
+
               {% for frame in event.frame_set.all %}
               <li class="list-group-item">
                 <div class="row">
@@ -132,8 +135,30 @@
                     </div>
                   </div>
                 </div>
+
+                {% if frame.upper_limit is not None %}
+                  <div class="progress" style="margin-bottom: 0;">
+                    <div class="progress-bar
+                    {% if frame.get_filled_rate < 40 %}
+                      progress-bar-success
+                    {% elif frame.get_filled_rate < 70 %}
+                      progress-bar-info
+                    {% elif frame.get_filled_rate < 100 %}
+                      progress-bar-warning
+                    {% else %}
+                      progress-bar-danger
+                    {% endif %}
+                    " role="progressbar" aria-valuenow="{{ frame.get_filled_rate }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ frame.get_filled_rate }}%;">
+                      <span>{{ frame.get_filled_rate }}%</span>
+                    </div>
+                  </div>
+                {% endif %}
+
               </li>
               {% endfor %}
+
+              {# END FRAME AREA #}
+
             </div>
           </div>
         </div>
