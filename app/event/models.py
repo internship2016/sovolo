@@ -20,7 +20,7 @@ except ImportError:
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
 import os
-
+import math
 
 class Event(AbstractBaseModel):
     # Numbers are arbitrary
@@ -188,6 +188,8 @@ class Frame(AbstractBaseModel):
     def waiting_id_list(self):
         return self.participation_set.filter(status="キャンセル待ち").values_list('user',flat=True)
 
+    def get_filled_rate(self):
+        return math.floor(float(self.num_participants())/float(self.upper_limit)*10)*10
 
 class FrameAdmin(admin.ModelAdmin):
     list_display = (
