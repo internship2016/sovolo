@@ -268,13 +268,14 @@ class Command(BaseCommand):
         testuser.set_password('pass1234')
         testuser.save()
 
+        #ちゃんとしたユーザー
         iconpathlist = glob.glob(os.path.join(settings.BASE_DIR, 'media', 'users', 'seed_icons', '*'))
         for i in range(20):
             lastname = str(i)
             username = username_sample[i]
             email = "test%d@sovol.earth" %(i+1)
             user = User(
-                first_name = 'genericuser',
+                first_name = 'user',
                 last_name = lastname,
                 username = username,
                 birthday = timezone.now() - timezone.timedelta(days=6000+i*600),
@@ -289,6 +290,7 @@ class Command(BaseCommand):
             django_file = File(open(iconpathlist[i], 'rb'))
             user.image.save(iconpathlist[i], django_file, save=True)
 
+        #モブキャラ
         for i in range(1,30):
             firstname = 'demo_user'
             lastname = str(i)
@@ -312,40 +314,25 @@ class Command(BaseCommand):
 
         prefec_list = list(self.prefectures)
 
-        for i in range(20):
-            name = eventname_sample[i]["name"]
-            host_user = User.objects.all()[i]
-            admin = host_user
-            genericevent = Event(
-                name=name,
-                start_time=timezone.now() - timezone.timedelta(days=i*30),
-                end_time=timezone.now() - timezone.timedelta(days=i*30-1),
-                meeting_place="下條駅駅前ポストの前",
-                contact="interlink@interlink.com",
-                details=eventdetail_sample,
-                host_user=host_user,
-                region=prefec_list[i],
-            )
-            genericevent.save()
-            genericevent.admin = User.objects.filter(pk=1)
-
-        for i in range(1,30):
-            for j in range(1,5):
-                name = "【第%d回】"%j + eventname_sample[i%len(eventname_sample)]["name"]
+        #ポイント稼ぎ用ボランティア
+        for i in range(1,21):
+            for j in range(1,4):
+                name = "【第%d回】"%j + eventname_sample[i]["name"]
                 host_user = User.objects.get(username="demo_user_%d"%i)
                 demoevent = Event(
                     name=name,
-                    start_time=timezone.now() - timezone.timedelta(days=i*30) - timezone.timedelta(hours=j),
-                    end_time = timezone.now() - timezone.timedelta(days=i*30-1) - timezone.timedelta(hours=j),
+                    start_time=timezone.now() - timezone.timedelta(days=301),
+                    end_time = timezone.now() - timezone.timedelta(days=300),
                     meeting_place="池袋駅東口母子像前",
-                    contact="interlink@interlink.com",
-                    details="過去のボランティアです。",
+                    contact="test@test.com",
+                    details=eventdetail_sample,
                     host_user=host_user,
                     region=prefec_list[i%47],
                 )
                 demoevent.save()
                 demoevent.admin = User.objects.filter(pk=i)
 
+        #新着一覧に出てくるきれいなボランティア
         dir = os.path.join(settings.BASE_DIR, 'media', 'events','seed_events')
 
         with open(os.path.join(dir, 'data.csv'), newline='', encoding='utf-8') as csvfile:
@@ -357,9 +344,9 @@ class Command(BaseCommand):
                      start_time=timezone.now() + timezone.timedelta(days=reader.line_num%3-1, hours=-4),
                      end_time=timezone.now() + timezone.timedelta(days=reader.line_num%3-1, hours=4),
                      meeting_place=d[4],
-                     contact="interlink@interlink.com",
+                     contact="test@interlink.ad.jp",
                      details=d[6],
-                     host_user=User.objects.all()[reader.line_num%20],
+                     host_user=User.objects.all().get(email="test{}@sovol.earth".format(reader.line_num%20)),
                      region=d[3],
                      private_notes="緊急連絡先です 090-xxxx-xxxx"
                  )
@@ -387,7 +374,7 @@ class Command(BaseCommand):
             )
             frame2.save()
 
-            for i in range(1,30):
+            for i in range(1,51):
                 event.supporter.add(User.objects.get(pk=i))
 
     def _create_participants(self):
@@ -401,23 +388,13 @@ class Command(BaseCommand):
             )
             participation.save()
 
-            for i in range(1,21):
-                if event.pk%i==0:
-                    user = User.objects.get(username=username_sample[i-1])
-                    participation = Participation(
-                        event=event,
-                        frame=frame,
-                        user=user,
-                        status='参加中',
-                    )
-                    participation.save()
-
+        for event in Event.objects.filter(email="test@interlink.ad.jp"):
             frame = event.frame_set.get(description='上限はありません')
-            for i in range(1,21):
+            for u in User.objects.filter(firstname='user'):
                 participation = Participation(
                     event=event,
                     frame=frame,
-                    user=User.objects.get(username='demo_user_%d'%i),
+                    user=u,
                     status='参加中',
                 )
                 participation.save()
@@ -491,10 +468,15 @@ class Command(BaseCommand):
             tag = Tag.objects.get(pk=(user.pk % len(taglist) + 1))
             user.follow_tag.add(tag)
 
-        for event in Event.objects.all():
-            for tag in Tag.objects.all():
-                if event.pk/len(taglist)<=tag.pk:
-                    event.tag.add(tag)
+        for i,event in enumerate(Event.objects.filter(contact="test@test.com")):
+            if i < 20:
+                event.tag.add(Tag.objects.get(name='環境'))
+            if i < 30:
+                event.tag.add(Tag.objects.get(name='教育'))
+            if i < 35:
+                event.tag.add(Tag.objects.get(name='介護'))
+            if i < 36:
+                event.tag.add(Tag.objects.get(name='災害'))
 
     def _create_questions_and_answers(self):
         for event in Event.objects.all():
@@ -510,7 +492,6 @@ class Command(BaseCommand):
                     text="I'm fine thank you.",
                 )
                 answer.save()
-
 
     def handle(self, *args, **options):
         arg_exist = False
