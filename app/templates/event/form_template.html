@@ -14,7 +14,7 @@
 <div class="form-group">
   <label for="id_start_time" class="col-sm-3">開始</label>
   <div class="col-sm-9">
-    <div class="input-group date datetimepicker">
+    <div class="input-group date datetimepicker start-date">
       <input id="id_start_time"
         class="form-control"
         name="start_time"
@@ -32,7 +32,7 @@
 <div class="form-group">
   <label for="id_end_time" class="col-sm-3">終了</label>
   <div class="col-sm-9">
-    <div class="input-group date datetimepicker">
+    <div class="input-group date datetimepicker end-date">
       <input id="id_end_time"
         class="form-control"
         name="end_time"
@@ -429,12 +429,31 @@
   var end_blank = $('#end_time_blank').val();
 
   $(function () {
+
+    $('.start-date').datetimepicker({
+      locale: moment.locale('ja'),
+      format: fmt,
+      sideBySide: true,
+      minDate: moment(),
+      stepping: 15,
+      defaultDate: moment().add(1, 'days').hours(8).minutes(0),
+    });
+
+    $('.end-date').datetimepicker({
+      locale: moment.locale('ja'),
+      format: fmt,
+      sideBySide: true,
+      minDate: moment(),
+      stepping: 15,
+      defaultDate: moment().add(1, 'days').hours(17).minutes(0),
+    });
+
     $('.datetimepicker').datetimepicker({
       locale: moment.locale('ja'),
       format: fmt,
       sideBySide: true,
       minDate: moment(),
-      stepping: 15
+      stepping: 15,
     });
 
     if(start_blank){
