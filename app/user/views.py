@@ -23,7 +23,7 @@ class UserCreateView(CreateView):
 
     def form_valid(self, form):
         user = form.save(commit=False)
-        # user.set_password(form.cleaned_data['password'])
+        user.set_password(form.cleaned_data['password'])
         user.is_active = False
         user.save()
 
