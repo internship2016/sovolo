@@ -308,29 +308,29 @@ class Command(BaseCommand):
     def _create_events(self):
 
         prefec_list = list(self.prefectures)
+        dir = os.path.join(settings.BASE_DIR, 'media', 'events','seed_events')
 
-        with open(os.path.join(settings.BASE_DIR, 'seed_events', 'data.csv'), newline='') as csvfile:
+        with open(os.path.join(dir, 'data.csv'), newline='', encoding='utf-8') as csvfile:
             reader = csv.reader(csvfile)
             header = next(reader)
             for d in reader:
-                try:
-                     e = Event(
-                         name=d[0],
-                         start_time=timezone.now() - timezone.timedelta(days=reader.line_num+1),
-                         end_time=timezone.now() - timezone.timedelta(days=reader.line_num),
-                         meeting_place=d[4],
-                         contact="interlink@interlink.com",
-                         details=d[6],
-                         region=prefec_list[reader.line_num%47+1],
-                     )
-                     e.save()
-                     e.admin = User.objects.filter(pk=1)
-                     img_path = os.path.join(settings.BASE_DIR, 'seed_events', 'photo', d[5])
-                     imgfile = open(img_path, 'rb')
-                     django_file = File(imgfile)
-                     e.image.save(img_path, django_file, save=True)
-                except:
-                    pass
+                 e = Event(
+                     name=d[0],
+                     start_time=timezone.now() - timezone.timedelta(days=reader.line_num+1),
+                     end_time=timezone.now() - timezone.timedelta(days=reader.line_num),
+                     meeting_place=d[4],
+                     contact="interlink@interlink.com",
+                     details=d[6],
+                     host_user=User.objects.all()[reader.line_num%20],
+                     region=prefec_list[reader.line_num%47],
+                 )
+                 e.save()
+                 e.admin = User.objects.filter(pk=1)
+                 img_path = os.path.join(dir, 'photo', d[5])
+                 imgfile = open(img_path, 'rb')
+                 django_file = File(imgfile)
+                 e.image.save(img_path, django_file, save=True)
+
 
 
         for i in range(20):
