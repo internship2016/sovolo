@@ -78,7 +78,25 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return self.participating_event.filter(supporter__isnull=False).values_list('supporter', flat=True).count()
 
     def get_level(self):
-        return math.floor(self.get_point() / 13) + 1
+        #return math.floor(self.get_point() / 13) + 1
+        point = self.get_point()
+        level = 1
+        while(self.is_level(level, point)):
+            level += 1
+
+        return level
+
+    def level_threshold(self, level):
+        return level*13
+
+    def is_level(self, level, point):
+        return self.level_threshold(level) <= point
+
+    def get_points_to_next_level(self):
+        return self.level_threshold(self.get_level()) - self.get_point()
+
+    def get_level_percentage(self):
+        return math.floor(float(self.get_point())/float(self.level_threshold(self.get_level()))*100)
 
     def get_full_name(self):
         return self.email

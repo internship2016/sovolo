@@ -9,33 +9,39 @@
           <h3 class="panel-title">
             プロフィール
           </h3>
-      </div>
+        </div>
         <div class="row"  style="padding-left:1em; padding-right: 1em;">
-        <div class="panel-body col-sm-6 col-md-5">
-          <h1>{{ user.username }}</h1>
+          <div class="panel-body col-sm-7 col-md-8" style="overflow-wrap: break-word;">
+            <h1>{{ user.username }}</h1>
 
-          {% if user.birthday != null %}
-          <p>年齢： {{ user.get_about_age }}代</p>
-          {% endif %}
-          {% if user.sex != null %}
-          <p>性別: {{ user.sex|yesno:"男,女,秘密" }}</p>
-          {% endif %}
-          <p>住んでる都道府県: {{ user.get_region_kanji }}</p>
-        </div>
+            {% if user.birthday != null %}
+            <p>年齢： {{ user.get_about_age }}代</p>
+            {% endif %}
+            {% if user.sex != null %}
+            <p>性別: {{ user.sex|yesno:"男,女,秘密" }}</p>
+            {% endif %}
+            <p>住んでる都道府県: {{ user.get_region_kanji }}</p>
+          </div>
 
-        <div class="panel-body col-sm-6 col-md-7">
-          <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
-          <p> ソボレージ<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
-          <div style="text-align: right">
-          {% if user.id == request.user.id %}
-            <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">プロフィール編集</a>
-          {% endif %}
-        </div>
+          <div class="panel-body col-sm-5 col-md-4" style="padding-bottom: 5px;">
+            <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
+            <p> ソボレージ<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
+            <div style="text-align: right">
+            {% if user.id == request.user.id %}
+              <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">プロフィール編集</a>
+            {% endif %}
+            </div>
+          </div>
+      </div>
+        <div class="panel-body" style="padding-top: 0;">
+          <span>次のレベルまであと{{ user.get_points_to_next_level }}ソボレージ！</span>
+          <div class="progress" style="margin-bottom: 0;">
+            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ user.get_level_percentage }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ user.get_level_percentage }}%;">
+            <span>{{user.get_level_percentage}}%</span>
+            </div>
+          </div>
         </div>
       </div>
-
-      </div>
-
     </div>
   </div>
    <div>
