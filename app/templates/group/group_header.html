@@ -1,17 +1,19 @@
-<div class="media">
-  <div class="media-left">
-      <div class="media-object custom_thumbnail group_detail-thumbnail" style="background-image:url({{ group.get_image_url }});"></div>
-  </div>
-  <div class="media-body">
-    <h1 class="media-heading">
-      <u>{{ group.name }}</u>
-    </h1>
-    {% if request.user in group.admins %}
-      <a class="btn btn-default pull-right" href="{% url 'group:edit' group.id %}">グループを編集</a>
-    {% elif request.user in group.members %}
-      <a class="btn btn-default pull-right" href="{% url 'group:leave' group.id %}">グループから脱退</a>
-    {% else  %}
-      <a class="btn btn-default pull-right" href="{% url 'group:join' group.id %}">グループに参加</a>
-    {% endif %}
+<div id="group_header">
+  <div class="detail-header row">
+    <div class="detail-header-left col-sm-4 col-md-3" style="text-align: center">
+      <div class="custom_thumbnail group_detail-thumbnail" style="background-image:url({{ group.get_image_url }});"></div>
+    </div>
+    <div class="detail-header-right col-sm-8 col-md-9" >
+      <div class="panel panel-primary" style="padding:1em; height:100%;">
+        <h1>{{ group.name }}</h1>
+          {% if request.user in group.admins %}
+            <a class="btn btn-default" href="{% url 'group:edit' group.id %}">グループを編集</a>
+          {% elif request.user in group.members %}
+            <a class="btn btn-default" href="{% url 'group:leave' group.id %}">グループから脱退</a>
+          {% else  %}
+            <a class="btn btn-default" href="{% url 'group:join' group.id %}">グループに参加</a>
+          {% endif %}
+      </div>
+    </div>
   </div>
 </div>
