@@ -87,7 +87,12 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return level
 
     def level_threshold(self, level):
-        return level*13
+        #有効数字2桁
+        base = 1.08
+        tmp = 10 * math.pow(base, level)
+        digit = int(math.log10(tmp)) + 1
+
+        return int(round(tmp, -digit+2))
 
     def is_level(self, level, point):
         return self.level_threshold(level) <= point
