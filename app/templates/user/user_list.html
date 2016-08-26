@@ -4,6 +4,9 @@
     {% for user in users|slice:":10" %}
       <a href="{% url 'user:detail' user.id %}" title="{{ user.username }}">
         <div class="custom_thumbnail user-list-thumbnail" style="background-image: url({{ user.get_image_url }});"></div>
+        {% if title == "主催者" %}
+        <p>{{ user.username }}</p>
+        {% endif %}
       </a>
     {% empty %}
       <p>{{ title }}はいません</p>
