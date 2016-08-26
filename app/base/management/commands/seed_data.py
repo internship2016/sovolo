@@ -8,7 +8,7 @@ from user.models import User
 from tag.models import Tag
 import csv
 import os
-
+import glob
 
 
 username_sample=[
@@ -256,18 +256,19 @@ class Command(BaseCommand):
         default_admin.save()
 
         testuser = User(
-                first_name = 'test',
-                last_name = 'user',
-                username = 'test',
-                birthday = timezone.now(),
+                first_name = 'インター',
+                last_name = 'リンク',
+                username = 'interlink',
+                birthday = timezone.now() - timezone.timedelta(days=10000),
                 telephone = 123456789,
                 emergency_contact = 119,
                 email = 'test@test.com',
-                occupation = '自宅警備員',
+                occupation = '会社員',
             )
         testuser.set_password('pass1234')
         testuser.save()
 
+        iconpathlist = glob.glob(os.path.join(settings.BASE_DIR, 'media', 'users', 'seed_icons', '*'))
         for i in range(20):
             lastname = str(i)
             username = username_sample[i]
@@ -280,11 +281,13 @@ class Command(BaseCommand):
                 telephone = 123456789,
                 emergency_contact = 119,
                 email = email,
-                occupation = 'NEET',
+                occupation = ['会社員','プログラマー','デザイナー'][i%3],
                 region = self.prefec_list[i],
             )
             user.set_password('pass1234')
             user.save()
+            django_file = File(open(iconpathlist[i], 'rb'))
+            user.image.save(iconpathlist[i], django_file, save=True)
 
         for i in range(1,30):
             firstname = 'demo_user'
