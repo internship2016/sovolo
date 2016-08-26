@@ -357,7 +357,8 @@ class Command(BaseCommand):
                      contact="interlink@interlink.com",
                      details=d[6],
                      host_user=User.objects.all()[reader.line_num%20],
-                     region=prefec_list[reader.line_num%47],
+                     region=d[3],
+                     private_notes="緊急連絡先です 090-xxxx-xxxx"
                  )
                  e.save()
                  e.admin = User.objects.filter(pk=1)
