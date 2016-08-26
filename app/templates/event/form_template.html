@@ -1,3 +1,4 @@
+{{ django_context_varable }}
 <script type="text/javascript"
   src="//maps.googleapis.com/maps/api/js?key=AIzaSyAW5PZqv_tJA9Pd-il4UeG-Mk9622Ub7R0">
 </script>
@@ -294,39 +295,10 @@
         $('#add_frame').on('click', function (event) {
           var X = $('#frames>div').length + 1;
 
-          var html = [
-            '<div class="panel panel-default panel-body" style="margin:0" id="frame_number_' + X + '">',
-            '  <div class="row">',
-            '    <input type="hidden" name="frame_number" value="' + X + '">',
-            '    <label class="col-sm-3">仕事内容<sup><font color="red"></font></sup></label>',
-            '    <div class="col-sm-9">',
-            '      <textarea class="form-control" name="frame_' + X + '_description"></textarea>',
-            '    </div>',
-            '    <label class="col-sm-3">上限人数</label>',
-            '    <div class="col-sm-9">',
-            '      <input class="form-control" type="number" min="0"  max="2147483647" step="1" name="frame_'+X+'_upperlimit" placeholder="任意">',
-            '    </div>',
-            '    <label class="col-sm-3">応募締め切り</label>',
-            '    <div class="col-sm-9">',
-            '      <input class="form-control datetimepicker deadend" name="frame_'+X+'_deadline" type="text" placeholder="任意">',
-            '      <script>',
-            '        (function () {',
-            '            $("#frame_number_' + X + ' .datetimepicker").datetimepicker({',
-            '              locale: moment.locale("ja"),',
-            '              format: "YYYY-MM-DD HH:mm",',
-            '              sideBySide:true,',
-            '              minDate: moment(),',
-            '              stepping: 15,',
-            '            });',
-            '        })();',
-            '      <\/script>',
-            '    </div>',
-            '  </div>',
-            '</div>',
-          ].join("\n");
+          var tmpl = Handlebars.compile($('#tmpl-frame').html());
 
           $wrapper = $('<div>');
-          $wrapper.html(html);
+          $wrapper.html(tmpl({X: X}));
           $('#frames').append($wrapper);
         });
       });
@@ -334,6 +306,38 @@
   </div>
 </div>
 
+{% verbatim %}
+<script id="tmpl-frame" type="text/x-handlebars-template">
+  <div class="panel panel-default panel-body" style="margin:0" id="frame_number_{{ X }}">
+    <div class="row">
+      <input type="hidden" name="frame_number" value="{{ X }}">
+      <label class="col-sm-3">仕事内容<sup><font color="red"></font></sup></label>
+      <div class="col-sm-9">
+        <textarea class="form-control" name="frame_{{ X }}_description"></textarea>
+      </div>
+      <label class="col-sm-3">上限人数</label>
+      <div class="col-sm-9">
+        <input class="form-control" type="number" min="0"  max="2147483647" step="1" name="frame_{{ X }}_upperlimit" placeholder="任意">
+      </div>
+      <label class="col-sm-3">応募締め切り</label>
+      <div class="col-sm-9">
+        <input class="form-control datetimepicker deadend" name="frame_{{ X }}_deadline" type="text" placeholder="任意">
+        <script>
+          (function () {
+            $("#frame_number_{{ X }} .datetimepicker").datetimepicker({
+              locale: moment.locale("ja"),
+              format: "YYYY-MM-DD HH:mm",
+              sideBySide:true,
+              minDate: moment(),
+              stepping: 15,
+            });
+          })();
+        <{{!}}/script>
+      </div>
+    </div>
+  </div>
+</script>
+{% endverbatim %}
 
 <div class="form-group">
   <label class="col-sm-3">関連付けるタグ</label>
