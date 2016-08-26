@@ -83,22 +83,17 @@ footer {
   background-size:cover;
 }
 
+/* Safari only */
+_::-webkit-:not(:root:root), .detail-thumbnail {
+  height: 200px!important;
+}
+
 .list-thumbnail{
   width:64px;
   height:64px;
 }
 
-.event_detail-thumbnail{
-  width:100%;
-  height:100%;
-}
-
-.group_detail-thumbnail{
-  width:100%;
-  height:100%;
-}
-
-.user_detail-thumbnail{
+.detail-thumbnail{
   width:100%;
   height:100%;
 }
