@@ -269,7 +269,7 @@ class Command(BaseCommand):
         testuser.save()
 
         #ちゃんとしたユーザー
-        iconpathlist = glob.glob(os.path.join(settings.BASE_DIR, 'media', 'users', 'seed_icons', '*'))
+        icondir = os.path.join(settings.BASE_DIR, 'media', 'users', 'seed_icons')
         for i in range(20):
             lastname = str(i)
             username = username_sample[i]
@@ -287,8 +287,9 @@ class Command(BaseCommand):
             )
             user.set_password('pass1234')
             user.save()
-            django_file = File(open(iconpathlist[i], 'rb'))
-            user.image.save(iconpathlist[i], django_file, save=True)
+            path = os.path.join(icondir, str(i+1)+'.jpg')
+            django_file = File(open(path, 'rb'))
+            user.image.save(path, django_file, save=True)
 
         #モブキャラ
         for i in range(1,30):
@@ -346,7 +347,7 @@ class Command(BaseCommand):
                      meeting_place=d[4],
                      contact="test@interlink.ad.jp",
                      details=d[6],
-                     host_user=User.objects.all().get(email="test{}@sovol.earth".format(reader.line_num%20)),
+                     host_user=User.objects.get(email="test{}@sovol.earth".format(reader.line_num%20+1)),
                      region=d[3],
                      private_notes="緊急連絡先です 090-xxxx-xxxx"
                  )
@@ -388,9 +389,9 @@ class Command(BaseCommand):
             )
             participation.save()
 
-        for event in Event.objects.filter(email="test@interlink.ad.jp"):
+        for event in Event.objects.all():
             frame = event.frame_set.get(description='上限はありません')
-            for u in User.objects.filter(firstname='user'):
+            for u in User.objects.filter(first_name='user'):
                 participation = Participation(
                     event=event,
                     frame=frame,
@@ -471,11 +472,11 @@ class Command(BaseCommand):
         for i,event in enumerate(Event.objects.filter(contact="test@test.com")):
             if i < 20:
                 event.tag.add(Tag.objects.get(name='環境'))
-            if i < 30:
+            elif i < 30:
                 event.tag.add(Tag.objects.get(name='教育'))
-            if i < 35:
+            elif i < 35:
                 event.tag.add(Tag.objects.get(name='介護'))
-            if i < 36:
+            elif i < 36:
                 event.tag.add(Tag.objects.get(name='災害'))
 
     def _create_questions_and_answers(self):
