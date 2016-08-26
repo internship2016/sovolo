@@ -61,9 +61,20 @@
 <div class="form-group">
   <label for="id_meeting_place" class="col-sm-3">集合場所</label>
   <div class="col-sm-9">
-    <input id="id_meeting_place" class="form-control" maxlength="400" name="meeting_place" type="text"
-           value="{{ event.meeting_place }}" required/>
-    <input type="button" class="btn btn-primary" onClick="getlatlng()" value="Google Map情報を取得">
+    <div class="input-group">
+      <input id="id_meeting_place"
+        class="form-control"
+        maxlength="400"
+        name="meeting_place"
+        type="text"
+        value="{{ event.meeting_place }}"
+        required/>
+      <span class="input-group-btn">
+        <button class="btn btn-primary" onClick="getlatlng()">
+          <span class="glyphicon glyphicon-map-marker"></span>
+        </button>
+      </span>
+    </div>
 
     <input id="id_latitude" type="hidden" name="latitude">
     <input id="id_longitude" type="hidden" name="longitude">
