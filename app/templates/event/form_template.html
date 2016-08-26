@@ -222,6 +222,14 @@
           admin_name.value = "";
           admins.appendChild(label);
         });
+
+        admin_name.addEventListener('keypress', function (e) {
+          if (e.keyCode == 13) {
+            e.preventDefault();
+            add_admin.click();
+          }
+          return false;
+        });
       })();
     </script>
   </div>
