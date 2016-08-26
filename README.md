@@ -1,7 +1,7 @@
 # sovol
 そぼる
 
-![ロゴ](https://cloud.githubusercontent.com/assets/343556/17840209/9a649c74-67b4-11e6-8d2c-83b2d48ee895.png)
+![ロゴ](https://cloud.githubusercontent.com/assets/343556/17990628/530c3824-6aec-11e6-8ad1-545acfb9c35b.png)
 
 ## INSTALL (port 80/443)
 
