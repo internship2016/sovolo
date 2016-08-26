@@ -10,6 +10,7 @@
       <h1 class="panel-title">グループ一覧</h1>
     </div>
     <div class="panel-body">
+      <a class="btn btn-default pull-right" href="{% url 'group:add' %}">グループを作成</a>
       {% for group in all_groups %}
         <div class="media">
           <div class="media-left">
