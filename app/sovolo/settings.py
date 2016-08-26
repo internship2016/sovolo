@@ -200,6 +200,8 @@ EMAIL_HOST_USER = None
 EMAIL_HOST_PASSWORD = None
 DEFAULT_FROM_EMAIL = 'Sovol <noreply@sovol.earth>'
 
+GOOGLE_RECAPTCHA_SECRET = os.environ.get('GOOGLE_RECAPTCHA_SECRET')
+
 PREFECTURES = {
     "Hokkaido": ("北海道", 1),
     "Aomori": ("青森県", 2),

@@ -38,7 +38,18 @@
             <div class="form-group">
               <div class="comment-input-area">
                 <textarea class="form-control" rows="10" name="text" placeholder="コメント" style="resize:vertical;"></textarea>
+                <div class="g-recaptcha" data-sitekey="6LcupCgTAAAAAL3L0mDBwqPil4PzFrtw28fWMgfq"></div>
+                <div id="g-recaptcha-message" style="color: red;"></div>
                 <button class="center-block btn btn-primary">送信</button>
+                <script>
+                  $('#comment-form').submit(function () {
+                    if (grecaptcha.getResponse().length == 0) {
+                        $('#g-recaptcha-message').text("チェックを入れてください。");
+                        return false;
+                    }
+                    return true;
+                  })
+                </script>
               </div>
             </div>
           </div>

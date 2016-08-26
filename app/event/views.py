@@ -37,6 +37,7 @@ import io
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import uuid
 import urllib
+import json, requests
 
 @method_decorator(login_required, name='dispatch')
 class EventCreate(CreateView):
@@ -568,8 +569,21 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
 class CommentCreate(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
-        text = self.request.POST["text"]
         event_id = kwargs["event_id"]
+
+        verify = requests.get(
+            url="https://www.google.com/recaptcha/api/siteverify",
+            params={
+                "secret": settings.GOOGLE_RECAPTCHA_SECRET,
+                "response": self.request.POST['g-recaptcha-response']
+            }
+        )
+        data = json.loads(verify.text)
+        if not data['success']:
+            messages.error(self.request, "認証に失敗しました。")
+            return reverse_lazy('event:detail', kwargs={'pk': event_id})
+
+        text = self.request.POST["text"]
         if text.strip()!="":
             comment = Comment(
                 user=self.request.user,
