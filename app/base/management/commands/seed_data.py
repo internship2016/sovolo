@@ -1,9 +1,15 @@
 from django.core.management.base import BaseCommand
+from django.core.files import File
 from django.utils import timezone
+from django.conf import settings
 from event.models import Event, Participation, Frame, Comment, Question, Answer
 from group.models import Group, Membership
 from user.models import User
 from tag.models import Tag
+import csv
+import os
+
+
 
 username_sample=[
 "koshiba_takahiro"
@@ -301,57 +307,31 @@ class Command(BaseCommand):
 
     def _create_events(self):
 
-        prefectures = {
-            "Hokkaido": "北海道",
-            "Aomori": "青森県",
-            "Iwate": "岩手県",
-            "Miyagi": "宮城県",
-            "Akita": "秋田県",
-            "Yamagata": "山形県",
-            "Fukushima": "福島県",
-            "Ibaraki": "茨城県",
-            "Tochigi": "栃木県",
-            "Gunnma": "群馬県",
-            "Saitama": "埼玉県",
-            "Chiba": "千葉県",
-            "Tokyo": "東京都",
-            "Kanagawa": "神奈川県",
-            "Niigata": "新潟県",
-            "Toyama": "富山県",
-            "Ishikawa": "石川県",
-            "Fukui": "福井県",
-            "Yamanashi": "山梨県",
-            "Nagano": "長野県",
-            "Gifu": "岐阜県",
-            "Shizuoka": "静岡県",
-            "Aichi": "愛知県",
-            "Mie": "三重県",
-            "Shiga": "滋賀県",
-            "Kyoto": "京都府",
-            "Osaka": "大阪府",
-            "Hyogo": "兵庫県",
-            "Nara": "奈良県",
-            "Wakayama": "和歌山県",
-            "Tottori": "鳥取県",
-            "Shimane": "島根県",
-            "Okayama": "岡山県",
-            "Hiroshima": "広島県",
-            "Yamaguchi": "山口県",
-            "Tokushima": "徳島県",
-            "Kagawa": "香川県",
-            "Ehime": "愛媛県",
-            "Kouchi": "高知県",
-            "Fukuoka": "福岡県",
-            "Saga": "佐賀県",
-            "Nagasaki": "長崎県",
-            "Kumamoto": "熊本県",
-            "Ooita": "大分県",
-            "Miyazaki": "宮崎県",
-            "Kagoshima": "鹿児島県",
-            "Okinawa": "沖縄県"
-        }
+        prefec_list = list(self.prefectures)
 
-        prefec_list = list(prefectures)
+        with open(os.path.join(settings.BASE_DIR, 'seed_events', 'data.csv'), newline='') as csvfile:
+            reader = csv.reader(csvfile)
+            header = next(reader)
+            for d in reader:
+                try:
+                     e = Event(
+                         name=d[0],
+                         start_time=timezone.now() - timezone.timedelta(days=reader.line_num+1),
+                         end_time=timezone.now() - timezone.timedelta(days=reader.line_num),
+                         meeting_place=d[4],
+                         contact="interlink@interlink.com",
+                         details=d[6],
+                         region=prefec_list[reader.line_num%47+1],
+                     )
+                     e.save()
+                     e.admin = User.objects.filter(pk=1)
+                     img_path = os.path.join(settings.BASE_DIR, 'seed_events', 'photo', d[5])
+                     imgfile = open(img_path, 'rb')
+                     django_file = File(imgfile)
+                     e.image.save(img_path, django_file, save=True)
+                except:
+                    pass
+
 
         for i in range(20):
             name = eventname_sample[i]["name"]
