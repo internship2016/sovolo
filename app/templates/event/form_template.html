@@ -222,6 +222,14 @@
           admin_name.value = "";
           admins.appendChild(label);
         });
+
+        admin_name.addEventListener('keypress', function (e) {
+          if (e.keyCode == 13) {
+            e.preventDefault();
+            add_admin.click();
+          }
+          return false;
+        });
       })();
     </script>
   </div>
@@ -278,7 +286,9 @@
       {% endfor %}
 
     </div>
-    <button class="btn btn-primary" id="add_frame" type="button">参加枠追加</button>
+    <button class="btn btn-primary pull-right" id="add_frame" type="button">
+      <span class="glyphicon glyphicon-plus"></span>
+    </button>
     <script>
       $(function () {
         $('#add_frame').on('click', function (event) {
@@ -288,7 +298,6 @@
             '<div class="panel panel-default panel-body" style="margin:0" id="frame_number_' + X + '">',
             '  <div class="row">',
             '    <input type="hidden" name="frame_number" value="' + X + '">',
-            // '    <input type="hidden" name="frame_'+X+'_id" value="{{ frame.id }}">',
             '    <label class="col-sm-3">仕事内容<sup><font color="red"></font></sup></label>',
             '    <div class="col-sm-9">',
             '      <textarea class="form-control" name="frame_' + X + '_description"></textarea>',
