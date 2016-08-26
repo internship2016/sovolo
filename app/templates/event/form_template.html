@@ -25,6 +25,7 @@
       </span>
     </div>
   </div>
+  <input id="start_time_blank" value="{{ event.start_time }}" type="hidden">
 </div>
 
 <div class="form-group">
@@ -42,6 +43,7 @@
       </span>
     </div>
   </div>
+  <input id="end_time_blank" value="{{ event.end_time }}" type="hidden">
 </div>
 
 
@@ -397,14 +399,23 @@
   var start = function () { return jq_start.val(); };
   var end = function () { return jq_end.val(); };
 
+  var start_blank = $('#start_time_blank').val();
+  var end_blank = $('#end_time_blank').val();
+
   $(function () {
     $('.datetimepicker').datetimepicker({
       locale: moment.locale('ja'),
       format: fmt,
       sideBySide: true,
       minDate: moment(),
-      stepping: 15,
+      stepping: 15
     });
+
+    if(!start()){
+      jq_start.val(start_blank);
+      jq_end.val(end_blank);
+    }
+
   });
 
   var overwrap = function (s_start, s_end) {
