@@ -6,3 +6,4 @@ django-dotenv
 python-social-auth
 django-extensions
 psycopg2
+social-auth-app-django
