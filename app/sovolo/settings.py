@@ -251,4 +251,3 @@ PREFECTURES = {
     "Kagoshima": ("鹿児島県", 46),
     "Okinawa": ("沖縄県", 47)
 }
-#test
