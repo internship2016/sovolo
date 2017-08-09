@@ -192,7 +192,22 @@ class Frame(AbstractBaseModel):
         return self.participation_set.filter(status="キャンセル待ち").values_list('user',flat=True)
 
     def get_filled_rate(self):
-        return math.floor(float(self.num_participants())/float(self.upper_limit)*10)*10
+        """Calculate participant capacity ratio.
+        参加者上限数に対し、何%の応募があるかを返す。
+
+        この関数は必ず何らかの整数値が返る事が期待されている。
+        値が不明であることを明示する場合は、関数の呼び出し元で
+        不明に対する処理を調整しなければならない。
+        """
+        participants = float(self.num_participants())
+        limit = float(self.upper_limit)
+        try:
+            ratio = math.floor(participants * 100 / limit)
+        except ZeroDivisionError:
+            # XXX: zero division = 100%?
+            ratio = 100
+
+        return ratio
 
 class FrameAdmin(admin.ModelAdmin):
     list_display = (
