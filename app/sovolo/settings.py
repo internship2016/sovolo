@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'bootstrap3',
     'crispy_forms',
+    'social_django',
 ]
 
 BOOTSTRAP3 = {
@@ -91,8 +92,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
-                'social.apps.django_app.context_processors.backends',
-                'social.apps.django_app.context_processors.login_redirect',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
@@ -164,23 +165,23 @@ LOGIN_URL = '/user/login/'
 AUTH_USER_MODEL = 'user.User'
 
 AUTHENTICATION_BACKENDS = [
-    'social.backends.twitter.TwitterOAuth',
-    'social.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.facebook.FacebookOAuth2',
     'django.contrib.auth.backends.ModelBackend',
 ]
 
 SOCIAL_AUTH_PIPELINE = (
-    'social.pipeline.social_auth.social_details',
-    'social.pipeline.social_auth.social_uid',
-    'social.pipeline.social_auth.auth_allowed',
-    'social.pipeline.social_auth.social_user',
-    'social.pipeline.user.get_username',
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.get_username',
     'user.social_auth.require_email',
-    'social.pipeline.user.create_user',
-    'social.pipeline.social_auth.associate_user',
-    'social.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.create_user',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
     'user.social_auth.get_profile_image',
-    'social.pipeline.user.user_details',
+    'social_core.pipeline.user.user_details',
 )
 
 SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY')
