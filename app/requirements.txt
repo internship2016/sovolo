@@ -3,7 +3,7 @@ Pillow
 django-bootstrap3
 django-crispy-forms
 django-dotenv
-python-social-auth
+python-social-auth[django]
 django-extensions
 psycopg2
 social-auth-app-django
