@@ -244,13 +244,13 @@ $slide-img-size : 200px;
 
 .swiper-container{
   width: 100%;
-  height: $slide-img-size+200px;
+  height: $slide-img-size+150px;
 }
 
 
 .swiper-slide{
   width: $slide-img-size !important;
-  height: $slide-img-size+100px;
+  height: $slide-img-size+120px;
   text-align: center;
   font-size: 18px;
   background: #fff;
@@ -280,10 +280,11 @@ $slide-img-size : 200px;
   }
   &-block{
     width: 100%;
-    height: 100px;
+    height: 120px;
   }
   &-title{
     font-size: 14px;
+    height: 2em;
   }
   &-text{
     font-size: 14px;
