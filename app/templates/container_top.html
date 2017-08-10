@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load event_tags %}
+{% load bootstrap3 %}
+
+{% block container %}
+
+<!-- Swiper -->
+
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+      {% for event in new_events %}
+      <div class="swiper-slide">
+        <div class="card">
+          <img class="card-img-top" src="{{ event.get_image_url }}" alt="トップ画像">
+          <div class="card-block">
+            <a href="{% url 'event:detail' event.pk %}"><h4 class="card-title">{{event.name}}</h4></a>
+            <p class="card-text">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              {{event.start_time_format | date:'n/j (D)' }}
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              {{event.get_region_kanji}}
+            </p>
+            <a href="{% url 'event:support' event.pk %}" class="btn btn-success">応援する</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+</div>
+
+
+<!-- Initialize Swiper -->
+<script>
+var swiper = new Swiper('.swiper-container', {
+    loop : true,
+    pagination: '.swiper-pagination',
+    nextButton: '.swiper-button-next',
+    prevButton: '.swiper-button-prev',
+    slidesPerView: 'auto',
+    centeredSlides: true,
+    paginationClickable: true,
+    spaceBetween: 30
+});
+</script>
+
+<div id="main-content" class="container">
+  {% if form.errors %}
+    {% bootstrap_form_errors form %}
+  {% endif %}
+    <div class="messages">
+      {% if messages %}
+        {% for message in messages %}
+          <p {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</p>
+        {% endfor %}
+      {% endif %}
+    </div>
+  {% block content %}{% endblock %}
+</div>
+{% endblock %}

@@ -19,11 +19,14 @@
   <script type="text/javascript" src="{% static 'js/handlebars.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/script.min.js' %}"></script>
   <script type="text/javascript" src='https://www.google.com/recaptcha/api.js'></script>
+  <script type="text/javascript" src="{% static 'js/swiper.min.js' %}"></script>
   <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker-custom.css' %}"/>
   <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}"/>
   <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
   <link rel="stylesheet" href="{% static 'css/croppie.css' %}"/>
   <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
+  <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}">
+
   <link rel="shorcut icon" href="media/common/logo.ico"/>
   <link rel="icon" href="media/common/logo.ico"/>
   <link rel="mask-icon" href="media/common/logo.ico" color="black">
@@ -99,20 +102,8 @@
 
 </header>
 
-<div id="main-content" class="container">
-  {% if form.errors %}
-    {% bootstrap_form_errors form %}
-  {% endif %}
-    <div class="messages">
-      {% if messages %}
-        {% for message in messages %}
-          <p {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</p>
-        {% endfor %}
-      {% endif %}
-    </div>
-  {% block content %}{% endblock %}
+{% block container %}{% endblock %}
 
-</div>
 <div class="footer-push"></div>
   </div>
 
@@ -125,6 +116,7 @@
     <span>rev: <a href="https://github.com/internship2016/sovolo/commit/{% git_version %}">{% git_version %}</a></span>
   </div>
 </footer>
+
 
 </body>
 </html>
