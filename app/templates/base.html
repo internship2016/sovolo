@@ -1,3 +1,4 @@
+{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>{% load static %}
@@ -52,7 +53,7 @@
                   <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dUser">
-                  <li><a href="{% url 'user:detail' request.user.id %}">プロフィール</a></li>
+                  <li><a href="{% url 'user:detail' request.user.id %}">{% trans 'Profile' %}</a></li>
                   <li><a href="{% url 'user:logout' %}">ログアウト</a></li>
                 </ul>
             </li>

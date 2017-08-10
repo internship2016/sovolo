@@ -70,6 +70,7 @@ MESSAGE_TAGS = {
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -252,3 +253,7 @@ PREFECTURES = {
     "Kagoshima": ("鹿児島県", 46),
     "Okinawa": ("沖縄県", 47)
 }
+
+LOCALE_PATHS = (
+    os.path.join(BASE_DIR, 'locale'),
+)
