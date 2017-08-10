@@ -5,7 +5,8 @@ $color-pallet: (
   'light': #FFF3E1,    /* 背景       */
   'hot': #FFD5D3,      /* ホット！   */
   'cold': #D5D3FF,     /* コールド！ */
-        'red': #FF4500, /* 赤 */
+  'red': #FF4500, /* 赤 */
+  'white' : #fff
 );
 
 
@@ -13,6 +14,14 @@ $color-pallet: (
   @return map-get($color-pallet, $key);
 }
 
+h1{
+  margin: 10px!important;
+  font-size: 20px !important;
+}
+
+nav{
+  color: #000 !important;
+}
 
 #search-area {
   div {

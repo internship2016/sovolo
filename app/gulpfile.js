@@ -152,7 +152,7 @@ gulp.task('css', 'scssファイルをstatic/cssに移す', ['css.bootstrap'], fu
   return gulp.src(conf.sassPath + '/*.scss')
     .pipe(sourcemaps.init())
     .pipe(concat('style.css'))
-    .pipe(sass({outputStyle: 'compressed'}).on('error', sass.logError))
+    .pipe(sass({outputStyle: 'nested'}).on('error', sass.logError))
     .pipe(minifyCSS({advanced: false}))
     .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest('./static/css'));
