@@ -55,7 +55,8 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
         },
         'jquery-ui': {
           main: [
-            './jquery-ui.min.js'
+            './jquery-ui.min.js',
+            './themes/base/jquery-ui.min.css'
           ]
         },
         'swiper': {
