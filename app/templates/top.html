@@ -6,6 +6,18 @@
 {% block title %}Sovol - ソーシャルボランティアプラットフォーム -{% endblock %}
 
 {% block content %}
+  <!--検索フォーム-->
+  <div class="row mb-10">
+    <form class="" role="search" action="{% url 'event:search' %}" method="get">
+      <div class="input-group">
+        <input type="text" class="form-control" placeholder="ボランティアを検索" name="q">
+        <div class="input-group-btn">
+        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+        </div>
+      </div>
+    </form>
+  </div>
+
   <div class="row">
     <div id="events-area" class="col-md-8">
       {% event_list request.user.get_future_participating_events "参加予定のボランティア" %}
