@@ -53,6 +53,17 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
             './jquery-migrate.min.js'
           ]
         },
+        'jquery-ui': {
+          main: [
+            './jquery-ui.min.js'
+          ]
+        },
+        'swiper': {
+          main: [
+            './dist/js/swiper.min.js',
+            './dist/css/swiper.min.css',
+          ]
+        },
         'Croppie': {
           main: [
             './croppie.min.js',
