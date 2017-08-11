@@ -21,9 +21,18 @@ h1{
 
 nav{
   color: #000 !important;
+  background-color: #f3f3f3;
 }
 
-.mb-10{margin-bottom: 10px;}
+#main{
+  background-color: #f3f3f3;
+  width: 100%;
+}
+
+.m10{margin: 10px;}
+.mt10{margin-top: 10px;}
+.mb10{margin-bottom: 10px;}
+
 
 #search-area {
   div {

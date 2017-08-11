@@ -31,32 +31,19 @@
     <div class="swiper-button-next"></div>
 </div>
 
-
-<!-- Initialize Swiper -->
-<script>
-var swiper = new Swiper('.swiper-container', {
-    loop : true,
-    pagination: '.swiper-pagination',
-    nextButton: '.swiper-button-next',
-    prevButton: '.swiper-button-prev',
-    slidesPerView: 'auto',
-    centeredSlides: true,
-    paginationClickable: true,
-    spaceBetween: 30
-});
-</script>
-
-<div id="main-content" class="container">
-  {% if form.errors %}
-    {% bootstrap_form_errors form %}
-  {% endif %}
-    <div class="messages">
-      {% if messages %}
-        {% for message in messages %}
-          <p {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</p>
-        {% endfor %}
-      {% endif %}
-    </div>
-  {% block content %}{% endblock %}
+<div id="main">
+  <div id="main-content" class="container">
+    {% if form.errors %}
+      {% bootstrap_form_errors form %}
+    {% endif %}
+      <div class="messages">
+        {% if messages %}
+          {% for message in messages %}
+            <p {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+    {% block content %}{% endblock %}
+  </div>
 </div>
 {% endblock %}

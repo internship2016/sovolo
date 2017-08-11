@@ -7,27 +7,51 @@
 
 {% block content %}
   <!--検索フォーム-->
-  <div class="row mb-10">
-    <form class="" role="search" action="{% url 'event:search' %}" method="get">
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="ボランティアを検索" name="q">
-        <div class="input-group-btn">
-        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+  <div class="row m10">
+    <div class="col-xs-12">
+      <form class="" role="search" action="{% url 'event:search' %}" method="get">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="ボランティアを検索" name="q">
+          <div class="input-group-btn">
+          <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 
-  <div class="row">
-    <div id="events-area" class="col-md-8">
-      {% event_list request.user.get_future_participating_events "参加予定のボランティア" %}
-      {% event_list request.user.get_new_group_events "所属グループの新着ボランティア" %}
-      {% event_list request.user.get_new_region_events "自分の地域の新着ボランティア" %}
-      {% event_list request.user.get_new_tag_events "フォローしているタグの新着ボランティア" %}
-      {% event_list new_events "新着のボランティア" %}
+  <div id="top-tabs">
+    <ul>
+        <li><a href="#top-tabs-1">イベント</a></li>
+        <li><a href="map.html">地図で探す</a></li>
+        <li><a href="#top-tabs-3">カレンダーで探す</a></li>
+    </ul>
+    <div id="top-tabs-1">
+      <div class="row">
+        <div id="events-area" class="col-md-8">
+          {% event_list request.user.get_future_participating_events "参加予定のボランティア" %}
+          {% event_list request.user.get_new_group_events "所属グループの新着ボランティア" %}
+          {% event_list request.user.get_new_region_events "自分の地域の新着ボランティア" %}
+          {% event_list request.user.get_new_tag_events "フォローしているタグの新着ボランティア" %}
+          {% event_list new_events "新着のボランティア" %}
+        </div>
+        <div class="col-md-4">
+          <ul>
+            <li>参加予定のボランティア</li>
+            <li>所属グループのボランティア</li>
+            <li>地域の新着ボランティア</li>
+            <li>すべてのボランティア</li>
+          </ul>
+        </div>
+      </div>
     </div>
-    <div id="search-area" class="col-md-4">
-      {% include 'event/search_form.html' %}
+    <div id="top-tabs-3">
+      <div class="row">
+        <div id="search-area" class="col-xs-12">
+          {% include 'event/search_form.html' %}
+        </div>
+      </div>
     </div>
   </div>
+
 {% endblock %}
