@@ -83,13 +83,13 @@
           </div>
         </form>-->
         <!--イベント追加フォーム-->
-        <!--<ul class="nav navbar-nav">
+        <ul class="nav navbar-nav">
           <li class="text-center">
             <p class="navbar-btn">
-              <a class="btn btn-primary btn-block" href="{% url 'event:add' %}" role="button">ボランティア作成</a>
+              <a class="btn btn-primary btn-block" href="{% url 'event:add' %}" role="button">ボランティア作成(仮)</a>
             </p>
           </li>
-        </ul>-->
+        </ul>
         {% if request.user.is_anonymous %}
           <ul class="nav navbar-nav navbar-right">
             <li class="pull-left"><a href="{% url 'user:register' %}">ユーザー登録</a></li>
