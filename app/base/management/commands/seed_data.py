@@ -271,9 +271,6 @@ class Command(BaseCommand):
             )
         testuser.set_password('pass1234')
         testuser.save()
-        path = os.path.join(icondir, 'demo.jpg')
-        django_file = File(open(path, 'rb'))
-        testuser.image.save(path, django_file, save=True)
 
         #ちゃんとしたユーザー
         for i in range(20):
@@ -293,9 +290,6 @@ class Command(BaseCommand):
             )
             user.set_password('pass1234')
             user.save()
-            path = os.path.join(icondir, str(i+1)+'.jpg')
-            django_file = File(open(path, 'rb'))
-            user.image.save(path, django_file, save=True)
 
         #モブキャラ
         for i in range(1,30):
@@ -339,30 +333,6 @@ class Command(BaseCommand):
                 demoevent.save()
                 demoevent.admin = User.objects.filter(pk=i)
 
-        #新着一覧に出てくるきれいなボランティア
-        dir = os.path.join(settings.BASE_DIR, 'media', 'events','seed_events')
-
-        with open(os.path.join(dir, 'data.csv'), newline='', encoding='utf-8') as csvfile:
-            reader = csv.reader(csvfile)
-            header = next(reader)
-            for d in reader:
-                 e = Event(
-                     name=d[0],
-                     start_time=timezone.now() + timezone.timedelta(days=reader.line_num%5-1, hours=-4),
-                     end_time=timezone.now() + timezone.timedelta(days=reader.line_num%5-1, hours=4),
-                     meeting_place=d[4],
-                     contact="vol@sovol.earth",
-                     details=d[6],
-                     host_user=User.objects.get(email="test{}@sovol.earth".format(reader.line_num%20+1)),
-                     region=d[3],
-                     private_notes="緊急連絡先です 090-xxxx-xxxx"
-                 )
-                 e.save()
-                 e.admin = User.objects.filter(pk=1)
-                 img_path = os.path.join(dir, 'photo', d[5])
-                 imgfile = open(img_path, 'rb')
-                 django_file = File(imgfile)
-                 e.image.save(img_path, django_file, save=True)
 
     def _create_frames(self):
         for event in Event.objects.all():
