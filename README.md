@@ -17,5 +17,6 @@
     # migrate
 
 ## TESTING (port 8000)
-
+    # cd /home/docker/code/app
+    # python3 manage.py seed_data    
     # runserver
