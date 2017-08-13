@@ -65,6 +65,9 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
             './dist/css/swiper.min.css',
           ]
         },
+        'bootstrap-social': {
+          main: []
+        },
         'Croppie': {
           main: [
             './croppie.min.js',
@@ -143,7 +146,7 @@ gulp.task('bower.webshim', 'webshimのファイルをコピーする', function 
 });
 
 gulp.task('bower', 'bower install and copy', function (cb) {
-  runSequence(['bower.install', 'bower.copy', 'bower.webshim'], cb);
+  runSequence('bower.install', ['bower.copy', 'bower.webshim'], cb);
 });
 
 gulp.task('css.bootstrap', 'カスタムbootstrapを作る', function () {
@@ -189,5 +192,5 @@ gulp.task('clean', '全部消す', function (cb) {
 });
 
 gulp.task('default', 'リビルド', function (cb) {
-  runSequence('clean', ['bower', 'css', 'js'], cb);
+  runSequence('clean', 'bower', ['css', 'js'], cb);
 });
