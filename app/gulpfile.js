@@ -20,7 +20,8 @@ var conf = {
   scriptPath: './static/script',
   bowerDir: bowerDir,
   bootstrapDir: bowerDir + '/bootstrap-sass',
-  bootstrapDatetimepickerDir: bowerDir + '/eonasdan-bootstrap-datetimepicker'
+  bootstrapDatetimepickerDir: bowerDir + '/eonasdan-bootstrap-datetimepicker',
+  bootstrapSocialDir: bowerDir + "/bootstrap-social",
 };
 
 var filter = {
@@ -150,11 +151,12 @@ gulp.task('bower', 'bower install and copy', function (cb) {
 });
 
 gulp.task('css.bootstrap', 'カスタムbootstrapを作る', function () {
-  return gulp.src(conf.sassPath + '/bootstrap/*.scss/')
+  return gulp.src(conf.sassPath + '/bootstrap/*.scss')
     .pipe(sass({
       includePaths: [
         conf.bootstrapDir + '/assets/stylesheets',
-        conf.bootstrapDatetimepickerDir + '/src/sass'
+        conf.bootstrapDatetimepickerDir + '/src/sass',
+        conf.bootstrapSocialDir
       ]
     }))
     .pipe(cleanCSS())

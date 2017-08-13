@@ -1,6 +1,7 @@
 @import "variables";
 @import "bootstrap";
 @import "bootstrap/theme";
+@import "bootstrap-social.scss";
 
 .break-word {
   @include hyphens;
