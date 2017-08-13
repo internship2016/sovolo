@@ -16,7 +16,10 @@
     # install-project
     # migrate
 
-## TESTING (port 8000)
+## SEEDING
     # cd /home/docker/code/app
-    # python3 manage.py seed_data    
+    # python3 manage.py flush
+    # python3 manage.py seed_data
+
+## TESTING (port 8000)
     # runserver
