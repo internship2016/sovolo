@@ -80,6 +80,11 @@ nav{
 html, body {
   height: 100%;
 }
+
+ul>li{
+  list-style: none;
+}
+
 .main-wrapper {
   min-height: 100%;
   height: auto !important;
@@ -299,5 +304,20 @@ $slide-img-size : 200px;
   }
   &-text{
     font-size: 14px;
+  }
+}
+
+.event{
+  &-active{
+    background-color: #efefef;
+  }
+  &-filter{
+    padding: 5px;
+    border-radius: 7px;
+    margin-bottom: 3px;
+    cursor: pointer;
+    &:hover{
+      background-color: #efefef;
+    }
   }
 }

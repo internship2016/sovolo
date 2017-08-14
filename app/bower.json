@@ -26,6 +26,7 @@
     "webshim": "^1.15.10",
     "handlebars": "^4.0.5",
     "jquery-ui": "^1.12.1",
-    "swiper": "^3.4.2"
+    "swiper": "^3.4.2",
+    "moment": "^2.18.1"
   }
 }
