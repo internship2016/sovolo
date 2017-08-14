@@ -19,5 +19,8 @@
     "main-bower-files": "^2.13.1",
     "rimraf": "^2.5.4",
     "run-sequence": "^1.2.2"
+  },
+  "scripts": {
+    "gulp": "gulp"
   }
 }

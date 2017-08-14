@@ -125,3 +125,6 @@ ENV/
 .ropeproject
 
 ### }}}
+
+.DS_Store
+Thumbs.db
