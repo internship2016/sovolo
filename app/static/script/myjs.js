@@ -37,6 +37,7 @@ $(function(){
   };
   show_events(data);
   $('.event-filter').on('click',function(){
+
     $.ajax({
       'url':$(this).attr('action'),
       'data':{},
