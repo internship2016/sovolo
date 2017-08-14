@@ -42,7 +42,7 @@
       <nav role="navigation" class="navbar">
           <div class="container">
               <div class="row">
-                  <div class="col-md-3">
+                  <div class="col-md-2">
                       <h1 class="navbar-header">
                           <a class="" href="{% url 'top' %}">
                             <img src="/media/common/logo.svg" style="max-width:24px;height:auto;display:inline-block;vertical-align:middle;" />
@@ -51,8 +51,8 @@
                       </h1>
                   </div>
                   <!--検索フォーム-->
-                  <div class="col-md-5">
-                      <form class="" role="search" action="{% url 'event:search' %}" method="get">
+                  <div class="col-md-6">
+                      <form class="" role="search" action="{% url 'event:search' %}" method="get" style="margin:10px">
                           <div class="input-group">
                             <input type="text" class="form-control" placeholder="ボランティアを検索" name="q">
                             <div class="input-group-btn">
@@ -63,11 +63,11 @@
                   </div>
                   <!--イベント追加フォーム-->
                   <div class="col-md-3">
-                      <div class="collapse navbar-collapse">
+                      <div class="collapse navbar-collapse" style="margin:10px 10px 10px 80px">
                           <ul class="nav navbar-nav">
                             <li class="text-center">
                               <p class="navbar-header">
-                                <a class="btn pull-left" href="{% url 'event:add' %}" role="button">ボランティア作成</a>
+                                <a class="btn pull-right" href="{% url 'event:add' %}" role="button">ボランティア作成</a>
                               </p>
                             </li>
                           </ul>
