@@ -1,3 +1,5 @@
+var template;
+
 $(function(){
   var swiper = new Swiper('.swiper-container', {
     loop : true,
@@ -12,16 +14,7 @@ $(function(){
   $('#top-tabs').tabs({
     selected  : 0,
   });
-  var source   = $("#event-template").html();
-  var template = Handlebars.compile(source);
-  // var data = {
-  //             "name": "ボランティア1",
-  //             "date": "2017-08-08 00:00:00",
-  //             "place": "北海道",
-  //             "url":"/event/1",
-  //             "status": "参加",
-  //             "img":"/media/events/default_event_image.svg",
-  // };
+  template = Handlebars.compile($("#event-template").html());
   var data ={
     "events": [
           {
@@ -42,8 +35,21 @@ $(function(){
           }
       ]
   };
-  $('#event-area').html(template(data));
+  show_events(data);
+  $('.event-filter').on('click',function(){
+    $.ajax({
+      'url':$(this).attr('action'),
+      'data':{},
+      'type':'POST',
+      'dataType':'json',
+      'success':show_events(response)
+    });
+  });
 });
+
+function show_events(context){
+  $('#event-area').html(template(context));
+}
 
 (function (window) {
   var $ = window.jQuery;
