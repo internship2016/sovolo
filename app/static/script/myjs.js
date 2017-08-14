@@ -9,11 +9,40 @@ $(function(){
     paginationClickable: true,
     spaceBetween: 30
   });
-});
-$(function(){
-    $('#top-tabs').tabs({
+  $('#top-tabs').tabs({
     selected  : 0,
   });
+  var source   = $("#event-template").html();
+  var template = Handlebars.compile(source);
+  // var data = {
+  //             "name": "ボランティア1",
+  //             "date": "2017-08-08 00:00:00",
+  //             "place": "北海道",
+  //             "url":"/event/1",
+  //             "status": "参加",
+  //             "img":"/media/events/default_event_image.svg",
+  // };
+  var data ={
+    "events": [
+          {
+              "id": 1,
+              "name": "ボランティア1",
+              "date": "2017-08-08 00:00:00",
+              "place": "北海道",
+              "status": "イベントステータス",
+              "img":"/media/events/default_event_image.svg",
+          },
+          {
+              "id": 2,
+              "name": "ボランティア2",
+              "date": "2017-08-08 00:00:00",
+              "place": "北海道",
+              "status": "イベントステータス",
+              "img":"/media/events/default_event_image.svg",
+          }
+      ]
+  };
+  $('#event-area').html(template(data));
 });
 
 (function (window) {
