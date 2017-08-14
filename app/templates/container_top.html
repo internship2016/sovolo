@@ -11,7 +11,9 @@
       {% for event in new_events %}
       <div class="swiper-slide">
         <div class="card">
-          <img class="card-img-top" src="{{ event.get_image_url }}" alt="トップ画像">
+          <a href="{% url 'event:detail' event.pk %}">
+            <img class="card-img-top" src="{{ event.get_image_url }}" alt="トップ画像">
+          </a>
           <div class="card-block">
             <a href="{% url 'event:detail' event.pk %}"><h4 class="card-title">{{event.name}}</h4></a>
             <p class="card-text">

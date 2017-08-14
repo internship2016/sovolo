@@ -28,13 +28,43 @@
     </ul>
     <div id="top-tabs-1">
       <div class="row">
-        <div id="events-area" class="col-md-8">
-          {% event_list request.user.get_future_participating_events "参加予定のボランティア" %}
-          {% event_list request.user.get_new_group_events "所属グループの新着ボランティア" %}
-          {% event_list request.user.get_new_region_events "自分の地域の新着ボランティア" %}
-          {% event_list request.user.get_new_tag_events "フォローしているタグの新着ボランティア" %}
-          {% event_list new_events "新着のボランティア" %}
+        <div id="event-area" class="col-md-8">
+          <div>ぐるぐる</div>
         </div>
+        {% verbatim %}
+        <script id="event-template" type="text/x-handlebars-template">
+          <section class="inner">
+          {{#each events}}
+            <div class="media">
+              <div class="media-left">
+                <a href="/event/{{id}}">
+                  <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{img}});">
+                  </div>
+                </a>
+              </div>
+              <div class="media-body">
+                <div class="event-info pull-left">
+                  <div>
+                    <span class="label label-default" style="margin-right: 1em;">
+                      {{status}}
+                    </span>
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                      {{date}}
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                      {{place}}
+                  </div>
+                  <div class="media-heading">
+                    <a href="/event/{{id}}">
+                      <h4>{{name}}</h4>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {{/each}}
+          </section>
+        </script>
+        {% endverbatim %}
         <div class="col-md-4">
           <ul>
             <li>参加予定のボランティア</li>
