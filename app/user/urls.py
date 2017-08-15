@@ -18,8 +18,5 @@ urlpatterns = [
     url(r'^edit/$', views.UserEditView.as_view(), name='edit'),
     # user/1/detail
     url(r'^(?P<pk>[0-9]+)/$', views.UserDetailView.as_view(), name='detail'),
-
-    # url(r'^(?P<pk>[0-9]+)/review/$',views.ReviewView, name='review'),
-    # url(r'^review/$',views.ReviewView, name='review'),
     url(r'^(?P<pk>[0-9]+)/review/$', views.UserReviewView.as_view(), name='review'),
 ]

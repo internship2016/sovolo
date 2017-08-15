@@ -17,12 +17,11 @@ try:
 except ImportError:
     from io import BytesIO as StringIO
 
-from django.db.models import Avg
-
 import sys, os, math
 
 # review
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db.models import Avg
 
 class UserManager(BaseUserManager):
     def create_user(self, email="", username="", password=None):
@@ -193,6 +192,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
         return trophies
 
+    # shuto tsuchiya
+    def get_mean_rating(self):
+        return self.userreviewlist_set.aggregate(Avg('rating'))['rating__avg']
 
 
 class UserActivation(models.Model):
@@ -230,6 +232,3 @@ class UserReviewList(models.Model):
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
         return str(self.rating)
-
-    def get_mean_rating(self):
-        # return self.all().aggregate(Avg('rating'))['rating__avg']

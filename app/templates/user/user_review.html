@@ -1,5 +1,5 @@
 {% extends "container.html" %}
-
+{% load i18n %}
 {% block title %}{{ user.username }} ユーザー詳細 | Sovol{% endblock %}
 
 {% block content %}
@@ -8,7 +8,8 @@
     <h1 class="panel-title">Review一覧</h1>
 </div>
 
-  <li>{{ user.userreviewlist_set.get_mean_rating }}</li>
+  <li>Cnt_rating ： {{ user.userreviewlist_set.all.count }}</li>
+  <li>Avg_rating : {{ user.get_mean_rating }}</li>
 
 <ul>
   {% for rate in user.userreviewlist_set.all %}

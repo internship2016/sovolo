@@ -15,7 +15,6 @@ from django.contrib.auth import login
 from django.utils import timezone
 from .models import User, UserActivation, UserPasswordResetting, UserReviewList
 
-
 class UserCreateView(CreateView):
     model = User
     fields = ['email', 'password', 'username']
@@ -197,6 +196,3 @@ def logout(request):
 class UserReviewView(DetailView):
     model = UserReviewList
     template_name = 'user/user_review.html'
-
-# def ReviewView(request):
-#     return render(request,'user/user_review.html')
