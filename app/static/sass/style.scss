@@ -99,6 +99,13 @@ footer {
   background-color: custom-color('dark');
   padding: 2rem 0;
   border-top: solid 1px darken(custom-color('dark'), 10%);
+
+  a {
+    color: darken(custom-color('primary'), 10%);
+    &:hover {
+      color: custom-color('primary');
+    }
+  }
 }
 
 /* images */
