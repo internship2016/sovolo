@@ -2,7 +2,7 @@ from django.conf.urls import url, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from . import views
+from . import views, api
 
 app_name = 'event'
 
@@ -32,12 +32,20 @@ urlpatterns = [
         views.EventParticipantsView.as_view(), name='participants'),
 
     # event/add
-    url(r'^add/$',
-        views.EventCreate.as_view(), name='add'),
+    url(r'^add/$',views.EventCreate.as_view(), name='add'),
 
     # event/search
-    url(r'^search/$',
-        views.EventSearchResultsView.as_view(), name='search'),
+    url(r'^search/$',views.EventSearchResultsView.as_view(), name='search'),
+
+    # event/list
+    url(r'^list/future_participating_events$', api.event_filter, {'event_kind':'future_participating_events'}, name='list'),
+    url(r'^list/new_group_events$', api.event_filter, {'event_kind':'new_group_events'}, name='list'),
+    url(r'^list/new_region_events$', api.event_filter, {'event_kind':'new_region_events'}, name='list'),
+    url(r'^list/new_tag_events$', api.event_filter, {'event_kind':'new_tag_events'}, name='list'),
+    url(r'^list/new_events$', api.event_filter, {'event_kind':'new_events'}, name='list'),
+
+    url(r'^list/(?P<event_kind>[\w_]+)$', api.event_filter, name='list'),
+
 
     # event/id/participate/frame_id
     url(r'^(?P<event_id>[0-9]+)/participate/(?P<frame_id>[0-9]+)$', views.EventJoinView.as_view(), name='participate'),
