@@ -38,13 +38,13 @@ urlpatterns = [
     url(r'^search/$',views.EventSearchResultsView.as_view(), name='search'),
 
     # event/list
-    url(r'^list/future_participating_events$', api.event_filter, {'event_kind':'future_participating_events'}, name='list'),
-    url(r'^list/new_group_events$', api.event_filter, {'event_kind':'new_group_events'}, name='list'),
-    url(r'^list/new_region_events$', api.event_filter, {'event_kind':'new_region_events'}, name='list'),
-    url(r'^list/new_tag_events$', api.event_filter, {'event_kind':'new_tag_events'}, name='list'),
-    url(r'^list/new_events$', api.event_filter, {'event_kind':'new_events'}, name='list'),
+    url(r'^filter/future_participating_events$', api.event_filter, {'event_kind':'future_participating_events'}, name='future_participating_events'),
+    url(r'^filter/new_group_events$', api.event_filter, {'event_kind':'new_group_events'}, name='new_group_events'),
+    url(r'^filter/new_region_events$', api.event_filter, {'event_kind':'new_region_events'}, name='new_region_events'),
+    url(r'^filter/new_tag_events$', api.event_filter, {'event_kind':'new_tag_events'}, name='new_tag_events'),
+    url(r'^filter/new_events$', api.event_filter, {'event_kind':'new_events'}, name='new_events'),
 
-    url(r'^list/(?P<event_kind>[\w_]+)$', api.event_filter, name='list'),
+    url(r'^filter/(?P<event_kind>[\w_]+)$', api.event_filter, name='filter'),
 
 
     # event/id/participate/frame_id

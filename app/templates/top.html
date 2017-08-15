@@ -67,10 +67,10 @@
         {% endverbatim %}
         <div class="col-md-4">
           <ul>
-            <li><form method="post" action="" class="event-filter event-active">参加予定のボランティア</form></li>
-            <li><form method="post" action="" class="event-filter">所属グループのボランティア</form></li>
-            <li><form method="post" action="" class="event-filter">地域の新着ボランティア</form></li>
-            <li><form method="post" action="" class="event-filter">すべてのボランティア</form></li>
+            <li><form method="post" action="{% url 'event:future_participating_events'%}" class="event-filter event-active">参加予定のボランティア</form></li>
+            <li><form method="post" action="{% url 'event:new_group_events'%}" class="event-filter">所属グループのボランティア</form></li>
+            <li><form method="post" action="{% url 'event:new_region_events'%}" class="event-filter">地域の新着ボランティア</form></li>
+            <li><form method="post" action="{% url 'event:new_events'%}" class="event-filter">すべてのボランティア</form></li>
           </ul>
         </div>
       </div>
