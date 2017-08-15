@@ -35,9 +35,12 @@ $(function(){
           }
       ]
   };
+  moment.updateLocale('ja', {
+    weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
+    weekdaysShort: ["日","月","火","水","木","金","土"],
+  });
   show_events(data);
   $('.event-filter').on('click',function(){
-
     $.ajax({
       'url':$(this).attr('action'),
       'data':{},
@@ -49,6 +52,9 @@ $(function(){
 });
 
 function show_events(context){
+  for(var i=0;i<context['events'].length;i++){
+    context['events'][i]['date'] = moment().format("M月D日(dd)");
+  }
   $('#event-area').html(template(context));
 }
 

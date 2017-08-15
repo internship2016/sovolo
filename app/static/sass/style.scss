@@ -9,7 +9,6 @@ $color-pallet: (
   'white' : #fff
 );
 
-
 @function custom-color($key: 'primary') {
   @return map-get($color-pallet, $key);
 }
@@ -320,4 +319,8 @@ $slide-img-size : 200px;
       background-color: #efefef;
     }
   }
+}
+
+.btn-seccess{
+  color: #fff !important;
 }
