@@ -8,24 +8,12 @@
     <h1 class="panel-title">Review一覧</h1>
 </div>
 
-<form method="post" action="">
-  <table border="1">
-    <thead>
-      <tr>
-        <th>Rating</th>
-        <th>Comment</th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for users in userreviewlist %}
-        <tr>
-          <td>{{ users.rating }}</td>
-          <td>{{ users.comment }}</td>
-        </tr>
-      {% endfor %}
-    </tbody>
-  </table>
-</form>
+  <li>{{ user.userreviewlist_set.get_mean_rating }}</li>
 
+<ul>
+  {% for rate in user.userreviewlist_set.all %}
+      <li>{{ rate.rating }} -- {{ rate.comment }}</li>
+  {% endfor %}
+</ul>
 
 {% endblock %}

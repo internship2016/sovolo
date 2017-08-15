@@ -37,4 +37,9 @@
 {% event_list user.get_future_participating_events "参加予定ボランティア一覧"　%}
 {% event_list user.get_past_participated_events "ボランティア実績"　%}
 
+
+<a class="btn btn-primary" href="{% url 'user:review' user.id %}">
+  Go to User Review Page
+</a>
+
 {% endblock %}

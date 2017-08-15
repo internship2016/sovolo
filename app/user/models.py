@@ -17,6 +17,8 @@ try:
 except ImportError:
     from io import BytesIO as StringIO
 
+from django.db.models import Avg
+
 import sys, os, math
 
 # review
@@ -217,9 +219,9 @@ class UserPasswordResetting(models.Model):
 
 class UserReviewList(models.Model):
 
-    rate_user = models.ForeignKey(User,
-                                  on_delete=models.CASCADE) # User毎に紐づけ
+    rated_user = models.ForeignKey(User,on_delete=models.CASCADE) # User毎に紐づけ
 
+    # rateing は１から５まで
     rating = models.IntegerField(validators=[MinValueValidator(0),
                                        MaxValueValidator(5)])
 
@@ -228,3 +230,6 @@ class UserReviewList(models.Model):
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
         return str(self.rating)
+
+    def get_mean_rating(self):
+        # return self.all().aggregate(Avg('rating'))['rating__avg']
