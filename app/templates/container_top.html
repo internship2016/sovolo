@@ -63,6 +63,8 @@
     });
     show_events(data);
     $('.event-filter').on('click',function(){
+      $('.event-filter').removeClass('event-active');
+      $(this).addClass('event-active')
       $.ajax({
         'url':$(this).attr('action'),
         'data':$(this).serialize(),
