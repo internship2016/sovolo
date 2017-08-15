@@ -19,6 +19,8 @@ except ImportError:
 
 import sys, os, math
 
+# review
+from django.core.validators import MinValueValidator, MaxValueValidator
 
 class UserManager(BaseUserManager):
     def create_user(self, email="", username="", password=None):
@@ -190,9 +192,6 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return trophies
 
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'created', 'modified')
-
 
 class UserActivation(models.Model):
     user = models.OneToOneField(User)
@@ -214,3 +213,18 @@ class UserPasswordResetting(models.Model):
         if not self.id:
             self.created = timezone.now()
         return super().save(*args, **kwargs)
+
+
+class UserReviewList(models.Model):
+
+    rate_user = models.ForeignKey(User,
+                                  on_delete=models.CASCADE) # User毎に紐づけ
+
+    rating = models.IntegerField(validators=[MinValueValidator(0),
+                                       MaxValueValidator(5)])
+
+    comment = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        # Built-in attribute of django.contrib.auth.models.User !
+        return str(self.rating)
