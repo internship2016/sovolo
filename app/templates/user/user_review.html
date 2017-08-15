@@ -10,7 +10,7 @@
 
   <li>Cnt_rating ： {{ user.userreviewlist_set.all.count }}</li>
   <li>Avg_rating : {{ user.get_mean_rating }}</li>
-
+  
 <ul>
   {% for rate in user.userreviewlist_set.all %}
       <li>{{ rate.rating }} -- {{ rate.comment }}</li>
