@@ -1,4 +1,3 @@
-var template;
 
 $(function(){
   var swiper = new Swiper('.swiper-container', {
@@ -14,42 +13,7 @@ $(function(){
   $('#top-tabs').tabs({
     selected  : 0,
   });
-  template = Handlebars.compile($("#event-template").html());
-  var data ={
-    "events": [
-          {
-              "id": 1,
-              "name": "ボランティア1",
-              "date": "2017-08-08 00:00:00",
-              "place": "北海道",
-              "status": "イベントステータス",
-              "img":"/media/events/default_event_image.svg",
-          },
-          {
-              "id": 2,
-              "name": "ボランティア2",
-              "date": "2017-08-08 00:00:00",
-              "place": "北海道",
-              "status": "イベントステータス",
-              "img":"/media/events/default_event_image.svg",
-          }
-      ]
-  };
-  show_events(data);
-  $('.event-filter').on('click',function(){
-    $.ajax({
-      'url':$(this).attr('action'),
-      'data':{},
-      'type':'POST',
-      'dataType':'json',
-      'success':show_events(response)
-    });
-  });
 });
-
-function show_events(context){
-  $('#event-area').html(template(context));
-}
 
 (function (window) {
   var $ = window.jQuery;

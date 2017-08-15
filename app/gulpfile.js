@@ -66,6 +66,12 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
             './dist/css/swiper.min.css',
           ]
         },
+        'spin': {
+          main: [
+            './javascripts/jquery.spin.js',
+            './stylesheets/jquery.spin.css',
+          ]
+        },
         'bootstrap-social': {
           main: []
         },

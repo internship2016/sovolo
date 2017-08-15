@@ -291,19 +291,31 @@
     <button class="btn btn-primary pull-right" id="add_frame" type="button">
       <span class="glyphicon glyphicon-plus"></span>
     </button>
-    <script>
+      <script>
       $(function () {
-        $('#add_frame').on('click', function (event) {
-          var X = $('#frames>div').length + 1;
+          $('#add_frame').on('click', function (event) {
+            var X = $('#frames>div').length + 1;
 
-          var tmpl = Handlebars.compile($('#tmpl-frame').html());
+            var tmpl = Handlebars.compile($('#tmpl-frame').html());
 
-          $wrapper = $('<div>');
-          $wrapper.html(tmpl({X: X}));
-          $('#frames').append($wrapper);
-        });
+            $wrapper = $('<div>');
+            $wrapper.html(tmpl({X: X}));
+            $('#frames').append($wrapper);
+          });
       });
-    </script>
+
+      </script>
+
+    <button class="btn btn-primary pull-right" id="delete_frame" type="button">
+      <span class="glyphicon glyphicon-minus"></span>
+    </button>
+      <script>
+      $('#delete_frame').click(function() {
+        $wrapper = $('<div>');
+        $('#frames div.panel:last').remove();
+
+      });
+      </script>
   </div>
 </div>
 
