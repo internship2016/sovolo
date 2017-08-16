@@ -352,3 +352,22 @@ $slide-img-size : 100px;
     left: 50px;
   }
 }
+
+.container-fluid-button{
+  text-align: center;
+  padding-top: 200px;
+  a{
+    background-image: -webkit-linear-gradient(top,#ff2730 0,#e9000a 100%);
+    background-image: -o-linear-gradient(top,#ff2730 0,#e9000a 100%);
+    background-image: linear-gradient(to bottom,#ff2730 0,#e9000a 100%);
+    background-repeat: repeat-x;
+    background-repeat: repeat-x;
+    border-color: #df0009;
+    color: #fff;
+    box-shadow: 0 2px 4px 0 rgba(152,152,152,0.5);
+    padding: 15px 30px;
+    border-radius: 4px;
+    font-size: 18px;
+    cursor: pointer;
+  }  
+}
