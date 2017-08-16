@@ -15,6 +15,7 @@ from django.contrib.auth import login
 from django.utils import timezone
 from .models import User, UserActivation, UserPasswordResetting, UserReviewList
 from .form import UserReviewListForm
+from django.urls import reverse
 
 class UserCreateView(CreateView):
     model = User
@@ -198,19 +199,20 @@ class UserReviewView(DetailView):
     model = User
     template_name = 'user/user_review.html'
 
-# class UserPostReviewView(DetailView):
-#     model = User
-#     template_name = 'user/user_post_review.html'
-
 
 class UserPostReviewView(FormView):
     template_name = 'user/user_post_review.html'
     form_class = UserReviewListForm
-    success_url = '/'
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         # form.send_email()
+        form.instance.rated_user_id = self.kwargs.get('pk') # pkを取得
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
+
+    # レビュー投稿時にレビュー結果ページに帰還
+    def get_success_url(self, **kwargs):
+        pk = self.kwargs.get('pk')
+        return reverse('user:review', args=(pk))

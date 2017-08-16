@@ -3,13 +3,14 @@
 {% block title %}{{ user.username }} ユーザーReview | Sovol{% endblock %}
 
 {% block content %}
-
-<h1>User Review Post Page</h1>
+<div class="panel panel-primary">
+    <h1 class="panel-title">User Review Post Page</h1>
+</div>
 
 <form action="" method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Send message" />
+    <input type="submit" value="Post Review" />
 </form>
 
 {% endblock %}
