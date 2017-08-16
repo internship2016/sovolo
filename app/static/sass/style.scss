@@ -327,6 +327,10 @@ $slide-img-size : 100px;
   }
 }
 
+#event-area>div{
+  min-height: 200px;
+}
+
 #navbar-collapse-content>form.navbar-form{
   margin: 5px!important;
 }

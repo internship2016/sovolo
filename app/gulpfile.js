@@ -68,8 +68,7 @@ gulp.task('bower.copy', 'bower_componentsからstaticに必要なファイルを
         },
         'spin': {
           main: [
-            './javascripts/jquery.spin.js',
-            './stylesheets/jquery.spin.css',
+            './spin.min.js',
           ]
         },
         'reset-css': {
