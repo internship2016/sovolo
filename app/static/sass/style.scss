@@ -14,7 +14,6 @@ $color-pallet: (
 }
 
 h1{
-  margin: 10px!important;
   font-size: 20px !important;
 }
 
@@ -326,4 +325,8 @@ $slide-img-size : 200px;
       background-color: #efefef;
     }
   }
+}
+
+#navbar-collapse-content>form.navbar-form{
+  margin: 5px!important;
 }

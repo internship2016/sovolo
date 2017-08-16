@@ -23,13 +23,14 @@
   <script type="text/javascript" src='https://www.google.com/recaptcha/api.js'></script>
   <script type="text/javascript" src="{% static 'js/swiper.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/jquery.spin.js' %}"></script>
+  <!--<link rel="stylesheet" href="{% static 'css/reset.css' %}"/>-->
   <link rel="stylesheet" href="{% static 'css/bootstrap-datetimepicker-custom.css' %}"/>
   <link rel="stylesheet" href="{% static 'css/jquery-ui.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}"/>
   <link rel="stylesheet" href="{% static 'css/croppie.css' %}"/>
-  <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
   <link rel="stylesheet" href="{% static 'css/swiper.min.css' %}">
   <link rel="stylesheet" href="{% static 'css/jquery.spin.css' %}">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}"/>
 
   <link rel="shorcut icon" href="/media/common/logo.ico"/>
   <link rel="icon" href="/media/common/logo.ico"/>
@@ -39,78 +40,67 @@
 <body>
   <div class="main-wrapper">
     <header>
+      <nav role="navigation" class="navbar navbar-default">
+        <!--container-fluid-->
+        <div class="container-fluid">
+          <!--navbar-header-->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-content" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'top' %}">
+              <img src="/media/common/logo.svg" style="max-width:24px;height:auto;display:inline-block;vertical-align:middle;" />
+              Sovol
+            </a>
+          </div>
+          <!--end of navbar-header-->
 
-      <nav role="navigation" class="navbar">
-          <div class="container">
-              <div class="row">
-                  <div class="col-md-2">
-                      <h1 class="navbar-header">
-                          <a class="" href="{% url 'top' %}">
-                            <img src="/media/common/logo.svg" style="max-width:24px;height:auto;display:inline-block;vertical-align:middle;" />
-                            Sovol
-                          </a>
-                      </h1>
-                  </div>
-                  <!--検索フォーム-->
-                  <div class="col-md-6">
-                      <form class="" role="search" action="{% url 'event:search' %}" method="get" style="margin:10px">
-                          <div class="input-group">
-                            <input type="text" class="form-control" placeholder="ボランティアを検索" name="q">
-                            <div class="input-group-btn">
-                            <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
-                            </div>
-                          </div>
-                      </form>
-                  </div>
-                  <!--イベント追加フォーム-->
-                  <div class="col-md-3">
-                      <div class="collapse navbar-collapse" style="margin:10px 10px 10px 80px">
-                          <ul class="nav navbar-nav">
-                            <li class="text-center">
-                              <p class="navbar-header">
-                                <a class="btn pull-right" href="{% url 'event:add' %}" role="button">ボランティア作成</a>
-                              </p>
-                            </li>
-                          </ul>
-                          {% if request.user.is_anonymous %}
-                            <ul class="nav navbar-nav navbar-right">
-                              <li class="pull-left"><a href="{% url 'user:register' %}">ユーザー登録</a></li>
-                              <li class="pull-left"><a href="{% url 'user:login' %}">ログイン</a></li>
-                            </ul>
-                          {% endif %}
-                      </div>
-                  </div>
+          <!--navbar-collapse-->
+          <div class="collapse navbar-collapse" id="navbar-collapse-content">
+            <!--検索フォーム-->
+            <form class="navbar-form navbar-left" role="search" action="{% url 'event:search' %}" method="get" style="margin:10px">
+                <div class="form-group">
+                  <input type="text" class="form-control" placeholder="ボランティアを検索" name="q">
+                  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span></button>
+                </div>
+            </form>
+            <!--end of form-->
 
-                  <div class="col-md-1">
-                      <div class="navbar-header navbar-right pull-right">
-                          {% if not request.user.is_anonymous %}
-                            <ul class="nav navbar-nav pull-left">
-                              <li class="dropdown">
-                                <a href="#" id="dUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <img src="{{ request.user.get_image_url }}" width="24" height="24">
-                                    {{ request.user.username }}
-                                    <span class="caret"></span>
-                                  </a>
-                                  <ul class="dropdown-menu" aria-labelledby="dUser">
-                                    <li><a href="{% url 'user:detail' request.user.id %}">{% trans 'Profile' %}</a></li>
-                                    <li><a href="{% url 'user:logout' %}">ログアウト</a></li>
-                                  </ul>
-                              </li>
-                            </ul>
-                          {% endif %}
-          
-                          <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                            <span class="icon-bar"></span>
-                          </button>
-                      </div>
-                  </div>
+            <!--イベント追加フォーム-->
+            <ul class="nav navbar-nav">
+              <li class="text-center">
+                <a class="btn" href="{% url 'event:add' %}" role="button">ボランティア作成</a>
+              </li>
+            </ul>
+
+            <!--right menu-->
+            <ul class="nav navbar-nav navbar-right">
+            {% if request.user.is_anonymous %}
+              <li class="pull-left"><a href="{% url 'user:register' %}">ユーザー登録</a></li>
+              <li class="pull-left"><a href="{% url 'user:login' %}">ログイン</a></li>
+            {% else %}
+              <li class="dropdown">
+                <a href="#" id="dUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ request.user.get_image_url }}" width="24" height="24">
+                    {{ request.user.username }}
+                    <span class="caret"></span>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="dUser">
+                    <li><a href="{% url 'user:detail' request.user.id %}">{% trans 'Profile' %}</a></li>
+                    <li><a href="{% url 'user:logout' %}">ログアウト</a></li>
+                  </ul>
+              </li>
+            {% endif %}
+            </ul>
+            <!--end of right menu-->
+          </div>
+          <!--end of navbar-collapse-->
         </div>
+        <!--end of container-fluid-->
       </nav>
-
-
     </header>
 
     {% block container %}{% endblock %}
