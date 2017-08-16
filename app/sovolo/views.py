@@ -5,19 +5,30 @@ from django.conf import settings
 
 
 def index(request):
-    all_tags = Tag.objects.all()
-    context = {
-        'all_tags': all_tags,
-        'prefectures': [(key, value[0]) for key, value in sorted(settings.PREFECTURES.items(), key=lambda x:x[1][1])]
-    }
+    context = {}
 
+    """All Tags
+    全てのタグ
+    """
+    context['all_tags'] = Tag.objects.all()
+
+    """New Events
+    新規イベント
+    """
+    ev_all = Event.objects.all().order_by('-created')
     if request.user.is_anonymous():
-        new_events = Event.objects.all().order_by('-created')[:20]
-        context['new_events'] = new_events
-
-        return render(request, 'top_anonymous.html', context)
+        context['new_events'] = ev_all[:20]
     else:
-        new_events = Event.objects.all().order_by('-created')[:5]
-        context['new_events'] = new_events
+        context['new_events'] = ev_all[:5]
 
-        return render(request, 'top.html', context)
+    """Prefectures
+    日本の(!)県名
+    """
+    # FIXME: i18n, how?
+    # XXX: PREFECTURES must be sorted right out of the box
+    prefs = settings.PREFECTURES.items()
+    prefs = sorted(prefs, key=lambda x: x[1][1])
+    prefs = [(k, v[0]) for k, v in prefs]
+    context['prefectures'] = prefs
+
+    return render(request, 'top.html', context)
