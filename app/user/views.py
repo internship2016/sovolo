@@ -208,7 +208,8 @@ class UserPostReviewView(FormView):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         # form.send_email()
-        form.instance.rated_user_id = self.kwargs.get('pk') # pkを取得
+        form.instance.to_rate_user_id = self.kwargs.get('pk') # pkを取得 評価対象
+        form.instance.from_rate_user_id = self.kwargs.get('pk') # 評価者
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
 

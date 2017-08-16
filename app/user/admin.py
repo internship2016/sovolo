@@ -5,6 +5,7 @@ from .models import User, UserReviewList
 # class ChoiceInline(admin.StackedInline):
 class UserReviewListInline(admin.TabularInline):
     model = UserReviewList
+    fk_name = "to_rate_user"
     extra = 3
 
 class UserAdmin(admin.ModelAdmin):

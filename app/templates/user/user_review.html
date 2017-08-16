@@ -8,12 +8,12 @@
     <h1 class="panel-title">Review List</h1>
 </div>
 
-  <li>Cnt_rating ： {{ user.userreviewlist_set.all.count }}</li>
+  <li>Cnt_rating ： {{ user.to_rate_user.all.count }}</li>
   <li>Avg_rating : {{ user.get_mean_rating }}</li>
 
 <ul>
-  {% for rate in user.userreviewlist_set.all %}
-      <li>{{ rate.rating }} -- {{ rate.comment }}</li>
+  {% for rate in user.to_rate_user.all %}
+      <li>{{ rate.rating }} -- {{ rate.comment }} -- {{ rate.from_rate_user }}</li>
   {% endfor %}
 </ul>
 
