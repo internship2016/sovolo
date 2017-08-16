@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.views.generic import DetailView, ListView, View
 from django.contrib  import messages
 from django.shortcuts import get_object_or_404
@@ -14,6 +14,7 @@ from django.contrib.auth import login
 
 from django.utils import timezone
 from .models import User, UserActivation, UserPasswordResetting, UserReviewList
+from .form import UserReviewListForm
 
 class UserCreateView(CreateView):
     model = User
@@ -197,6 +198,19 @@ class UserReviewView(DetailView):
     model = User
     template_name = 'user/user_review.html'
 
-class UserPostReviewView(DetailView):
-    model = User
+# class UserPostReviewView(DetailView):
+#     model = User
+#     template_name = 'user/user_post_review.html'
+
+
+class UserPostReviewView(FormView):
     template_name = 'user/user_post_review.html'
+    form_class = UserReviewListForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        # form.send_email()
+        form.save()
+        return super(UserPostReviewView, self).form_valid(form)
