@@ -196,3 +196,7 @@ def logout(request):
 class UserReviewView(DetailView):
     model = User
     template_name = 'user/user_review.html'
+
+class UserPostReviewView(DetailView):
+    model = User
+    template_name = 'user/user_post_review.html'
