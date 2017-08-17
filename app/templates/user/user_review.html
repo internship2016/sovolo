@@ -1,10 +1,24 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>test</title>
-  </head>
-  <body>
-    <h1>test</h1>
-  </body>
-</html>
+{% extends "container.html" %}
+{% load i18n %}
+{% block title %}{{ user.username }} ユーザー詳細 | Sovol{% endblock %}
+
+{% block content %}
+
+<div class="panel panel-primary">
+    <h1 class="panel-title">Review List</h1>
+</div>
+
+  <li>Cnt_rating ： {{ user.to_rate_user.all.count }}</li>
+  <li>Avg_rating : {{ user.get_mean_rating }}</li>
+
+<ul>
+  {% for rate in user.to_rate_user.all %}
+      <li>{{ rate.rating }} -- {{ rate.comment }} -- {{ rate.from_rate_user }}</li>
+  {% endfor %}
+</ul>
+
+<a class="btn btn-primary" href="{% url 'user:post_review' user.id %}">
+  Go to User Review Post Page
+</a>
+
+{% endblock %}

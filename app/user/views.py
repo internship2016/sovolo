@@ -1,6 +1,6 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
 from django.views.generic import DetailView, ListView, View
 from django.contrib  import messages
 from django.shortcuts import get_object_or_404
@@ -14,7 +14,8 @@ from django.contrib.auth import login
 
 from django.utils import timezone
 from .models import User, UserActivation, UserPasswordResetting, UserReviewList
-
+from .form import UserReviewListForm
+from django.urls import reverse
 
 class UserCreateView(CreateView):
     model = User
@@ -194,9 +195,25 @@ def logout(request):
 
 
 ## Review
-class UserReviewView(View):
-    model = UserReviewList
+class UserReviewView(DetailView):
+    model = User
     template_name = 'user/user_review.html'
 
-# def ReviewView(request):
-#     return render(request,'user/user_review.html')
+
+class UserPostReviewView(FormView):
+    template_name = 'user/user_post_review.html'
+    form_class = UserReviewListForm
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        # form.send_email()
+        form.instance.to_rate_user_id = self.kwargs.get('pk') # pkを取得 評価対象
+        form.instance.from_rate_user_id = self.kwargs.get('pk') # 評価者
+        form.save()
+        return super(UserPostReviewView, self).form_valid(form)
+
+    # レビュー投稿時にレビュー結果ページに帰還
+    def get_success_url(self, **kwargs):
+        pk = self.kwargs.get('pk')
+        return reverse('user:review', args=(pk))

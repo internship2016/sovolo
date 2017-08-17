@@ -21,6 +21,7 @@ import sys, os, math
 
 # review
 from django.core.validators import MinValueValidator, MaxValueValidator
+from django.db.models import Avg
 
 class UserManager(BaseUserManager):
     def create_user(self, email="", username="", password=None):
@@ -191,6 +192,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
         return trophies
 
+    # shuto tsuchiya
+    def get_mean_rating(self):
+        return self.to_rate_user.aggregate(Avg('rating'))['rating__avg']
 
 
 class UserActivation(models.Model):
@@ -214,16 +218,29 @@ class UserPasswordResetting(models.Model):
             self.created = timezone.now()
         return super().save(*args, **kwargs)
 
-
 class UserReviewList(models.Model):
 
-    rate_user = models.ForeignKey(User,
-                                  on_delete=models.CASCADE) # User毎に紐づけ
+    to_rate_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='to_rate_user',
+        null=True,
+        ) # User毎に紐づけ
 
+    # rateing は１から５まで
     rating = models.IntegerField(validators=[MinValueValidator(0),
                                        MaxValueValidator(5)])
 
     comment = models.CharField(max_length=200, null=True)
+
+    # 誰から送られてきたか保持
+    from_rate_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='from_rate_user',
+        null=True,
+        )
+
 
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
