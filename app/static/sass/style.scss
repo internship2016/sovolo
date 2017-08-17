@@ -332,7 +332,20 @@ $slide-img-size : 100px;
 }
 
 #navbar-collapse-content>form.navbar-form{
-  margin: 5px!important;
+  margin: 17px!important;
+}
+
+$logo-height :65px;
+.logo{
+  width: $logo-height*2;
+  height: $logo-height;
+  padding: 0 15px 0 !important;
+  img{
+    width: $logo-height*2;
+    height: $logo-height;
+    display: inline-block;
+    vertical-align: middle; 
+  }
 }
 
 .top-search{
