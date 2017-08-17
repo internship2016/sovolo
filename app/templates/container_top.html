@@ -99,14 +99,14 @@
       }).done(function(response){
         show_events(response);
       }).fail(function(){
-        console.log("取得に失敗")
+        console.log("取得に失敗");
       });
     });
   })
 
   function show_events(context){
     for(var i=0;i<context['filtered_events'].length;i++){
-      context['filtered_events'][i]['start_time'] = moment().format("M月D日(dd)");
+      context['filtered_events'][i]['start_time'] = moment(context['filtered_events'][i]['start_time']).format("M月D日(dd)");
     }
     $('#event-area').html(template(context));
   }
