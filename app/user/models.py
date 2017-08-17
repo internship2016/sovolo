@@ -160,8 +160,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def get_new_region_events(self):
         Event = apps.get_model('event', 'Event')
 
-        return Event.objects.filter(region=self.region).distinct().order_by('-created')[:5]
-
+        return [event for event in Event.objects.filter(region=self.region).distinct().order_by('-created') if not event.is_over()]
     def get_future_participating_events(self):
         return [event for event in self.participating_event.all().order_by('start_time') if not event.is_over()]
 
