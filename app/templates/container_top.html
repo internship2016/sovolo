@@ -17,19 +17,20 @@
     <div class="swiper-wrapper">
       {% for event in new_events %}
       <div class="swiper-slide">
-        <div class="card">
-          <a href="{% url 'event:detail' event.pk %}">
-            <img class="card-img-top" src="{{ event.get_image_url }}" alt="トップ画像">
+        <div class="card row">
+          <a class="card-img col-xs-6" href="{% url 'event:detail' event.pk %}">
+            <img src="{{ event.get_image_url }}" alt="トップ画像">
           </a>
-          <div class="card-block">
+          <div class="card-block col-xs-6">
             <a href="{% url 'event:detail' event.pk %}"><h4 class="card-title">{{event.name}}</h4></a>
             <p class="card-text">
               <i class="fa fa-calendar" aria-hidden="true"></i>
               {{event.start_time_format | date:'n/j (D)' }}
+              <br>
               <i class="fa fa-map-marker" aria-hidden="true"></i>
               {{event.get_region_kanji}}
             </p>
-            <a href="{% url 'event:support' event.pk %}" class="btn btn-success d-inline-block align-bottom">応援する</a>
+            <a href="{% url 'event:support' event.pk %}" class="btn btn-success align-bottom">応援する</a>
           </div>
         </div>
       </div>

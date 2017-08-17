@@ -34,7 +34,8 @@ nav{
 
 #search-area {
   div {
-    margin: 0px;
+    margin-top: 3px;
+    margin-bottom: 4px
   }
 }
 
@@ -203,6 +204,11 @@ _::-webkit-:not(:root:root), .detail-thumbnail {
     td.day.weekend + td.day.weekend:not(.active) {
       background-color: custom-color('hot');
     }
+    /*　選択した日付を色付け */
+    td.day.active {
+      background-color: #F86D6D;
+      border-radius: 4px
+    }
   }
 }
 
@@ -261,17 +267,17 @@ footer {
   width: 80px;
 }
 
-$slide-img-size : 100px;
+$slide-img-size : 150px;
 
 .swiper-container{
   width: 100%;
-  height: $slide-img-size+150px;
+  height: $slide-img-size+50px;
 }
 
 
 .swiper-slide{
-  width: $slide-img-size !important;
-  height: $slide-img-size+120px;
+  width: $slide-img-size*2+6px !important;
+  height: $slide-img-size+2px;
   text-align: center;
   font-size: 18px;
   background: #fff;
@@ -293,22 +299,34 @@ $slide-img-size : 100px;
 }
 
 .card{
-  width: 100%;
-  height: 100%;
-  &-img-top{
+  width: $slide-img-size*2+6px;
+  height: $slide-img-size;
+  border: 1px solid #ccc;
+  &-img{
     width: $slide-img-size;
     height: $slide-img-size;
+    padding: 0;
+    >img{
+      width: $slide-img-size;
+      height: $slide-img-size;
+    }
   }
   &-block{
-    width: 100%;
-    height: 120px;
+    padding: 0;
+    width: $slide-img-size;
+    height: $slide-img-size;
+    >.btn{
+      margin: 0 auto;
+    }
   }
   &-title{
     font-size: 14px;
-    height: 2em;
+    height: 3em;
+    overflow: hidden;
   }
   &-text{
     font-size: 14px;
+    height: 2.5em;
   }
 }
 
@@ -364,6 +382,10 @@ $logo-height :65px;
     top: 30px;
     left: 50px;
   }
+}
+
+#top-tabs{
+  margin-top: 10px;
 }
 
 .container-fluid-button{
