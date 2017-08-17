@@ -7,22 +7,6 @@
 
 {% block content %}
 
-{% if request.user.is_anonymous %}
-
-  <div class="row">
-    <img src="/static/img/cover.svg">
-  </div>
-  <div class="row">
-    <div id="events-area" class="col-md-8">
-      {% event_list new_events "新着のボランティア" %}
-    </div>
-    <div id="search-area" class="col-md-4">
-      {% include 'event/search_form.html' %}
-    </div>
-  </div>
-
-{% else %}
-
   <div id="top-tabs">
     <ul>
         <li><a href="#top-tabs-1">イベント</a></li>
@@ -70,6 +54,7 @@
         {% endverbatim %}
         <div class="col-md-4">
           <ul>
+            {% if not request.user.is_anonymous %}
             <li>
               <form method="post" action="{% url 'event:future_participating_events'%}" class="event-filter event-active">
                 {% csrf_token %}
@@ -82,6 +67,7 @@
                 所属グループのボランティア
               </form>
             </li>
+            {% endif %}
             <li>
               <form method="post" action="{% url 'event:new_region_events'%}" class="event-filter">
                 {% csrf_token %}
@@ -106,6 +92,5 @@
       </div>
     </div>
   </div>
-{% endif %}
 
 {% endblock %}
