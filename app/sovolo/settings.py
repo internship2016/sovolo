@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+from django.utils.translation import ugettext_lazy as _
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -141,7 +142,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
-LANGUAGE_CODE = 'ja'
+LANGUAGES = (
+    ('en-us', _('English')),
+    ('ja-jp', _('Japanese')),
+)
+LANGUAGE_CODE = 'ja-jp'
 TIME_ZONE = 'Asia/Tokyo'
 USE_I18N = True
 USE_L10N = True
@@ -204,7 +209,6 @@ DEFAULT_FROM_EMAIL = 'Sovol <noreply@sovol.earth>'
 
 GOOGLE_RECAPTCHA_SECRET = os.environ.get('GOOGLE_RECAPTCHA_SECRET')
 
-from django.utils.translation import ugettext_lazy as _
 PREFECTURES = {
     "Hokkaido"  : (_("Hokkaido" ),  1),
     "Aomori"    : (_("Aomori"   ),  2),
