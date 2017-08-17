@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import User, UserReviewList
 # Register your models here.
-
+from .models import Frame, FrameAdmin
 # class ChoiceInline(admin.StackedInline):
 class UserReviewListInline(admin.TabularInline):
     model = UserReviewList
@@ -13,3 +13,4 @@ class UserAdmin(admin.ModelAdmin):
     inlines = [UserReviewListInline]
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Frame,FrameAdmin)

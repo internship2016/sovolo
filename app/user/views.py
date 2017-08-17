@@ -45,6 +45,21 @@ class UserCreateView(CreateView):
         messages.info(self.request, "記入したメールアドレス"+user.email+"に確認メールを送信しました。")
         return redirect("top")
 
+        frame_numbers = self.request.POST.getlist('frame_number')
+
+        for number in frame_numbers:
+            frame_id = self.request.POST.getlist('frame_' + number + '_id')
+            if frame_id is None:
+                frame = Frame(frame_user=frame_user)
+            else:
+                frame = Frame.objects.get(pk=frame.id)
+
+            frame.description = self.request.POST.get('frame_' + number + '_description')
+            frame.tag = self.request.POST.get('frame_' + number + '_tag')
+            frame.user_todo = self.request.POST.get('frame_' + number + '_user_todo')
+            frame.save()
+
+
     def create_activation_key(self):
         key = uuid.uuid4().hex
         return key
@@ -57,7 +72,7 @@ class UserCreateView(CreateView):
         form.fields['username'].label = "ニックネーム（15文字以内)"
         return form
 
-
+    
 class UserActivationView(View):
     def get(self, request, *args, **kwargs):
         activation = get_object_or_404(UserActivation, key=kwargs['key'])
@@ -153,7 +168,7 @@ class UserDetailView(DetailView):
 
 class UserEditView(UpdateView):
     model = User
-    fields = ['username', 'email', 'image', 'region', 'sex', 'birthday']
+    fields = ['username', 'email', 'image', 'region', 'sex', 'birthday', ]
     template_name = 'user/edit.html'
 
     def get_object(self, queryset=None):

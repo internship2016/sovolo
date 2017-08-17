@@ -70,6 +70,85 @@
                 {% endfor %}
             </div>
         </div>
+        
+        <div class="form-group">
+          <label class="col-sm-3">ボランティアしたいこと</label>
+          <div class="col-sm-9">
+            <div id="frames">
+              {% for frame in frame_user.frame_set.all %}
+                <div class="panel panel-default panel-body" style="margin:0">
+                  <div class="row">
+                    <input type="hidden" name="frame_number" value="{{ forloop.counter }}">
+                    {% if not request.GET.copy_user_id %}
+                      <input type="hidden" name="frame_{{ forloop.counter }}_id" value="{{ frame_id }}">
+                    {% endif %}
+                    <label class="col-sm-3">タグ</label>
+                    <div class="checkbox col-sm-9">
+                      {% for tag in all_tags %}
+                        <label><input type="checkbox" name="tags" value="{{ tag.id }}"
+                          {% if tag in event.tag.all %}checked{% endif %}>{{ tag.name }}</label>
+                      {% endfor %}
+                    </div>
+                    <label class="col-sm-3">できる内容</label>
+                    <div class="col-sm-9">
+                      <textarea class="form-control" name="frame_{{ forloop.counter }}_user_todo">{{ frame.user_todo }}</textarea>
+                    </div>
+                  </div>
+                </div>
+                {% empty %}
+                <div class="panel panel-default panel-body" style="margin:0">
+                  <div class="row">
+                    <input type="hidden" name="frame_number" value="1">
+                    <!--<input type="hidden" name="frame_1_id" value="{{ frame.id }}">-->
+                    <label class="col-sm-3">タグ<sup><font color="red"></font></sup></label>
+                    <div class="checkbox col-sm-9">↲
+                      {% for tag in all_tags %}↲
+                      <label><input type="checkbox" name="tags" value="{{ tag.id     }}"↲
+                        {% if tag in event.tag.all %}checked{% endif %}>{{ tag.name }}</label>↲
+                      {% endfor %}↲
+                     </div>↲
+                     <label class="col-sm-3">できる内容</label>↲
+                     <div class="col-sm-9">↲
+                       <textarea class="form-control"  name="frame_{{ forloop.counter     }}_user_todo">{{ frame.user_todo }}</textarea>↲
+                     </div>↲
+                    </div>↲
+                  </div>↲
+              {% endfor %}
+
+            </div>
+            <button class="btn btn-primary pull-right" id="add_frame" type="button">
+
+              <span class="glyphicon glyphicon-plus"></span>
+            </button>
+              <script>
+              $(function () {
+                  $('#add_frame').on('click', function (event) {
+                      var X = $('#frame>div').length + 1;
+
+                      var tmpl = HandLebars.compile($('#tmpl-frame').html());
+
+                      $wapper = $('<div>');
+                      $wapper.html(tmpl({X: X}));
+                    });
+                });
+              </script>
+
+            <button class="btn btn-primary pull-right" id="delete_frame" type="button">
+              <span class="glyphicon glyphicon-minus"></span>
+            </button>
+              <script>
+              $('#delete_frame').click(function() {
+                  $wrapper = $('<div>');
+                  $('#frames div.panel:last').remove();
+             });
+              </script>
+            </div>
+          </div>
+
+        
+        <div class="form-group">
+          <label for="usertodo-form" class="col-sm-3 col-lg-2 control-label">できること</label>
+            <div class="col-sm-9 col-lg-9"><input id="usertodo-form" class="form-control" name="user_todo" maxlength="1000" value="{{ user.user_todo }}"/></div>
         <input type="button" onclick="location.href='../request_password_reset'" value="passwordを変更する">
         <div class="row">
           <input type="submit" class="btn btn-primary btn-lg col-sm-4 col-sm-offset-4 col-lg-2 col-lg-offset-5 col-xs-8 col-xs-offset-2" value="適用"/>

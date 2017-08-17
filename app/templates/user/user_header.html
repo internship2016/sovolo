@@ -60,6 +60,33 @@
         </div>
       </div>
     </div>
+
+  <div>
+      <div id="user_frame" class="panel panel-primary">
+        <div class="panel-heading">
+            ボランティアしたいこと
+        </div>
+        {% for frame in user.frame_set.all %}
+        <h3 class="panel-title">
+          タグ
+        </h3>
+        <div class="panel-body">
+          {% for tags in frame.tag.all %}
+            <a class="tag" href="{% url 'event:search' %}?tags={{ tags.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tags.name }}</a>
+          {% empty %}
+          <p>タグはありません</p>
+          {% endfor %}
+        </div>
+        <h3 class="panel-title">
+          具体的なレベル
+        </h3>
+        <div class="panel-body">
+          <p>{{ frame.user_todo }}</p>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+ 
   <div>
       <div id="user-info" class="panel panel-primary">
         <div class="panel-heading">
@@ -75,8 +102,20 @@
                 <p>フォローしているタグがありません</p>
               {% endfor %}
             </div>
-
         </div>
       </div>
+    <div>
+        <div id="user_todo" class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 class="panel-title">
+              ボランティアできること
+            </h3>
+          </div>
+          <div class="panel-body container-fluid">
+            <div>
+              <p>{{ user.user_todo }}</p>
+            </div>
+          </div>
+        <div>
   </div>
 </div>
