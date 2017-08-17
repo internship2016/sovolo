@@ -210,6 +210,7 @@ class UserPostReviewView(FormView):
         # form.send_email()
         form.instance.to_rate_user_id = self.kwargs.get('pk') # pkを取得 評価対象
         form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
+        form.instance.joined_event_id = 2
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
 

@@ -238,6 +238,8 @@ class UserReviewList(models.Model):
         related_name='from_rate_user',
         )
 
+    joined_event = models.ForeignKey('event.Event', null=True)
+
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
         return str(self.rating)
