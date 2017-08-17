@@ -17,8 +17,11 @@
   {% endfor %}
 </ul>
 
-<a class="btn btn-primary" href="{% url 'user:post_review' user.id %}">
-  Go to User Review Post Page
-</a>
+{% if request.user.is_anonymous %}
+{% else %}
+  <a class="btn btn-primary" href="{% url 'user:post_review' user.id %}">
+    Go to User Review Post Page
+  </a>
+{% endif %}
 
 {% endblock %}

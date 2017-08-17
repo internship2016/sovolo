@@ -209,11 +209,11 @@ class UserPostReviewView(FormView):
         # It should return an HttpResponse.
         # form.send_email()
         form.instance.to_rate_user_id = self.kwargs.get('pk') # pkを取得 評価対象
-        form.instance.from_rate_user_id = self.kwargs.get('pk') # 評価者
+        form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
 
     # レビュー投稿時にレビュー結果ページに帰還
     def get_success_url(self, **kwargs):
         pk = self.kwargs.get('pk')
-        return reverse('user:review', args=(pk))
+        return reverse('user:review', kwargs={'pk': pk})

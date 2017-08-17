@@ -218,29 +218,25 @@ class UserPasswordResetting(models.Model):
             self.created = timezone.now()
         return super().save(*args, **kwargs)
 
+
 class UserReviewList(models.Model):
 
     to_rate_user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='to_rate_user',
-        null=True,
-        ) # User毎に紐づけ
+        )
 
-    # rateing は１から５まで
     rating = models.IntegerField(validators=[MinValueValidator(0),
                                        MaxValueValidator(5)])
 
     comment = models.CharField(max_length=200, null=True)
 
-    # 誰から送られてきたか保持
     from_rate_user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='from_rate_user',
-        null=True,
         )
-
 
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
