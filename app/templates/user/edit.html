@@ -75,7 +75,7 @@
           <label class="col-sm-3">ボランティアしたいこと</label>
           <div class="col-sm-9">
             <div id="frames">
-              {% for frame in frame_user.frame_set.all %}
+              {% for frame in user.frame_set.all %}
                 <div class="panel panel-default panel-body" style="margin:0">
                   <div class="row">
                     <input type="hidden" name="frame_number" value="{{ forloop.counter }}">
@@ -123,12 +123,13 @@
               <script>
               $(function () {
                   $('#add_frame').on('click', function (event) {
-                      var X = $('#frame>div').length + 1;
+                      var X = $('#frames>div').length + 1;
 
-                      var tmpl = HandLebars.compile($('#tmpl-frame').html());
+                      var tmpl = Handlebars.compile($('#tmpl-frame').html());
 
-                      $wapper = $('<div>');
-                      $wapper.html(tmpl({X: X}));
+                      $wrapper = $('<div>');
+                      $wrapper.html(tmpl({X: X}));
+                      $('#frames').append($wrapper);
                     });
                 });
               </script>
@@ -144,6 +145,38 @@
               </script>
             </div>
           </div>
+        {% verbatim %}
+        <script id="tmpl-frame" type="text/x-handlebars-template">
+          <div class="panel panel-default panel-body" style="margin:0" id="frame_number_{{ X }}">
+            <input type="hidden" name="frame_number" value="{{ X }}">
+            <label class="col-sm-3">タグ<sup><font color="red"></font></sup></label>
+            <div class="checkbox col-sm-9">
+              {% for tag in all_tags %}
+              <label><input type="checkbox" name="tags" value="{{ tag.id }}"
+                {% if tag in event.tag.all %}checked{% endif %}>{{ tag.name }}</label>
+                {% endfor %}
+              </div>
+              <label class="col-sm-3">できる内容</label>
+              <div class="col-sm-9">
+                <textarea class="form-control" name="frame_{{ X }}_user_todo"></textarea>
+            <script>
+              (function () {
+                  $("#frame_number_{{ X }} .datetimepicker").datetimepicker({
+                      locale: moment.locale("ja"),
+                      format:"YYYY\MM\DD HH:mm",
+                      sideBySide:true,
+                      minDate: moment(),
+                      stepping: 15
+                    });
+                })();
+              <{{!}}/script>
+            </div>
+          </div>
+        </div>
+       </script>
+       {% endverbatim %}
+              
+
 
         
         <div class="form-group">
