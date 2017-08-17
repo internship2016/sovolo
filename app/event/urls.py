@@ -45,6 +45,7 @@ urlpatterns = [
     url(r'^filter/new_events$', api.event_filter, {'event_kind':'new_events'}, name='new_events'),
 
     url(r'^filter/(?P<event_kind>[\w_]+)$', api.event_filter, name='filter'),
+    url(r'^range_search/$', api.event_range_search, name='range_search'),
 
 
     # event/id/participate/frame_id
