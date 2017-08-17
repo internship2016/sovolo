@@ -34,7 +34,8 @@ nav{
 
 #search-area {
   div {
-    margin: 0px;
+    margin-top: 3px;
+    margin-bottom: 4px
   }
 }
 
@@ -202,6 +203,11 @@ _::-webkit-:not(:root:root), .detail-thumbnail {
     /* 連休の二日目以降は赤に */
     td.day.weekend + td.day.weekend:not(.active) {
       background-color: custom-color('hot');
+    }
+    /*　選択した日付を色付け */
+    td.day.active {
+      background-color: #F86D6D;
+      border-radius: 4px
     }
   }
 }
