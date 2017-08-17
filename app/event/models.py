@@ -22,6 +22,7 @@ import sys
 import os
 import math
 
+
 class Event(AbstractBaseModel):
     # Numbers are arbitrary
     name = models.CharField(max_length=100)
@@ -140,9 +141,6 @@ class Event(AbstractBaseModel):
     def get_host_user_as_list(self):
         return [self.host_user]
 
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
-
 
 class Frame(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
@@ -209,15 +207,6 @@ class Frame(AbstractBaseModel):
 
         return ratio
 
-class FrameAdmin(admin.ModelAdmin):
-    list_display = (
-        'pk',
-        'event',
-        'description',
-        'upper_limit',
-        'deadline',
-    )
-
 
 class Participation(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
@@ -233,10 +222,6 @@ class Participation(AbstractBaseModel):
 
     def save(self, *args, **kwargs):
         return super(Participation, self).save(*args, **kwargs)
-
-
-class ParticipationAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'event', 'user', 'status', 'frame']
 
 
 class Comment(AbstractBaseModel):
