@@ -1,20 +1,4 @@
 
-$(function(){
-  var swiper = new Swiper('.swiper-container', {
-    loop : true,
-    pagination: '.swiper-pagination',
-    nextButton: '.swiper-button-next',
-    prevButton: '.swiper-button-prev',
-    slidesPerView: 'auto',
-    centeredSlides: true,
-    paginationClickable: true,
-    spaceBetween: 30
-  });
-  $('#top-tabs').tabs({
-    selected  : 0,
-  });
-});
-
 (function (window) {
   var $ = window.jQuery;
   var moment = window.moment;

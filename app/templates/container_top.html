@@ -14,42 +14,64 @@
 
 <!-- Swiper -->
 <div class="swiper-container">
-    <div class="swiper-wrapper">
-      {% for event in new_events %}
-      <div class="swiper-slide">
-        <div class="card row">
-          <a class="card-img col-xs-6" href="{% url 'event:detail' event.pk %}">
-            <img src="{{ event.get_image_url }}" alt="トップ画像">
-          </a>
-          <div class="card-block col-xs-6">
-            <a href="{% url 'event:detail' event.pk %}"><h4 class="card-title">{{event.name}}</h4></a>
-            <p class="card-text">
-              <i class="fa fa-calendar" aria-hidden="true"></i>
-              {{event.start_time_format | date:'n/j (D)' }}
-              <br>
-              <i class="fa fa-map-marker" aria-hidden="true"></i>
-              {{event.get_region_kanji}}
-            </p>
-            <a href="{% url 'event:support' event.pk %}" class="btn btn-success align-bottom">応援する</a>
-          </div>
-        </div>
-      </div>
-      {% endfor %}
+    <div class="swiper-wrapper" id="swiper-wrapper">
     </div>
     <div class="swiper-pagination"></div>
     <div class="swiper-button-prev"></div>
     <div class="swiper-button-next"></div>
 </div>
 
+{% verbatim %}
+<script id="slide-template" type="text/x-handlebars-template">
+  {{#each filtered_events}}
+  <div class="swiper-slide">
+    <div class="card row">
+      <a class="card-img col-xs-6" href="/event/{{id}}">
+        <img src="{{img}}" alt="トップ画像">
+      </a>
+      <div class="card-block col-xs-6">
+        <a href="/event/{{id}}"><h4 class="card-title">{{name}}</h4></a>
+        <p class="card-text">
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+          {{start_time}}
+          <br>
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          {{place}}
+        </p>
+        <a href="/event/{{id}}/support" class="btn btn-success align-bottom">応援する</a>
+      </div>
+    </div>
+  </div>
+  {{/each}}
+</script>
+{% endverbatim %}
+
 
 <script>
   var template;
   $(function(){
-    template = Handlebars.compile($("#event-template").html());
     moment.updateLocale('ja', {
       weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
       weekdaysShort: ["日","月","火","水","木","金","土"],
     });
+    var slide_template = Handlebars.compile($("#slide-template").html());
+    var slide_content = $(".event-filter:first-of-type");
+    $.ajax({
+        'url':slide_content.attr("action"),
+        'data':slide_content.serialize(),
+        'type':'POST',
+        'dataType':'json',
+      }).done(function(response){
+        for(var i=0;i<response['filtered_events'].length;i++){
+          response['filtered_events'][i]['start_time'] = moment(response['filtered_events'][i]['start_time']).format("M月D日(dd)");
+        }
+        console.log(slide_template(response));
+        $('#swiper-wrapper').html(slide_template(response));
+      }).fail(function(){
+        console.log("取得に失敗")
+    });
+
+    template = Handlebars.compile($("#event-template").html());
     var opts = {
       lines: 13, //線の数
       length: 33, //線の長さ
@@ -102,11 +124,26 @@
         console.log("取得に失敗")
       });
     });
+    console.log($('.swiper-container').get(0));
+    var swiper = new Swiper('.swiper-container', {
+      loop : true,
+      pagination: '.swiper-pagination',
+      nextButton: '.swiper-button-next',
+      prevButton: '.swiper-button-prev',
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      paginationClickable: true,
+      spaceBetween: 30
+    });
+    $('#top-tabs').tabs({
+      selected  : 0,
+    });
+
   })
 
   function show_events(context){
     for(var i=0;i<context['filtered_events'].length;i++){
-      context['filtered_events'][i]['start_time'] = moment().format("M月D日(dd)");
+      context['filtered_events'][i]['start_time'] = moment( context['filtered_events'][i]['start_time']).format("M月D日(dd)");
     }
     $('#event-area').html(template(context));
   }
