@@ -9,7 +9,7 @@ class UserReviewListInline(admin.TabularInline):
     extra = 3
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'created', 'modified')
+    list_display = ('pk', 'username', 'created', 'modified')
     inlines = [UserReviewListInline]
 
 admin.site.register(User, UserAdmin)
