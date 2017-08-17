@@ -5,66 +5,70 @@
   </div>
   <div class="panel-body">
     <form class="form-horizontal" role="search" action="{% url 'event:search' %}" method="get">
-      <div class="form-group" id="search-calendar">
-        <div class="col-lg-12">
-          <input type="hidden" id="searchform-date" class="form-control" name="date" />
-        </div>
-        <script>$(function () { $('#searchform-date').data("DateTimePicker").defaultDate('{{ request.GET.date }}');});</script>
-      </div>
-      <div class="form-group" id="word-search">
-        <label for="searchform-keyword" class="col-lg-4 control-label">キーワード</label>
-        <div class="col-lg-8">
-          <input type="text" id="searchform-keyword" class="form-control"  name="q" value="{{ request.GET.q }}"/>
-        </div>
-      </div>
-      <div class="form-group" id="search-category">
-        <label class="col-lg-4 control-label">タグ</label>
-        <div class="checkbox col-lg-8">
-          {% for tag in all_tags %}
-            <label>
-              <input type="checkbox" name="tags" value="{{ tag.pk }}" {% if tag.pk in checked_tags %}checked{% endif %}>{{ tag.name }}
-            </label>
-          {% endfor %}
-        </div>
-      </div>
-      <div class="form-group" id="search-area">
-        <label for="searchform-area" class="col-lg-4 control-label">場所</label>
-        <div class="col-lg-8">
-          <select class="form-control" name="region">
-            <option value="">未選択</option>
-            {% for alphabet, kanji in prefectures %}
-              <option value="{{ alphabet }}" {% if alphabet == request.GET.region %}selected{% endif %}>{{ kanji }}</option>
-            {% endfor %}
-          </select>
-        </div>
-      </div>
-      <div class="form-group center-block search-ordering">
-        <label for="searchform-order_by" class="col-lg-4 control-label">並び順</label>
-        <div class="col-lg-8">
-          <select class="form-control" name="order_by" id="searchform-order_by">
-            <option value="start_time-asc" {% if request.GET.order_by == "start_time-asc" %}selected{% endif %}>開始日 (昇順）</option>
-            <option value="start_time-desc" {% if request.GET.order_by == "start_time-desc" %}selected{% endif %}>開始日 (降順)</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group center-block search-ordering">
-        <label for="searchform-numperpage" class="col-lg-4 control-label">表示件数</label>
-        <div class="col-lg-8">
-          <select class="form-control" name="numperpage" id="searchform-numperpage">
-            <option value="10" {% if request.GET.numperpage == '10' %}selected{% endif %}>10 件/ページ</option>
-            <option value="20" {% if request.GET.numperpage == '20' %}selected{% endif %}>20 件/ページ</option>
-            <option value="50" {% if request.GET.numperpage == '50' %}selected{% endif %}>50 件/ページ</option>
-          </select>
-        </div>
-      </div>
-      <div class="form-group center-block search-ordering">
-        <label for="searchform-closed" class="col-lg-4 control-label">ステータス</label>
-        <div class="checkbox col-lg-8">
-          <input type="checkbox" name="exclude_closed_events" id="searchform-closed" {% if request.GET.exclude_closed_events == 'on' %}checked{% endif %}>締め切られたボランティアを表示
-        </div>
-      </div>
       <div class="row">
-        <button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4 col-lg-2 col-lg-offset-5 col-xs-8 col-xs-offset-2">検索</button>
+        <div class="form-group col-xs-12 col-md-6" id="search-calendar">
+          <div class="col-lg-12">
+            <input type="hidden" id="searchform-date" class="form-control" name="date" />
+          </div>
+          <script>$(function () { $('#searchform-date').data("DateTimePicker").defaultDate('{{ request.GET.date }}');});</script>
+        </div>
+        <div class="col-xs-12 col-md-6">
+          <div class="form-group" id="word-search">
+            <label for="searchform-keyword" class="col-lg-4 control-label">キーワード</label>
+            <div class="col-lg-8">
+              <input type="text" id="searchform-keyword" class="form-control"  name="q" value="{{ request.GET.q }}"/>
+            </div>
+          </div>
+          <div class="form-group" id="search-category">
+            <label class="col-lg-4 control-label">タグ</label>
+            <div class="checkbox col-lg-8">
+              {% for tag in all_tags %}
+                <label>
+                  <input type="checkbox" name="tags" value="{{ tag.pk }}" {% if tag.pk in checked_tags %}checked{% endif %}>{{ tag.name }}
+                </label>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="form-group" id="search-area">
+            <label for="searchform-area" class="col-lg-4 control-label">場所</label>
+            <div class="col-lg-8">
+              <select class="form-control" name="region">
+                <option value="">未選択</option>
+                {% for alphabet, kanji in prefectures %}
+                  <option value="{{ alphabet }}" {% if alphabet == request.GET.region %}selected{% endif %}>{{ kanji }}</option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="form-group center-block search-ordering">
+            <label for="searchform-order_by" class="col-lg-4 control-label">並び順</label>
+            <div class="col-lg-8">
+              <select class="form-control" name="order_by" id="searchform-order_by">
+                <option value="start_time-asc" {% if request.GET.order_by == "start_time-asc" %}selected{% endif %}>開始日 (昇順）</option>
+                <option value="start_time-desc" {% if request.GET.order_by == "start_time-desc" %}selected{% endif %}>開始日 (降順)</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group center-block search-ordering">
+            <label for="searchform-numperpage" class="col-lg-4 control-label">表示件数</label>
+            <div class="col-lg-8">
+              <select class="form-control" name="numperpage" id="searchform-numperpage">
+                <option value="10" {% if request.GET.numperpage == '10' %}selected{% endif %}>10 件/ページ</option>
+                <option value="20" {% if request.GET.numperpage == '20' %}selected{% endif %}>20 件/ページ</option>
+                <option value="50" {% if request.GET.numperpage == '50' %}selected{% endif %}>50 件/ページ</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group center-block search-ordering">
+            <label for="searchform-closed" class="col-lg-4 control-label">ステータス</label>
+            <div class="checkbox col-lg-8">
+              <input type="checkbox" name="exclude_closed_events" id="searchform-closed" {% if request.GET.exclude_closed_events == 'on' %}checked{% endif %}>締め切られたボランティアを表示
+            </div>
+          </div>
+          <div class="row">
+            <button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4 col-lg-2 col-lg-offset-5 col-xs-8 col-xs-offset-2">検索</button>
+          </div>
+        </div>
       </div>
     </form>
   </div>
