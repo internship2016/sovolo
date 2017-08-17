@@ -151,9 +151,8 @@
             <input type="hidden" name="frame_number" value="{{ X }}">
             <label class="col-sm-3">タグ<sup><font color="red"></font></sup></label>
             <div class="checkbox col-sm-9">
-              {% for tag in all_tags %}
-              <label><input type="checkbox" name="tags" value="{{ tag.id }}"
-                {% if tag in event.tag.all %}checked{% endif %}>{{ tag.name }}</label>
+              {% for tag in event.tag.all %}
+              <label><input type="checkbox" name="tags" value="{{ tag.id }}i"{% if tag in request.user.follow_tag.all %}checked{% endif %}>{{ tag.name }}</label>
                 {% endfor %}
               </div>
               <label class="col-sm-3">できる内容</label>
@@ -175,13 +174,11 @@
         </div>
        </script>
        {% endverbatim %}
-              
-
-
-        
+      
         <div class="form-group">
           <label for="usertodo-form" class="col-sm-3 col-lg-2 control-label">できること</label>
-            <div class="col-sm-9 col-lg-9"><input id="usertodo-form" class="form-control" name="user_todo" maxlength="1000" value="{{ user.user_todo }}"/></div>
+            <div class="col-sm-9 col-lg-9"><input id="usertodo-form" type="text"  class="form-control" name="user_todo" maxlength="1000" value="{{ user.user_todo }}"/></div>
+        </div>
         <input type="button" onclick="location.href='../request_password_reset'" value="passwordを変更する">
         <div class="row">
           <input type="submit" class="btn btn-primary btn-lg col-sm-4 col-sm-offset-4 col-lg-2 col-lg-offset-5 col-xs-8 col-xs-offset-2" value="適用"/>
