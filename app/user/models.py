@@ -23,6 +23,7 @@ import sys, os, math
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Avg
 
+
 class UserManager(BaseUserManager):
     def create_user(self, email="", username="", password=None):
         user = self.model(
@@ -240,6 +241,8 @@ class UserReviewList(models.Model):
 
     joined_event = models.ForeignKey('event.Event', null=True)
 
+    # post_day = models.DateTimeField(default=timezone.now, editable=False, null=True)
+    post_day = models.DateTimeField(default=timezone.now, null=True)
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
-        return str(self.rating)
+        return str(self.to_rate_user)
