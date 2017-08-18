@@ -32,3 +32,6 @@ def index(request):
     context['prefectures'] = prefs
 
     return render(request, 'top.html', context)
+
+def show_map(request):
+    return render(request, 'map.html')
