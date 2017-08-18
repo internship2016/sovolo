@@ -218,3 +218,8 @@ class UserPostReviewView(FormView):
     def get_success_url(self, **kwargs):
         pk = self.kwargs.get('pk')
         return reverse('user:review', kwargs={'pk': pk})
+
+## Review
+class UserUnReviewedView(DetailView):
+    model = User
+    template_name = 'user/user_unreviewed.html'

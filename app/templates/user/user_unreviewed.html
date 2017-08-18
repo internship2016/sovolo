@@ -1,0 +1,15 @@
+{% extends "container.html" %}
+{% load i18n %}
+{% load event_tags %}
+
+{% block title %}{{ user.username }} ユーザー未レビュー | Sovol{% endblock %}
+
+
+{% block content %}
+
+
+
+{% event_list user.get_past_participated_and_unreviewed_events "参加後かつ未レビューのボランティア一覧"　%}
+<h1>{{ user.id }}</h1>
+<h1>{% url %}</h1>
+{% endblock %}

@@ -167,7 +167,6 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def get_past_participated_events(self):
         return [event for event in self.participating_event.all().order_by('start_time') if event.is_over()]
 
-
     def get_new_tag_events(self):
         Event = apps.get_model('event', 'Event')
         tag_list = self.follow_tag.all()
@@ -192,10 +191,18 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
         return trophies
 
-    # shuto tsuchiya
+    # Review
     def get_mean_rating(self):
         return self.to_rate_user.aggregate(Avg('rating'))['rating__avg']
 
+    def get_reviewed_events(self):
+        return [event.joined_event for event in self.to_rate_user.all()]
+
+    def get_past_participated_and_unreviewed_events(self):
+        finished_list = [event for event in self.participating_event.all() if event.is_over()]
+        reviewed_list_id = [event.id for event in self.get_reviewed_events()]
+        unreviewed_event = [event for event in finished_list if not event.id in reviewed_list_id]
+        return unreviewed_event
 
 class UserActivation(models.Model):
     user = models.OneToOneField(User)

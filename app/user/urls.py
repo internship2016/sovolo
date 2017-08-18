@@ -21,4 +21,5 @@ urlpatterns = [
     # review
     url(r'^(?P<pk>[0-9]+)/review/$', views.UserReviewView.as_view(), name='review'),
     url(r'^(?P<pk>[0-9]+)/post_review/$', views.UserPostReviewView.as_view(), name='post_review'),
+    url(r'^(?P<pk>[0-9]+)/unreviewed/$', views.UserUnReviewedView.as_view(), name='unreviewed'),
 ]
