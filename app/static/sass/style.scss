@@ -412,3 +412,23 @@ $logo-height :65px;
     cursor: pointer;
   }  
 }
+
+.input-loc{
+  padding: 0;
+  &-btn{
+  border-width: 1px 0 1px;
+  border-style: solid;
+  border-color: #ccc;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  border-radius: none;
+  box-sizing: border-box;
+  height: 34px;
+    &_2{
+      height: 34px;
+    }
+  }
+}
+
+#id_meeting_place{
+  border-right: none;
+}
