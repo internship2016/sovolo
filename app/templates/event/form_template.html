@@ -83,8 +83,8 @@
       </span>
     </div>
 
-    <input id="id_latitude" type="hidden" name="latitude">
-    <input id="id_longitude" type="hidden" name="longitude">
+    <input id="id_latitude" type="hidden" name="latitude" value="{{event.latitude}}">
+    <input id="id_longitude" type="hidden" name="longitude" value="{{event.longitude}}" >
 
     <p>詳細な位置はピンで指定してください</p>
     <div id="map_canvas" class="center-block"></div>
@@ -99,9 +99,14 @@
   var marker;
 
   function initialize(){
-    var default_lat = 35.709984;
-    var default_lng = 139.810703;
-    var latlng = new google.maps.LatLng(default_lat,default_lng);
+    var default_lat,default_lng;
+    var lat = parseFloat($('#id_latitude').val());
+    var lng = parseFloat($('#id_longitude').val());
+    if(isNaN(lat)||isNaN(lng)){
+      lat = 35.7335;
+      lng = 139.71200499999998;
+    }
+    var latlng = new google.maps.LatLng(lat,lng);
 
     var opts = {
       zoom: 15,
@@ -112,12 +117,6 @@
     
     gmap.setCenter(latlng);
     setPin(latlng);
-
-    {% if event.latitude and event.longitude %}
-      latlng = new google.maps.LatLng({{ event.latitude }},{{ event.longitude }});
-      gmap.setCenter(latlng);
-      setPin(latlng);
-    {% endif %}
 
     geocoder = new google.maps.Geocoder();
   }
@@ -132,8 +131,6 @@
         geocoder.geocode( { 'location': now}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               $('#id_meeting_place').val(results[0].formatted_address);
-            } else {
-              alert("ほげげ");
             }
         });
     }, function() {
