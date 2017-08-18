@@ -141,17 +141,10 @@ class Event(AbstractBaseModel):
     def get_host_user_as_list(self):
         return [self.host_user]
 
-<<<<<<< HEAD
-=======
     @classmethod
     def get_events_in_range(cls, ne_lat, sw_lat, ne_lng, sw_lng):
         return cls.objects.filter(latitude__range=(ne_lat, sw_lat), longitude__range=(ne_lng, sw_lng))
 
-
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
-
->>>>>>> 42349d711c856d33057f5b1269ec0c4065cc076e
 
 class Frame(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
