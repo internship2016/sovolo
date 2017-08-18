@@ -17,6 +17,9 @@ from .models import User, UserActivation, UserPasswordResetting, UserReviewList
 from .form import UserReviewListForm
 from django.urls import reverse
 
+from django.utils import translation
+from django.conf import settings
+
 class UserCreateView(CreateView):
     model = User
     fields = ['email', 'password', 'username']
@@ -153,7 +156,17 @@ class UserDetailView(DetailView):
 
 class UserEditView(UpdateView):
     model = User
-    fields = ['username', 'email', 'image', 'region', 'sex', 'birthday']
+
+    fields = [
+        'username',
+        'email',
+        'image',
+        'region',
+        'sex',
+        'birthday',
+        'language',
+    ]
+
     template_name = 'user/edit.html'
 
     def get_object(self, queryset=None):
@@ -162,6 +175,7 @@ class UserEditView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UserEditView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
+        context['languages'] = settings.LANGUAGES
         return context
 
     def form_valid(self, form):
@@ -175,6 +189,8 @@ class UserEditView(UpdateView):
 
         for tag_id in old_tags - new_tags:
             user.follow_tag.remove(tag_id)
+
+        self.request.session[translation.LANGUAGE_SESSION_KEY] = user.language
 
         messages.info(self.request, "ユーザー情報を編集しました。")
         return super(UserEditView, self).form_valid(form)

@@ -6,6 +6,8 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.apps import apps
 
+from django.utils.translation import ugettext_lazy as _
+
 from datetime import datetime
 from django.utils import timezone
 
@@ -64,6 +66,12 @@ class User(AbstractBaseModel, AbstractBaseUser):
     objects = UserManager()
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+
+    language = models.CharField(verbose_name=_('Language'),
+                                max_length=10,
+                                choices=settings.LANGUAGES,
+                                default=settings.LANGUAGE_CODE,  # FIXME: !!
+                                null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
