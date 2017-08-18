@@ -6,10 +6,11 @@ from .models import User, UserReviewList
 class UserReviewListInline(admin.TabularInline):
     model = UserReviewList
     fk_name = "to_rate_user"
+    readonly_fields = ('post_day',)
     extra = 3
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('username', 'created', 'modified')
+    list_display = ('pk', 'username', 'created', 'modified')
     inlines = [UserReviewListInline]
 
 admin.site.register(User, UserAdmin)
