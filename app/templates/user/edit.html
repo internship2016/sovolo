@@ -79,14 +79,14 @@
                 <div class="panel panel-default panel-body" style="margin:0">
                   <div class="row">
                     <input type="hidden" name="frame_number" value="{{ forloop.counter }}">
-                    {% if not request.GET.copy_user_id %}
+                    {% if not request.POST.copy_user_id %}
                       <input type="hidden" name="frame_{{ forloop.counter }}_id" value="{{ frame_id }}">
                     {% endif %}
                     <label class="col-sm-3">タグ</label>
                     <div class="checkbox col-sm-9">
                       {% for tag in all_tags %}
                         <label><input type="checkbox" name="tags" value="{{ tag.id }}"
-                          {% if tag in event.tag.all %}checked{% endif %}>{{ tag.name }}</label>
+                          {% if tag in frame.tag.all %}checked{% endif %}>{{ tag.name }}</label>
                       {% endfor %}
                     </div>
                     <label class="col-sm-3">できる内容</label>
@@ -104,7 +104,7 @@
                     <div class="checkbox col-sm-9">↲
                       {% for tag in all_tags %}↲
                       <label><input type="checkbox" name="tags" value="{{ tag.id     }}"↲
-                        {% if tag in event.tag.all %}checked{% endif %}>{{ tag.name }}</label>↲
+                        {% if tag in frame.tag.all %}checked{% endif %}>{{ tag.name }}</label>↲
                       {% endfor %}↲
                      </div>↲
                      <label class="col-sm-3">できる内容</label>↲
@@ -150,9 +150,10 @@
           <div class="panel panel-default panel-body" style="margin:0" id="frame_number_{{ X }}">
             <input type="hidden" name="frame_number" value="{{ X }}">
             <label class="col-sm-3">タグ<sup><font color="red"></font></sup></label>
-            <div class="checkbox col-sm-9">
-              {% for tag in event.tag.all %}
-              <label><input type="checkbox" name="tags" value="{{ tag.id }}i"{% if tag in request.user.follow_tag.all %}checked{% endif %}>{{ tag.name }}</label>
+            {% for tag in user.frame_set.all %}
+              <div class="checkbox col-sm-9">
+              
+              <label><input type="checkbox" name="tags" value="{{ tag.id }}"{% if tag in request.user.follow_tag.all %}checked{% endif %}>{{ tag.name }}</label>
                 {% endfor %}
               </div>
               <label class="col-sm-3">できる内容</label>

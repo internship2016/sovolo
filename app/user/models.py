@@ -258,7 +258,7 @@ class Frame(AbstractBaseModel):
     user_todo = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return "Frame #" + str(self.pk) + " in User #" +str(self.frame_user)
+        return "Frame #" + str(self.pk) + " in User #" +str(self.user_id)
 
     def get_tags_as_string(self):
         return "\n".join([tag.name for tag in self.tag.all()])
