@@ -28,8 +28,11 @@ nav{
 }
 
 .m10{margin: 10px;}
+.m15{margin: 15px;}
 .mt10{margin-top: 10px;}
+.mt15{margin-top: 15px;}
 .mb10{margin-bottom: 10px;}
+.mb15{margin-bottom: 15px;}
 
 
 #search-area {
@@ -66,9 +69,10 @@ nav{
 }
 
 /* Google Maps */
+$map-size :400px;
 #map_canvas{
-  height:300px;
-  width:300px;
+  height:$map-size;
+  width:$map-size;
   margin-top:10px;
 }
 

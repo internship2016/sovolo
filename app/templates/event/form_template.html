@@ -103,7 +103,10 @@
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     gmap = new google.maps.Map(document.getElementById("map_canvas"), opts);
-
+    
+    console.log("ほげげg");
+    gmap.setCenter(latlng);
+    setPin(latlng);
     {% if event.latitude and event.longitude %}
       latlng = new google.maps.LatLng({{ event.latitude }},{{ event.longitude }});
       gmap.setCenter(latlng);
@@ -122,6 +125,7 @@
           $(('#id_latitude')).val(results[0].geometry.location.lat())
           $(('#id_longitude')).val(results[0].geometry.location.lng())
         } else {
+          console.log("ほげげ");
           alert("緯度経度情報を取得できませんでした。");
         }
       });
@@ -425,6 +429,7 @@
   }
 </style>
 
+<!--datetimepicker-->
 <script type="text/javascript">
 (function (global) {
   var $ = global.jQuery;
