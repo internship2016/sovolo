@@ -104,9 +104,18 @@
     });
   })
 
+ var label_convert={
+   '開催中' : 'success',
+   '募集中' :  'info',
+   '管理者' : 'primary',
+   '終了' : 'default',
+ }
+
   function show_events(context){
     for(var i=0;i<context['filtered_events'].length;i++){
       context['filtered_events'][i]['start_time'] = moment(context['filtered_events'][i]['start_time']).format("M月D日(dd)");
+      context['filtered_events'][i]['label_brand']
+       = label_convert[context['filtered_events'][i]['status']];
     }
     $('#event-area').html(template(context));
   }
