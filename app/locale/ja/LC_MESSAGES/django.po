@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-17 05:22+0900\n"
+"POT-Creation-Date: 2017-08-19 03:58+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,194 +18,206 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: sovolo/settings.py:209
+#: sovolo/settings.py:146
+msgid "English"
+msgstr "英語"
+
+#: sovolo/settings.py:147
+msgid "Japanese"
+msgstr "日本語"
+
+#: sovolo/settings.py:213
 msgid "Hokkaido"
 msgstr "北海道"
 
-#: sovolo/settings.py:210
+#: sovolo/settings.py:214
 msgid "Aomori"
 msgstr "青森県"
 
-#: sovolo/settings.py:211
+#: sovolo/settings.py:215
 msgid "Iwate"
 msgstr "岩手県"
 
-#: sovolo/settings.py:212
+#: sovolo/settings.py:216
 msgid "Miyagi"
 msgstr "宮城県"
 
-#: sovolo/settings.py:213
+#: sovolo/settings.py:217
 msgid "Akita"
 msgstr "秋田県"
 
-#: sovolo/settings.py:214
+#: sovolo/settings.py:218
 msgid "Yamagata"
 msgstr "山形県"
 
-#: sovolo/settings.py:215
+#: sovolo/settings.py:219
 msgid "Fukushima"
 msgstr "福島県"
 
-#: sovolo/settings.py:216
+#: sovolo/settings.py:220
 msgid "Ibaraki"
 msgstr "茨城県"
 
-#: sovolo/settings.py:217
+#: sovolo/settings.py:221
 msgid "Tochigi"
 msgstr "栃木県"
 
-#: sovolo/settings.py:218
+#: sovolo/settings.py:222
 msgid "Gunnma"
 msgstr "群馬県"
 
-#: sovolo/settings.py:219
+#: sovolo/settings.py:223
 msgid "Saitama"
 msgstr "埼玉県"
 
-#: sovolo/settings.py:220
+#: sovolo/settings.py:224
 msgid "Chiba"
 msgstr "千葉県"
 
-#: sovolo/settings.py:221
+#: sovolo/settings.py:225
 msgid "Tokyo"
 msgstr "東京都"
 
-#: sovolo/settings.py:222
+#: sovolo/settings.py:226
 msgid "Kanagawa"
 msgstr "神奈川県"
 
-#: sovolo/settings.py:223
+#: sovolo/settings.py:227
 msgid "Niigata"
 msgstr "新潟県"
 
-#: sovolo/settings.py:224
+#: sovolo/settings.py:228
 msgid "Toyama"
 msgstr "富山県"
 
-#: sovolo/settings.py:225
+#: sovolo/settings.py:229
 msgid "Ishikawa"
 msgstr "石川県"
 
-#: sovolo/settings.py:226
+#: sovolo/settings.py:230
 msgid "Fukui"
 msgstr "福井県"
 
-#: sovolo/settings.py:227
+#: sovolo/settings.py:231
 msgid "Yamanashi"
 msgstr "山梨県"
 
-#: sovolo/settings.py:228
+#: sovolo/settings.py:232
 msgid "Nagano"
 msgstr "長野県"
 
-#: sovolo/settings.py:229
+#: sovolo/settings.py:233
 msgid "Gifu"
 msgstr "岐阜県"
 
-#: sovolo/settings.py:230
+#: sovolo/settings.py:234
 msgid "Shizuoka"
 msgstr "静岡県"
 
-#: sovolo/settings.py:231
+#: sovolo/settings.py:235
 msgid "Aichi"
 msgstr "愛知県"
 
-#: sovolo/settings.py:232
+#: sovolo/settings.py:236
 msgid "Mie"
 msgstr "三重県"
 
-#: sovolo/settings.py:233
+#: sovolo/settings.py:237
 msgid "Shiga"
 msgstr "滋賀県"
 
-#: sovolo/settings.py:234
+#: sovolo/settings.py:238
 msgid "Kyoto"
 msgstr "京都府"
 
-#: sovolo/settings.py:235
+#: sovolo/settings.py:239
 msgid "Osaka"
 msgstr "大阪府"
 
-#: sovolo/settings.py:236
+#: sovolo/settings.py:240
 msgid "Hyogo"
 msgstr "兵庫県"
 
-#: sovolo/settings.py:237
+#: sovolo/settings.py:241
 msgid "Nara"
 msgstr "奈良県"
 
-#: sovolo/settings.py:238
+#: sovolo/settings.py:242
 msgid "Wakayama"
 msgstr "和歌山県"
 
-#: sovolo/settings.py:239
+#: sovolo/settings.py:243
 msgid "Tottori"
 msgstr "鳥取県"
 
-#: sovolo/settings.py:240
+#: sovolo/settings.py:244
 msgid "Shimane"
 msgstr "島根県"
 
-#: sovolo/settings.py:241
+#: sovolo/settings.py:245
 msgid "Okayama"
 msgstr "岡山県"
 
-#: sovolo/settings.py:242
+#: sovolo/settings.py:246
 msgid "Hiroshima"
 msgstr "広島県"
 
-#: sovolo/settings.py:243
+#: sovolo/settings.py:247
 msgid "Yamaguchi"
 msgstr "山口県"
 
-#: sovolo/settings.py:244
+#: sovolo/settings.py:248
 msgid "Tokushima"
 msgstr "徳島県"
 
-#: sovolo/settings.py:245
+#: sovolo/settings.py:249
 msgid "Kagawa"
 msgstr "香川県"
 
-#: sovolo/settings.py:246
+#: sovolo/settings.py:250
 msgid "Ehime"
 msgstr "愛媛県"
 
-#: sovolo/settings.py:247
+#: sovolo/settings.py:251
 msgid "Kouchi"
 msgstr "高知県"
 
-#: sovolo/settings.py:248
+#: sovolo/settings.py:252
 msgid "Fukuoka"
 msgstr "福岡県"
 
-#: sovolo/settings.py:249
+#: sovolo/settings.py:253
 msgid "Saga"
 msgstr "佐賀県"
 
-#: sovolo/settings.py:250
+#: sovolo/settings.py:254
 msgid "Nagasaki"
 msgstr "長崎県"
 
-#: sovolo/settings.py:251
+#: sovolo/settings.py:255
 msgid "Kumamoto"
 msgstr "熊本県"
 
-#: sovolo/settings.py:252
+#: sovolo/settings.py:256
 msgid "Ooita"
 msgstr "大分県"
 
-#: sovolo/settings.py:253
+#: sovolo/settings.py:257
 msgid "Miyazaki"
 msgstr "宮崎県"
 
-#: sovolo/settings.py:254
+#: sovolo/settings.py:258
 msgid "Kagoshima"
 msgstr "鹿児島県"
 
-#: sovolo/settings.py:255
+#: sovolo/settings.py:259
 msgid "Okinawa"
 msgstr "沖縄県"
 
-#: templates/base.html:95
+#: templates/base.html:94
 msgid "Profile"
 msgstr "プロフィール"
+
+#: templates/user/edit.html:66 user/models.py:70
+msgid "Language"
+msgstr "言語"
