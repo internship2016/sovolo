@@ -227,21 +227,22 @@ class UserReviewList(models.Model):
         related_name='to_rate_user',
         )
 
-    rating = models.IntegerField(validators=[MinValueValidator(0),
-                                       MaxValueValidator(5)])
-
-    comment = models.CharField(max_length=200, null=True)
-
     from_rate_user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='from_rate_user',
         )
 
+    rating = models.IntegerField(validators=[MinValueValidator(0),
+                                       MaxValueValidator(5)])
+
+    comment = models.CharField(max_length=200, null=True)
+
     joined_event = models.ForeignKey('event.Event', null=True)
 
     # post_day = models.DateTimeField(default=timezone.now, editable=False, null=True)
     post_day = models.DateTimeField(default=timezone.now, null=True)
+
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
         return str(self.to_rate_user)
