@@ -71,9 +71,14 @@
         type="text"
         value="{{ event.meeting_place }}"
         required/>
-      <span class="input-group-btn">
-        <button class="btn btn-primary" onClick="getlatlng(); return false;">
+      <span class="input-group-addon input-loc">
+        <button class="btn btn-link" onClick="getnow(); return false;">
           <span class="glyphicon glyphicon-map-marker"></span>
+        </button>
+      </span>
+      <span class="input-group-btn">
+        <button class="btn btn-primary input-loc-btn_2" onClick="getlatlng(); return false;">
+          検索
         </button>
       </span>
     </div>
@@ -97,51 +102,77 @@
     var default_lat = 35.709984;
     var default_lng = 139.810703;
     var latlng = new google.maps.LatLng(default_lat,default_lng);
+
     var opts = {
       zoom: 15,
       center: latlng,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     gmap = new google.maps.Map(document.getElementById("map_canvas"), opts);
+    
+    gmap.setCenter(latlng);
+    setPin(latlng);
 
     {% if event.latitude and event.longitude %}
       latlng = new google.maps.LatLng({{ event.latitude }},{{ event.longitude }});
       gmap.setCenter(latlng);
       setPin(latlng);
     {% endif %}
+
+    geocoder = new google.maps.Geocoder();
+  }
+
+  function getnow(){
+    navigator.geolocation.getCurrentPosition(function(position) {
+        // 緯度経度の取得
+        var now = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        gmap.setCenter(now);
+        setPin(now);
+    }, function() {
+        alert('位置情報取得に失敗しました');
+    });
   }
 
   function getlatlng(){
-    geocoder = new google.maps.Geocoder();
+    //検索した時
     var address = document.getElementById("id_meeting_place").value;
     geocoder.geocode( { 'address': address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           gmap.setCenter(results[0].geometry.location);
           setPin(results[0].geometry.location);
-          //set values of hidden inputs
-          $(('#id_latitude')).val(results[0].geometry.location.lat())
-          $(('#id_longitude')).val(results[0].geometry.location.lng())
         } else {
           alert("緯度経度情報を取得できませんでした。");
         }
-      });
+    });
   }
 
   function setPin(pos) {
+    $(('#id_latitude')).val(pos.lat());
+    $(('#id_longitude')).val(pos.lng());
     if (!marker) {
+      //最初のマーカーを置く時
       marker = new google.maps.Marker({
         map: gmap,
         draggable: true
-      })
+      });
       marker.addListener('dragend',function () {
+        //マーカーを動かした時
         $(('#id_latitude')).val(marker.position.lat())
         $(('#id_longitude')).val(marker.position.lng())
+        geocoder.geocode( { 'location': marker.position}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              $('#id_meeting_place').val(results[0].formatted_address);
+              gmap.setCenter(results[0].geometry.location);
+            } else {
+              alert("緯度経度情報を取得できませんでした。");
+            }
+        });
       })
     }
     marker.setPosition(pos);
   }
 
-  window.onload = initialize()
+  window.onload = initialize();
 </script>
 
 
@@ -425,6 +456,7 @@
   }
 </style>
 
+<!--datetimepicker-->
 <script type="text/javascript">
 (function (global) {
   var $ = global.jQuery;

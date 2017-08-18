@@ -28,8 +28,11 @@ nav{
 }
 
 .m10{margin: 10px;}
+.m15{margin: 15px;}
 .mt10{margin-top: 10px;}
+.mt15{margin-top: 15px;}
 .mb10{margin-bottom: 10px;}
+.mb15{margin-bottom: 15px;}
 
 
 #search-area {
@@ -68,9 +71,10 @@ nav{
 }
 
 /* Google Maps */
+$map-size :400px;
 #map_canvas{
-  height:300px;
-  width:300px;
+  height:$map-size;
+  width:$map-size;
   margin-top:10px;
 }
 
@@ -407,4 +411,24 @@ $logo-height :65px;
     font-size: 18px;
     cursor: pointer;
   }  
+}
+
+.input-loc{
+  padding: 0;
+  &-btn{
+  border-width: 1px 0 1px;
+  border-style: solid;
+  border-color: #ccc;
+  box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+  border-radius: none;
+  box-sizing: border-box;
+  height: 34px;
+    &_2{
+      height: 34px;
+    }
+  }
+}
+
+#id_meeting_place{
+  border-right: none;
 }
