@@ -72,9 +72,9 @@
         value="{{ event.meeting_place }}"
         required/>
       <span class="input-group-addon input-loc">
-        <button class="btn btn-link" onClick="getnow(); return false;">
-          <span class="glyphicon glyphicon-map-marker"></span>
-        </button>
+        <span class="btn btn-link input-loc-btn" onClick="getnow(); return false;">
+          <span class="fa fa-compass"></span>
+        </span>
       </span>
       <span class="input-group-btn">
         <button class="btn btn-primary input-loc-btn_2" onClick="getlatlng(); return false;">
@@ -127,7 +127,15 @@
         // 緯度経度の取得
         var now = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
         gmap.setCenter(now);
+        $('#id_meeting_place').val(position.formatted_address);
         setPin(now);
+        geocoder.geocode( { 'location': now}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              $('#id_meeting_place').val(results[0].formatted_address);
+            } else {
+              alert("ほげげ");
+            }
+        });
     }, function() {
         alert('位置情報取得に失敗しました');
     });
