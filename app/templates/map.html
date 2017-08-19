@@ -1,5 +1,104 @@
+
 <div class="row">
   <div class="col-xs-12">
-    mapmap
+    <div class="form-group">
+      <div class="input-group">
+        <input id="id_meeting_place"
+          class="form-control"
+          maxlength="300"
+          name="meeting_place"
+          type="text"
+          required/>
+        <span class="input-group-addon input-loc">
+          <span class="btn btn-link input-loc-btn" onClick="getnow(); return false;">
+            <span class="fa fa-compass"></span>
+          </span>
+        </span>
+        <span class="input-group-btn">
+          <button class="btn btn-primary input-loc-btn_2" onClick="getlatlng(); return false;">
+            検索
+          </button>
+        </span>
+      </div>
+
+      <input id="ne_lat" type="hidden" name="ne_lat" value="">
+      <input id="sw_lat" type="hidden" name="sw_lat" value="">
+      <input id="ne_lat" type="hidden" name="ne_lng" value="">
+      <input id="sw_lat" type="hidden" name="sw_lng" value="">
+
+      <div id="map_canvas2" class="center-block"></div>
+
+    </div>
   </div>
 </div>
+
+<script>
+  var gmap;
+  var geocoder;
+  var marker;
+
+  function initialize(){
+    var lat = 35.7291213;
+    var lng = 139.7191322;
+    var latlng = new google.maps.LatLng(lat,lng);
+
+    var opts = {
+      zoom: 15,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    gmap = new google.maps.Map(document.getElementById("map_canvas2"), opts);
+    gmap.setCenter(latlng);
+    google.maps.event.addListener(gmap, 'idle', function(){
+      get_events();
+    });
+    geocoder = new google.maps.Geocoder();
+  }
+
+  function getnow(){
+    navigator.geolocation.getCurrentPosition(function(position) {
+        // 緯度経度の取得
+        var now = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        gmap.setCenter(now);
+        $('#id_meeting_place').val(position.formatted_address);
+        geocoder.geocode( { 'location': now}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              $('#id_meeting_place').val(results[0].formatted_address);
+            }
+        });
+    }, function() {
+        alert('位置情報取得に失敗しました');
+    });
+  }
+
+  function getlatlng(){
+    //検索した時
+    var address = document.getElementById("id_meeting_place").value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          gmap.setCenter(results[0].geometry.location);
+          get_events();
+        } else {
+          alert("情報を取得できませんでした。");
+        }
+    });
+  }
+
+  function get_events(){
+    //四隅の情報を取得
+    var bounds = gmap.getBounds();
+    console.log(bounds)
+    map_ne_lat = bounds.getNorthEast().lat();
+    map_sw_lat = bounds.getSouthWest().lat();
+    map_ne_lng = bounds.getNorthEast().lng();
+    map_sw_lng = bounds.getSouthWest().lng();
+    $('#ne_lat').val(map_ne_lat);
+    $('#sw_lat').val(map_sw_lat);
+    $('#ne_lng').val(map_ne_lng);
+    $('#sw_lng').val(map_sw_lng);
+  }
+   
+  $(function(){
+    initialize();
+  });
+</script>

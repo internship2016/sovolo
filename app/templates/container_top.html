@@ -41,86 +41,10 @@
     <div class="swiper-button-next"></div>
 </div>
 
-
-<script>
-  var template;
-  $(function(){
-    template = Handlebars.compile($("#event-template").html());
-    moment.updateLocale('ja', {
-      weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
-      weekdaysShort: ["日","月","火","水","木","金","土"],
-    });
-    var opts = {
-      lines: 13, //線の数
-      length: 33, //線の長さ
-      width: 11, //線の幅
-      radius: 16, //スピナーの内側の広さ
-      corners: 1, //角の丸み
-      rotate: 74, //向き(あんまり意味が無い・・)
-      direction: 1, //1：時計回り -1：反時計回り
-      color: '#000', // 色
-      speed: 1.5, // 一秒間に回転する回数
-      trail: 71, //残像の長さ
-      shadow: true, // 影
-      hwaccel: true, // ？
-      className: 'spinner', // クラス名
-      zIndex: 2e9, // Z-index
-      top: '50%', // relative TOP
-      left: '50%', // relative LEFT
-      opacity: .25, //透明度
-      fps: 20 //fps
-    };
-    //描画先の親要素
-    var spin_target = $("#event-area").get(0);
-    //スピナーオブジェクト
-    var spinner = new Spinner(opts);
-    //スピナー描画
-    spinner.spin(spin_target);
-    //もう一度spinを呼ぶとスピナー停止
-    var init = $(".event-filter:first-of-type");
-    $.ajax({
-        'url':init.attr("action"),
-        'data':init.serialize(),
-        'type':'POST',
-        'dataType':'json',
-      }).done(function(response){
-        show_events(response);
-      }).fail(function(){
-        console.log("取得に失敗")
-    });
-    $('.event-filter').on('click',function(){
-      $('.event-filter').removeClass('event-active');
-      $(this).addClass('event-active')
-      $.ajax({
-        'url':$(this).attr('action'),
-        'data':$(this).serialize(),
-        'type':'POST',
-        'dataType':'json',
-      }).done(function(response){
-        show_events(response);
-      }).fail(function(){
-        console.log("取得に失敗");
-      });
-    });
-  })
-
- var label_convert={
-   '開催中' : 'success',
-   '募集中' :  'info',
-   '管理者' : 'primary',
-   '終了' : 'default',
- }
-
-  function show_events(context){
-    for(var i=0;i<context['filtered_events'].length;i++){
-      context['filtered_events'][i]['start_time'] = moment(context['filtered_events'][i]['start_time']).format("M月D日(dd)");
-      context['filtered_events'][i]['label_brand']
-       = label_convert[context['filtered_events'][i]['status']];
-    }
-    $('#event-area').html(template(context));
-  }
-
+<script type="text/javascript"
+  src="//maps.googleapis.com/maps/api/js?key=AIzaSyAW5PZqv_tJA9Pd-il4UeG-Mk9622Ub7R0">
 </script>
+
 
 <div id="main">
   <div id="main-content" class="container">
