@@ -1,0 +1,38 @@
+{% extend "container.html" %}
+{%load i18n %}
+{% load event_tags %}
+{% load user_tags %}
+
+{% bloack title %}{{ user.name }} ユーザー詳細 | Sovol{% endblock %}
+{% block content %}
+
+{% include "user/user_header.html" %}
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">スキル一覧</h1>
+  </div>
+    {% for skill in user.skill_set.all %}
+      <div class="panel panel-default panel body" style="margin:0">
+        <div class="row">
+          <input type="hidden" name="skill_number" value="{{ forloop.counter }}">
+          {% if not request.GET.copy_user_id %}
+            <input type="hidden" name="skill_{{ forloop.counter }}_id" value="{{ skill_id }}">
+          {% endif %}
+          <label class="col-sm-3">タグ</label>
+          <div class="checkbox col-sm-9">
+            {% for tag in all_tags %}
+              <label<input type="checkbox" name="tags" value="{{ tag.id }}"</label>{% if tag in skill.tag.all %}checked{% endif %}>{{ tag.name }}</label>
+            {% endfor %}
+          </div>
+          <label class="col-sm-3">できる内容</label>
+          <div class="col-sm-9">
+            <textarea class="form-control" name="skill_{{ forloop.counter }}_skilltodo">{{ skill.skilltodo }}</textarea>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+

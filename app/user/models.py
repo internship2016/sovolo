@@ -52,7 +52,6 @@ class User(AbstractBaseModel, AbstractBaseUser):
     email = models.EmailField(unique=True, db_index=True)
     sex = models.NullBooleanField()  # True:Men, False:Women
     occupation = models.CharField(max_length=100, null=True)
-    user_todo = models.CharField(max_length=1000, null=True)
     # regionは都道府県で指定
     prefectures = settings.PREFECTURES
 
@@ -246,8 +245,8 @@ class UserReviewList(models.Model):
         return str(self.rating)
 
 
-class Frame(AbstractBaseModel):
-    frame_user = models.ForeignKey(User, on_delete=models.CASCADE)
+class Skill(AbstractBaseModel):
+    userskill = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(default='ボランティアできること')
     admin = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
@@ -255,19 +254,20 @@ class Frame(AbstractBaseModel):
         blank=True,
     )
     tag = models.ManyToManyField(Tag, blank=True)
-    user_todo = models.CharField(max_length=200, null=True)
+    skilltodo = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return "Frame #" + str(self.pk) + " in User #" +str(self.user_id)
+        return "Skill #" + str(self.pk) + " in User #" +str(self.userskill_id)
 
     def get_tags_as_string(self):
         return "\n".join([tag.name for tag in self.tag.all()])
 
-class FrameAdmin(admin.ModelAdmin):
-    list_display = (
+class SkillAdmin(admin.ModelAdmin):
+    list_display22 = (
         'pk',
-        'frame_user',
+        'event',
         'description',
-        'get_tags_as_string',
-        'user_todo',
+        'skilltodo',
     )
+
+

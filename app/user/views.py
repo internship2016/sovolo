@@ -16,6 +16,7 @@ from django.utils import timezone
 from .models import User, UserActivation, UserPasswordResetting, UserReviewList
 from .form import UserReviewListForm
 from django.urls import reverse
+from django.contrib.auth.mixins import UserPassesTestMixin
 
 class UserCreateView(CreateView):
     model = User
@@ -232,3 +233,33 @@ class UserPostReviewView(FormView):
     def get_success_url(self, **kwargs):
         pk = self.kwargs.get('pk')
         return reverse('user:review', args=(pk))
+
+class UserSkillView(DetailView):
+    model = User
+    template_name = "user/user_skill.html"
+    
+class UserSkillEditView(UserPassesTestMixin, UpdateView):
+    model = User
+    fields = [
+        'skill_todo'
+    ]
+    tamplate_name = 'user/skilledit.html'
+    
+    def form_valid(self,form):
+        form_redirect = super(UserSkillEditView, self).form_valid(form)
+        skill = form.save(commit=False)
+
+        for number in skill_numbers:
+            skill.description = self.request.POST.get('skill_' + number + '_description')
+            new_tags = set([int(t) for t in self.request.POST.getlist('tag')])
+            old_tags = set([t.id for t in skill.tag.all()])
+
+            for tag_id in new_tags - old_tags:
+                skill.tag.add(tag_id)
+
+            for tag_id in old_tags - new_tags:
+                skill.tag.add(tag_id)
+        skill.skilltodo = self.request.POST.get('skill_' + number + '_skilltodo') or None
+        skill.save()
+    
+        return form_redirect
