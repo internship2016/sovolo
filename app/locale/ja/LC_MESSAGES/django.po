@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-21 21:40+0000\n"
+"POT-Creation-Date: 2017-08-21 23:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -250,15 +250,19 @@ msgstr "トップ画像"
 msgid "Add to Favorites"
 msgstr "お気に入りに登録"
 
-#: templates/map.html:77
+#: templates/map.html:20
+msgid "Search"
+msgstr ""
+
+#: templates/map.html:113
 msgid "Failed to get location."
 msgstr "位置情報取得に失敗しました"
 
-#: templates/map.html:89
+#: templates/map.html:125
 msgid "Failed to get information."
 msgstr "情報を取得できませんでした"
 
-#: templates/map.html:115
+#: templates/map.html:151
 msgid "There is no event nearby."
 msgstr "周辺イベントはありません"
 
@@ -286,7 +290,7 @@ msgstr "参加予定のボランティア"
 msgid "Events of My Groups"
 msgstr "所属グループのボランティア"
 
-#: templates/top.html:74
+#: templates/top.html:73
 msgid "Events Nearby"
 msgstr "地域の新着ボランティア"
 
@@ -294,26 +298,65 @@ msgstr "地域の新着ボランティア"
 msgid "View All Events"
 msgstr "すべてのボランティア"
 
+#: templates/top.html:103
+#, fuzzy
+#| msgid "Sunday"
+msgid "Sun"
+msgstr "日"
+
+#: templates/top.html:103
+#, fuzzy
+#| msgid "Monday"
+msgid "Mon"
+msgstr "月"
+
+#: templates/top.html:103
+msgid "Tue"
+msgstr "火"
+
+#: templates/top.html:103
+#, fuzzy
+#| msgid "Wanted"
+msgid "Wed"
+msgstr "募集中"
+
+#: templates/top.html:103
+msgid "Thu"
+msgstr "木"
+
+#: templates/top.html:103
+msgid "Fri"
+msgstr "金"
+
+#: templates/top.html:103
+#, fuzzy
+#| msgid "Saitama"
+msgid "Sat"
+msgstr "土"
+
 #: templates/top.html:141 templates/top.html:154
 msgid "Failed to get information"
 msgstr "取得に失敗"
 
-#: templates/top.html:160
+#: templates/top.html:167
 msgid "Onging"
 msgstr "開催中"
 
-#: templates/top.html:161
+#: templates/top.html:168
 msgid "Wanted"
 msgstr "募集中"
 
-#: templates/top.html:162
+#: templates/top.html:169
 msgid "Organizer"
 msgstr "管理者"
 
-#: templates/top.html:163
+#: templates/top.html:170
 msgid "Finished"
 msgstr "終了"
 
 #: templates/user/edit.html:66 user/models.py:70
 msgid "Language"
 msgstr "言語"
+
+#~ msgid "Thursday"
+#~ msgstr "木"

@@ -100,7 +100,7 @@
       template = Handlebars.compile($("#event-template").html());
       moment.updateLocale('ja', {
         weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
-        weekdaysShort: ["日","月","火","水","木","金","土"],
+        weekdaysShort: ['{% trans "Sun" %}','{% trans "Mon" %}','{% trans "Tue" %}','{% trans "Wed" %}','{% trans "Thu" %}','{% trans "Fri" %}','{% trans "Sat" %}'],
       });
       var opts = {
         lines: 13, //線の数
@@ -157,17 +157,28 @@
     })
 
   var label_convert={
-    '{% trans "Onging" %}' : 'success',
-    '{% trans "Wanted" %}' : 'info',
-    '{% trans "Organizer" %}' : 'primary',
-    '{% trans "Finished" %}' : 'default',
+    '開催中' : 'success',
+    '募集中' : 'info',
+    '管理者' : 'primary',
+    '終了' : 'default',
   };
+
+  var label_trans={
+    '開催中' : '{% trans "Onging" %}',
+    '募集中' : '{% trans "Wanted" %}',
+    '管理者' : '{% trans "Organizer" %}',
+    '終了' :  '{% trans "Finished" %}',
+  };
+
 
     function show_events(context){
       for(var i=0;i<context['filtered_events'].length;i++){
-        context['filtered_events'][i]['start_time'] = moment(context['filtered_events'][i]['start_time']).format("M月D日(dd)");
+        context['filtered_events'][i]['start_time'] 
+        = moment(context['filtered_events'][i]['start_time']).format("M月D日(ddd)");
         context['filtered_events'][i]['label_brand']
         = label_convert[context['filtered_events'][i]['status']];
+        context['filtered_events'][i]['status']
+        = label_trans[context['filtered_events'][i]['status']];
       }
       $('#event-area').html(template(context));
     }
