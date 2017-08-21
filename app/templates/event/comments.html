@@ -1,6 +1,6 @@
 {% load i18n %}
 <div id="upcoming-events" class="panel panel-primary">
-  <div class="panel-heading">コメント欄</div>
+  <div class="panel-heading">{% trans "Comments" %}</div>
   <div class="panel-body">
     {% for comment in comment_list %}
     <div id="comment#comment.id" class="media">
@@ -18,7 +18,7 @@
           {% if participation.event == event and request.user in event.admin.all %}
             <form method="post" action="{% url 'event:comment_delete' event_id=event.id pk=comment.id %}">
               {% csrf_token %}
-              <button class="btn btn-link pull-right">コメントを削除</button>
+              <button class="btn btn-link pull-right">{% trans "Delete this comment" %}</button>
             </form>
           {% endif %}
         {% endfor %}
@@ -38,14 +38,14 @@
             </div>
             <div class="form-group">
               <div class="comment-input-area">
-                <textarea class="form-control" rows="10" name="text" placeholder="コメント" style="resize:vertical;"></textarea>
+                <textarea class="form-control" rows="10" name="text" placeholder="{% trans 'Write your comment here' %}" style="resize:vertical;"></textarea>
                 <div class="g-recaptcha" data-sitekey="6LcupCgTAAAAAL3L0mDBwqPil4PzFrtw28fWMgfq"></div>
                 <div id="g-recaptcha-message" style="color: red;"></div>
-                <button class="center-block btn btn-primary">送信</button>
+                <button class="center-block btn btn-primary">{% trans "Post" %}</button>
                 <script>
                   $('#comment-form').submit(function () {
                     if (grecaptcha.getResponse().length == 0) {
-                        $('#g-recaptcha-message').text("チェックを入れてください。");
+                        $('#g-recaptcha-message').text("{% trans 'Please check the box above.' %}");
                         return false;
                     }
                     return true;

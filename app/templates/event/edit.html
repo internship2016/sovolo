@@ -1,14 +1,14 @@
 {% extends "container.html" %}
 {% load i18n %}
-{% block title %}ボランティア編集 | {{ event.name }} | Sovol{% endblock %}
+{% block title %}{% trans "Edit your event" %} | {{ event.name }} | Sovol{% endblock %}
 {% block content %}
 {% include "event/event_header.html" %}
 <div class="panel panel-primary">
 
   <div class="panel-heading">
-    ボランティア内容変更
+      {% trans "Edit Your Event" %}
   </div>
-  <div class="alert" style="box-shadow: none;"><a class="btn btn-default pull-right" href="{% url 'event:add' %}?copy_event_id={{ event.id }}">このボランティアを雛形に新しいボランティアを作成する</a></div>
+  <div class="alert" style="box-shadow: none;"><a class="btn btn-default pull-right" href="{% url 'event:add' %}?copy_event_id={{ event.id }}">{% trans "Create a new event based on this one" %}</a></div>
   <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
     <!--    {{ form.as_ul }} -->
     <div class="panel-body">
@@ -16,13 +16,13 @@
       {% include 'event/form_template.html' %}
     </div>
     <div class="panel-footer" style="text-align:center">
-      <button class="btn btn-primary" type="submit">更新</button>
+      <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
     </div>
   </form>
 </div>
 <form method="post" action="{% url 'event:delete' event.id %}">
   {% csrf_token %}
-  <button type="submit" class="center-block btn btn-danger" data-toggle="confirmation">ボランティアを削除する</button>
+  <button type="submit" class="center-block btn btn-danger" data-toggle="confirmation">{% trans "Delete this event" %}</button>
 </form>
 
 {% endblock %}
