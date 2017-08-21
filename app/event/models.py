@@ -8,12 +8,6 @@ from django.db.models import Q
 from django.utils import timezone
 from tag.models import Tag
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import BytesIO as StringIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
-import sys
 import os
 import math
 
@@ -37,11 +31,15 @@ class Event(AbstractBaseModel):
         settings.AUTH_USER_MODEL,
         related_name='host_event',
     )
-    supporter = models.ManyToManyField(User, related_name="support", blank=True)
+    supporter = models.ManyToManyField(User,
+                                       related_name="support",
+                                       blank=True)
 
     # regionは都道府県で指定
     prefectures = settings.PREFECTURES
-    region_list = [(key, value[0]) for key, value in sorted(prefectures.items(), key=lambda x:x[1][1])]
+    prefs = prefectures.items()
+    prefs = sorted(prefs, key=lambda x: x[1][1])
+    region_list = [(k, v[0]) for k, v in prefs]
     region = models.CharField(max_length=10, choices=region_list)
 
     participant = models.ManyToManyField(
