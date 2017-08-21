@@ -1,3 +1,4 @@
+{% load i18n %}
 
 <div class="row">
   <div class="col-xs-12 col-md-8">
@@ -16,7 +17,7 @@
         </span>
         <span class="input-group-btn">
           <button class="btn btn-primary input-loc-btn_2" onClick="getlatlng(); return false;">
-            検索
+            {$ trans "Search" %}
           </button>
         </span>
       </div>
@@ -109,7 +110,7 @@
             }
         });
     }, function() {
-        alert('位置情報取得に失敗しました');
+        alert('{% trans "Failed to get location." %}');
     });
   }
 
@@ -121,7 +122,7 @@
           gmap.setCenter(results[0].geometry.location);
           get_events();
         } else {
-          alert("情報を取得できませんでした。");
+          alert('{% trans "Failed to get information." %}');
         }
     });
   }
@@ -147,7 +148,7 @@
     }).done(function(response){
       console.log(response);
     }).fail(function(){
-      console.log('周辺イベントはありません');
+      console.log('{% trans "There is no event nearby." %}');
     });
   }
    
