@@ -6,6 +6,10 @@
 <div class="panel panel-primary">
     <h1 class="panel-title">User Review Post Page</h1>
 </div>
+  <h1>このイベントのレビューをおこないます。</h1>
+  <h1>Event ID : {{review_event.id}}</h1>
+  <h1>Host User : {{review_event.host_user}}</h1>
+  <h1>Event Name : {{review_event.name}}</h1>
 
 <form action="" method="post">
     {% csrf_token %}

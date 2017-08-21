@@ -196,7 +196,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return self.to_rate_user.aggregate(Avg('rating'))['rating__avg']
 
     def get_reviewed_events(self):
-        return [event.joined_event for event in self.to_rate_user.all()]
+        return [event.joined_event for event in self.from_rate_user.all()]
 
     def get_past_participated_and_unreviewed_events(self):
         finished_list = [event for event in self.participating_event.all() if event.is_over()]

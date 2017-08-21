@@ -17,6 +17,8 @@ from .models import User, UserActivation, UserPasswordResetting, UserReviewList
 
 from .form import UserReviewListForm
 from django.urls import reverse
+from django.forms import formset_factory
+from event.models import Event
 
 class UserCreateView(CreateView):
     model = User
@@ -204,23 +206,33 @@ class UserReviewView(DetailView):
 class UserPostReviewView(FormView):
     template_name = 'user/user_post_review.html'
     form_class = UserReviewListForm
+    model = User
+
+    def get_context_data(self, **kwargs):
+        context = super(UserPostReviewView, self).get_context_data(**kwargs)
+        if 'event_id' in self.request.GET:
+            self.joined_event = Event.objects.get(pk=self.request.GET['event_id'])
+            context['review_event'] = self.joined_event
+        return context
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
-        # form.send_email()
-        form.instance.to_rate_user_id = self.kwargs.get('pk') # pkを取得 評価対象
+        if 'event_id' in self.request.GET:
+            self.joined_event = Event.objects.get(pk=self.request.GET['event_id'])
+        form.instance.to_rate_user_id = self.joined_event.host_user.id # pkを取得 評価対象
         form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
-        form.instance.joined_event_id = 1
+        form.instance.joined_event_id = self.joined_event.id
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
 
     # レビュー投稿時にレビュー結果ページに帰還
     def get_success_url(self, **kwargs):
-        pk = self.kwargs.get('pk')
-        return reverse('user:review', kwargs={'pk': pk})
+        messages.info(self.request, "レビューを送信しました。")
+        return reverse('user:unreviewed')
 
 ## Review
 class UserUnReviewedView(ListView):
+    # なぜ model and form_class がセットでも動くのかわかりません。
     model = User
     template_name = 'user/user_unreviewed.html'
