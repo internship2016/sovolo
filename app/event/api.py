@@ -6,6 +6,20 @@ def event_filter(request, event_kind, *args, **kwargs):
     if request.method == 'POST':
         def new_events():
             return Event.objects.all().order_by('-created')[:10]
+        if request.user.is_anonymous():
+            events = new_events()
+            res_obj = {'filtered_events':[]}
+            for event in events:
+                res_obj['filtered_events'].append({
+                    'id' : event.id,
+                    'name' : event.name,
+                    'start_time' : event.start_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    'end_time' : event.end_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    'place' : event.meeting_place,
+                    'img' : event.get_image_url(),
+                    'status' : event.get_status()
+                    })
+            return JsonResponse(res_obj)
         events = {
                 'future_participating_events' : request.user.get_future_participating_events,
                 'new_group_events' : request.user.get_new_group_events,

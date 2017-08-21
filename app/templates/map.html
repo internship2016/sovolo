@@ -34,8 +34,44 @@
     </div>
   </div>
   <div class="col-xs-12 col-md-4">
-    <div id="event-list"></div>
+    <div id="event-list">
+
+    </div>
   </div>
+  {% verbatim %}
+    <script id="map-event-template" type="text/x-handlebars-template">
+      <section class="inner">
+      {{#each filtered_events}}
+        <div class="media">
+          <div class="media-left">
+            <a href="/event/{{id}}">
+              <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{img}});">
+              </div>
+            </a>
+          </div>
+          <div class="media-body">
+            <div class="event-info pull-left">
+              <div>
+                <span class="label label-{{label_brand}}" style="margin-right: 1em;">
+                  {{status}}
+                </span>
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                  {{start_time}}
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  {{place}}
+              </div>
+              <div class="media-heading">
+                <a href="/event/{{id}}">
+                  <h4>{{name}}</h4>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </section>
+    </script>
+  {% endverbatim %}
 </div>
 
 <script>
