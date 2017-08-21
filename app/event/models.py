@@ -7,7 +7,6 @@ from django.conf import settings
 from django.db.models import Q
 from django.utils import timezone
 from tag.models import Tag
-from datetime import datetime
 from datetime import timedelta
 
 from PIL import Image
