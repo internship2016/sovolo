@@ -37,7 +37,9 @@ class Event(AbstractBaseModel):
 
     # regionは都道府県で指定
     prefectures = settings.PREFECTURES
-    region_list = [(key, value[0]) for key, value in sorted(prefectures.items(), key=lambda x:x[1][1])]
+    prefs = prefectures.items()
+    prefs = sorted(prefs, key=lambda x: x[1][1])
+    region_list = [(k, v[0]) for k, v in prefs]
     region = models.CharField(max_length=10, choices=region_list)
 
     participant = models.ManyToManyField(

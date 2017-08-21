@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-21 23:20+0000\n"
+"POT-Creation-Date: 2017-08-21 23:44+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -256,9 +256,166 @@ msgstr "トップ画像"
 msgid "Add to Favorites"
 msgstr "お気に入りに登録"
 
+#: templates/event/add.html:5 templates/event/add.html:13
+#, fuzzy
+#| msgid "Create an event"
+msgid "Create a new event"
+msgstr "ボランティア作成"
+
+#: templates/event/add.html:21 templates/event/edit.html:19
+msgid "Submit"
+msgstr "送信"
+
+#: templates/event/add.html:26
+#, fuzzy
+#| msgid "Create an event"
+msgid "Create a new group"
+msgstr "ボランティア作成"
+
+#: templates/event/check_delete.html:5
+msgid "Are you sure you want to delete "
+msgstr "　"
+
+#: templates/event/check_delete.html:5
+msgid "?"
+msgstr "を本当に削除しますか？"
+
+#: templates/event/comments.html:3
+msgid "Comments"
+msgstr "コメント欄"
+
+#: templates/event/comments.html:21
+msgid "Delete this comment"
+msgstr "コメントを削除"
+
+#: templates/event/comments.html:41
+msgid "Write your comment here"
+msgstr "コメント"
+
+#: templates/event/comments.html:44
+msgid "Post"
+msgstr "投稿"
+
+#: templates/event/comments.html:48
+msgid "Please check the box above."
+msgstr "チェックを入れてください"
+
+#: templates/event/detail.html:7
+msgid "Details"
+msgstr "ボランティア詳細"
+
+#: templates/event/detail.html:20
+msgid "Availability"
+msgstr "参加状況"
+
+#: templates/event/detail.html:31
+msgid "Role "
+msgstr "参加枠"
+
+#: templates/event/detail.html:33 templates/event/detail.html:35
+msgid "Deadline"
+msgstr "締切"
+
+#: templates/event/detail.html:42
+msgid "Participated"
+msgstr "参加しました"
+
+#: templates/event/detail.html:44
+msgid "Ongoing"
+msgstr "参加中"
+
+#: templates/event/detail.html:46
+msgid "Confirmed"
+msgstr "参加確定"
+
+#: templates/event/detail.html:48
+msgid "Participating"
+msgstr "参加予定"
+
+#: templates/event/detail.html:52 templates/event/detail.html:62
+#: templates/top.html:170
+msgid "Finished"
+msgstr "終了"
+
+#: templates/event/detail.html:54 templates/event/detail.html:56
+#: templates/event/detail.html:66 templates/event/detail.html:97
+#: templates/event/detail.html:99 templates/event/detail.html:110
+#: templates/event/detail.html:112
+msgid "Closed"
+msgstr "締切済"
+
+#: templates/event/detail.html:58 templates/event/detail.html:115
+msgid "Waiting List"
+msgstr "キャンセル待ち"
+
+#: templates/event/detail.html:64
+msgid "In Session"
+msgstr "開催中"
+
+#: templates/event/detail.html:86 templates/event/detail.html:91
+#: templates/event/detail.html:103
+msgid "Cancel"
+msgstr "キャンセル"
+
+#: templates/event/detail.html:117
+msgid "Join"
+msgstr "参加"
+
+#: templates/event/detail.html:128 templates/event/detail.html:132
+msgid " "
+msgstr "人"
+
+#: templates/event/detail.html:133
+msgid "Unlimited"
+msgstr "上限なし"
+
+#: templates/event/detail.html:167
+msgid "About this event"
+msgstr "募集詳細"
+
+#: templates/event/detail.html:171
+msgid "When:"
+msgstr "日時"
+
+#: templates/event/detail.html:175
+msgid "Details:"
+msgstr "説明"
+
+#: templates/event/detail.html:179
+msgid "Informations:"
+msgstr "連絡事項"
+
+#: templates/event/detail.html:183
+msgid "Contact:"
+msgstr "連絡先"
+
+#: templates/event/detail.html:190
+msgid "Meet at:"
+msgstr "集合場所"
+
+#: templates/event/detail.html:205
+msgid "Comments to the participants: (This won't be showen to nonapplicants.)"
+msgstr "参加者への連絡事項（応募していないユーザーには見えません）"
+
+#: templates/event/edit.html:3
+msgid "Edit your event"
+msgstr "ボランティア編集"
+
+#: templates/event/edit.html:9
+msgid "Edit Your Event"
+msgstr "ボランティア内容変更"
+
+#: templates/event/edit.html:11
+msgid "Create a new event based on this one"
+msgstr "このボランティアを雛形に新しいボランティアを作成する"
+
+#: templates/event/edit.html:25
+msgid "Delete this event"
+msgstr "ボランティアを削除する"
+
 #: templates/map.html:20
 msgid "Search"
-msgstr ""
+msgstr "検索"
 
 #: templates/map.html:113
 msgid "Failed to get location."
@@ -347,10 +504,6 @@ msgstr "募集中"
 #: templates/top.html:169
 msgid "Organizer"
 msgstr "管理者"
-
-#: templates/top.html:170
-msgid "Finished"
-msgstr "終了"
 
 #: templates/user/edit.html:66 user/models.py:70
 msgid "Language"
