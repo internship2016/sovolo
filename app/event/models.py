@@ -8,7 +8,6 @@ from django.db.models import Q
 from django.utils import timezone
 from tag.models import Tag
 
-from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
 import os
 import math
