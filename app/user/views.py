@@ -10,8 +10,9 @@ from tag.models import Tag
 from base.utils import send_template_mail
 from django.contrib.auth import views as auth_views
 import uuid
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
-
+from django.utils.decorators import method_decorator
 from django.utils import timezone
 from .models import User, UserActivation, UserPasswordResetting, UserReviewList
 from .form import UserReviewListForm
@@ -263,3 +264,25 @@ class UserSkillEditView(UpdateView):
         context = super(UserSkillEditView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
         return context
+
+@method_decorator(login_required, name='dispatch')
+class UserSkillAddView(CreateView):
+    model = Skill
+    fields = ['skilltodo']
+    
+    template_name = "user/skill_add.html"
+    def get_context_data(self, **kwargs):
+        context = super(UserSkillAddView, self).get_context_data(**kwargs)
+        context['all_tags'] = Tag.objects.all
+        return context       
+    def form_valid(self, form):
+        form.instance.host_user = self.request.user
+        form_redirect = super(UserSkillAddView, self).form_valid(form)
+        skill = form.save()
+                           
+        skill.tag.clearn()
+        for tag_id in self.request.POST.getlist('tags'):
+            skill.tag.add(int(tag_id))
+        return form_redirec
+
+

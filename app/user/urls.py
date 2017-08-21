@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/post_review/$', views.UserPostReviewView.as_view(), name='post_review'),
     url(r'^(?P<pk>[0-9]+)/skill/$', views.UserSkillView.as_view(), name='skill'),
     url(r'^(?P<pk>[0-9]+)/skill/(?P<skill_id>[0-9]+)/edit/$', views.UserSkillEditView.as_view(), name='skill'),
+    url(r'^(?P<pk>[0-9]+)/skill/add/$', views.UserSkillAddView.as_view(), name='skill'),
 ]
