@@ -269,7 +269,7 @@ class UserSkillEditView(UpdateView):
 class UserSkillAddView(CreateView):
     model = Skill
     fields = ['skilltodo']
-    
+
     template_name = "user/skill_add.html"
     def get_context_data(self, **kwargs):
         context = super(UserSkillAddView, self).get_context_data(**kwargs)
@@ -283,6 +283,6 @@ class UserSkillAddView(CreateView):
         skill.tag.clearn()
         for tag_id in self.request.POST.getlist('tags'):
             skill.tag.add(int(tag_id))
-        return form_redirec
+        return form_redirect
 
 

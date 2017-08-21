@@ -246,11 +246,11 @@ class UserReviewList(models.Model):
 
 
 class Skill(AbstractBaseModel):
-    userskill = models.ForeignKey(User, on_delete=models.CASCADE)
+    userskill = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     description = models.TextField(default='ボランティアできること')
     admin = models.ManyToManyField(
         settings.AUTH_USER_MODEL,
-        related_name='admin_frame',
+        related_name='admin_skill',
         blank=True,
     )
     tag = models.ManyToManyField(Tag, blank=True)
