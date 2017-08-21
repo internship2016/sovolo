@@ -18,8 +18,8 @@ class Event(AbstractBaseModel):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     meeting_place = models.CharField(max_length=400)
-    longitude = models.FloatField(default=35.7291)
-    latitude = models.FloatField(default=139.7191)
+    longitude = models.FloatField(default=139.7191)
+    latitude = models.FloatField(default=35.7291)
     image = models.ImageField(upload_to='events/', null=True, blank=True)
     contact = models.CharField(max_length=200)
     details = models.TextField()
@@ -132,9 +132,9 @@ class Event(AbstractBaseModel):
     def get_host_user_as_list(self):
         return [self.host_user]
 
-    @classmethod
-    def get_events_in_range(cls, ne_lat, sw_lat, ne_lng, sw_lng):
-        return cls.objects.filter(latitude__range=(ne_lat, sw_lat), longitude__range=(ne_lng, sw_lng))
+        @classmethod
+        def get_events_in_range(cls, ne_lat, sw_lat, ne_lng, sw_lng):
+            return cls.objects.filter(latitude__gte=sw_lat, latitude__lte=ne_lat, longitude__gte=sw_lng, longitude__lte=ne_lng)
 
 
 class Frame(AbstractBaseModel):
