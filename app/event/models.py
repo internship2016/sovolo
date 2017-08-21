@@ -1,7 +1,6 @@
 # coding=utf-8
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
 from user.models import User
 from base.models import AbstractBaseModel
 from django.conf import settings
