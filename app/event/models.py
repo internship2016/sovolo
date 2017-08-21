@@ -60,7 +60,11 @@ class Event(AbstractBaseModel):
         ordering = ['-start_time']
 
     def __str__(self):
-        return self.name + ": " + self.start_time.strftime("%Y-%m-%d") + " ~ " + self.end_time.strftime("%Y-%m-%d")
+        return "%(name)s: %(since)s ~ %(until)s" % {
+            'name': self.name,
+            'since': self.start_time.strftime("%Y-%m-%d"),
+            'until': self.end_time.strftime("%Y-%m-%d"),
+        }
 
     def get_absolute_url(self):
         return reverse('event:detail', kwargs={'pk': self.id})
