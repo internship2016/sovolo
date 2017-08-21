@@ -4,7 +4,6 @@ from django.core.urlresolvers import reverse
 from user.models import User
 from base.models import AbstractBaseModel
 from django.conf import settings
-from django.contrib import admin
 from django.db.models import Q
 from django.utils import timezone
 from tag.models import Tag
