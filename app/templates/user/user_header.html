@@ -30,6 +30,7 @@
             <div style="text-align: right">
             {% if user.id == request.user.id %}
               <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">プロフィール編集</a>
+              <a class="btn btn-default btn-sm" href="./skill">スキル一覧を見る</a>
             {% endif %}
             </div>
           </div>
@@ -86,18 +87,5 @@
         {% endfor %}
       </div>
     </div>
-    <div>
-        <div id="user_todo" class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">
-              ボランティアできること
-            </h3>
-          </div>
-          <div class="panel-body container-fluid">
-            <div>
-              <p>{{ user.user_todo }}</p>
-            </div>
-          </div>
-        <div>
-  </div>
+
 </div>

@@ -1,19 +1,18 @@
 {% extends "container.html" %}
-{%load i18n %}
+{% load i18n %}
 {% load event_tags %}
 {% load user_tags %}
 
 {% block title %}{{ user.name }} ユーザー詳細 | Sovol{% endblock %}
 
 {% block content %}
-<div class="panel panelprimary">
+<div class="panel paneli-primary">
   <div class="panel-heading">
     スキル変更
   </div>
   <form class="form-horizontal" action="" method="post" enctype="multipart/form-date">
     <!--  {{ form.as_ul }} -->
       {% csrf_token %}
-    
     <div class="form-group">
     <label class="col-sm-3">スキルのタグ</label>
       <div class="">
