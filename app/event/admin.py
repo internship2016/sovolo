@@ -7,13 +7,16 @@ class ParticipationInline(admin.TabularInline):
     model = Participation
     extra = 1
 
+
 class FrameInline(admin.TabularInline):
     model = Frame
     extra = 1
 
+
 class CommentInline(admin.TabularInline):
     model = Comment
     extra = 1
+
 
 class AnswerInline(admin.TabularInline):
     model = Answer
@@ -23,6 +26,7 @@ class AnswerInline(admin.TabularInline):
 class QuestionAdmin(admin.ModelAdmin):
     model = Question
     inlines = (AnswerInline,)
+
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
