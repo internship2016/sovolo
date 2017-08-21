@@ -1,6 +1,6 @@
 
 <div class="row">
-  <div class="col-xs-12">
+  <div class="col-xs-12 col-md-8">
     <div class="form-group">
       <div class="input-group">
         <input id="id_meeting_place"
@@ -21,14 +21,20 @@
         </span>
       </div>
 
-      <input id="ne_lat" type="hidden" name="ne_lat" value="">
-      <input id="sw_lat" type="hidden" name="sw_lat" value="">
-      <input id="ne_lat" type="hidden" name="ne_lng" value="">
-      <input id="sw_lat" type="hidden" name="sw_lng" value="">
+      <form id="bound_data" type="hidden" action="{% url 'event:range_search' %}" method="post">
+        {% csrf_token %}
+        <input id="ne_lat" type="hidden" name="ne_lat" value="">
+        <input id="sw_lat" type="hidden" name="sw_lat" value="">
+        <input id="ne_lng" type="hidden" name="ne_lng" value="">
+        <input id="sw_lng" type="hidden" name="sw_lng" value="">
+      </form>
 
       <div id="map_canvas2" class="center-block"></div>
 
     </div>
+  </div>
+  <div class="col-xs-12 col-md-4">
+    <div id="event-list"></div>
   </div>
 </div>
 
@@ -96,6 +102,17 @@
     $('#sw_lat').val(map_sw_lat);
     $('#ne_lng').val(map_ne_lng);
     $('#sw_lng').val(map_sw_lng);
+
+    $.ajax({
+      'url': $('#bound_data').attr('action'),
+      'data':$('#bound_data').serialize(),
+      'type':'POST',
+      'dataType':'json',
+    }).done(function(response){
+      console.log(response);
+    }).fail(function(){
+      console.log('周辺イベントはありません');
+    });
   }
    
   $(function(){
