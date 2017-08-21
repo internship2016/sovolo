@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-21 23:02+0000\n"
+"POT-Creation-Date: 2017-08-21 23:20+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -237,6 +237,12 @@ msgstr "プロフィール"
 #: templates/base.html:95
 msgid "Log out"
 msgstr "ログアウト"
+
+#: templates/base.html:106
+#, fuzzy
+#| msgid "Language"
+msgid "Change language"
+msgstr "言語切り替え"
 
 #: templates/container_top.html:12
 msgid "Create an Event"

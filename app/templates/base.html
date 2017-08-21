@@ -103,7 +103,7 @@
             {% if not request.user.is_anonymous %}
             <form class="navbar-form navbar-right" action="{% url 'event:search' %}" method="get" style="margin:auto 0;">
               <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-                English
+                {% trans "Change language" %}
               </button>
             </form>
             {% endif %}
