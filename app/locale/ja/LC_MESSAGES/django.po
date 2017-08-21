@@ -299,14 +299,10 @@ msgid "View All Events"
 msgstr "すべてのボランティア"
 
 #: templates/top.html:103
-#, fuzzy
-#| msgid "Sunday"
 msgid "Sun"
 msgstr "日"
 
 #: templates/top.html:103
-#, fuzzy
-#| msgid "Monday"
 msgid "Mon"
 msgstr "月"
 
@@ -315,10 +311,8 @@ msgid "Tue"
 msgstr "火"
 
 #: templates/top.html:103
-#, fuzzy
-#| msgid "Wanted"
 msgid "Wed"
-msgstr "募集中"
+msgstr "水"
 
 #: templates/top.html:103
 msgid "Thu"
@@ -329,8 +323,6 @@ msgid "Fri"
 msgstr "金"
 
 #: templates/top.html:103
-#, fuzzy
-#| msgid "Saitama"
 msgid "Sat"
 msgstr "土"
 
@@ -357,6 +349,3 @@ msgstr "終了"
 #: templates/user/edit.html:66 user/models.py:70
 msgid "Language"
 msgstr "言語"
-
-#~ msgid "Thursday"
-#~ msgstr "木"
