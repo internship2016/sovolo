@@ -5,7 +5,7 @@ from django.views.generic import DetailView, ListView, View
 from django.contrib  import messages
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse_lazy
-from .models import User
+from .models import User, Skill
 from tag.models import Tag
 from base.utils import send_template_mail
 from django.contrib.auth import views as auth_views
@@ -238,28 +238,28 @@ class UserSkillView(DetailView):
     model = User
     template_name = "user/user_skill.html"
     
-class UserSkillEditView(UserPassesTestMixin, UpdateView):
-    model = User
-    fields = [
-        'skill_todo'
-    ]
-    tamplate_name = 'user/skilledit.html'
+class UserSkillEditView(UpdateView):
+    model = Skill
+    tamplate_name = 'user/skill_form.html'
+    fields = ['skilltodo']
+
     
     def form_valid(self,form):
         form_redirect = super(UserSkillEditView, self).form_valid(form)
         skill = form.save(commit=False)
 
-        for number in skill_numbers:
-            skill.description = self.request.POST.get('skill_' + number + '_description')
-            new_tags = set([int(t) for t in self.request.POST.getlist('tag')])
-            old_tags = set([t.id for t in skill.tag.all()])
+        new_tags = set([int(t) for t in self.request.POST.getlist('tags')])
+        old_tags = set([t.id for t in skill.tag.all()])
 
-            for tag_id in new_tags - old_tags:
-                skill.tag.add(tag_id)
+        for tag_id in new_tags - old_tags:
+            skill.tag.add(tag_id)
 
-            for tag_id in old_tags - new_tags:
-                skill.tag.add(tag_id)
-        skill.skilltodo = self.request.POST.get('skill_' + number + '_skilltodo') or None
-        skill.save()
-    
+        for tag_id in old_tags - new_tags:
+            skill.tag.remove(tag_id)
+
         return form_redirect
+
+    def get_context_data(self, **kwargs):
+        context = super(UserSkillEditView, self).get_context_data(**kwargs)
+        context['all_tags'] = Tag.objects.all
+        return context
