@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-19 03:58+0900\n"
+"POT-Creation-Date: 2017-08-21 21:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -214,9 +214,105 @@ msgstr "鹿児島県"
 msgid "Okinawa"
 msgstr "沖縄県"
 
+#: templates/base.html:64
+msgid "Find Events"
+msgstr "ボランティアを検索"
+
+#: templates/base.html:77
+msgid "Create an event"
+msgstr "ボランティア作成"
+
+#: templates/base.html:84
+msgid "Register"
+msgstr "ユーザー登録"
+
+#: templates/base.html:85
+msgid "Log in"
+msgstr "ログイン"
+
 #: templates/base.html:94
 msgid "Profile"
 msgstr "プロフィール"
+
+#: templates/base.html:95
+msgid "Log out"
+msgstr "ログアウト"
+
+#: templates/container_top.html:12
+msgid "Create an Event"
+msgstr "ボランティアをはじめる"
+
+#: templates/container_top.html:23
+msgid "Event photo"
+msgstr "トップ画像"
+
+#: templates/container_top.html:34
+msgid "Add to Favorites"
+msgstr "お気に入りに登録"
+
+#: templates/map.html:77
+msgid "Failed to get location."
+msgstr "位置情報取得に失敗しました"
+
+#: templates/map.html:89
+msgid "Failed to get information."
+msgstr "情報を取得できませんでした"
+
+#: templates/map.html:115
+msgid "There is no event nearby."
+msgstr "周辺イベントはありません"
+
+#: templates/top.html:6
+msgid "Social Volunteering Network"
+msgstr "ソーシァルボランティアプラットフォーム"
+
+#: templates/top.html:12
+msgid "Browse"
+msgstr "イベント"
+
+#: templates/top.html:13
+msgid "Location"
+msgstr "地図で探す"
+
+#: templates/top.html:14
+msgid "Calender"
+msgstr "カレンダーで探す"
+
+#: templates/top.html:61
+msgid "Events I'm going"
+msgstr "参加予定のボランティア"
+
+#: templates/top.html:67
+msgid "Events of My Groups"
+msgstr "所属グループのボランティア"
+
+#: templates/top.html:74
+msgid "Events Nearby"
+msgstr "地域の新着ボランティア"
+
+#: templates/top.html:80
+msgid "View All Events"
+msgstr "すべてのボランティア"
+
+#: templates/top.html:141 templates/top.html:154
+msgid "Failed to get information"
+msgstr "取得に失敗"
+
+#: templates/top.html:160
+msgid "Onging"
+msgstr "開催中"
+
+#: templates/top.html:161
+msgid "Wanted"
+msgstr "募集中"
+
+#: templates/top.html:162
+msgid "Organizer"
+msgstr "管理者"
+
+#: templates/top.html:163
+msgid "Finished"
+msgstr "終了"
 
 #: templates/user/edit.html:66 user/models.py:70
 msgid "Language"

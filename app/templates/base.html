@@ -61,7 +61,7 @@
             <!--検索フォーム-->
             <form class="navbar-form navbar-left" role="search" action="{% url 'event:search' %}" method="get" style="margin:auto 0;">
                 <div class="input-group">
-                  <input type="text" class="form-control" placeholder="ボランティアを検索" name="q">
+                  <input type="text" class="form-control" placeholder="{% trans 'Find Events' %}" name="q">
                   <span class="input-group-btn">
                     <button class="btn btn-primary top-search" type="submit">
                     <i class='glyphicon glyphicon-search'></i>
@@ -74,15 +74,15 @@
             <!--イベント追加フォーム-->
             <ul class="nav navbar-nav">
               <li class="text-center">
-                <a class="btn" href="{% url 'event:add' %}" role="button">ボランティア作成</a>
+                <a class="btn" href="{% url 'event:add' %}" role="button">{% trans "Create an event" %}</a>
               </li>
             </ul>
 
             <!--right menu-->
             <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_anonymous %}
-              <li class="pull-left"><a href="{% url 'user:register' %}">ユーザー登録</a></li>
-              <li class="pull-left"><a href="{% url 'user:login' %}">ログイン</a></li>
+              <li class="pull-left"><a href="{% url 'user:register' %}">{% trans "Register" %}</a></li>
+              <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
             {% else %}
               <li class="dropdown">
                 <a href="#" id="dUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
@@ -92,7 +92,7 @@
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="dUser">
                     <li><a href="{% url 'user:detail' request.user.id %}">{% trans 'Profile' %}</a></li>
-                    <li><a href="{% url 'user:logout' %}">ログアウト</a></li>
+                    <li><a href="{% url 'user:logout' %}">{% trans "Log out" %}</a></li>
                   </ul>
               </li>
             {% endif %}
