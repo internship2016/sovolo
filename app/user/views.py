@@ -11,7 +11,7 @@ from django.contrib.auth import views as auth_views
 import uuid
 from django.contrib.auth import login
 
-from .models import UserActivation, UserPasswordResetting, UserReviewList
+from .models import UserActivation, UserPasswordResetting
 from .form import UserReviewListForm
 from django.urls import reverse
 
