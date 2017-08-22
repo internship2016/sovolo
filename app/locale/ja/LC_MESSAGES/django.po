@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 20:52+0000\n"
+"POT-Creation-Date: 2017-08-23 05:55+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,6 +61,11 @@ msgstr "災害"
 #: base/management/commands/seed_data.py:469
 msgid "Animals"
 msgstr "動物"
+
+#: event/views.py:87
+#, python-format
+msgid "There is no user named %(name)s."
+msgstr "ユーザー名 %(name)s に一致するユーザーはいませんでした。"
 
 #: sovolo/settings.py:146
 msgid "English"
