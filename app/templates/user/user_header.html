@@ -64,7 +64,7 @@
       <div id="user-info" class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">
-            フォローしているタグ
+            {% trans 'Following tags' %}
           </h3>
         </div>
         <div class="panel-body container-fluid">
@@ -72,7 +72,7 @@
               {% for tag in user.follow_tag.all %}
                 <a class="tag" href="{% url 'event:search' %}?tags={{ tag.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
               {% empty %}
-                <p>フォローしているタグがありません</p>
+                <p>{% trans 'Tags not found' %}</p>
               {% endfor %}
             </div>
 
