@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 21:58+0000\n"
+"POT-Creation-Date: 2017-08-23 07:47+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,50 +17,6 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#: base/management/commands/seed_data.py:459
-msgid "Environment"
-msgstr "環境"
-
-#: base/management/commands/seed_data.py:460
-msgid "Community"
-msgstr "地域"
-
-#: base/management/commands/seed_data.py:461
-msgid "Human Rights"
-msgstr "人権"
-
-#: base/management/commands/seed_data.py:462
-msgid "Education"
-msgstr "教育"
-
-#: base/management/commands/seed_data.py:463
-msgid "Medical Care"
-msgstr "医療"
-
-#: base/management/commands/seed_data.py:464
-msgid "People with Disabilities"
-msgstr "介護"
-
-#: base/management/commands/seed_data.py:465
-msgid "International"
-msgstr "国際"
-
-#: base/management/commands/seed_data.py:466
-msgid "Culture"
-msgstr "文化"
-
-#: base/management/commands/seed_data.py:467
-msgid "Sports"
-msgstr "スポーツ"
-
-#: base/management/commands/seed_data.py:468
-msgid "Disaster Relief"
-msgstr "災害"
-
-#: base/management/commands/seed_data.py:469
-msgid "Animals"
-msgstr "動物"
 
 #: event/views.py:87
 #, python-format
@@ -71,13 +27,13 @@ msgstr "ユーザー名 %(name)s に一致するユーザーはいませんで�
 #, fuzzy
 #| msgid "User profile was successfully edited."
 msgid "Your event was successfully added."
-msgstr "ボランティアを登録しました。"
+msgstr "ユーザー情報を編集しました。"
 
 #: event/views.py:169
 #, fuzzy
 #| msgid "Tags not found"
 msgid "Event not found."
-msgstr "そのボランティアは存在しません。"
+msgstr "フォローしているタグがありません"
 
 #: sovolo/settings.py:146
 msgid "English"
@@ -523,7 +479,7 @@ msgid "View all groups"
 msgstr "すべてのグループを見る"
 
 #: templates/event/form_template.html:9
-#: templates/user/user_post_review.html:16
+#: templates/user/user_post_review.html:16 templates/user/user_review.html:19
 msgid "Event Name"
 msgstr "ボランティア名"
 
@@ -573,7 +529,7 @@ msgstr "現在の画像："
 msgid "Change image to:"
 msgstr "画像を再設定する："
 
-#: templates/event/form_template.html:192
+#: templates/event/form_template.html:192 templates/user/edit.html:23
 msgid "Browse..."
 msgstr "選択..."
 
@@ -854,7 +810,7 @@ msgstr "土"
 msgid "Social Volunteering Network"
 msgstr "ソーシャルボランティアプラットフォーム"
 
-#: templates/top.html:12 templates/user/edit.html:23
+#: templates/top.html:12
 msgid "Browse"
 msgstr "イベント"
 
@@ -894,10 +850,6 @@ msgstr "サービスの利用にはEmailアドレスが必要です"
 msgid "REGISTER"
 msgstr "登録"
 
-#: templates/user/detail.html:5 templates/user/user_header.html:11
-msgid "About Me"
-msgstr "ユーザー詳細"
-
 #: templates/user/detail.html:13
 msgid "List of My Groups"
 msgstr "所属グループ一覧"
@@ -926,7 +878,7 @@ msgstr "すべてのレビューを見る"
 msgid "Reviews not yet posted"
 msgstr "未レビューを見る"
 
-#: templates/user/edit.html:4 templates/user/user_header.html:32
+#: templates/user/edit.html:4 templates/user/user_header.html:31
 msgid "Edit profile"
 msgstr "プロフィール編集"
 
@@ -966,7 +918,7 @@ msgstr "生年月日"
 msgid "Language"
 msgstr "言語"
 
-#: templates/user/edit.html:81 templates/user/user_header.html:67
+#: templates/user/edit.html:81 templates/user/user_header.html:66
 msgid "Following tags"
 msgstr "フォローしているタグ"
 
@@ -1053,31 +1005,31 @@ msgstr "新しいパスワードを入力してください"
 msgid "Your new pasword"
 msgstr "新しいパスワード"
 
-#: templates/user/user_header.html:19
+#: templates/user/user_header.html:18
 msgid "Age Group:"
 msgstr "年代："
 
-#: templates/user/user_header.html:19
+#: templates/user/user_header.html:18
 msgid "'s"
 msgstr "代"
 
-#: templates/user/user_header.html:22
+#: templates/user/user_header.html:21
 msgid "Sex:"
 msgstr "性別："
 
-#: templates/user/user_header.html:24
+#: templates/user/user_header.html:23
 msgid "Region:"
 msgstr "地域："
 
-#: templates/user/user_header.html:29
+#: templates/user/user_header.html:28
 msgid "Sovolage"
 msgstr "ソボレージ"
 
-#: templates/user/user_header.html:51
+#: templates/user/user_header.html:50
 msgid "Trophies"
 msgstr "獲得トロフィー"
 
-#: templates/user/user_header.html:75
+#: templates/user/user_header.html:74
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
 
@@ -1106,6 +1058,30 @@ msgstr "ユーザーID"
 msgid "User Name"
 msgstr "ユーザー名"
 
+#: templates/user/user_review.html:3 templates/user/user_review.html:8
+msgid "Reviews"
+msgstr "レビュー"
+
+#: templates/user/user_review.html:11
+msgid "reviews"
+msgstr "件"
+
+#: templates/user/user_review.html:17
+msgid "Rating"
+msgstr "評価"
+
+#: templates/user/user_review.html:18
+msgid "Rated by"
+msgstr "投稿者"
+
+#: templates/user/user_review.html:20
+msgid "Comment"
+msgstr "コメント"
+
+#: templates/user/user_review.html:21
+msgid "Posted on"
+msgstr "投稿日"
+
 #: user/models.py:86
 #, python-format
 msgid "You need %(points_to_next)d more Sovolage to the next level!"
@@ -1119,6 +1095,3 @@ msgstr "ユーザー情報を編集しました。"
 #: user/views.py:228
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
-
-#~ msgid "View all reviews posted"
-#~ msgstr "すべてのレビューを見る"

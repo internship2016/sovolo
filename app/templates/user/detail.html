@@ -2,34 +2,12 @@
 {% load i18n %}
 {% load event_tags %}
 
-{% block title %}{{ user.username }} {% trans "About Me" %} | Sovol{% endblock %}
+{% block title %}{{ user.username }} | Sovol{% endblock %}
 
 {% block content %}
 
 {% include "user/user_header.html" %}
 
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <h1 class="panel-title">{% trans 'List of My Groups' %}</h1>
-  </div>
-  <div class="panel-body">
-    {% for group in user.group_set.all %}
-      <div class="media">
-        <div class="media-left">
-          <a href="{% url "group:detail" group.id %}">
-            <div class="custom_thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
-          </a>
-        </div>
-        <div class="media-body">
-          <h3 class="media-heading"><a href="{% url "group:detail" group.id %}">{{ group.name }}</a></h3>
-          {{ group.description }}
-        </div>
-      </div>
-    {% empty %}
-    <p>{% trans 'No groups' %}</p>
-    {% endfor %}
-  </div>
-</div>
 
 {% if user.admin_event.all %}
 {% event_list user.admin_event.all _("List of Events Organizing") %}

@@ -319,13 +319,17 @@ class Command(BaseCommand):
         #ポイント稼ぎ用ボランティア
         random.seed(1)
         for i in range(1,21):
+            if i < 11:
+                x = 1
+            else:
+                x = -1
             for j in range(1,4):
                 name = "【第%d回】"%j + eventname_sample[i]["name"]
                 host_user = User.objects.get(username="demo_user_%d"%i)
                 demoevent = Event(
                     name=name,
                     start_time=timezone.now() - timezone.timedelta(days=301),
-                    end_time = timezone.now() + timezone.timedelta(days=300),
+                    end_time = timezone.now() + x * timezone.timedelta(days=300),
                     meeting_place="池袋駅東口母子像前",
                     contact="testvol@sovol.earth",
                     details=eventdetail_sample,
@@ -456,17 +460,17 @@ class Command(BaseCommand):
 
     def _create_tags(self):
         taglist = (
-            _("Environment"),
-            _("Community"),
-            _("Human Rights"),
-            _("Education"),
-            _("Medical Care"),
-            _("People with Disabilities"),
-            _("International"),
-            _("Culture"),
-            _("Sports"),
-            _("Disaster Relief"),
-            _("Animals")
+            '環境',
+            '地域',
+            '人権',
+            '教育',
+            '医療',
+            '介護',
+            '国際協力',
+            '文化',
+            'スポーツ',
+            '災害',
+            '動物'
         )
         user = User.objects.get(pk=1)
         for t in taglist:

@@ -85,6 +85,15 @@
               <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
             {% else %}
               <li class="dropdown">
+                <a href="#" id="notification" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-bell-o" aria-hidden="true"></i>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="dUser">
+                  <li><a href="">uhhhhhhhhhh</a></li>
+                  <li><a href="">hogegege</a></li>
+                </ul>
+              </li>
+              <li class="dropdown">
                 <a href="#" id="dUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                     <img src="{{ request.user.get_image_url }}" width="24" height="24">
                     {{ request.user.username }}
