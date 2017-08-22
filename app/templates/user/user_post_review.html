@@ -8,13 +8,14 @@
 </div>
   <h1>このイベントのレビューをおこないます。</h1>
   <h1>Event ID : {{review_event.id}}</h1>
-  <h1>Host User : {{review_event.host_user}}</h1>
+  <h1>Host User : {{review_event.host_user.username}}</h1>
   <h1>Event Name : {{review_event.name}}</h1>
 
 {% if to_user.id %}
+  <p></p>
   <h1>このユーザーのレビューをおこないます。</h1>
   <h1>User ID : {{to_user.id}}</h1>
-  <h1>User Name: {{to_user.usename}}</h1>
+  <h1>User Name: {{to_user.username}}</h1>
 {% endif %}
 
 
