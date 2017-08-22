@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 03:09+0900\n"
+"POT-Creation-Date: 2017-08-23 03:51+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -873,7 +873,7 @@ msgstr "プロフィール編集"
 msgid "Region"
 msgstr "地域"
 
-#: templates/user/edit.html:66 user/models.py:72
+#: templates/user/edit.html:66 user/models.py:73
 msgid "Language"
 msgstr "言語"
 
@@ -892,6 +892,13 @@ msgstr "獲得トロフィー"
 #: templates/user/user_header.html:75
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
+
+#: user/models.py:86
+#, fuzzy, python-format
+#| msgid "You need %(points_to_next)d more Sovolage to the next level!"
+msgid "You need %(points_to_next)d more Sovolage to the next level!"
+msgid_plural "You need %(points_to_next)d more Sovolages to the next level!"
+msgstr[0] "次のレベルまであと%(points_to_next)dソボレージ！"
 
 #, fuzzy
 #~| msgid "Waiting List"
