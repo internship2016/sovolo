@@ -417,7 +417,7 @@ class EventSearchResultsView(ListView):
         if 'region' in self.request.GET:
             place = self.request.GET['region']
 
-            if place is not None and place!="":
+            if place is not None and place != "":
                 place_query = Q(region=place)
                 query = query & place_query
 
@@ -425,7 +425,7 @@ class EventSearchResultsView(ListView):
         if 'group' in self.request.GET:
             group = self.request.GET['group']
 
-            if group is not None and group!="":
+            if group is not None and group != "":
                 Group = apps.get_model('group', 'Group')
                 try:
                     g = Group.objects.get(pk=int(group))
