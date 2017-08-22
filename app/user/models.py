@@ -59,7 +59,11 @@ class User(AbstractBaseModel, AbstractBaseUser):
     region_list = [(k, v[0]) for k, v in prefs]
 
     region = models.CharField(max_length=10, choices=region_list)
-    follow_tag = models.ManyToManyField(Tag, related_name='follower', blank=True)
+
+    follow_tag = models.ManyToManyField(Tag,
+                                        related_name='follower',
+                                        blank=True)
+
     image = models.ImageField(upload_to='users/', null=True, blank=True)
     objects = UserManager()
     is_active = models.BooleanField(default=True)
