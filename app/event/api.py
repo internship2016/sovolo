@@ -13,7 +13,7 @@ def event_filter(request, event_kind, *args, **kwargs):
             return Event.objects.all().order_by('-created')[:10]
         if request.user.is_anonymous():
             events = new_events()
-            res_obj = {'filtered_events':[]}
+            res_obj = {'filtered_events': []}
             for event in events:
                 res_obj['filtered_events'].append({
                     'id' : event.id,
