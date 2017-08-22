@@ -18,6 +18,7 @@ from django.urls import reverse
 from django.utils import translation
 from django.conf import settings
 
+
 class UserCreateView(CreateView):
     model = User
     fields = ['email', 'password', 'username']
