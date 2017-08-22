@@ -215,6 +215,8 @@ class UserPostReviewView(FormView):
             context['review_event'] = self.joined_event
         return context
 
+    # 重複なしで、イベント参加者の判定を行う。
+
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
