@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 20:22+0000\n"
+"POT-Creation-Date: 2017-08-22 20:28+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -314,6 +314,7 @@ msgid "Create a new event"
 msgstr "ボランティア作成"
 
 #: templates/event/add.html:21 templates/event/edit.html:19
+#: templates/user/request_password_reset.html:17
 msgid "Submit"
 msgstr "送信"
 
@@ -987,6 +988,17 @@ msgstr "Facebookで登録"
 #: templates/user/register.html:42
 msgid "Already have an account?"
 msgstr "アカウントをお持ちの方はこちら"
+
+#: templates/user/request_password_reset.html:4
+#: templates/user/request_password_reset.html:7
+msgid "Forgot Your Password?"
+msgstr "パスワード再設定リクエスト"
+
+#: templates/user/request_password_reset.html:8
+msgid ""
+"Enter your email address and we'll send you instructions on how to reset "
+"your password."
+msgstr "8　パスワードを再設定したいメールアドレスを入力してください"
 
 #: templates/user/user_header.html:29
 msgid "Sovolage"
