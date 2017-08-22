@@ -136,7 +136,8 @@ class EventCreate(CreateView):
             django_file = File(reopen)
             event.image.save(new_url, django_file, save=True)
 
-            messages.info(self.request, "ボランティアを登録しました。")
+            info_msg = _("Your event was successfully added.")
+            messages.info(self.request, info_msg)
         return form_redirect
 
     def form_invalid(self, form):
