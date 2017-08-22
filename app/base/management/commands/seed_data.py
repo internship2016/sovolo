@@ -6,6 +6,7 @@ from event.models import Event, Participation, Frame, Comment, Question, Answer
 from group.models import Group, Membership
 from user.models import User
 from tag.models import Tag
+from django.utils.translation import ugettext_lazy as _
 import csv
 import os
 import glob

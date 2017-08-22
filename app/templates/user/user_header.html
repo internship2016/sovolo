@@ -7,14 +7,13 @@
     <div class="detail-header-right col-sm-8 col-md-9">
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">
-              {% trans "About Me" %}
-          </h3>
+          <h1 class="panel-title">
+              {{ user.username }}
+          </h1>
         </div>
         <div class="row"  style="padding-left:1em; padding-right: 1em;">
           <div class="panel-body col-sm-7 col-md-8" style="overflow-wrap: break-word;">
-            <h1>{{ user.username }}</h1>
-
+            
             {% if user.birthday != null %}
             <p>{% trans "Age Group:" %} {{ user.get_about_age }}{% trans "'s" %}</p>
             {% endif %}

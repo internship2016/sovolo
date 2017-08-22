@@ -1,24 +1,24 @@
 {% extends "container.html" %}
 {% load i18n %}
-{% block title %}{{ user.username }} ユーザー詳細 | Sovol{% endblock %}
+{% block title %}{{ user.username }} {% trans "Reviews" %} | Sovol{% endblock %}
 
 {% block content %}
 
 <div class="panel panel-primary">
-    <h1 class="panel-title">Review List</h1>
+    <h1 class="panel-title">{% trans "Reviews" %}</h1>
 </div>
 
-  <li>Cnt_rating ： {{ user.to_rate_user.all.count }}</li>
-  <li>Avg_rating : {{ user.get_mean_rating }}</li>
+  <li> {{ user.to_rate_user.all.count }} {% trans "reviews" %}</li>
+  <li> {{ user.get_mean_rating }}</li>
 
 <ul>
   {% for rate in user.to_rate_user.all %}
       <ul>
-        <li>Rating ： {{ rate.rating }}</li>
-        <li>Rater ： {{ rate.from_rate_user.username }}</li>
-        <li>Event ： {{ rate.joined_event.name }}</li>
-        <li>Comment ： {{ rate.comment }}</li>
-        <li>Post Day ： {{ rate.post_day }}</li>
+        <li>{% trans "Rating" %} ： {{ rate.rating }}</li>
+        <li>{% trans "Rated by" %} ： {{ rate.from_rate_user.username }}</li>
+        <li>{% trans "Event Name" %} ： {{ rate.joined_event.name }}</li>
+        <li>{% trans "Comment" %} ： {{ rate.comment }}</li>
+        <li>P{% trans "Posted on" %} ： {{ rate.post_day }}</li>
       </ul>
       <p></p>
   {% endfor %}

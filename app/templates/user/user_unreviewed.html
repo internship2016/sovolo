@@ -121,13 +121,16 @@
     </div>
   </div>
 
+
   <h4>@User List</h4>
   {% for p_user in user_list %}
-    <h5>{{ p_user.pk }} : {{ p_user.username }}</h5>
+    <h5>User ID : {{ p_user.id }}</h5>
+    <h5>User Name : {{ p_user.username }}</h5>
     <a class="btn btn-primary" href="{% url 'user:post_review' %}?event_id={{event.id}}&to_user_id={{p_user.pk}}">
       Go to User Review Post Page
     </a>
   {% endfor %}
+
 
   {% empty %}
     <p>未レビューの参加者はいません</p>

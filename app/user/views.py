@@ -241,13 +241,14 @@ class UserPostReviewView(FormView):
     model = User
 
     def get_context_data(self, **kwargs):
+
         context = super(UserPostReviewView, self).get_context_data(**kwargs)
         if 'event_id' in self.request.GET:
-            self.joined_event = Event.objects.get(pk=self.request.GET['event_id'])
-            context['review_event'] = self.joined_event
+            joined_event = Event.objects.get(pk=self.request.GET['event_id'])
+            context['review_event'] = joined_event
         if 'to_user_id' in self.request.GET:
-            self.to_user = User.objects.get(pk=self.request.GET['to_user_id'])
-            context['to_user'] = self.joined_event
+            to_user = User.objects.get(pk=self.request.GET['to_user_id'])
+            context['to_user'] = to_user
         return context
 
     def form_valid(self, form):
@@ -265,12 +266,10 @@ class UserPostReviewView(FormView):
         else:
             to_user = User.objects.get(pk=joined_event.host_user.id) # pkを取得 評価対象
 
-        # Set Instanse
-        form.instance.to_rate_user_id = to_user.id
-        form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
-        form.instance.joined_event_id = joined_event.id
 
         ## Validators
+
+        # params
         from_reviews = self.request.user.from_rate_user.all()
         to_from_event_list = []
         for review in from_reviews:
@@ -278,21 +277,51 @@ class UserPostReviewView(FormView):
                                        review.from_rate_user,
                                        review.joined_event])
 
-        # User is Host or Participant
+        # Past joined_or_hosted_event or not
+        if (joined_event not in self.request.user.get_past_participated_events()) and (joined_event not in self.request.user.get_past_hosted_events()):
+            messages.error(self.request, "Invalid Review")
+            return self.form_invalid(form)
+
+        # from_User is Host or Participant
         if (self.request.user not in joined_event.participant.all()) and (self.request.user != joined_event.host_user):
             # form.add_error('rating', 'Incident with this email already exist')
-            messages.error(self.request, "You didn't Join event")
+            messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
+
+        # to_User is Host or Participant
+        if (to_user not in joined_event.participant.all()) and (to_user != joined_event.host_user):
+            # form.add_error('rating', 'Incident with this email already exist')
+            messages.error(self.request, "Invalid Review")
+            return self.form_invalid(form)
+
+        # from user Participant -> Host or not
+        if (self.request.user in joined_event.participant.all()) and (to_user != joined_event.host_user):
+            messages.error(self.request, "Invalid Review")
+            return self.form_invalid(form)
+
+        # rom user Host -> Participant or not
+        if (self.request.user == joined_event.host_user) and (to_user not in joined_event.participant.all()):
+            messages.error(self.request, "Invalid Review")
+            return self.form_invalid(form)
+
         # Check Already Reviewed or not
-        elif [to_user, self.request.user, joined_event] in to_from_event_list:
+        if [to_user, self.request.user, joined_event] in to_from_event_list:
                 messages.error(self.request, "You Already Reviewd")
                 return self.form_invalid(form)
-        else:
-            form.save()
-            return super(UserPostReviewView, self).form_valid(form)
+
+
+
+
+        # Set Instanse
+        form.instance.to_rate_user_id = to_user.id
+        form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
+        form.instance.joined_event_id = joined_event.id
+        form.save()
+        return super(UserPostReviewView, self).form_valid(form)
 
     # レビュー投稿時に未レビューページに帰還
     def get_success_url(self, **kwargs):
+
         messages.info(self.request, "Your review was successfully sent")
         return reverse('user:unreviewed')
 
