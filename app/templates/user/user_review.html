@@ -26,9 +26,13 @@
 
 {% if request.user.is_anonymous %}
 {% else %}
-  <a class="btn btn-primary" href="{% url 'user:post_review' user.id %}">
+  <a class="btn btn-primary" href="{% url 'user:post_review' %}">
     Go to User Review Post Page
   </a>
+  <a class="btn btn-primary" href="{% url 'user:unreviewed'%}">
+    Go to User Review Post Page
+  </a>
+
 {% endif %}
 
 {% endblock %}

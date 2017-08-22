@@ -239,10 +239,62 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
         return trophies
 
-    # shuto tsuchiya
+    # Review (using by participant)
     def get_mean_rating(self):
         return self.to_rate_user.aggregate(Avg('rating'))['rating__avg']
 
+    def get_reviewed_events(self):
+        return [event.joined_event for event in self.from_rate_user.all()]
+
+    def get_past_participated_and_unreviewed_events(self):
+        finished_list = [event for event in self.participating_event.all() if event.is_over()]
+        reviewed_list_id = [event.id for event in self.get_reviewed_events()]
+        unreviewed_event = [event for event in finished_list if not event.id in reviewed_list_id]
+        return unreviewed_event
+
+    # Review (using by host)
+    def get_past_hosted_events(self):
+        return [event for event in self.host_event.all().order_by('start_time') if event.is_over()]
+
+    def get_paticipant_of_past_hosted_events(self):
+        user_reviewed_list = []
+        for event in self.get_past_hosted_events():
+            user_reviewed_list.append([ p_user.user for p_user in event.participation_set.all()])
+        return user_reviewed_list
+
+    def get_reviewed_paticipant_of_past_hosted_events(self):
+        user_reviewed_list = []
+        for event in self.get_past_hosted_events():
+            temp = [review.to_rate_user for review in self.from_rate_user.all() if review.joined_event == event]
+            user_reviewed_list.append(temp)
+        return user_reviewed_list
+
+    def get_unreviewed_paticipant_of_past_hosted_events(self):
+        user_unreviewed_list = []
+        for user_list_all, user_list_re  in zip(self.get_paticipant_of_past_hosted_events(),
+                             self.get_reviewed_paticipant_of_past_hosted_events()):
+            temp = [user for user in user_list_all if user not in user_list_re]
+            user_unreviewed_list.append(temp)
+        return user_unreviewed_list
+
+    # pop Null
+    def get_unreviewed_past_hosted_events(self):
+        user_unreviewed_list = []
+        for event, unreviewed in zip(self.get_past_hosted_events(), self.get_unreviewed_paticipant_of_past_hosted_events()):
+            if not len(unreviewed) == 0:
+                user_unreviewed_list.append(event)
+        return user_unreviewed_list
+
+    def get_unreviewed_paticipant_of_past_hosted_events_poped_per_event(self):
+        user_unreviewed_list = []
+        for user_list in self.get_unreviewed_paticipant_of_past_hosted_events():
+            if not len(user_list) == 0:
+                user_unreviewed_list.append(user_list)
+        return user_unreviewed_list
+
+    def get_ziped_unreview_hoseted(self):
+        return zip(self.get_unreviewed_past_hosted_events(),
+                   self.get_unreviewed_paticipant_of_past_hosted_events_poped_per_event())
 
 class UserActivation(models.Model):
     user = models.OneToOneField(User)
@@ -272,25 +324,29 @@ class UserReviewList(models.Model):
                                      on_delete=models.CASCADE,
                                      related_name='to_rate_user')
 
+    from_rate_user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='from_rate_user',
+        )
+
     rating = models.IntegerField(validators=[MinValueValidator(0),
-                                             MaxValueValidator(5)])
+                                       MaxValueValidator(5)])
 
     comment = models.CharField(max_length=200, null=True)
-
-    from_rate_user = models.ForeignKey(User,
-                                       on_delete=models.CASCADE,
-                                       related_name='from_rate_user')
 
     joined_event = models.ForeignKey('event.Event', null=True)
 
     post_day = models.DateTimeField(default=timezone.now, null=True)
+
+    event_host = models.NullBooleanField(default=False, null=True)
 
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
         return str(self.to_rate_user)
 
 class Skill(AbstractBaseModel):
-    userskill = models.ForeignKey(User, on_delete=models.CASCADE)
+    userskill = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     description = models.TextField(default='ボランティアできること')
     admin = models.ManyToManyField(
         settings.AUTH_USER_MODEL,

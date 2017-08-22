@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, FormView
-from django.views.generic import DetailView, View
+from django.views.generic import DetailView, View, ListView
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from .models import User, Skill
@@ -16,6 +16,10 @@ from .models import User, UserActivation, UserPasswordResetting, UserReviewList
 from .form import UserReviewListForm
 from django.urls import reverse
 from django.contrib.auth.mixins import UserPassesTestMixin
+
+from django.utils import timezone
+from django.forms import formset_factory
+from event.models import Event
 
 from django.utils import translation
 from django.conf import settings
@@ -233,21 +237,48 @@ class UserReviewView(DetailView):
 class UserPostReviewView(FormView):
     template_name = 'user/user_post_review.html'
     form_class = UserReviewListForm
+    model = User
+
+    def get_context_data(self, **kwargs):
+        context = super(UserPostReviewView, self).get_context_data(**kwargs)
+        if 'event_id' in self.request.GET:
+            self.joined_event = Event.objects.get(pk=self.request.GET['event_id'])
+            context['review_event'] = self.joined_event
+        if 'to_user_id' in self.request.GET:
+            self.to_user = User.objects.get(pk=self.request.GET['to_user_id'])
+            context['to_user'] = self.joined_event
+        return context
+
+    # 重複なしで、イベント参加者の判定を行う。
 
     def form_valid(self, form):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
-        # form.send_email()
-        form.instance.to_rate_user_id = self.kwargs.get('pk')  # pkを取得 評価対象
-        form.instance.from_rate_user_id = self.request.user.id  # 評価者 <--
-        form.instance.joined_event_id = 2
+        if 'event_id' in self.request.GET:
+            self.joined_event = Event.objects.get(pk=self.request.GET['event_id'])
+
+        if 'to_user_id' in self.request.GET:
+            self.to_user = User.objects.get(pk=self.request.GET['to_user_id'])
+            form.instance.to_rate_user_id = self.to_user.id
+            form.instance.event_host = True
+        else:
+            form.instance.to_rate_user_id = self.joined_event.host_user.id # pkを取得 評価対象
+
+        form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
+        form.instance.joined_event_id = self.joined_event.id
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
 
     # レビュー投稿時にレビュー結果ページに帰還
     def get_success_url(self, **kwargs):
-        pk = self.kwargs.get('pk')
-        return reverse('user:review', kwargs={'pk': pk})
+        messages.info(self.request, "レビューを送信しました。")
+        return reverse('user:unreviewed')
+
+## Review
+class UserUnReviewedView(ListView):
+    # なぜ model and form_class がセットでも動くのかわかりません。
+        model = User
+        template_name = 'user/user_unreviewed.html'
 
 class UserSkillView(DetailView):
     model = User
@@ -280,6 +311,10 @@ class UserSkillEditView(UpdateView):
         context['all_tags'] = Tag.objects.all
         return context
 
+    def get_success_url(self, **kwargs):
+        messages.info(self.request, "スキル内容を変更しました")
+        userskill_id = self.request.user.id
+        return reverse('user:skill', kwargs={'pk': userskill_id})
 
 @method_decorator(login_required, name='dispatch')
 class UserSkillAddView(CreateView):
@@ -303,4 +338,8 @@ class UserSkillAddView(CreateView):
         form.save()
         return form_redirect
 
+    def get_success_url(self, **kwargs):
+        messages.info(self.request, "新規スキルを作成しました")
+        userskill_id = self.request.user.id
+        return reverse('user:skill', kwargs={'pk': userskill_id})
 

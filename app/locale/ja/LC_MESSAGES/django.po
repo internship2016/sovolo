@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 04:13+0000\n"
+"POT-Creation-Date: 2017-08-23 02:02+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -331,7 +331,7 @@ msgid "Participating"
 msgstr "参加予定"
 
 #: templates/event/detail.html:52 templates/event/detail.html:62
-#: templates/top.html:170
+#: templates/map.html:100 templates/top.html:170
 msgid "Finished"
 msgstr "終了"
 
@@ -574,7 +574,8 @@ msgstr "新着ボランティア一覧"
 msgid "Recipients:"
 msgstr "宛先"
 
-#: templates/event/message.html:16 templates/top.html:169
+#: templates/event/message.html:16 templates/map.html:99
+#: templates/top.html:169
 msgid "Organizer"
 msgstr "管理者"
 
@@ -692,17 +693,53 @@ msgstr "関連しているグループはありません"
 msgid "There are no filters attached."
 msgstr "このボランティアはタグ付けされていません"
 
-#: templates/map.html:113
+#: templates/map.html:97 templates/top.html:167
+msgid "Onging"
+msgstr "開催中"
+
+#: templates/map.html:98 templates/top.html:168
+msgid "Wanted"
+msgstr "募集中"
+
+#: templates/map.html:133
 msgid "Failed to get location."
 msgstr "位置情報取得に失敗しました"
 
-#: templates/map.html:125
+#: templates/map.html:145
 msgid "Failed to get information."
 msgstr "情報を取得できませんでした"
 
-#: templates/map.html:151
+#: templates/map.html:171
 msgid "There are no events nearby."
 msgstr "周辺イベントはありません"
+
+#: templates/map.html:227 templates/top.html:103
+msgid "Sun"
+msgstr "日"
+
+#: templates/map.html:227 templates/top.html:103
+msgid "Mon"
+msgstr "月"
+
+#: templates/map.html:227 templates/top.html:103
+msgid "Tue"
+msgstr "火"
+
+#: templates/map.html:227 templates/top.html:103
+msgid "Wed"
+msgstr "水"
+
+#: templates/map.html:227 templates/top.html:103
+msgid "Thu"
+msgstr "木"
+
+#: templates/map.html:227 templates/top.html:103
+msgid "Fri"
+msgstr "金"
+
+#: templates/map.html:227 templates/top.html:103
+msgid "Sat"
+msgstr "土"
 
 #: templates/top.html:6
 msgid "Social Volunteering Network"
@@ -732,46 +769,30 @@ msgstr "地域の新着ボランティア"
 msgid "View All Events"
 msgstr "すべてのボランティア"
 
-#: templates/top.html:103
-msgid "Sun"
-msgstr "日"
-
-#: templates/top.html:103
-msgid "Mon"
-msgstr "月"
-
-#: templates/top.html:103
-msgid "Tue"
-msgstr "火"
-
-#: templates/top.html:103
-msgid "Wed"
-msgstr "水"
-
-#: templates/top.html:103
-msgid "Thu"
-msgstr "木"
-
-#: templates/top.html:103
-msgid "Fri"
-msgstr "金"
-
-#: templates/top.html:103
-msgid "Sat"
-msgstr "土"
-
 #: templates/top.html:141 templates/top.html:154
 msgid "Failed to get information"
 msgstr "取得に失敗"
 
-#: templates/top.html:167
-msgid "Onging"
-msgstr "開催中"
+#: templates/user/edit.html:28 templates/user/user_header.html:24
+msgid "Region"
+msgstr "地域"
 
-#: templates/top.html:168
-msgid "Wanted"
-msgstr "募集中"
-
-#: templates/user/edit.html:66 user/models.py:70
+#: templates/user/edit.html:66 user/models.py:72
 msgid "Language"
 msgstr "言語"
+
+#: templates/user/edit.html:81 templates/user/user_header.html:67
+msgid "Following tags"
+msgstr "フォローしているタグ"
+
+#: templates/user/user_header.html:29
+msgid "Sovolage"
+msgstr "ソボレージ"
+
+#: templates/user/user_header.html:51
+msgid "Trophies"
+msgstr "獲得トロフィー"
+
+#: templates/user/user_header.html:75
+msgid "Tags not found"
+msgstr "フォローしているタグがありません"

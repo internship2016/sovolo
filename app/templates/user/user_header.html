@@ -21,12 +21,12 @@
             {% if user.sex != null %}
             <p>性別: {{ user.sex|yesno:"男,女,秘密" }}</p>
             {% endif %}
-            <p>住んでる都道府県: {{ user.get_region_kanji }}</p>
+            <p>{% trans 'Region' %}: {{ user.get_region_kanji }}</p>
           </div>
 
           <div class="panel-body col-sm-5 col-md-4" style="padding-bottom: 5px;">
             <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
-            <p> ソボレージ<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
+            <p> {% trans 'Sovolage' %}<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
             <div style="text-align: right">
             {% if user.id == request.user.id %}
               <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">プロフィール編集</a>
@@ -49,7 +49,7 @@
    <div>
       <div class="panel panel-primary">
         <div class="panel-heading">
-          <h3 class="panel-title">獲得トロフィー</h3>
+          <h3 class="panel-title">{% trans 'Trophies' %}</h3>
         </div>
         <div class="panel-body">
           {% for trophy in user.trophy_list %}
@@ -61,4 +61,23 @@
         </div>
       </div>
     </div>
+  <div>
+      <div id="user-info" class="panel panel-primary">
+        <div class="panel-heading">
+          <h3 class="panel-title">
+            {% trans 'Following tags' %}
+          </h3>
+        </div>
+        <div class="panel-body container-fluid">
+          <div>
+              {% for tag in user.follow_tag.all %}
+                <a class="tag" href="{% url 'event:search' %}?tags={{ tag.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
+              {% empty %}
+                <p>{% trans 'Tags not found' %}</p>
+              {% endfor %}
+            </div>
+
+        </div>
+      </div>
+  </div>
 </div>

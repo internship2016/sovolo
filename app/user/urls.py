@@ -20,8 +20,10 @@ urlpatterns = [
     url(r'^(?P<pk>[0-9]+)/$', views.UserDetailView.as_view(), name='detail'),
     # review
     url(r'^(?P<pk>[0-9]+)/review/$', views.UserReviewView.as_view(), name='review'),
-    url(r'^(?P<pk>[0-9]+)/post_review/$', views.UserPostReviewView.as_view(), name='post_review'),
     url(r'^(?P<pk>[0-9]+)/skill/$', views.UserSkillView.as_view(), name='skill'),
     url(r'^skill/(?P<pk>[0-9]+)/edit/$', views.UserSkillEditView.as_view(), name='skill_edit'),
     url(r'^(?P<user_id>[0-9]+)/skill/add/$', views.UserSkillAddView.as_view(), name='skill_add'),
+    url(r'^post_review/$', views.UserPostReviewView.as_view(), name='post_review'),
+    # url(r'^(?P<pk>[0-9]+)/unreviewed/$', views.UserUnReviewedView.as_view(), name='unreviewed'),
+    url(r'^unreviewed/$', views.UserUnReviewedView.as_view(), name='unreviewed'),
 ]

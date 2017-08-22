@@ -1,0 +1,138 @@
+{% extends "container.html" %}
+{% load i18n %}
+{% load event_tags %}
+
+{% block title %} {{ user.username }} ユーザー未レビュー | Sovol{% endblock %}
+
+
+{% block content %}
+
+{% load i18n %}
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+      <div class="panel-title">参加後かつ未レビューのボランティア一覧(自分が参加者)</div>
+    </div>
+    <div class="panel-body">
+  {% for event in user.get_past_participated_and_unreviewed_events %}
+  <div class="media">
+    <div class="media-left">
+      <a href="/event/{{event.pk}}">
+        <div class="media-object custom_thumbnail list-thumbnail" style="background-image:url({{ event.get_image_url }});"></div>
+      </a>
+    </div>
+    <div class="media-body">
+      <div class="event-info pull-left">
+        <div>
+          {% if event.is_over %}
+            <span class="label label-default" style="margin-right: 1em;">
+              {{ event.get_status }}
+            </span>
+          {% else %}
+            {% if event in user.participating_event.all %}
+              {% for participation in user.participation_set.all %}
+                {% if participation.event == event %}
+                  <span class="label label-warning" style="margin-right: 1em;">
+                    {{ participation.status }}
+                  </span>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <span class="label label-info" style="margin-right: 1em;">
+                {{ event.get_status }}
+              </span>
+            {% endif %}
+          {% endif %}
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+          {{event.start_time_format | date:'n/j (D)' }}
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          {{event.get_region_kanji}}
+        </div>
+        <div class="media-heading">
+          <a href="/event/{{event.pk}}">
+            <h4>{{event.name}}</h4>
+          </a>
+        </div>
+
+        <div class="media-heading">
+          <a class="btn btn-primary" href="{% url 'user:post_review' %}?event_id={{event.id}}">
+            Go to Event Review Post Page
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p>未レビューのボランティアがありません</p>
+  {% endfor %}
+  </div>
+</div>
+
+
+
+<div class="panel panel-primary">
+    <div class="panel-heading">
+      <div class="panel-title">開催後かつ未レビューの参加者一覧(自分が開催者)</div>
+    </div>
+    <div class="panel-body">
+  {% for event, user_list in user.get_ziped_unreview_hoseted %}
+
+  <div class="media">
+
+    <div class="media-left">
+      <a href="/event/{{event.pk}}">
+        <div class="media-object custom_thumbnail list-thumbnail" style="background-image:url({{ event.get_image_url }});"></div>
+      </a>
+    </div>
+    <div class="media-body">
+      <div class="event-info pull-left">
+        <div>
+          {% if event.is_over %}
+            <span class="label label-default" style="margin-right: 1em;">
+              {{ event.get_status }}
+            </span>
+          {% else %}
+            {% if event in user.participating_event.all %}
+              {% for participation in user.participation_set.all %}
+                {% if participation.event == event %}
+                  <span class="label label-warning" style="margin-right: 1em;">
+                    {{ participation.status }}
+                  </span>
+                {% endif %}
+              {% endfor %}
+            {% else %}
+              <span class="label label-info" style="margin-right: 1em;">
+                {{ event.get_status }}
+              </span>
+            {% endif %}
+          {% endif %}
+          <i class="fa fa-calendar" aria-hidden="true"></i>
+          {{event.start_time_format | date:'n/j (D)' }}
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          {{event.get_region_kanji}}
+        </div>
+        <div class="media-heading">
+          <a href="/event/{{event.pk}}">
+            <h4>{{event.name}}</h4>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h4>@User List</h4>
+  {% for p_user in user_list %}
+    <h5>{{ p_user.pk }} : {{ p_user.username }}</h5>
+    <a class="btn btn-primary" href="{% url 'user:post_review' %}?event_id={{event.id}}&to_user_id={{p_user.pk}}">
+      Go to User Review Post Page
+    </a>
+  {% endfor %}
+
+  {% empty %}
+  <p>未レビューの参加者はいません</p>
+  {% endfor %}
+  </div>
+</div>
+
+{% endblock %}
