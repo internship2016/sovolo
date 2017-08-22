@@ -12,7 +12,9 @@ def get_profile_image(strategy, details, response,
     backend = kwargs.get('backend')
     if is_new:
         if backend.name == 'facebook':
-            url = "http://graph.facebook.com/%s/picture?type=large" % response['id']
+            url = "http://graph.facebook.com/%(id)s/picture?type=large" % {
+                'id': response['id'],
+            }
         elif backend.name == 'twitter':
             url = response.get('profile_image_url', '').replace('_normal', '')
         if url:
