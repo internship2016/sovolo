@@ -407,7 +407,7 @@ class EventSearchResultsView(ListView):
                 tag_query = None
                 for t in tags:
                     tag = Tag.objects.get(pk=t)
-                    if tag_query==None:
+                    if tag_query is None:
                         tag_query = Q(tag=tag)
                     else:
                         tag_query = tag_query | Q(tag=tag)
