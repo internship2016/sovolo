@@ -74,6 +74,8 @@ class User(AbstractBaseModel, AbstractBaseUser):
                                 choices=settings.LANGUAGES,
                                 default=settings.LANGUAGE_CODE,  # FIXME: !!
                                 null=True)
+    # helper or sufferer
+    role = models.CharField(blank=True, null=True, max_length=15, default='helper')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
