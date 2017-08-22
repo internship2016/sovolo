@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 02:02+0900\n"
+"POT-Creation-Date: 2017-08-23 03:09+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,50 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: base/management/commands/seed_data.py:459
+msgid "Environment"
+msgstr "環境"
+
+#: base/management/commands/seed_data.py:460
+msgid "Community"
+msgstr "地域"
+
+#: base/management/commands/seed_data.py:461
+msgid "Human Rights"
+msgstr "人権"
+
+#: base/management/commands/seed_data.py:462
+msgid "Education"
+msgstr "教育"
+
+#: base/management/commands/seed_data.py:463
+msgid "Medical Care"
+msgstr "医療"
+
+#: base/management/commands/seed_data.py:464
+msgid "People with Disabilities"
+msgstr "介護"
+
+#: base/management/commands/seed_data.py:465
+msgid "International"
+msgstr "国際"
+
+#: base/management/commands/seed_data.py:466
+msgid "Culture"
+msgstr "文化"
+
+#: base/management/commands/seed_data.py:467
+msgid "Sports"
+msgstr "スポーツ"
+
+#: base/management/commands/seed_data.py:468
+msgid "Disaster Relief"
+msgstr "災害"
+
+#: base/management/commands/seed_data.py:469
+msgid "Animals"
+msgstr "動物"
 
 #: sovolo/settings.py:146
 msgid "English"
@@ -331,7 +375,7 @@ msgid "Participating"
 msgstr "参加予定"
 
 #: templates/event/detail.html:52 templates/event/detail.html:62
-#: templates/map.html:100 templates/top.html:170
+#: templates/map.html:102 templates/top.html:170
 msgid "Finished"
 msgstr "終了"
 
@@ -343,6 +387,7 @@ msgid "Closed"
 msgstr "締切済"
 
 #: templates/event/detail.html:58 templates/event/detail.html:115
+#: templates/event/side_info.html:9
 msgid "Waiting List"
 msgstr "キャンセル待ち"
 
@@ -473,7 +518,7 @@ msgid "Location:"
 msgstr "開催地域"
 
 #: templates/event/form_template.html:81 templates/event/search_form.html:69
-#: templates/event/search_form_side.html:69 templates/map.html:20
+#: templates/event/search_form_side.html:69 templates/map.html:21
 msgid "Search"
 msgstr "検索"
 
@@ -574,8 +619,8 @@ msgstr "新着ボランティア一覧"
 msgid "Recipients:"
 msgstr "宛先"
 
-#: templates/event/message.html:16 templates/map.html:99
-#: templates/top.html:169
+#: templates/event/message.html:16 templates/event/side_info.html:5
+#: templates/map.html:101 templates/top.html:169
 msgid "Organizer"
 msgstr "管理者"
 
@@ -600,6 +645,7 @@ msgid "Send"
 msgstr "送信"
 
 #: templates/event/participants.html:6 templates/event/participants.html:14
+#: templates/event/side_info.html:7
 msgid "Participants"
 msgstr "参加者一覧"
 
@@ -681,6 +727,10 @@ msgstr "前へ"
 msgid "Next"
 msgstr "次へ"
 
+#: templates/event/side_info.html:6
+msgid "Owner"
+msgstr "オーナー"
+
 #: templates/event/side_info.html:13
 msgid "Groups"
 msgstr "グループ"
@@ -693,51 +743,63 @@ msgstr "関連しているグループはありません"
 msgid "There are no filters attached."
 msgstr "このボランティアはタグ付けされていません"
 
-#: templates/map.html:97 templates/top.html:167
+#: templates/group/form_template.html:93
+#, fuzzy
+#| msgid "Groups I organize:"
+msgid "Events I organize"
+msgstr "自分の管理しているボランティア"
+
+#: templates/group/form_template.html:119
+#, fuzzy
+#| msgid "Groups I organize:"
+msgid "No events I organize"
+msgstr "管理しているボランティア活動はありません。"
+
+#: templates/map.html:99 templates/top.html:167
 msgid "Onging"
 msgstr "開催中"
 
-#: templates/map.html:98 templates/top.html:168
+#: templates/map.html:100 templates/top.html:168
 msgid "Wanted"
 msgstr "募集中"
 
-#: templates/map.html:133
+#: templates/map.html:135
 msgid "Failed to get location."
 msgstr "位置情報取得に失敗しました"
 
-#: templates/map.html:145
+#: templates/map.html:147
 msgid "Failed to get information."
 msgstr "情報を取得できませんでした"
 
-#: templates/map.html:171
+#: templates/map.html:173
 msgid "There are no events nearby."
 msgstr "周辺イベントはありません"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Sun"
 msgstr "日"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Mon"
 msgstr "月"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Tue"
 msgstr "火"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Wed"
 msgstr "水"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Thu"
 msgstr "木"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Fri"
 msgstr "金"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Sat"
 msgstr "土"
 
@@ -773,6 +835,40 @@ msgstr "すべてのボランティア"
 msgid "Failed to get information"
 msgstr "取得に失敗"
 
+#: templates/user/detail.html:13
+#, fuzzy
+#| msgid "Events of My Groups"
+msgid "List of My Groups"
+msgstr "所属グループ一覧"
+
+#: templates/user/detail.html:29
+#, fuzzy
+#| msgid "Groups"
+msgid "No groups"
+msgstr "所属しているグループがありません"
+
+#: templates/user/detail.html:35
+#, fuzzy
+#| msgid "Groups I organize:"
+msgid "List of Events I organize"
+msgstr "管理しているボランティア一覧"
+
+#: templates/user/detail.html:37
+msgid "List of Events I attend"
+msgstr "管理しているボランティア一覧"
+
+#: templates/user/detail.html:38
+#, fuzzy
+#| msgid "Event image"
+msgid "Event Achievements"
+msgstr "ボランティア実績"
+
+#: templates/user/edit.html:4 templates/user/user_header.html:32
+#, fuzzy
+#| msgid "Profile"
+msgid "Edit profile"
+msgstr "プロフィール編集"
+
 #: templates/user/edit.html:28 templates/user/user_header.html:24
 msgid "Region"
 msgstr "地域"
@@ -796,3 +892,8 @@ msgstr "獲得トロフィー"
 #: templates/user/user_header.html:75
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
+
+#, fuzzy
+#~| msgid "Waiting List"
+#~ msgid "Waitlist"
+#~ msgstr "キャンセル待ち"
