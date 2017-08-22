@@ -10,7 +10,7 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title">所属グループ一覧</h1>
+    <h1 class="panel-title">{% trans 'List of My Groups' %}</h1>
   </div>
   <div class="panel-body">
     {% for group in user.group_set.all %}

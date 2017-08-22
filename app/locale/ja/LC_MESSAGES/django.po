@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 02:04+0900\n"
+"POT-Creation-Date: 2017-08-23 02:39+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -331,7 +331,7 @@ msgid "Participating"
 msgstr "参加予定"
 
 #: templates/event/detail.html:52 templates/event/detail.html:62
-#: templates/map.html:100 templates/top.html:170
+#: templates/map.html:102 templates/top.html:170
 msgid "Finished"
 msgstr "終了"
 
@@ -473,7 +473,7 @@ msgid "Location:"
 msgstr "開催地域"
 
 #: templates/event/form_template.html:81 templates/event/search_form.html:69
-#: templates/event/search_form_side.html:69 templates/map.html:20
+#: templates/event/search_form_side.html:69 templates/map.html:21
 msgid "Search"
 msgstr "検索"
 
@@ -574,7 +574,7 @@ msgstr "新着ボランティア一覧"
 msgid "Recipients:"
 msgstr "宛先"
 
-#: templates/event/message.html:16 templates/map.html:99
+#: templates/event/message.html:16 templates/map.html:101
 #: templates/top.html:169
 msgid "Organizer"
 msgstr "管理者"
@@ -693,51 +693,51 @@ msgstr "関連しているグループはありません"
 msgid "There are no filters attached."
 msgstr "このボランティアはタグ付けされていません"
 
-#: templates/map.html:97 templates/top.html:167
+#: templates/map.html:99 templates/top.html:167
 msgid "Onging"
 msgstr "開催中"
 
-#: templates/map.html:98 templates/top.html:168
+#: templates/map.html:100 templates/top.html:168
 msgid "Wanted"
 msgstr "募集中"
 
-#: templates/map.html:133
+#: templates/map.html:135
 msgid "Failed to get location."
 msgstr "位置情報取得に失敗しました"
 
-#: templates/map.html:145
+#: templates/map.html:147
 msgid "Failed to get information."
 msgstr "情報を取得できませんでした"
 
-#: templates/map.html:171
+#: templates/map.html:173
 msgid "There are no events nearby."
 msgstr "周辺イベントはありません"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Sun"
 msgstr "日"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Mon"
 msgstr "月"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Tue"
 msgstr "火"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Wed"
 msgstr "水"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Thu"
 msgstr "木"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Fri"
 msgstr "金"
 
-#: templates/map.html:227 templates/top.html:103
+#: templates/map.html:235 templates/top.html:103
 msgid "Sat"
 msgstr "土"
 
@@ -772,6 +772,12 @@ msgstr "すべてのボランティア"
 #: templates/top.html:141 templates/top.html:154
 msgid "Failed to get information"
 msgstr "取得に失敗"
+
+#: templates/user/detail.html:13
+#, fuzzy
+#| msgid "Events of My Groups"
+msgid "List of My Groups"
+msgstr "所属グループ一覧"
 
 #: templates/user/edit.html:4 templates/user/user_header.html:32
 #, fuzzy
