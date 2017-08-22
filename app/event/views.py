@@ -593,7 +593,10 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
 
                 # Send Email
                 template = get_template("email/carry_up.txt")
-                context = Context({'user': carry_up.user, 'event': carry_up.event})
+
+                context = Context({'user': carry_up.user,
+                                   'event': carry_up.event})
+
                 content = template.render(context)
                 subject = content.split("\n", 1)[0]
                 message = content.split("\n", 1)[1]
