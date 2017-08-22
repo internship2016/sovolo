@@ -277,11 +277,9 @@ class UserReviewList(models.Model):
 
     comment = models.CharField(max_length=200, null=True)
 
-    from_rate_user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='from_rate_user',
-        )
+    from_rate_user = models.ForeignKey(User,
+                                       on_delete=models.CASCADE,
+                                       related_name='from_rate_user')
 
     joined_event = models.ForeignKey('event.Event', null=True)
 
