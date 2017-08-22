@@ -80,8 +80,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     def get_about_age(self):
         today = datetime.today()
-        age = today.year - self.birthday.year
-        if (today.month, today.day) <= (self.birthday.month, self.birthday.day):
+        birthday = self.birthday
+        age = today.year - birthday.year
+        if (today.month, today.day) <= (birthday.month, birthday.day):
             age -= 1
         return math.floor(age / 10) * 10
 
