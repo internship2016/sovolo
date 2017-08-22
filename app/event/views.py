@@ -142,7 +142,6 @@ class EventCreate(CreateView):
     def form_invalid(self, form):
         return super(EventCreate, self).form_invalid(form)
 
-
     def get_success_url(self):
         self.object.admin.add(self.request.user)
         sys.stderr.write("Added User")
