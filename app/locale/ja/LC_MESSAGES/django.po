@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 21:09+0000\n"
+"POT-Creation-Date: 2017-08-23 06:11+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,6 +72,12 @@ msgstr "ユーザー名 %(name)s に一致するユーザーはいませんで�
 #| msgid "User profile was successfully edited."
 msgid "Your event was successfully added."
 msgstr "ボランティアを登録しました。"
+
+#: event/views.py:169
+#, fuzzy
+#| msgid "Tags not found"
+msgid "Event not found."
+msgstr "そのボランティアは存在しません。"
 
 #: sovolo/settings.py:146
 msgid "English"

@@ -166,7 +166,8 @@ class EventDetailView(DetailView):
         try:
             self.object = self.get_object()
         except Http404:
-            messages.error(request, "そのボランティアは存在しません")
+            error_msg = _("Event not found.")
+            messages.error(request, error_msg)
             return redirect('top')
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
