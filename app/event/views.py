@@ -478,7 +478,8 @@ class EventSearchResultsView(ListView):
         prefs = sorted(prefs, key=lambda x: x[1][1])
         context['prefectures'] = [(k, v[0]) for k, v in prefs]
 
-        context['checked_tags'] = [int(t) for t in self.request.GET.getlist('tags')]
+        tags = self.request.GET.getlist('tags')
+        context['checked_tags'] = [int(t) for t in tags]
 
         return context
 
