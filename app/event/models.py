@@ -198,7 +198,9 @@ class Frame(AbstractBaseModel):
         return [p.user for p in participations]
 
     def waiting_id_list(self):
-        return self.participation_set.filter(status="キャンセル待ち").values_list('user',flat=True)
+        return self.participation_set \
+                   .filter(status="キャンセル待ち") \
+                   .values_list('user', flat=True)
 
     def get_filled_rate(self):
         """Calculate participant capacity ratio.
