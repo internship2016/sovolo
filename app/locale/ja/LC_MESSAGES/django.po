@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 21:58+0000\n"
+"POT-Creation-Date: 2017-08-22 22:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -894,10 +894,6 @@ msgstr "サービスの利用にはEmailアドレスが必要です"
 msgid "REGISTER"
 msgstr "登録"
 
-#: templates/user/detail.html:5 templates/user/user_header.html:11
-msgid "About Me"
-msgstr "ユーザー詳細"
-
 #: templates/user/detail.html:13
 msgid "List of My Groups"
 msgstr "所属グループ一覧"
@@ -926,7 +922,7 @@ msgstr "すべてのレビューを見る"
 msgid "Reviews not yet posted"
 msgstr "未レビューを見る"
 
-#: templates/user/edit.html:4 templates/user/user_header.html:32
+#: templates/user/edit.html:4 templates/user/user_header.html:31
 msgid "Edit profile"
 msgstr "プロフィール編集"
 
@@ -966,7 +962,7 @@ msgstr "生年月日"
 msgid "Language"
 msgstr "言語"
 
-#: templates/user/edit.html:81 templates/user/user_header.html:67
+#: templates/user/edit.html:81 templates/user/user_header.html:66
 msgid "Following tags"
 msgstr "フォローしているタグ"
 
@@ -1053,31 +1049,31 @@ msgstr "新しいパスワードを入力してください"
 msgid "Your new pasword"
 msgstr "新しいパスワード"
 
-#: templates/user/user_header.html:19
+#: templates/user/user_header.html:18
 msgid "Age Group:"
 msgstr "年代："
 
-#: templates/user/user_header.html:19
+#: templates/user/user_header.html:18
 msgid "'s"
 msgstr "代"
 
-#: templates/user/user_header.html:22
+#: templates/user/user_header.html:21
 msgid "Sex:"
 msgstr "性別："
 
-#: templates/user/user_header.html:24
+#: templates/user/user_header.html:23
 msgid "Region:"
 msgstr "地域："
 
-#: templates/user/user_header.html:29
+#: templates/user/user_header.html:28
 msgid "Sovolage"
 msgstr "ソボレージ"
 
-#: templates/user/user_header.html:51
+#: templates/user/user_header.html:50
 msgid "Trophies"
 msgstr "獲得トロフィー"
 
-#: templates/user/user_header.html:75
+#: templates/user/user_header.html:74
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
 
@@ -1119,6 +1115,3 @@ msgstr "ユーザー情報を編集しました。"
 #: user/views.py:228
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
-
-#~ msgid "View all reviews posted"
-#~ msgstr "すべてのレビューを見る"
