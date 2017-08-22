@@ -231,7 +231,10 @@ class Participation(AbstractBaseModel):
         unique_together = (('event', 'user'),)
 
     def __str__(self):
-        return "Participant:" + self.user.username +", Status: " + self.status
+        return "Participant: %(username)s, Status: %(status)s" % {
+            'username': self.user.username,
+            'status': self.status,
+        }
 
     def save(self, *args, **kwargs):
         return super(Participation, self).save(*args, **kwargs)
