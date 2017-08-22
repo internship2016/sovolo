@@ -49,10 +49,5 @@
   {% empty %}
   <p>{% trans "There are no events" %}</p>
   {% endfor %}
-
-  {% if title == "所属グループの新着ボランティア" %}
-    <a class="btn btn-default pull-right" href="{% url 'group:add' %}">{% trans "Create a new group" %}</a>
-    <a class="btn pull-right" href="{% url 'group:index' %}">{% trans "View all groups" %}</a>
-  {% endif %}
   </div>
 </div>

@@ -113,7 +113,7 @@
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     gmap = new google.maps.Map(document.getElementById("map_canvas"), opts);
-    
+
     gmap.setCenter(latlng);
     setPin(latlng);
 
@@ -397,54 +397,6 @@
   </div>
 </div>
 
-<div class="form-group">
-  <label class="col-sm-3">{% trans "Related group:" %}</label>
-  <div class="col-sm-9">
-    <div class="checkbox" id="events">
-      {% for group in event.group_set.all %}
-        {% if forloop.first %}
-          <h4>{% trans "Groups related to this event:" %}</h4>
-        {% endif %}
-        <label>
-          <input type="checkbox" name="groups" value="{{ group.id }}" checked>
-          <div class="media">
-            <div class="media-left">
-              <a href="{% url "group:detail" group.id %}">
-                <div class="custom_thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
-              </a>
-            </div>
-            <div class="media-body">
-              <h3 class="media-heading"><a href="{% url "group:detail" group.id %}">{{ group.name }}</a></h3>
-              {{ group.description }}
-            </div>
-          </div>
-        </label>
-      {% endfor %}
-
-      <h4>{% trans "Groups I organize:" %}</h4>
-      {% for group in request.user.admin_group.all %}
-        {% if group not in event.group_set.all %}
-          <label>
-            <input type="checkbox" name="groups" value="{{ group.id }}">
-            <div class="media">
-              <div class="media-left">
-                <a href="{% url "group:detail" group.id %}">
-                  <div class="custom_thumbnail list-thumbnail" style="background-image:url({{ group.get_image_url }})"></div>
-                </a>
-              </div>
-              <div class="media-body">
-                <h3 class="media-heading"><a href="{% url "group:detail" group.id %}">{{ group.name }}</a></h3>
-                {{ group.description }}
-              </div>
-            </div>
-          </label>
-        {% endif %}
-      {% empty %}
-        <p>{% trans "I don't organize any group." %}</p>
-      {% endfor %}
-    </div>
-  </div>
-</div>
 
 <style>
   #tags label {

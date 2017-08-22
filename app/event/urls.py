@@ -39,7 +39,6 @@ urlpatterns = [
 
     # event/list
     url(r'^filter/future_participating_events$', api.event_filter, {'event_kind':'future_participating_events'}, name='future_participating_events'),
-    url(r'^filter/new_group_events$', api.event_filter, {'event_kind':'new_group_events'}, name='new_group_events'),
     url(r'^filter/new_region_events$', api.event_filter, {'event_kind':'new_region_events'}, name='new_region_events'),
     url(r'^filter/new_tag_events$', api.event_filter, {'event_kind':'new_tag_events'}, name='new_tag_events'),
     url(r'^filter/new_events$', api.event_filter, {'event_kind':'new_events'}, name='new_events'),

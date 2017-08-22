@@ -62,12 +62,6 @@
               </form>
             </li>
             <li>
-              <form method="post" action="{% url 'event:new_group_events'%}" class="event-filter">
-                {% csrf_token %}
-                {% trans "Events of My Groups" %}
-              </form>
-            </li>
-            <li>
               <form method="post" action="{% url 'event:new_region_events'%}" class="event-filter">
                 {% csrf_token %}
                 {% trans "Events Nearby" %}
