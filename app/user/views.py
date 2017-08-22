@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, FormView
-from django.views.generic import DetailView, ListView, View
+from django.views.generic import DetailView, View
 from django.contrib  import messages
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse_lazy
