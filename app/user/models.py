@@ -52,9 +52,12 @@ class User(AbstractBaseModel, AbstractBaseUser):
     occupation = models.CharField(max_length=100, null=True)
 
     # regionは都道府県で指定
+    # XXX: dup
     prefectures = settings.PREFECTURES
+    prefs = prefectures.items()
+    prefs = sorted(prefs, key=lambda x: x[1][1])
+    region_list = [(k, v[0]) for k, v in prefs]
 
-    region_list = [(key, value[0]) for key, value in sorted(prefectures.items(), key=lambda x:x[1][1])]
     region = models.CharField(max_length=10, choices=region_list)
     follow_tag = models.ManyToManyField(Tag, related_name='follower', blank=True)
     image = models.ImageField(upload_to='users/', null=True, blank=True)
