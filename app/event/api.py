@@ -59,7 +59,6 @@ def event_filter(request, event_kind, *args, **kwargs):
 def event_range_search(request, *args, **kwargs):
     if request.method == 'POST':
         res = {'events_in_range': []}
-        # json_data = json.loads('{"ne_lat": 0, "sw_lat":200, "ne_lng": 0, "sw_lng": 200 }')
         range_value = dict(request.POST)
         keys = ['ne_lat', 'sw_lat', 'ne_lng', 'sw_lng']
         for key in keys:
