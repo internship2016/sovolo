@@ -4,7 +4,6 @@ from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic import DetailView, View
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-from django.core.urlresolvers import reverse_lazy
 from .models import User
 from tag.models import Tag
 from base.utils import send_template_mail
