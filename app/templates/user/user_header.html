@@ -21,7 +21,7 @@
             {% if user.sex != null %}
             <p>性別: {{ user.sex|yesno:"男,女,秘密" }}</p>
             {% endif %}
-            <p>住んでる都道府県: {{ user.get_region_kanji }}</p>
+            <p>{% trans 'Region' %}: {{ user.get_region_kanji }}</p>
           </div>
 
           <div class="panel-body col-sm-5 col-md-4" style="padding-bottom: 5px;">
