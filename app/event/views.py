@@ -105,18 +105,25 @@ class EventCreate(CreateView):
             event.tag.add(int(tag_id))
 
         # Frames
-        frame_numbers = self.request.POST.getlist('frame_number')
+        # XXX: Unspecified large numbere of Frames via POST
+        req_post = self.request.POST
 
-        for number in frame_numbers:
-            frame_id = self.request.POST.get('frame_' + number + '_id')
+        for n in req_post.getlist('frame_number'):
+            frame_id = req_post.get('frame_' + n + '_id')
             if frame_id is None:
                 frame = Frame(event=event)
             else:
                 frame = Frame.objects.get(pk=frame_id)
 
-            frame.description = self.request.POST.get('frame_' + number + '_description')
-            frame.upper_limit = self.request.POST.get('frame_' + number + '_upperlimit') or None
-            frame.deadline = self.request.POST.get('frame_' + number + '_deadline') or event.end_time
+            description_key = 'frame_' + n + '_description'
+            frame.description = req_post.get(description_key)
+
+            upperlimit_key = 'frame_' + n + '_upperlimit'
+            frame.upper_limit = req_post.get(upperlimit_key) or None
+
+            deadline_key = 'frame_' + n + '_deadline'
+            frame.deadline = req_post.get(deadline_key) or event.end_time
+
             frame.save()
 
         # Lng, Lat
