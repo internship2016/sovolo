@@ -274,11 +274,12 @@ class EventEditView(UserPassesTestMixin, UpdateView):
             frame.save()
 
         # Lng, Lat
-        if 'latitude' in self.request.POST and 'longitude' in self.request.POST:
-            if self.request.POST['latitude'] != "" and self.request.POST['longitude'] != "":
-                event.latitude = self.request.POST['latitude']
-                event.longitude = self.request.POST['longitude']
-                event.save()
+        latitude = self.request.POST.get('latitude')
+        longitude = self.request.POST.get('longitude')
+        if latitude and longitude:
+            event.latitude = latitude
+            event.longitude = longitude
+            event.save()
 
         messages.info(self.request, "ボランティア情情報を編集しました。")
         return form_redirect
