@@ -283,7 +283,6 @@ class UserReviewList(models.Model):
 
     joined_event = models.ForeignKey('event.Event', null=True)
 
-    # post_day = models.DateTimeField(default=timezone.now, editable=False, null=True)
     post_day = models.DateTimeField(default=timezone.now, null=True)
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
