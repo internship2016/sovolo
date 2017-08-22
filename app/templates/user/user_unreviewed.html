@@ -11,7 +11,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-      <div class="panel-title">参加後かつ未レビューのボランティア一覧(自分が参加者)</div>
+      <div class="panel-title">参加後かつ未レビューのボランティア一覧(Participant)</div>
     </div>
     <div class="panel-body">
   {% for event in user.get_past_participated_and_unreviewed_events %}
@@ -73,7 +73,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-      <div class="panel-title">開催後かつ未レビューの参加者一覧(自分が開催者)</div>
+      <div class="panel-title">開催後かつ未レビューの参加者一覧(Host)</div>
     </div>
     <div class="panel-body">
   {% for event, user_list in user.get_ziped_unreview_hoseted %}
@@ -130,7 +130,7 @@
   {% endfor %}
 
   {% empty %}
-  <p>未レビューの参加者はいません</p>
+    <p>未レビューの参加者はいません</p>
   {% endfor %}
   </div>
 </div>
