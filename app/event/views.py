@@ -450,11 +450,11 @@ class EventSearchResultsView(ListView):
             results = results.order_by(criterion)
 
         # Include events with no openings?
-        if 'exclude_full_events' in self.request.GET and self.request.GET['exclude_full_events'] == "on":
+        if self.request.GET.get('exclude_full_events') == "on":
             results = [event for event in results if not event.is_full()]
 
         # Include events that are already over?
-        if 'exclude_closed_events' in self.request.GET and self.request.GET['exclude_closed_events'] == "on":
+        if self.request.GET.get('exclude_closed_events') == "on":
             results = [event for event in results if not event.is_closed()]
 
         if len(results)==0:
