@@ -35,7 +35,7 @@
 {% event_list user.admin_event.all _("List of Events I organize") %}
 {% endif %}
 {% event_list user.get_future_participating_events _("List of Events I attend") %}
-{% event_list user.get_past_participated_events _("Event Archievements") %}
+{% event_list user.get_past_participated_events _("Event Achievements") %}
 
 
 <a class="btn btn-primary" href="{% url 'user:review' user.id %}">

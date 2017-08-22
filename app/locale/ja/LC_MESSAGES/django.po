@@ -854,7 +854,7 @@ msgstr "管理しているボランティア一覧"
 #: templates/user/detail.html:38
 #, fuzzy
 #| msgid "Event image"
-msgid "Event Archievements"
+msgid "Event Achievements"
 msgstr "ボランティア実績"
 
 #: templates/user/edit.html:4 templates/user/user_header.html:32
