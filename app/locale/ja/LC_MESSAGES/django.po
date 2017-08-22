@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 18:56+0000\n"
+"POT-Creation-Date: 2017-08-23 04:00+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -948,6 +948,14 @@ msgstr "フォローしているタグがありません"
 msgid "You need %(points_to_next)d more Sovolage to the next level!"
 msgid_plural "You need %(points_to_next)d more Sovolages to the next level!"
 msgstr[0] "次のレベルまであと%(points_to_next)dソボレージ！"
+
+#: user/views.py:213
+msgid "User profile was successfully edited."
+msgstr "ユーザー情報を編集しました。"
+
+#: user/views.py:228
+msgid "You have been successfully logged out."
+msgstr "ログアウトしました。"
 
 #, fuzzy
 #~| msgid "Waiting List"
