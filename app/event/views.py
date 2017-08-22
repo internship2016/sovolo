@@ -2,7 +2,6 @@ import os
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic.edit import CreateView
