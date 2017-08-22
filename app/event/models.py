@@ -170,11 +170,10 @@ class Frame(AbstractBaseModel):
         if self.upper_limit is None:
             return False
         else:
-            participant_query = Q(frame=self)
-            status_query = Q(status="参加中")
-            num_participants = Participation.objects.filter(participant_query & status_query).count()
+            participants = Participation.objects \
+                .filter(Q(frame=self) & Q(status="参加中"))
 
-            return num_participants >= self.upper_limit
+            return participants.count() >= self.upper_limit
 
     def is_closed(self):
         return timezone.now() > self.deadline
@@ -187,16 +186,21 @@ class Frame(AbstractBaseModel):
         return self.deadline
 
     def participant_id_list(self):
-        return self.participation_set.all().values_list('user',flat=True)
+        return self.participation_set.all().values_list('user', flat=True)
 
     def reserved_id_list(self):
-        return self.participation_set.filter(status="参加中").values_list('user',flat=True)
+        return self.participation_set \
+                   .filter(status="参加中") \
+                   .values_list('user', flat=True)
 
     def get_reserved_users(self):
-        return [participation.user for participation in self.participation_set.filter(status="参加中")]
+        participations = self.participation_set.filter(status="参加中")
+        return [p.user for p in participations]
 
     def waiting_id_list(self):
-        return self.participation_set.filter(status="キャンセル待ち").values_list('user',flat=True)
+        return self.participation_set \
+                   .filter(status="キャンセル待ち") \
+                   .values_list('user', flat=True)
 
     def get_filled_rate(self):
         """Calculate participant capacity ratio.
@@ -227,7 +231,10 @@ class Participation(AbstractBaseModel):
         unique_together = (('event', 'user'),)
 
     def __str__(self):
-        return "Participant:" + self.user.username +", Status: " + self.status
+        return "Participant: %(username)s, Status: %(status)s" % {
+            'username': self.user.username,
+            'status': self.status,
+        }
 
     def save(self, *args, **kwargs):
         return super(Participation, self).save(*args, **kwargs)
