@@ -72,7 +72,7 @@ class UserCreateView(CreateView):
         form.fields['username'].label = "ニックネーム（15文字以内)"
         return form
 
-    
+
 class UserActivationView(View):
     def get(self, request, *args, **kwargs):
         activation = get_object_or_404(UserActivation, key=kwargs['key'])
@@ -299,7 +299,7 @@ class UserPostReviewView(FormView):
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
-        # rom user Host -> Participant or not
+        # from user Host -> Participant or not
         if (self.request.user == joined_event.host_user) and (to_user not in joined_event.participant.all()):
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
@@ -338,7 +338,7 @@ class UserSkillEditView(UpdateView):
     tamplate_name = 'user/user_form.html'
     fields = ['skilltodo']
 
-    
+
     def form_valid(self,form):
         form_redirect = super(UserSkillEditView, self).form_valid(form)
         skill = form.save(commit=False)
@@ -373,11 +373,11 @@ class UserSkillAddView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(UserSkillAddView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
-        return context       
+        return context
 
     def form_valid(self, form):
         form_redirect = super(UserSkillAddView, self).form_valid(form)
-        skill = form.save() 
+        skill = form.save()
         skill.tag.clear()
         for tag_id in self.request.POST.getlist('tags'):
             skill.tag.add(int(tag_id))
@@ -390,4 +390,3 @@ class UserSkillAddView(CreateView):
         messages.info(self.request, "新規スキルを作成しました")
         userskill_id = self.request.user.id
         return reverse('user:skill', kwargs={'pk': userskill_id})
-
