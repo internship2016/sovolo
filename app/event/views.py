@@ -590,7 +590,8 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
                 carry_up = waiting_list.first()
                 carry_up.status = "参加中"
                 carry_up.save()
-                #Send Email
+
+                # Send Email
                 template = get_template("email/carry_up.txt")
                 context = Context({'user': carry_up.user, 'event': carry_up.event})
                 content = template.render(context)
