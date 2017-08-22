@@ -28,7 +28,7 @@ def get_profile_image(strategy, details, response,
 
 @partial
 def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
-    backend = kwargs.get('backend')
+    # backend = kwargs.get('backend')
     if user and user.email:
         # The user we're logging in already has their email attribute set
         return
