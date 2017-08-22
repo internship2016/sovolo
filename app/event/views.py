@@ -234,8 +234,10 @@ class EventEditView(UserPassesTestMixin, UpdateView):
             messages.error(self.request, error_msg)
 
         # Groups
+        # XXX: Bad naming: group_ids
         event.group_set.clear()
-        for group_id in set([int(g) for g in self.request.POST.getlist('groups')]):
+        group_ids = set([int(g) for g in self.request.POST.getlist('groups')])
+        for group_id in group_ids:
             event.group_set.add(group_id)
 
         # Tags
