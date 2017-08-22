@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 01:56+0900\n"
+"POT-Creation-Date: 2017-08-23 01:59+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -784,6 +784,10 @@ msgstr "言語"
 #: templates/user/edit.html:81 templates/user/user_header.html:67
 msgid "Following tags"
 msgstr "フォローしているタグ"
+
+#: templates/user/user_header.html:29
+msgid "Sovolage"
+msgstr ""
 
 #: templates/user/user_header.html:75
 msgid "Tags not found"

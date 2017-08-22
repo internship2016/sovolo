@@ -26,7 +26,7 @@
 
           <div class="panel-body col-sm-5 col-md-4" style="padding-bottom: 5px;">
             <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
-            <p> ソボレージ<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
+            <p> {% trans 'Sovolage' %}<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
             <div style="text-align: right">
             {% if user.id == request.user.id %}
               <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">プロフィール編集</a>
