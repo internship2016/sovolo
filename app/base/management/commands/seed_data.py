@@ -6,7 +6,6 @@ from event.models import Event, Participation, Frame, Comment, Question, Answer
 from group.models import Group, Membership
 from user.models import User
 from tag.models import Tag
-from django.utils.translation import ugettext_lazy as _
 import csv
 import os
 import glob
@@ -457,17 +456,17 @@ class Command(BaseCommand):
 
     def _create_tags(self):
         taglist = (
-            _("Environment"),
-            _("Community"),
-            _("Human Rights"),
-            _("Education"),
-            _("Medical Care"),
-            _("People with Disabilities"),
-            _("International"),
-            _("Culture"),
-            _("Sports"),
-            _("Disaster Relief"),
-            _("Animals")
+            '環境',
+            '地域',
+            '人権',
+            '教育',
+            '医療',
+            '介護',
+            '国際協力',
+            '文化',
+            'スポーツ',
+            '災害',
+            '動物'
         )
         user = User.objects.get(pk=1)
         for t in taglist:

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 22:27+0000\n"
+"POT-Creation-Date: 2017-08-23 07:47+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,66 +18,22 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: base/management/commands/seed_data.py:459
-msgid "Environment"
-msgstr "環境"
-
-#: base/management/commands/seed_data.py:460
-msgid "Community"
-msgstr "地域"
-
-#: base/management/commands/seed_data.py:461
-msgid "Human Rights"
-msgstr "人権"
-
-#: base/management/commands/seed_data.py:462
-msgid "Education"
-msgstr "教育"
-
-#: base/management/commands/seed_data.py:463
-msgid "Medical Care"
-msgstr "医療"
-
-#: base/management/commands/seed_data.py:464
-msgid "People with Disabilities"
-msgstr "介護"
-
-#: base/management/commands/seed_data.py:465
-msgid "International"
-msgstr "国際"
-
-#: base/management/commands/seed_data.py:466
-msgid "Culture"
-msgstr "文化"
-
-#: base/management/commands/seed_data.py:467
-msgid "Sports"
-msgstr "スポーツ"
-
-#: base/management/commands/seed_data.py:468
-msgid "Disaster Relief"
-msgstr "災害"
-
-#: base/management/commands/seed_data.py:469
-msgid "Animals"
-msgstr "動物"
-
 #: event/views.py:87
 #, python-format
 msgid "There is no user named %(name)s."
-msgstr "ユーザー名 %(name)s に一致するユーザーはいませんでした。"
+msgstr ""
 
 #: event/views.py:139
 #, fuzzy
 #| msgid "User profile was successfully edited."
 msgid "Your event was successfully added."
-msgstr "ボランティアを登録しました。"
+msgstr "ユーザー情報を編集しました。"
 
 #: event/views.py:169
 #, fuzzy
 #| msgid "Tags not found"
 msgid "Event not found."
-msgstr "そのボランティアは存在しません。"
+msgstr "フォローしているタグがありません"
 
 #: sovolo/settings.py:146
 msgid "English"
