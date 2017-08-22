@@ -64,8 +64,12 @@ def event_range_search(request, *args, **kwargs):
         for key in keys:
             range_value[key] = float(range_value[key][0])
 
-        for event in Event.get_events_in_range(
-                range_value['ne_lat'], range_value['sw_lat'], range_value['ne_lng'], range_value['sw_lng']):
+        events = Event.get_events_in_range(range_value['ne_lat'],
+                                           range_value['sw_lat'],
+                                           range_value['ne_lng'],
+                                           range_value['sw_lng'])
+
+        for event in events:
             res['events_in_range'].append({
                 'id': event.id,
                 'name': event.name,
@@ -77,4 +81,5 @@ def event_range_search(request, *args, **kwargs):
                 'img': event.get_image_url(),
                 'status': event.get_status()
             })
+
         return JsonResponse(res)
