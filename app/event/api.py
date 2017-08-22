@@ -13,7 +13,10 @@ def event_filter(request, event_kind, *args, **kwargs):
     if request.method == 'POST':
         def new_events():
             return Event.objects.all().order_by('-created')[:10]
-        if request.user.is_anonymous():
+
+        user = request.user
+
+        if user.is_anonymous():
             events = new_events()
             res_obj = {'filtered_events': []}
             for event in events:
@@ -27,13 +30,15 @@ def event_filter(request, event_kind, *args, **kwargs):
                     'status': event.get_status()
                 })
             return JsonResponse(res_obj)
+
         events = {
-            'future_participating_events': request.user.get_future_participating_events,
-            'new_group_events': request.user.get_new_group_events,
-            'new_region_events': request.user.get_new_region_events,
-            'new_tag_events': request.user.get_new_tag_events,
+            'future_participating_events': user.get_future_participating_events,
+            'new_group_events': user.get_new_group_events,
+            'new_region_events': user.get_new_region_events,
+            'new_tag_events': user.get_new_tag_events,
             'new_events': new_events
         }
+
         if event_kind in events.keys():
             res_obj = {'filtered_events': []}
             for event in events[event_kind]()[:10]:
