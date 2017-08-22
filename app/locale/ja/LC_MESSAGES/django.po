@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 06:11+0900\n"
+"POT-Creation-Date: 2017-08-22 21:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -907,6 +907,14 @@ msgstr "管理しているボランティア一覧"
 #: templates/user/detail.html:38
 msgid "Event Achievements"
 msgstr "ボランティア実績"
+
+#: templates/user/detail.html:42
+msgid "View all reviews posted"
+msgstr "すべてのレビューを見る"
+
+#: templates/user/detail.html:46
+msgid "Reviews not yet posted"
+msgstr "未レビューを見る"
 
 #: templates/user/edit.html:4 templates/user/user_header.html:32
 msgid "Edit profile"

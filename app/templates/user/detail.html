@@ -39,11 +39,11 @@
 
 
 <a class="btn btn-primary" href="{% url 'user:review' user.id %}">
-  Go to User Review Page
+    {% trans "View all reviews posted" %}
 </a>
 
 <a class="btn btn-primary" href="{% url 'user:unreviewed' %}">
-  Go to User UnReviewed Page
+    {% trans "Reviews not yet posted" %}
 </a>
 
 {% endblock %}

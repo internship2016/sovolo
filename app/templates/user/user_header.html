@@ -21,7 +21,7 @@
             {% if user.sex != null %}
             <p>{% trans "Sex:" %} {{ user.sex|yesno:"男,女,秘密" }}</p>
             {% endif %}
-            <p>{% trans 'Region:' %}: {{ user.get_region_kanji }}</p>
+            <p>{% trans 'Region:' %} {{ user.get_region_kanji }}</p>
           </div>
 
           <div class="panel-body col-sm-5 col-md-4" style="padding-bottom: 5px;">
