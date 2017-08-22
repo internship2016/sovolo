@@ -104,9 +104,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
                    .count()
 
     def get_level(self):
-        #return math.floor(self.get_point() / 13) + 1
         point = self.get_point()
         level = 1
+
+        # FIXME: Deterministic, this shouldn't be using while statement
         while(self.is_level(level, point)):
             level += 1
 
