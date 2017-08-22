@@ -128,7 +128,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return self.level_threshold(self.get_level()) - self.get_point()
 
     def get_level_percentage(self):
-        return math.floor(float(self.get_point())/float(self.level_threshold(self.get_level()))*100)
+        point = float(self.get_point())
+        threshold = float(self.level_threshold(self.get_level()))
+        return math.floor(point * 100 / threshold)
 
     def get_full_name(self):
         return self.email
