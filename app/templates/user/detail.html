@@ -32,9 +32,9 @@
 </div>
 
 {% if user.admin_event.all %}
-{% event_list user.admin_event.all _("List of Events I organize") %}
+{% event_list user.admin_event.all _("List of Events Organizing") %}
 {% endif %}
-{% event_list user.get_future_participating_events _("List of Events I attend") %}
+{% event_list user.get_future_participating_events _("List of Events Attending") %}
 {% event_list user.get_past_participated_events _("Event Achievements") %}
 
 
