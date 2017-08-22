@@ -5,7 +5,10 @@ from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
+from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
+from django.views.generic.edit import DeleteView
+from django.views.generic.edit import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import DetailView, ListView, RedirectView, View
 from django import forms
@@ -34,10 +37,12 @@ import re
 from datetime import datetime
 import sys
 import io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import uuid
 import urllib
-import json, requests
+import json
+import requests
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
+
 
 @method_decorator(login_required, name='dispatch')
 class EventCreate(CreateView):
