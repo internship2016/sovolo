@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 22:14+0000\n"
+"POT-Creation-Date: 2017-08-22 22:22+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -523,7 +523,7 @@ msgid "View all groups"
 msgstr "すべてのグループを見る"
 
 #: templates/event/form_template.html:9
-#: templates/user/user_post_review.html:16
+#: templates/user/user_post_review.html:16 templates/user/user_review.html:19
 msgid "Event Name"
 msgstr "ボランティア名"
 
@@ -1101,6 +1101,30 @@ msgstr "ユーザーID"
 #: templates/user/user_post_review.html:20
 msgid "User Name"
 msgstr "ユーザー名"
+
+#: templates/user/user_review.html:3 templates/user/user_review.html:8
+msgid "Reviews"
+msgstr "レビュー"
+
+#: templates/user/user_review.html:11
+msgid "reviews"
+msgstr "件"
+
+#: templates/user/user_review.html:17
+msgid "Rating"
+msgstr "評価"
+
+#: templates/user/user_review.html:18
+msgid "Rated by"
+msgstr "投稿者"
+
+#: templates/user/user_review.html:20
+msgid "Comment"
+msgstr "コメント"
+
+#: templates/user/user_review.html:21
+msgid "Posted on"
+msgstr "投稿日"
 
 #: user/models.py:86
 #, python-format
