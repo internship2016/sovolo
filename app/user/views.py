@@ -224,7 +224,7 @@ def logout(request):
     return auth_views.logout(request, next_page="/")
 
 
-## Review
+# Review
 class UserReviewView(DetailView):
     model = User
     template_name = 'user/user_review.html'
