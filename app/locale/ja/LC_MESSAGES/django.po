@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 18:56+0000\n"
+"POT-Creation-Date: 2017-08-22 20:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -267,11 +267,13 @@ msgid "Create an event"
 msgstr "ボランティア作成"
 
 #: templates/base.html:84 templates/user/acquire_email.html:4
-#: templates/user/acquire_email.html:7
+#: templates/user/acquire_email.html:7 templates/user/register.html:21
 msgid "Register"
 msgstr "ユーザー登録"
 
-#: templates/base.html:85
+#: templates/base.html:85 templates/user/login_page.html:6
+#: templates/user/login_page.html:11 templates/user/login_page.html:27
+#: templates/user/register.html:45
 msgid "Log in"
 msgstr "ログイン"
 
@@ -284,10 +286,12 @@ msgid "Log out"
 msgstr "ログアウト"
 
 #: templates/base.html:106
-#, fuzzy
-#| msgid "Language"
 msgid "Change language"
 msgstr "言語切り替え"
+
+#: templates/container_top.html:10
+msgid "Let's Get Involved"
+msgstr "はじめよう、つながろう"
 
 #: templates/container_top.html:12
 msgid "Create an Event"
@@ -302,12 +306,11 @@ msgid "Like"
 msgstr "いいね"
 
 #: templates/event/add.html:5 templates/event/add.html:13
-#, fuzzy
-#| msgid "Create an event"
 msgid "Create a new event"
 msgstr "ボランティア作成"
 
 #: templates/event/add.html:21 templates/event/edit.html:19
+#: templates/user/request_password_reset.html:17
 msgid "Submit"
 msgstr "送信"
 
@@ -356,6 +359,8 @@ msgid "Position "
 msgstr "参加枠"
 
 #: templates/event/detail.html:33 templates/event/detail.html:35
+#: templates/event/form_template.html:317
+#: templates/event/form_template.html:370
 msgid "Deadline"
 msgstr "締切"
 
@@ -585,12 +590,29 @@ msgid "Job Description:"
 msgstr "仕事内容"
 
 #: templates/event/form_template.html:292
-msgid "The fixed number:"
+msgid "up to:"
 msgstr "上限人数"
 
 #: templates/event/form_template.html:297
 msgid "Deadline:"
 msgstr "応募締切"
+
+#: templates/event/form_template.html:309
+#: templates/event/form_template.html:362
+msgid "Job Description"
+msgstr "仕事内容"
+
+#: templates/event/form_template.html:313
+#: templates/event/form_template.html:366
+msgid "up to"
+msgstr "上限人数"
+
+#: templates/event/form_template.html:315
+#: templates/event/form_template.html:319
+#: templates/event/form_template.html:368
+#: templates/event/form_template.html:372
+msgid "optional"
+msgstr "任意"
 
 #: templates/event/form_template.html:391
 msgid "Related to:"
@@ -669,7 +691,7 @@ msgid "Filters"
 msgstr "タグ"
 
 #: templates/event/search_form.html:33
-#: templates/event/search_form_side.html:33 templates/top.html:13
+#: templates/event/search_form_side.html:33
 msgid "Location"
 msgstr "場所"
 
@@ -745,14 +767,10 @@ msgid "There are no filters attached."
 msgstr "このボランティアはタグ付けされていません"
 
 #: templates/group/form_template.html:93
-#, fuzzy
-#| msgid "Groups I organize:"
 msgid "Events I organize"
 msgstr "自分の管理しているボランティア"
 
 #: templates/group/form_template.html:119
-#, fuzzy
-#| msgid "Groups I organize:"
 msgid "No events I organize"
 msgstr "管理しているボランティア活動はありません。"
 
@@ -812,9 +830,13 @@ msgstr "ソーシャルボランティアプラットフォーム"
 msgid "Browse"
 msgstr "イベント"
 
+#: templates/top.html:13
+msgid "Map"
+msgstr "地図"
+
 #: templates/top.html:14
 msgid "Calender"
-msgstr "カレンダーで探す"
+msgstr "カレンダー"
 
 #: templates/top.html:61
 msgid "Events I'm going"
@@ -849,36 +871,26 @@ msgid "About Me"
 msgstr "ユーザー詳細"
 
 #: templates/user/detail.html:13
-#, fuzzy
-#| msgid "Events of My Groups"
 msgid "List of My Groups"
 msgstr "所属グループ一覧"
 
 #: templates/user/detail.html:29
-#, fuzzy
-#| msgid "Groups"
 msgid "No groups"
 msgstr "所属しているグループがありません"
 
 #: templates/user/detail.html:35
-#, fuzzy
-#| msgid "Groups I organize:"
-msgid "List of Events I organize"
+msgid "List of Events Organizing"
 msgstr "管理しているボランティア一覧"
 
 #: templates/user/detail.html:37
-msgid "List of Events I attend"
+msgid "List of Events Attending"
 msgstr "管理しているボランティア一覧"
 
 #: templates/user/detail.html:38
-#, fuzzy
-#| msgid "Event image"
 msgid "Event Achievements"
 msgstr "ボランティア実績"
 
 #: templates/user/edit.html:4 templates/user/user_header.html:32
-#, fuzzy
-#| msgid "Profile"
 msgid "Edit profile"
 msgstr "プロフィール編集"
 
@@ -930,6 +942,65 @@ msgstr "パスワードを変更する"
 msgid "Apply"
 msgstr "適用"
 
+#: templates/user/login_page.html:15
+msgid "Log in with your email address"
+msgstr "メールアドレスでログイン"
+
+#: templates/user/login_page.html:28
+msgid "Forgot your password?"
+msgstr "パスワードを忘れた方はこちら"
+
+#: templates/user/login_page.html:37
+msgid "Log in using the following services"
+msgstr "SNSアカウントでログイン"
+
+#: templates/user/login_page.html:41
+msgid "Log in with Twitter"
+msgstr "Twitterでログイン"
+
+#: templates/user/login_page.html:52
+msgid "Not registered with us yet?"
+msgstr "Facebookでログイン"
+
+#: templates/user/login_page.html:55
+msgid "Join Now"
+msgstr "新規登録"
+
+#: templates/user/register.html:7 templates/user/register.html:11
+msgid "Join Sovol"
+msgstr "ユーザー新規登録"
+
+#: templates/user/register.html:15
+msgid "Register with email address"
+msgstr "メールアドレスで登録"
+
+#: templates/user/register.html:29
+msgid "Register with the following services"
+msgstr "SNSアカウントで登録"
+
+#: templates/user/register.html:32
+msgid "Register with Twitter"
+msgstr "Twitterで登録"
+
+#: templates/user/register.html:35
+msgid "Register with Facebook"
+msgstr "Facebookで登録"
+
+#: templates/user/register.html:42
+msgid "Already have an account?"
+msgstr "アカウントをお持ちの方はこちら"
+
+#: templates/user/request_password_reset.html:4
+#: templates/user/request_password_reset.html:7
+msgid "Forgot Your Password?"
+msgstr "パスワード再設定リクエスト"
+
+#: templates/user/request_password_reset.html:8
+msgid ""
+"Enter your email address and we'll send you instructions on how to reset "
+"your password."
+msgstr "8　パスワードを再設定したいメールアドレスを入力してください"
+
 #: templates/user/user_header.html:29
 msgid "Sovolage"
 msgstr "ソボレージ"
@@ -943,13 +1014,15 @@ msgid "Tags not found"
 msgstr "フォローしているタグがありません"
 
 #: user/models.py:86
-#, fuzzy, python-format
-#| msgid "You need %(points_to_next)d more Sovolage to the next level!"
+#, python-format
 msgid "You need %(points_to_next)d more Sovolage to the next level!"
 msgid_plural "You need %(points_to_next)d more Sovolages to the next level!"
 msgstr[0] "次のレベルまであと%(points_to_next)dソボレージ！"
 
-#, fuzzy
-#~| msgid "Waiting List"
-#~ msgid "Waitlist"
-#~ msgstr "キャンセル待ち"
+#: user/views.py:213
+msgid "User profile was successfully edited."
+msgstr "ユーザー情報を編集しました。"
+
+#: user/views.py:228
+msgid "You have been successfully logged out."
+msgstr "ログアウトしました。"

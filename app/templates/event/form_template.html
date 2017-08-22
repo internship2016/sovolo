@@ -289,7 +289,7 @@
               <textarea class="form-control"
                         name="frame_{{ forloop.counter }}_description">{{ frame.description }}</textarea>
             </div>
-            <label class="col-sm-3">{% trans "The fixed number:" %}</label>
+            <label class="col-sm-3">{% trans "up to:" %}</label>
             <div class="col-sm-9">
               <input class="form-control" type="number" min="1" max="2147483647" step="1" name="frame_{{ forloop.counter }}_upperlimit"
                      value="{{ frame.upper_limit|default_if_none:'' }}">
@@ -306,17 +306,17 @@
           <div class="row">
             <input type="hidden" name="frame_number" value="1">
             <!--<input type="hidden" name="frame_1_id" value="{{ frame.id }}">-->
-            <label class="col-sm-3">仕事内容<sup><font color="red"></font></sup></label>
+            <label class="col-sm-3">{% trans 'Job Description' %}<sup><font color="red"></font></sup></label>
             <div class="col-sm-9">
               <textarea class="form-control" name="frame_1_description"></textarea>
             </div>
-            <label class="col-sm-3">上限人数</label>
+            <label class="col-sm-3">{% trans 'up to' %}</label>
             <div class="col-sm-9">
-              <input class="form-control" type="number" min="0" step="1"  max="2147483647" name="frame_1_upperlimit" placeholder="任意">
+              <input class="form-control" type="number" min="0" step="1"  max="2147483647" name="frame_1_upperlimit" placeholder="{% trans 'optional' %}">
             </div>
-            <label class="col-sm-3">応募締め切り</label>
+            <label class="col-sm-3">{% trans 'Deadline' %}</label>
             <div class='col-sm-9'>
-              <input class="form-control datetimepicker deadend" name="frame_1_deadline" type="text" placeholder="任意">
+              <input class="form-control datetimepicker deadend" name="frame_1_deadline" type="text" placeholder="{% trans 'optional' %}">
             </div>
           </div>
         </div>
@@ -359,17 +359,17 @@
   <div class="panel panel-default panel-body" style="margin:0" id="frame_number_{{ X }}">
     <div class="row">
       <input type="hidden" name="frame_number" value="{{ X }}">
-      <label class="col-sm-3">仕事内容<sup><font color="red"></font></sup></label>
+      <label class="col-sm-3">{% endverbatim %}{% trans 'Job Description' %}{% verbatim %}<sup><font color="red"></font></sup></label>
       <div class="col-sm-9">
         <textarea class="form-control" name="frame_{{ X }}_description"></textarea>
       </div>
-      <label class="col-sm-3">上限人数</label>
+      <label class="col-sm-3">{% endverbatim %}{% trans 'up to' %}{% verbatim %}</label>
       <div class="col-sm-9">
-        <input class="form-control" type="number" min="0"  max="2147483647" step="1" name="frame_{{ X }}_upperlimit" placeholder="任意">
+        <input class="form-control" type="number" min="0"  max="2147483647" step="1" name="frame_{{ X }}_upperlimit" placeholder="{% endverbatim %}{% trans 'optional' %}{% verbatim %}">
       </div>
-      <label class="col-sm-3">応募締め切り</label>
+      <label class="col-sm-3">{% endverbatim %}{% trans 'Deadline' %}{% verbatim %}</label>
       <div class="col-sm-9">
-        <input class="form-control datetimepicker deadend" name="frame_{{ X }}_deadline" type="text" placeholder="任意">
+        <input class="form-control datetimepicker deadend" name="frame_{{ X }}_deadline" type="text" placeholder="{% endverbatim %}{% trans 'optional' %}{% verbatim %}">
         <script>
           (function () {
             $("#frame_number_{{ X }} .datetimepicker").datetimepicker({
