@@ -457,13 +457,13 @@ class EventSearchResultsView(ListView):
         if self.request.GET.get('exclude_closed_events') == "on":
             results = [event for event in results if not event.is_closed()]
 
-        if len(results)==0:
+        if len(results) == 0:
             messages.error(self.request, "検索結果に一致するボランティアが見つかりませんでした")
 
         # Filter based on page and number per page
         if 'numperpage' in self.request.GET:
             num_per_page = self.request.GET["numperpage"]
-            if num_per_page is not None and num_per_page!="":
+            if num_per_page is not None and num_per_page != "":
                 self.paginate_by = int(num_per_page)
 
         return results
