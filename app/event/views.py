@@ -32,7 +32,6 @@ import sys
 import re
 from datetime import datetime
 import io
-import urllib
 import json
 import requests
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
