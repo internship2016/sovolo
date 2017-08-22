@@ -213,6 +213,9 @@ class UserPostReviewView(FormView):
         if 'event_id' in self.request.GET:
             self.joined_event = Event.objects.get(pk=self.request.GET['event_id'])
             context['review_event'] = self.joined_event
+        if 'to_user_id' in self.request.GET:
+            self.to_user = User.objects.get(pk=self.request.GET['to_user_id'])
+            context['to_user'] = self.joined_event
         return context
 
     # 重複なしで、イベント参加者の判定を行う。
@@ -222,7 +225,13 @@ class UserPostReviewView(FormView):
         # It should return an HttpResponse.
         if 'event_id' in self.request.GET:
             self.joined_event = Event.objects.get(pk=self.request.GET['event_id'])
-        form.instance.to_rate_user_id = self.joined_event.host_user.id # pkを取得 評価対象
+
+        if 'to_user_id' in self.request.GET:
+            self.to_user = User.objects.get(pk=self.request.GET['to_user_id'])
+            form.instance.to_rate_user_id = self.to_user.id
+        else:
+            form.instance.to_rate_user_id = self.joined_event.host_user.id # pkを取得 評価対象
+
         form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
         form.instance.joined_event_id = self.joined_event.id
         form.save()

@@ -211,13 +211,13 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def get_paticipant_of_past_hosted_events(self):
         user_reviewed_list = []
         for event in self.get_past_hosted_events():
-            user_reviewed_list.append(event.participation_set.all())
+            user_reviewed_list.append([ p_user.user for p_user in event.participation_set.all()])
         return user_reviewed_list
 
     def get_reviewed_paticipant_of_past_hosted_events(self):
         user_reviewed_list = []
         for event in self.get_past_hosted_events():
-            temp = [review for review in self.from_rate_user.all() if review.joined_event == event]
+            temp = [review.to_rate_user for review in self.from_rate_user.all() if review.joined_event == event]
             user_reviewed_list.append(temp)
         return user_reviewed_list
 
