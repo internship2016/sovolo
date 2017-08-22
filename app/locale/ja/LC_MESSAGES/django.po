@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 06:00+0900\n"
+"POT-Creation-Date: 2017-08-22 21:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -878,7 +878,7 @@ msgstr "サービスの利用にはEmailアドレスが必要です"
 msgid "REGISTER"
 msgstr "登録"
 
-#: templates/user/detail.html:5
+#: templates/user/detail.html:5 templates/user/user_header.html:11
 msgid "About Me"
 msgstr "ユーザー詳細"
 
@@ -914,7 +914,7 @@ msgstr "(15文字以内)"
 msgid "Your photo"
 msgstr "プロフィール画像"
 
-#: templates/user/edit.html:28 templates/user/user_header.html:24
+#: templates/user/edit.html:28
 msgid "Region"
 msgstr "地域"
 
@@ -1028,6 +1028,22 @@ msgstr "新しいパスワードを入力してください"
 #: templates/user/reset_password.html:12
 msgid "Your new pasword"
 msgstr "新しいパスワード"
+
+#: templates/user/user_header.html:19
+msgid "Age Group:"
+msgstr "年代："
+
+#: templates/user/user_header.html:19
+msgid "'s"
+msgstr "代"
+
+#: templates/user/user_header.html:22
+msgid "Sex:"
+msgstr "性別："
+
+#: templates/user/user_header.html:24
+msgid "Region:"
+msgstr "地域："
 
 #: templates/user/user_header.html:29
 msgid "Sovolage"
