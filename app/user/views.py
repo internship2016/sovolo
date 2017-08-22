@@ -35,7 +35,9 @@ class UserCreateView(CreateView):
         activation.save()
 
         base_url = "/".join(self.request.build_absolute_uri().split("/")[:3])
-        activation_url = "{0}/user/activation/{1}".format(base_url, activation_key)
+
+        activation_url = "{0}/user/activation/{1}".format(base_url,
+                                                          activation_key)
 
         send_template_mail(
             "email/activation.txt",
