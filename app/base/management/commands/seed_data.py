@@ -319,13 +319,17 @@ class Command(BaseCommand):
         #ポイント稼ぎ用ボランティア
         random.seed(1)
         for i in range(1,21):
+            if i < 11:
+                x = 1
+            else:
+                x = -1
             for j in range(1,4):
                 name = "【第%d回】"%j + eventname_sample[i]["name"]
                 host_user = User.objects.get(username="demo_user_%d"%i)
                 demoevent = Event(
                     name=name,
                     start_time=timezone.now() - timezone.timedelta(days=301),
-                    end_time = timezone.now() + timezone.timedelta(days=300),
+                    end_time = timezone.now() + x * timezone.timedelta(days=300),
                     meeting_place="池袋駅東口母子像前",
                     contact="testvol@sovol.earth",
                     details=eventdetail_sample,
