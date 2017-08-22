@@ -114,7 +114,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return level
 
     def level_threshold(self, level):
-        #有効数字2桁
+        # 有効数字2桁
         base = 1.08
         tmp = 10 * math.pow(base, level)
         digit = int(math.log10(tmp)) + 1
