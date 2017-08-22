@@ -145,7 +145,10 @@ class Event(AbstractBaseModel):
 
     @classmethod
     def get_events_in_range(cls, ne_lat, sw_lat, ne_lng, sw_lng):
-            return cls.objects.filter(latitude__gte=sw_lat, latitude__lte=ne_lat, longitude__gte=sw_lng, longitude__lte=ne_lng)
+        return cls.objects.filter(latitude__gte=sw_lat,
+                                  latitude__lte=ne_lat,
+                                  longitude__gte=sw_lng,
+                                  longitude__lte=ne_lng)
 
 
 class Frame(AbstractBaseModel):
