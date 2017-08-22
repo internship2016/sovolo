@@ -599,7 +599,12 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
 
                 content = template.render(context)
                 subject, message = content.split("\n", 1)
-                send_mail(subject, message, "reminder@sovol.earth", [carry_up.user.email])
+
+                # XXX: Hardcoded From address
+                send_mail(subject,
+                          message,
+                          "reminder@sovol.earth",
+                          [carry_up.user.email])
 
         messages.success(self.request, "参加をキャンセルしました。")
         return reverse_lazy('event:detail', kwargs={'pk': self.kwargs['event_id']})
