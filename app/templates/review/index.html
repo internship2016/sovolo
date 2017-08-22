@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}
+{{ review.name }}体験記一覧　| Sovol
+{% endblock %}
+
+{% block content %}
+ <div class="panel panel-primary">
+    <div class="panel-heading">
+        <h1 class="panel-title">体験記一覧</h1>
+    </div>
+    <div class="panel-body">
+        <a class="btn btn-defalt pull-right" href="{% url 'review:add' %}">体験記を書く</a>
+        {% for report in all_reports %}
+            <div class="media">
+                <div class="media-left">
+                    <a href="{% url "review:detail" report.id %}">
+                        <img class="media-object" src="{{ review.get_image_url }}" alt="image" width"64" height="64">
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h3 class="media-heading"><a href="{% url "review:detail" review.id %}">{{ review.title }}</a></h3>
+                    {{ review.text }}
+                </div>
+            </div>
+        {% empty %}
+        <p>一覧がありません</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

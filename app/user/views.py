@@ -4,17 +4,21 @@ from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic import DetailView, View, ListView
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-from .models import User
+from .models import User, Skill
 from tag.models import Tag
 from base.utils import send_template_mail
 from django.contrib.auth import views as auth_views
 import uuid
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
-
+from django.utils.decorators import method_decorator
 from django.utils import timezone
-from .models import UserActivation, UserPasswordResetting, UserReviewList
+from .models import User, UserActivation, UserPasswordResetting, UserReviewList
 from .form import UserReviewListForm
 from django.urls import reverse
+from django.contrib.auth.mixins import UserPassesTestMixin
+
+from django.utils import timezone
 from django.forms import formset_factory
 from event.models import Event
 
@@ -57,7 +61,6 @@ class UserCreateView(CreateView):
         messages.info(self.request, info_msg)
         return redirect("top")
 
-    def create_activation_key(self):
         key = uuid.uuid4().hex
         return key
 
@@ -69,7 +72,7 @@ class UserCreateView(CreateView):
         form.fields['username'].label = "ニックネーム（15文字以内)"
         return form
 
-
+    
 class UserActivationView(View):
     def get(self, request, *args, **kwargs):
         activation = get_object_or_404(UserActivation, key=kwargs['key'])
@@ -174,7 +177,6 @@ class UserDetailView(DetailView):
 
 class UserEditView(UpdateView):
     model = User
-
     fields = [
         'username',
         'email',
@@ -323,5 +325,69 @@ class UserPostReviewView(FormView):
 
 class UserUnReviewedView(ListView):
     # なぜ model and form_class がセットでも動くのかわかりません。
+        model = User
+        template_name = 'user/user_unreviewed.html'
+
+class UserSkillView(DetailView):
     model = User
-    template_name = 'user/user_unreviewed.html'
+    template_name = "user/user_skill.html"
+
+
+class UserSkillEditView(UpdateView):
+    model = Skill
+    tamplate_name = 'user/user_form.html'
+    fields = ['skilltodo']
+
+    
+    def form_valid(self,form):
+        form_redirect = super(UserSkillEditView, self).form_valid(form)
+        skill = form.save(commit=False)
+
+        new_tags = set([int(t) for t in self.request.POST.getlist('tags')])
+        old_tags = set([t.id for t in skill.tag.all()])
+
+        for tag_id in new_tags - old_tags:
+            skill.tag.add(tag_id)
+
+        for tag_id in old_tags - new_tags:
+            skill.tag.remove(tag_id)
+
+        return form_redirect
+
+    def get_context_data(self, **kwargs):
+        context = super(UserSkillEditView, self).get_context_data(**kwargs)
+        context['all_tags'] = Tag.objects.all
+        return context
+
+    def get_success_url(self, **kwargs):
+        messages.info(self.request, "スキル内容を変更しました")
+        userskill_id = self.request.user.id
+        return reverse('user:skill', kwargs={'pk': userskill_id})
+
+@method_decorator(login_required, name='dispatch')
+class UserSkillAddView(CreateView):
+    model = Skill
+    fields = ['skilltodo']
+    success_url = "../../"
+    template_name = "user/skill_add.html"
+    def get_context_data(self, **kwargs):
+        context = super(UserSkillAddView, self).get_context_data(**kwargs)
+        context['all_tags'] = Tag.objects.all
+        return context       
+
+    def form_valid(self, form):
+        form_redirect = super(UserSkillAddView, self).form_valid(form)
+        skill = form.save() 
+        skill.tag.clear()
+        for tag_id in self.request.POST.getlist('tags'):
+            skill.tag.add(int(tag_id))
+
+        form.instance.userskill_id = self.request.user.id
+        form.save()
+        return form_redirect
+
+    def get_success_url(self, **kwargs):
+        messages.info(self.request, "新規スキルを作成しました")
+        userskill_id = self.request.user.id
+        return reverse('user:skill', kwargs={'pk': userskill_id})
+

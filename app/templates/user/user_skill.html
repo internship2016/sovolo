@@ -1,0 +1,42 @@
+{% extends "container.html" %}
+{% load i18n %}
+{% load event_tags %}
+{% load user_tags %}
+
+{% block title %}{{ user.name }}ユーザー詳細 | Sovol{% endblock %}
+{% block content %}
+
+{% include "user/user_header.html" %}
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h1 class="panel-title">スキル一覧</h1>
+  </div>
+  <div class="panel-body">
+    {% for skill in user.skill_set.all %}
+      <div class="panel panel-default panel-body" style="margin:0">
+        <div class="row">
+          <div class="col-sm-9">
+            <h5>スキル{{ forloop.counter }}</h5>
+            {% for tag in skill.tag.all %}
+              <a class="tag" href="{% url 'event:search' %}?tags={{ tags.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
+            {% endfor %}
+          </div>
+          <label class="col-sm-3">できる内容</label>
+          <div class="col-sm-9">
+            <a class="form-control" name="skill_{{ forloop.counter }}_skilltodo">{{ skill.skilltodo }}</a>
+          </div>
+
+          <div style="text-align: right; margin-top: 2px;">
+            <a href="{% url 'user:skill_edit' skill.id %}" type="button" class="btn btn-default">内容変更</a>
+          </div>
+        </div>
+      </div>
+    {% endfor %}
+    <div style="text-align: center; margin-top: 4px;">
+      <a href=" ./add" type="button" class="btn btn-default">新スキル作成</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

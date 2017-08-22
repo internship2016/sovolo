@@ -21,5 +21,9 @@
     # # python3 manage.py flush # if need
     # python3 manage.py seed_data
 
+## I18N
+    # cd /home/docker/code/app
+    # python3 manage.py compilemessages
+
 ## TESTING (port 8000)
     # runserver

@@ -1,5 +1,6 @@
 # coding=utf-8
 from django.db import models
+from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -51,7 +52,6 @@ class User(AbstractBaseModel, AbstractBaseUser):
     email = models.EmailField(unique=True, db_index=True)
     sex = models.NullBooleanField()  # True:Men, False:Women
     occupation = models.CharField(max_length=100, null=True)
-
     # regionは都道府県で指定
     # XXX: dup
     prefectures = settings.PREFECTURES
@@ -363,3 +363,33 @@ class UserReviewList(models.Model):
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
         return str(self.to_rate_user)
+
+class Skill(AbstractBaseModel):
+    userskill = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    description = models.TextField(default='ボランティアできること')
+    admin = models.ManyToManyField(
+        settings.AUTH_USER_MODEL,
+        related_name='admin_skill',
+        blank=True,
+    )
+    tag = models.ManyToManyField(Tag, blank=True)
+    skilltodo = models.CharField(max_length=200, null=True)
+
+    def __str__(self):
+        return "Skill #" + str(self.pk) + " in User #" +str(self.userskill_id)
+
+    def get_tags_as_string(self):
+        return "\n".join([tag.name for tag in self.tag.all()])
+
+    def get_absolute_url(self):
+        return reverse('user:detail', kwargs={'pk' : self.id})
+
+class SkillAdmin(admin.ModelAdmin):
+    list_display22 = (
+        'pk',
+        'event',
+        'description',
+        'skilltodo',
+    )
+
+

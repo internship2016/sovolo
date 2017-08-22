@@ -1,7 +1,8 @@
 from django.contrib import admin
 from .models import User, UserReviewList
+from .models import Skill
+from .models import SkillAdmin
 # Register your models here.
-
 # class ChoiceInline(admin.StackedInline):
 
 
@@ -18,3 +19,4 @@ class UserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(User, UserAdmin)
+admin.site.register(Skill, SkillAdmin)

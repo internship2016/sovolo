@@ -1,0 +1,25 @@
+{% extends "container.html" %}
+{% load i18n %}
+{% block title %}
+体験記作成 | Sovolo
+{% endblock %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="panel panel-primary">
+            <div class="panel-heading">体験記作成</div>
+            <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
+                <div class="panel-body">
+                    {% csrf_token %}
+                    {% include 'review/form_template.html' %}
+                </div>
+                <div class="panel-footer" style="text-align:center">
+                    <button class="btn btn-primary" type="submit">作成</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+            
