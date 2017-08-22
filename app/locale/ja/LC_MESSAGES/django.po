@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 20:09+0000\n"
+"POT-Creation-Date: 2017-08-22 20:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -267,12 +267,13 @@ msgid "Create an event"
 msgstr "ボランティア作成"
 
 #: templates/base.html:84 templates/user/acquire_email.html:4
-#: templates/user/acquire_email.html:7
+#: templates/user/acquire_email.html:7 templates/user/register.html:21
 msgid "Register"
 msgstr "ユーザー登録"
 
 #: templates/base.html:85 templates/user/login_page.html:6
 #: templates/user/login_page.html:11 templates/user/login_page.html:27
+#: templates/user/register.html:45
 msgid "Log in"
 msgstr "ログイン"
 
@@ -954,6 +955,30 @@ msgstr "Facebookでログイン"
 #: templates/user/login_page.html:55
 msgid "Join Now"
 msgstr "新規登録"
+
+#: templates/user/register.html:7 templates/user/register.html:11
+msgid "Join Sovol"
+msgstr "ユーザー新規登録"
+
+#: templates/user/register.html:15
+msgid "Register with email address"
+msgstr "メールアドレスで登録"
+
+#: templates/user/register.html:29
+msgid "Register with the following services"
+msgstr "SNSアカウントで登録"
+
+#: templates/user/register.html:32
+msgid "Register with Twitter"
+msgstr "Twitterで登録"
+
+#: templates/user/register.html:35
+msgid "Register with Facebook"
+msgstr "Facebookで登録"
+
+#: templates/user/register.html:42
+msgid "Already have an account?"
+msgstr "アカウントをお持ちの方はこちら"
 
 #: templates/user/user_header.html:29
 msgid "Sovolage"
