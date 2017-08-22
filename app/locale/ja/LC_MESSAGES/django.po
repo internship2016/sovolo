@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 20:28+0000\n"
+"POT-Creation-Date: 2017-08-23 05:31+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -363,6 +363,8 @@ msgid "Position "
 msgstr "参加枠"
 
 #: templates/event/detail.html:33 templates/event/detail.html:35
+#: templates/event/form_template.html:317
+#: templates/event/form_template.html:370
 msgid "Deadline"
 msgstr "締切"
 
@@ -592,12 +594,33 @@ msgid "Job Description:"
 msgstr "仕事内容"
 
 #: templates/event/form_template.html:292
-msgid "The fixed number:"
+msgid "up to:"
 msgstr "上限人数"
 
 #: templates/event/form_template.html:297
 msgid "Deadline:"
 msgstr "応募締切"
+
+#: templates/event/form_template.html:309
+#: templates/event/form_template.html:362
+#, fuzzy
+#| msgid "Job Description:"
+msgid "Job Description"
+msgstr "仕事内容"
+
+#: templates/event/form_template.html:313
+#: templates/event/form_template.html:366
+msgid "up to"
+msgstr "上限人数"
+
+#: templates/event/form_template.html:315
+#: templates/event/form_template.html:319
+#: templates/event/form_template.html:368
+#: templates/event/form_template.html:372
+#, fuzzy
+#| msgid "Position"
+msgid "optional"
+msgstr "任意"
 
 #: templates/event/form_template.html:391
 msgid "Related to:"
@@ -1026,6 +1049,14 @@ msgstr "ユーザー情報を編集しました。"
 #: user/views.py:228
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
+
+#~ msgid "The fixed number:"
+#~ msgstr "上限人数"
+
+#, fuzzy
+#~| msgid "The fixed number:"
+#~ msgid "The fixed number"
+#~ msgstr "上限人数"
 
 #, fuzzy
 #~| msgid "Waiting List"
