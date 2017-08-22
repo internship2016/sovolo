@@ -99,7 +99,6 @@ class EventCreate(CreateView):
         for group_id in self.request.POST.getlist('groups'):
             event.group_set.add(int(group_id))
 
-
         # Tags
         event.tag.clear()
         for tag_id in self.request.POST.getlist('tags'):
