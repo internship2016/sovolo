@@ -286,8 +286,6 @@ msgid "Log out"
 msgstr "ログアウト"
 
 #: templates/base.html:106
-#, fuzzy
-#| msgid "Language"
 msgid "Change language"
 msgstr "言語切り替え"
 
@@ -308,8 +306,6 @@ msgid "Like"
 msgstr "いいね"
 
 #: templates/event/add.html:5 templates/event/add.html:13
-#, fuzzy
-#| msgid "Create an event"
 msgid "Create a new event"
 msgstr "ボランティア作成"
 
@@ -603,8 +599,6 @@ msgstr "応募締切"
 
 #: templates/event/form_template.html:309
 #: templates/event/form_template.html:362
-#, fuzzy
-#| msgid "Job Description:"
 msgid "Job Description"
 msgstr "仕事内容"
 
@@ -617,8 +611,6 @@ msgstr "上限人数"
 #: templates/event/form_template.html:319
 #: templates/event/form_template.html:368
 #: templates/event/form_template.html:372
-#, fuzzy
-#| msgid "Position"
 msgid "optional"
 msgstr "任意"
 
@@ -775,14 +767,10 @@ msgid "There are no filters attached."
 msgstr "このボランティアはタグ付けされていません"
 
 #: templates/group/form_template.html:93
-#, fuzzy
-#| msgid "Groups I organize:"
 msgid "Events I organize"
 msgstr "自分の管理しているボランティア"
 
 #: templates/group/form_template.html:119
-#, fuzzy
-#| msgid "Groups I organize:"
 msgid "No events I organize"
 msgstr "管理しているボランティア活動はありません。"
 
@@ -883,20 +871,14 @@ msgid "About Me"
 msgstr "ユーザー詳細"
 
 #: templates/user/detail.html:13
-#, fuzzy
-#| msgid "Events of My Groups"
 msgid "List of My Groups"
 msgstr "所属グループ一覧"
 
 #: templates/user/detail.html:29
-#, fuzzy
-#| msgid "Groups"
 msgid "No groups"
 msgstr "所属しているグループがありません"
 
 #: templates/user/detail.html:35
-#, fuzzy
-#| msgid "Groups I organize:"
 msgid "List of Events I organize"
 msgstr "管理しているボランティア一覧"
 
@@ -905,14 +887,10 @@ msgid "List of Events I attend"
 msgstr "管理しているボランティア一覧"
 
 #: templates/user/detail.html:38
-#, fuzzy
-#| msgid "Event image"
 msgid "Event Achievements"
 msgstr "ボランティア実績"
 
 #: templates/user/edit.html:4 templates/user/user_header.html:32
-#, fuzzy
-#| msgid "Profile"
 msgid "Edit profile"
 msgstr "プロフィール編集"
 
@@ -1036,8 +1014,6 @@ msgid "Tags not found"
 msgstr "フォローしているタグがありません"
 
 #: user/models.py:86
-#, fuzzy, python-format
-#| msgid "You need %(points_to_next)d more Sovolage to the next level!"
 msgid "You need %(points_to_next)d more Sovolage to the next level!"
 msgid_plural "You need %(points_to_next)d more Sovolages to the next level!"
 msgstr[0] "次のレベルまであと%(points_to_next)dソボレージ！"
@@ -1049,16 +1025,3 @@ msgstr "ユーザー情報を編集しました。"
 #: user/views.py:228
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
-
-#~ msgid "The fixed number:"
-#~ msgstr "上限人数"
-
-#, fuzzy
-#~| msgid "The fixed number:"
-#~ msgid "The fixed number"
-#~ msgstr "上限人数"
-
-#, fuzzy
-#~| msgid "Waiting List"
-#~ msgid "Waitlist"
-#~ msgstr "キャンセル待ち"
