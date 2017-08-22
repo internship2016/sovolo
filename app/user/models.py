@@ -221,7 +221,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     def trophy_list(self):
         date = timezone.now()
-        participated = self.participating_event.all().filter(end_time__lte=date)
+        participated = self.participating_event \
+                           .all() \
+                           .filter(end_time__lte=date)
 
         trophies = []
         for tag in Tag.objects.all():
