@@ -210,7 +210,6 @@ class User(AbstractBaseModel, AbstractBaseUser):
                      .order_by('start_time')
         return [event for event in events if event.is_over()]
 
-
     def get_new_tag_events(self):
         Event = apps.get_model('event', 'Event')
         tag_list = self.follow_tag.all()
