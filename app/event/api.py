@@ -1,6 +1,6 @@
 from django.http import JsonResponse
 from event.models import Event
-import json
+
 #リクエストのあったイベントを新規イベントは作成日時順、他は開始日時順の若い方から10件をjsonで返す。
 def event_filter(request, event_kind, *args, **kwargs):
     if request.method == 'POST':
