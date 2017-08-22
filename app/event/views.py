@@ -393,7 +393,8 @@ class EventSearchResultsView(ListView):
         if 'end_date' in self.request.GET:
             end_date_string = self.request.GET['end_date']
             if end_date_string is not None and end_date_string != "":
-                date = datetime.strptime(end_date_string, "%Y-%m-%d") + datetime.timedelta(days=1)
+                end_date = datetime.strptime(end_date_string, "%Y-%m-%d")
+                date = end_date + datetime.timedelta(days=1)
                 date_query = Q(start_time__lt=date)
                 query = query & date_query
 
