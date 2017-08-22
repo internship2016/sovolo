@@ -26,14 +26,16 @@
           <div class="panel-body col-sm-5 col-md-4" style="padding-bottom: 5px;">
             <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
             <p> {% trans 'Sovolage' %}<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
-            <div style="text-align: right">
+          </div>
+
+          <div class="panel-body" style="text-align: right">
             {% if user.id == request.user.id %}
               <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">{% trans 'Edit profile' %}</a>
               <a class="btn btn-default btn-sm" href="{% url 'user:skill' user.id %}">{% trans "View my skills" %}</a>
             {% endif %}
-            </div>
           </div>
-      </div>
+
+        </div>
         <div class="panel-body" style="padding-top: 0;">
           <span>{{ user.msg_you_need_more_xxx_sovolage_to_the_next_level }}</span>
           <div class="progress" style="margin-bottom: 0;">
