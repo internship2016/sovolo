@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 21:27+0000\n"
+"POT-Creation-Date: 2017-08-22 21:31+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -909,7 +909,7 @@ msgid "Event Achievements"
 msgstr "ボランティア実績"
 
 #: templates/user/detail.html:42
-msgid "View all reviews posted"
+msgid "Reviews posted"
 msgstr "すべてのレビューを見る"
 
 #: templates/user/detail.html:46
@@ -922,7 +922,7 @@ msgstr "プロフィール編集"
 
 #: templates/user/edit.html:13
 msgid "Input up to 15 characters."
-msgstr "(15文字以内)"
+msgstr "15文字以内"
 
 #: templates/user/edit.html:21
 msgid "Your photo"
@@ -1084,3 +1084,6 @@ msgstr "ユーザー情報を編集しました。"
 #: user/views.py:228
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
+
+#~ msgid "View all reviews posted"
+#~ msgstr "すべてのレビューを見る"
