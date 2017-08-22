@@ -27,6 +27,7 @@ from tag.models import Tag
 from user.models import User
 from django.conf import settings
 from django.core.files import File
+from django.utils.translation import ugettext_lazy as _
 
 import sys
 import re
@@ -83,8 +84,7 @@ class EventCreate(CreateView):
 
         new_admin_names = new_admins.values_list('username', flat=True)
         for name in set(raw_admins) - set(new_admin_names):
-            error_msg = ("ユーザー名 %(name)s に一致する"
-                         "ユーザーはいませんでした。") % {'name': name}
+            error_msg = _( "There is no user named %(name)s.") % {'name': name}
             messages.error(self.request, error_msg)
 
         # Groups
@@ -136,7 +136,8 @@ class EventCreate(CreateView):
             django_file = File(reopen)
             event.image.save(new_url, django_file, save=True)
 
-            messages.info(self.request, "ボランティアを登録しました。")
+            info_msg = _("Your event was successfully added.")
+            messages.info(self.request, info_msg)
         return form_redirect
 
     def form_invalid(self, form):
@@ -165,7 +166,8 @@ class EventDetailView(DetailView):
         try:
             self.object = self.get_object()
         except Http404:
-            messages.error(request, "そのボランティアは存在しません")
+            error_msg = _("Event not found.")
+            messages.error(request, error_msg)
             return redirect('top')
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
