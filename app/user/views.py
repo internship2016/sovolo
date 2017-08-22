@@ -98,7 +98,8 @@ class RequestPasswordReset(View):
             absolute_uri = self.request.build_absolute_uri()
             base_url = "/".join(absolute_uri.split("/")[:3])
 
-            reset_url = "{0}/user/reset_password/{1}".format(base_url, reset_key)
+            reset_url = "{0}/user/reset_password/{1}".format(base_url,
+                                                             reset_key)
 
             send_template_mail(
                 "email/reset_password.txt",
