@@ -706,7 +706,9 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
                                      kwargs={'pk': kwargs['pk']}))
 
     def test_func(self):
-        return self.request.user.is_authenticated and self.request.user.is_manager_for(self.get_object())
+        is_authenticated = self.request.user.is_authenticated
+        is_manager = self.request.user.is_manager_for(self.get_object())
+        return is_authenticated and is_manager
 
     def handle_no_permission(self):
         return HttpResponseForbidden()
