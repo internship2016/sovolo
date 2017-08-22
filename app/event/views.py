@@ -32,7 +32,6 @@ import sys
 import re
 from datetime import datetime
 import io
-import uuid
 import urllib
 import json
 import requests
