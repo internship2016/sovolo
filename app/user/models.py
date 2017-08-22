@@ -254,7 +254,7 @@ class UserReviewList(models.Model):
         return str(self.to_rate_user)
 
 class Skill(AbstractBaseModel):
-    userskill = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    userskill = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(default='ボランティアできること')
     admin = models.ManyToManyField(
         settings.AUTH_USER_MODEL,

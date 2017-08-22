@@ -280,11 +280,13 @@ class UserSkillAddView(CreateView):
 
     def form_valid(self, form):
         form_redirect = super(UserSkillAddView, self).form_valid(form)
-        skill = form.save()
-        
+        skill = form.save() 
         skill.tag.clear()
         for tag_id in self.request.POST.getlist('tags'):
             skill.tag.add(int(tag_id))
+
+        form.instance.userskill_id = self.request.user.id
+        form.save()
         return form_redirect
 
 
