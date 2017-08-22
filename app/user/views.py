@@ -268,7 +268,6 @@ class UserPostReviewView(FormView):
 
 
         ## Validators
-
         # params
         from_reviews = self.request.user.from_rate_user.all()
         to_from_event_list = []
@@ -290,7 +289,6 @@ class UserPostReviewView(FormView):
 
         # to_User is Host or Participant
         if (to_user not in joined_event.participant.all()) and (to_user != joined_event.host_user):
-            # form.add_error('rating', 'Incident with this email already exist')
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
@@ -306,10 +304,8 @@ class UserPostReviewView(FormView):
 
         # Check Already Reviewed or not
         if [to_user, self.request.user, joined_event] in to_from_event_list:
-                messages.error(self.request, "You Already Reviewd")
-                return self.form_invalid(form)
-
-
+            messages.error(self.request, "You Already Reviewd")
+            return self.form_invalid(form)
 
 
         # Set Instanse
@@ -321,7 +317,6 @@ class UserPostReviewView(FormView):
 
     # レビュー投稿時に未レビューページに帰還
     def get_success_url(self, **kwargs):
-
         messages.info(self.request, "Your review was successfully sent")
         return reverse('user:unreviewed')
 
