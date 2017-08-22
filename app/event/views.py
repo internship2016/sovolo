@@ -402,7 +402,7 @@ class EventSearchResultsView(ListView):
         if 'tags' in self.request.GET:
             tags = [int(t) for t in self.request.GET.getlist('tags')]
 
-            if len(tags)>0:
+            if len(tags) > 0:
                 Tag = apps.get_model('tag', 'Tag')
                 tag_query = None
                 for t in tags:
