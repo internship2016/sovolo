@@ -6,7 +6,6 @@ from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
-from django.views.generic.edit import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import DetailView, ListView, RedirectView, View
 from django import forms
