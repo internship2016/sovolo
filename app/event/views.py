@@ -598,8 +598,7 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
                                    'event': carry_up.event})
 
                 content = template.render(context)
-                subject = content.split("\n", 1)[0]
-                message = content.split("\n", 1)[1]
+                subject, message = content.split("\n", 1)
                 send_mail(subject, message, "reminder@sovol.earth", [carry_up.user.email])
 
         messages.success(self.request, "参加をキャンセルしました。")
