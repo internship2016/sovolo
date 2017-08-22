@@ -212,7 +212,8 @@ class UserEditView(UpdateView):
 class AcquireEmail(View):
     def get(self, request, *args, **kwargs):
         """
-        Request email for the create user flow for logins that don't specify their email address.
+        Request email for the create user flow for logins that don't specify
+        their email address.
         """
         backend = request.session['partial_pipeline']['backend']
         return render(request, 'user/acquire_email.html', {"backend": backend})
