@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 23:39+0000\n"
+"POT-Creation-Date: 2017-08-22 23:49+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1066,9 +1066,12 @@ msgid "Posted on"
 msgstr "投稿日"
 
 #: templates/user/user_skill.html:6 templates/user/user_skill.html:13
-#: templates/user/user_skill.html:20
 msgid "My skills"
 msgstr "スキル一覧"
+
+#: templates/user/user_skill.html:20
+msgid "Skill "
+msgstr "スキル"
 
 #: templates/user/user_skill.html:31
 msgid "Edit"
