@@ -1,26 +1,16 @@
 # coding=utf-8
 from django.db import models
 from django.core.urlresolvers import reverse
-from django.shortcuts import redirect
 from user.models import User
 from base.models import AbstractBaseModel
 from django.conf import settings
-from django.contrib import admin
 from django.db.models import Q
 from django.utils import timezone
 from tag.models import Tag
-from datetime import datetime
-from datetime import timedelta
 
-from PIL import Image
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import BytesIO as StringIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
-import sys
 import os
 import math
+
 
 class Event(AbstractBaseModel):
     # Numbers are arbitrary
@@ -28,8 +18,8 @@ class Event(AbstractBaseModel):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     meeting_place = models.CharField(max_length=400)
-    longitude = models.FloatField(blank=True, null=True)
-    latitude = models.FloatField(blank=True, null=True)
+    longitude = models.FloatField(default=35.7291)
+    latitude = models.FloatField(default=139.7191)
     image = models.ImageField(upload_to='events/', null=True, blank=True)
     contact = models.CharField(max_length=200)
     details = models.TextField()
@@ -41,11 +31,15 @@ class Event(AbstractBaseModel):
         settings.AUTH_USER_MODEL,
         related_name='host_event',
     )
-    supporter = models.ManyToManyField(User, related_name="support", blank=True)
+    supporter = models.ManyToManyField(User,
+                                       related_name="support",
+                                       blank=True)
 
     # regionは都道府県で指定
     prefectures = settings.PREFECTURES
-    region_list = [(key, value[0]) for key, value in sorted(prefectures.items(), key=lambda x:x[1][1])]
+    prefs = prefectures.items()
+    prefs = sorted(prefs, key=lambda x: x[1][1])
+    region_list = [(k, v[0]) for k, v in prefs]
     region = models.CharField(max_length=10, choices=region_list)
 
     participant = models.ManyToManyField(
@@ -145,10 +139,6 @@ class Event(AbstractBaseModel):
         return cls.objects.filter(latitude__range=(ne_lat, sw_lat), longitude__range=(ne_lng, sw_lng))
 
 
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('pk', 'name', 'created', 'modified', 'get_tags_as_string')
-
-
 class Frame(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     description = models.TextField(default='通常参加枠')
@@ -214,15 +204,6 @@ class Frame(AbstractBaseModel):
 
         return ratio
 
-class FrameAdmin(admin.ModelAdmin):
-    list_display = (
-        'pk',
-        'event',
-        'description',
-        'upper_limit',
-        'deadline',
-    )
-
 
 class Participation(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
@@ -238,10 +219,6 @@ class Participation(AbstractBaseModel):
 
     def save(self, *args, **kwargs):
         return super(Participation, self).save(*args, **kwargs)
-
-
-class ParticipationAdmin(admin.ModelAdmin):
-    list_display = ['pk', 'event', 'user', 'status', 'frame']
 
 
 class Comment(AbstractBaseModel):

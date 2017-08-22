@@ -13,12 +13,22 @@
 
 <ul>
   {% for rate in user.to_rate_user.all %}
-      <li>{{ rate.rating }} -- {{ rate.comment }} -- {{ rate.from_rate_user }}</li>
+      <ul>
+        <li>Rating ： {{ rate.rating }}</li>
+        <li>Rater ： {{ rate.from_rate_user.username }}</li>
+        <li>Event ： {{ rate.joined_event.name }}</li>
+        <li>Comment ： {{ rate.comment }}</li>
+        <li>Post Day ： {{ rate.post_day }}</li>
+      </ul>
+      <p></p>
   {% endfor %}
 </ul>
 
-<a class="btn btn-primary" href="{% url 'user:post_review' user.id %}">
-  Go to User Review Post Page
-</a>
+{% if request.user.is_anonymous %}
+{% else %}
+  <a class="btn btn-primary" href="{% url 'user:post_review' user.id %}">
+    Go to User Review Post Page
+  </a>
+{% endif %}
 
 {% endblock %}

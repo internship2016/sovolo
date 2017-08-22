@@ -19,6 +19,9 @@ from .form import UserReviewListForm
 from django.urls import reverse
 from django.contrib.auth.mixins import UserPassesTestMixin
 
+from django.utils import translation
+from django.conf import settings
+
 class UserCreateView(CreateView):
     model = User
     fields = ['email', 'password', 'username']
@@ -47,22 +50,6 @@ class UserCreateView(CreateView):
         messages.info(self.request, "記入したメールアドレス"+user.email+"に確認メールを送信しました。")
         return redirect("top")
 
-        frame_numbers = self.request.POST.getlist('frame_number')
-
-        for number in frame_numbers:
-            frame_id = self.request.POST.getlist('frame_' + number + '_id')
-            if frame_id is None:
-                frame = Frame(frame_user=frame_user)
-            else:
-                frame = Frame.objects.get(pk=frame.id)
-
-            frame.description = self.request.POST.get('frame_' + number + '_description')
-            frame.tag = self.request.POST.get('frame_' + number + '_tag')
-            frame.user_todo = self.request.POST.get('frame_' + number + '_user_todo')
-            frame.save()
-
-
-    def create_activation_key(self):
         key = uuid.uuid4().hex
         return key
 
@@ -170,7 +157,16 @@ class UserDetailView(DetailView):
 
 class UserEditView(UpdateView):
     model = User
-    fields = ['username', 'email', 'image', 'region', 'sex', 'birthday', ]
+    fields = [
+        'username',
+        'email',
+        'image',
+        'region',
+        'sex',
+        'birthday',
+        'language',
+    ]
+
     template_name = 'user/edit.html'
 
     def get_object(self, queryset=None):
@@ -179,6 +175,7 @@ class UserEditView(UpdateView):
     def get_context_data(self, **kwargs):
         context = super(UserEditView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
+        context['languages'] = settings.LANGUAGES
         return context
 
     def form_valid(self, form):
@@ -192,6 +189,8 @@ class UserEditView(UpdateView):
 
         for tag_id in old_tags - new_tags:
             user.follow_tag.remove(tag_id)
+
+        self.request.session[translation.LANGUAGE_SESSION_KEY] = user.language
 
         messages.info(self.request, "ユーザー情報を編集しました。")
         return super(UserEditView, self).form_valid(form)
@@ -226,14 +225,15 @@ class UserPostReviewView(FormView):
         # It should return an HttpResponse.
         # form.send_email()
         form.instance.to_rate_user_id = self.kwargs.get('pk') # pkを取得 評価対象
-        form.instance.from_rate_user_id = self.kwargs.get('pk') # 評価者
+        form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
+        form.instance.joined_event_id = 2
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
 
     # レビュー投稿時にレビュー結果ページに帰還
     def get_success_url(self, **kwargs):
         pk = self.kwargs.get('pk')
-        return reverse('user:review', args=(pk))
+        return reverse('user:review', kwargs={'pk': pk})
 
 class UserSkillView(DetailView):
     model = User

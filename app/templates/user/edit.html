@@ -63,6 +63,21 @@
         </div>
 
         <div class="form-group">
+          <label for="form-language" class="control-label col-sm-3 col-lg-2">{% trans 'Language' %}</label>
+          <div class="col-sm-9 col-lg-9">
+            <select class="form-control" id="form-language" name="language">
+              {% for lang in languages %}
+                <option value="{{ lang.0 }}"
+                  {% if user.language == lang.0 %}
+                    selected
+                  {% endif %}
+                >{{ lang.1 }}</option>
+              {% endfor %}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
             <label class="col-sm-3 col-lg-2 control-label">フォローしているタグ</label>
             <div class="">
                 {% for tag in all_tags %}

@@ -6,6 +6,8 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.apps import apps
 
+from django.utils.translation import ugettext_lazy as _
+
 from datetime import datetime
 from django.utils import timezone
 
@@ -22,6 +24,7 @@ import sys, os, math
 # review
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db.models import Avg
+
 
 class UserManager(BaseUserManager):
     def create_user(self, email="", username="", password=None):
@@ -62,6 +65,12 @@ class User(AbstractBaseModel, AbstractBaseUser):
     objects = UserManager()
     is_active = models.BooleanField(default=True)
     is_admin = models.BooleanField(default=False)
+
+    language = models.CharField(verbose_name=_('Language'),
+                                max_length=10,
+                                choices=settings.LANGUAGES,
+                                default=settings.LANGUAGE_CODE,  # FIXME: !!
+                                null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -216,34 +225,33 @@ class UserPasswordResetting(models.Model):
             self.created = timezone.now()
         return super().save(*args, **kwargs)
 
+
 class UserReviewList(models.Model):
 
     to_rate_user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='to_rate_user',
-        null=True,
-        ) # User毎に紐づけ
+        )
 
-    # rateing は１から５まで
     rating = models.IntegerField(validators=[MinValueValidator(0),
                                        MaxValueValidator(5)])
 
     comment = models.CharField(max_length=200, null=True)
 
-    # 誰から送られてきたか保持
     from_rate_user = models.ForeignKey(
         User,
         on_delete=models.CASCADE,
         related_name='from_rate_user',
-        null=True,
         )
 
+    joined_event = models.ForeignKey('event.Event', null=True)
 
+    # post_day = models.DateTimeField(default=timezone.now, editable=False, null=True)
+    post_day = models.DateTimeField(default=timezone.now, null=True)
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
-        return str(self.rating)
-
+        return str(self.to_rate_user)
 
 class Skill(AbstractBaseModel):
     userskill = models.ForeignKey(User, on_delete=models.CASCADE, null=True)

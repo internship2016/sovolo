@@ -1,5 +1,158 @@
+{% load i18n %}
+
 <div class="row">
-  <div class="col-xs-12">
-    mapmap
+  <div class="col-xs-12 col-md-8">
+    <div class="form-group">
+      <div class="input-group">
+        <input id="id_meeting_place"
+          class="form-control"
+          maxlength="300"
+          name="meeting_place"
+          type="text"
+          required/>
+        <span class="input-group-addon input-loc">
+          <span class="btn btn-link input-loc-btn" onClick="getnow(); return false;">
+            <span class="fa fa-compass"></span>
+          </span>
+        </span>
+        <span class="input-group-btn">
+          <button class="btn btn-primary input-loc-btn_2" onClick="getlatlng(); return false;">
+            {% trans "Search" %}
+          </button>
+        </span>
+      </div>
+
+      <form id="bound_data" type="hidden" action="{% url 'event:range_search' %}" method="post">
+        {% csrf_token %}
+        <input id="ne_lat" type="hidden" name="ne_lat" value="">
+        <input id="sw_lat" type="hidden" name="sw_lat" value="">
+        <input id="ne_lng" type="hidden" name="ne_lng" value="">
+        <input id="sw_lng" type="hidden" name="sw_lng" value="">
+      </form>
+
+      <div id="map_canvas2" class="center-block"></div>
+
+    </div>
   </div>
+  <div class="col-xs-12 col-md-4">
+    <div id="event-list">
+
+    </div>
+  </div>
+  {% verbatim %}
+    <script id="map-event-template" type="text/x-handlebars-template">
+      <section class="inner">
+      {{#each filtered_events}}
+        <div class="media">
+          <div class="media-left">
+            <a href="/event/{{id}}">
+              <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{img}});">
+              </div>
+            </a>
+          </div>
+          <div class="media-body">
+            <div class="event-info pull-left">
+              <div>
+                <span class="label label-{{label_brand}}" style="margin-right: 1em;">
+                  {{status}}
+                </span>
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                  {{start_time}}
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                  {{place}}
+              </div>
+              <div class="media-heading">
+                <a href="/event/{{id}}">
+                  <h4>{{name}}</h4>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/each}}
+      </section>
+    </script>
+  {% endverbatim %}
 </div>
+
+<script>
+  var gmap;
+  var geocoder;
+  var marker;
+
+  function initialize(){
+    var lat = 35.7291213;
+    var lng = 139.7191322;
+    var latlng = new google.maps.LatLng(lat,lng);
+
+    var opts = {
+      zoom: 15,
+      center: latlng,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    gmap = new google.maps.Map(document.getElementById("map_canvas2"), opts);
+    gmap.setCenter(latlng);
+    google.maps.event.addListener(gmap, 'idle', function(){
+      get_events();
+    });
+    geocoder = new google.maps.Geocoder();
+  }
+
+  function getnow(){
+    navigator.geolocation.getCurrentPosition(function(position) {
+        // 緯度経度の取得
+        var now = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        gmap.setCenter(now);
+        $('#id_meeting_place').val(position.formatted_address);
+        geocoder.geocode( { 'location': now}, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+              $('#id_meeting_place').val(results[0].formatted_address);
+            }
+        });
+    }, function() {
+        alert('{% trans "Failed to get location." %}');
+    });
+  }
+
+  function getlatlng(){
+    //検索した時
+    var address = document.getElementById("id_meeting_place").value;
+    geocoder.geocode( { 'address': address}, function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+          gmap.setCenter(results[0].geometry.location);
+          get_events();
+        } else {
+          alert('{% trans "Failed to get information." %}');
+        }
+    });
+  }
+
+  function get_events(){
+    //四隅の情報を取得
+    var bounds = gmap.getBounds();
+    console.log(bounds)
+    map_ne_lat = bounds.getNorthEast().lat();
+    map_sw_lat = bounds.getSouthWest().lat();
+    map_ne_lng = bounds.getNorthEast().lng();
+    map_sw_lng = bounds.getSouthWest().lng();
+    $('#ne_lat').val(map_ne_lat);
+    $('#sw_lat').val(map_sw_lat);
+    $('#ne_lng').val(map_ne_lng);
+    $('#sw_lng').val(map_sw_lng);
+
+    $.ajax({
+      'url': $('#bound_data').attr('action'),
+      'data':$('#bound_data').serialize(),
+      'type':'POST',
+      'dataType':'json',
+    }).done(function(response){
+      console.log(response);
+    }).fail(function(){
+      console.log('{% trans "There is no event nearby." %}');
+    });
+  }
+   
+  $(function(){
+    initialize();
+  });
+</script>

@@ -3,15 +3,15 @@
 {% load bootstrap3 %}
 {% load event_tags %}
 
-{% block title %}Sovol - ソーシャルボランティアプラットフォーム -{% endblock %}
+{% block title %}Sovol - {% trans "Social Volunteering Network" %} -{% endblock %}
 
 {% block content %}
 
   <div id="top-tabs">
     <ul>
-        <li><a href="#top-tabs-1">イベント</a></li>
-        <li><a href="map.html">地図で探す</a></li>
-        <li><a href="#top-tabs-3">カレンダーで探す</a></li>
+        <li><a href="#top-tabs-1">{% trans "Browse" %}</a></li>
+        <li><a href="{% url 'show_map'%}">{% trans "Location" %}</a></li>
+        <li><a href="#top-tabs-3">{% trans "Calender" %}</a></li>
     </ul>
     <div id="top-tabs-1">
       <div class="row">
@@ -32,7 +32,7 @@
               <div class="media-body">
                 <div class="event-info pull-left">
                   <div>
-                    <span class="label label-default" style="margin-right: 1em;">
+                    <span class="label label-{{label_brand}}" style="margin-right: 1em;">
                       {{status}}
                     </span>
                     <i class="fa fa-calendar" aria-hidden="true"></i>
@@ -58,26 +58,26 @@
             <li>
               <form method="post" action="{% url 'event:future_participating_events'%}" class="event-filter event-active">
                 {% csrf_token %}
-                参加予定のボランティア
+                {% trans "Events I'm going" %}
               </form>
             </li>
             <li>
               <form method="post" action="{% url 'event:new_group_events'%}" class="event-filter">
                 {% csrf_token %}
-                所属グループのボランティア
+                {% trans "Events of My Groups" %}
+              </form>
+            </li>
+            <li>
+              <form method="post" action="{% url 'event:new_region_events'%}" class="event-filter">
+                {% csrf_token %}
+                {% trans "Events Nearby" %}
               </form>
             </li>
             {% endif %}
             <li>
-              <form method="post" action="{% url 'event:new_region_events'%}" class="event-filter">
-                {% csrf_token %}
-                地域の新着ボランティア
-              </form>
-            </li>
-            <li>
               <form method="post" action="{% url 'event:new_events'%}" class="event-filter">
                 {% csrf_token %}
-                すべてのボランティア
+                {% trans "View All Events" %}
               </form>
             </li>
           </ul>
@@ -92,5 +92,98 @@
       </div>
     </div>
   </div>
+
+
+  <script>
+    var template;
+    $(function(){
+      template = Handlebars.compile($("#event-template").html());
+      moment.updateLocale('ja', {
+        weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
+        weekdaysShort: ['{% trans "Sun" %}','{% trans "Mon" %}','{% trans "Tue" %}','{% trans "Wed" %}','{% trans "Thu" %}','{% trans "Fri" %}','{% trans "Sat" %}'],
+      });
+      var opts = {
+        lines: 13, //線の数
+        length: 33, //線の長さ
+        width: 11, //線の幅
+        radius: 16, //スピナーの内側の広さ
+        corners: 1, //角の丸み
+        rotate: 74, //向き(あんまり意味が無い・・)
+        direction: 1, //1：時計回り -1：反時計回り
+        color: '#000', // 色
+        speed: 1.5, // 一秒間に回転する回数
+        trail: 71, //残像の長さ
+        shadow: true, // 影
+        hwaccel: true, // ？
+        className: 'spinner', // クラス名
+        zIndex: 2e9, // Z-index
+        top: '50%', // relative TOP
+        left: '50%', // relative LEFT
+        opacity: .25, //透明度
+        fps: 20 //fps
+      };
+      //描画先の親要素
+      var spin_target = $("#event-area").get(0);
+      //スピナーオブジェクト
+      var spinner = new Spinner(opts);
+      //スピナー描画
+      spinner.spin(spin_target);
+      //もう一度spinを呼ぶとスピナー停止
+      var init = $(".event-filter:first-of-type");
+      $.ajax({
+          'url':init.attr("action"),
+          'data':init.serialize(),
+          'type':'POST',
+          'dataType':'json',
+        }).done(function(response){
+          show_events(response);
+        }).fail(function(){
+          console.log("{% trans 'Failed to get information' %}")
+      });
+      $('.event-filter').on('click',function(){
+        $('.event-filter').removeClass('event-active');
+        $(this).addClass('event-active')
+        $.ajax({
+          'url':$(this).attr('action'),
+          'data':$(this).serialize(),
+          'type':'POST',
+          'dataType':'json',
+        }).done(function(response){
+          show_events(response);
+        }).fail(function(){
+          console.log("{% trans 'Failed to get information' %}");
+        });
+      });
+    })
+
+  var label_convert={
+    '開催中' : 'success',
+    '募集中' : 'info',
+    '管理者' : 'primary',
+    '終了' : 'default',
+  };
+
+  var label_trans={
+    '開催中' : '{% trans "Onging" %}',
+    '募集中' : '{% trans "Wanted" %}',
+    '管理者' : '{% trans "Organizer" %}',
+    '終了' :  '{% trans "Finished" %}',
+  };
+
+
+    function show_events(context){
+      for(var i=0;i<context['filtered_events'].length;i++){
+        context['filtered_events'][i]['start_time'] 
+        = moment(context['filtered_events'][i]['start_time']).format("M月D日(ddd)");
+        context['filtered_events'][i]['label_brand']
+        = label_convert[context['filtered_events'][i]['status']];
+        context['filtered_events'][i]['status']
+        = label_trans[context['filtered_events'][i]['status']];
+      }
+      $('#event-area').html(template(context));
+    }
+
+  </script>
+
 
 {% endblock %}

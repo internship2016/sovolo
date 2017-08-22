@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.http import JsonResponse,QueryDict
 from event.models import Event
 import json
 #リクエストのあったイベントを新規イベントは作成日時順、他は開始日時順の若い方から10件をjsonで返す。
@@ -6,6 +6,20 @@ def event_filter(request, event_kind, *args, **kwargs):
     if request.method == 'POST':
         def new_events():
             return Event.objects.all().order_by('-created')[:10]
+        if request.user.is_anonymous():
+            events = new_events()
+            res_obj = {'filtered_events':[]}
+            for event in events:
+                res_obj['filtered_events'].append({
+                    'id' : event.id,
+                    'name' : event.name,
+                    'start_time' : event.start_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    'end_time' : event.end_time.strftime("%Y-%m-%d %H:%M:%S"),
+                    'place' : event.meeting_place,
+                    'img' : event.get_image_url(),
+                    'status' : event.get_status()
+                    })
+            return JsonResponse(res_obj)
         events = {
                 'future_participating_events' : request.user.get_future_participating_events,
                 'new_group_events' : request.user.get_new_group_events,
@@ -31,9 +45,12 @@ def event_filter(request, event_kind, *args, **kwargs):
 def event_range_search(request,  *args, **kwargs):
     if request.method == 'POST':
         res = {'events_in_range':[]}
-        json_data = json.loads(request.body)
-        #json_data = json.loads('{"range_value":{"ne_lat" : 0, "sw_lat" :200, "ne_lng" : 0, "sw_lng" : 200 }}')
-        range_value = json_data["range_value"]
+        # json_data = json.loads('{"ne_lat" : 0, "sw_lat" :200, "ne_lng" : 0, "sw_lng" : 200 }')
+        range_value = dict(request.POST)
+        keys = ['ne_lat','sw_lat','ne_lng','sw_lng']
+        for key in keys:
+            range_value[key] = float(range_value[key][0])
+
         for event in Event.get_events_in_range(range_value['ne_lat'], range_value['sw_lat'], range_value['ne_lng'], range_value['sw_lng']):
             res['events_in_range'].append({
                 'id' : event.id,

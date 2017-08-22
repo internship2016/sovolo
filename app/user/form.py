@@ -3,10 +3,10 @@ from user.models import UserReviewList
 
 
 class UserReviewListForm(forms.ModelForm):
+
     class Meta():
         model = UserReviewList
         fields = ('rating','comment')
-
-    def send_email(self):
-        # send email using the self.cleaned_data dictionary
-        pass
+        widgets = {
+            'comment': forms.Textarea(attrs={'cols': 20, 'rows': 10}),
+        }
