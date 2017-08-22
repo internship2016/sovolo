@@ -31,7 +31,6 @@ from django.core.files import File
 import sys
 import re
 from datetime import datetime
-import sys
 import io
 import uuid
 import urllib
