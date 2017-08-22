@@ -483,6 +483,7 @@ class EventSearchResultsView(ListView):
 
         return context
 
+
 @method_decorator(login_required, name='dispatch')
 class EventJoinView(RedirectView):
     def get_redirect_url(self, *args, **kwargs):
