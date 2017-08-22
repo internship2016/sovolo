@@ -672,13 +672,16 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
         event = self.get_object()
 
         if target == "admin":
-            users = event.participant.filter(participation__status__in=["管理者"])
+            users = event.participant \
+                         .filter(participation__status__in=["管理者"])
         elif target == "participants":
             users = event.participant.all()
         elif target == "members":
-            users = event.participant.filter(participation__status__in=["管理者","参加中"])
+            users = event.participant \
+                         .filter(participation__status__in=["管理者", "参加中"])
         elif target == "waiting":
-            users = event.participant.filter(participation__status__in=["管理者","キャンセル待ち"])
+            users = event.participant \
+                         .filter(participation__status__in=["管理者", "キャンセル待ち"])
         else:
             messages.error(request, "不正な送信先です")
             return redirect(reverse_lazy('event:message', kwargs={'pk': kwargs['pk']}))
