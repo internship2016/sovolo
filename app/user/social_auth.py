@@ -7,7 +7,8 @@ import urllib
 
 
 @partial
-def get_profile_image(strategy, details, response, user=None, is_new=False, *args, **kwargs):
+def get_profile_image(strategy, details, response,
+                      user=None, is_new=False, *args, **kwargs):
     backend = kwargs.get('backend')
     if is_new:
         if backend.name == 'facebook':
