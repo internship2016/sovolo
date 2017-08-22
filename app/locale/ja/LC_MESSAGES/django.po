@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 03:09+0900\n"
+"POT-Creation-Date: 2017-08-22 18:56+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -266,7 +266,8 @@ msgstr "ボランティアを検索"
 msgid "Create an event"
 msgstr "ボランティア作成"
 
-#: templates/base.html:84
+#: templates/base.html:84 templates/user/acquire_email.html:4
+#: templates/user/acquire_email.html:7
 msgid "Register"
 msgstr "ユーザー登録"
 
@@ -375,7 +376,7 @@ msgid "Participating"
 msgstr "参加予定"
 
 #: templates/event/detail.html:52 templates/event/detail.html:62
-#: templates/map.html:102 templates/top.html:170
+#: templates/map.html:116 templates/top.html:170
 msgid "Finished"
 msgstr "終了"
 
@@ -571,7 +572,7 @@ msgstr "（応募者のみに表示）"
 msgid "Organizer:"
 msgstr "管理者"
 
-#: templates/event/form_template.html:242
+#: templates/event/form_template.html:242 templates/user/edit.html:13
 msgid "Nickname"
 msgstr "ニックネーム"
 
@@ -620,7 +621,7 @@ msgid "Recipients:"
 msgstr "宛先"
 
 #: templates/event/message.html:16 templates/event/side_info.html:5
-#: templates/map.html:101 templates/top.html:169
+#: templates/map.html:115 templates/top.html:169
 msgid "Organizer"
 msgstr "管理者"
 
@@ -755,51 +756,51 @@ msgstr "自分の管理しているボランティア"
 msgid "No events I organize"
 msgstr "管理しているボランティア活動はありません。"
 
-#: templates/map.html:99 templates/top.html:167
+#: templates/map.html:113 templates/top.html:167
 msgid "Onging"
 msgstr "開催中"
 
-#: templates/map.html:100 templates/top.html:168
+#: templates/map.html:114 templates/top.html:168
 msgid "Wanted"
 msgstr "募集中"
 
-#: templates/map.html:135
+#: templates/map.html:149
 msgid "Failed to get location."
 msgstr "位置情報取得に失敗しました"
 
-#: templates/map.html:147
+#: templates/map.html:161
 msgid "Failed to get information."
 msgstr "情報を取得できませんでした"
 
-#: templates/map.html:173
+#: templates/map.html:187
 msgid "There are no events nearby."
 msgstr "周辺イベントはありません"
 
-#: templates/map.html:235 templates/top.html:103
+#: templates/map.html:248 templates/top.html:103
 msgid "Sun"
 msgstr "日"
 
-#: templates/map.html:235 templates/top.html:103
+#: templates/map.html:248 templates/top.html:103
 msgid "Mon"
 msgstr "月"
 
-#: templates/map.html:235 templates/top.html:103
+#: templates/map.html:248 templates/top.html:103
 msgid "Tue"
 msgstr "火"
 
-#: templates/map.html:235 templates/top.html:103
+#: templates/map.html:248 templates/top.html:103
 msgid "Wed"
 msgstr "水"
 
-#: templates/map.html:235 templates/top.html:103
+#: templates/map.html:248 templates/top.html:103
 msgid "Thu"
 msgstr "木"
 
-#: templates/map.html:235 templates/top.html:103
+#: templates/map.html:248 templates/top.html:103
 msgid "Fri"
 msgstr "金"
 
-#: templates/map.html:235 templates/top.html:103
+#: templates/map.html:248 templates/top.html:103
 msgid "Sat"
 msgstr "土"
 
@@ -807,7 +808,7 @@ msgstr "土"
 msgid "Social Volunteering Network"
 msgstr "ソーシャルボランティアプラットフォーム"
 
-#: templates/top.html:12
+#: templates/top.html:12 templates/user/edit.html:23
 msgid "Browse"
 msgstr "イベント"
 
@@ -834,6 +835,18 @@ msgstr "すべてのボランティア"
 #: templates/top.html:141 templates/top.html:154
 msgid "Failed to get information"
 msgstr "取得に失敗"
+
+#: templates/user/acquire_email.html:8
+msgid "You need an email address to create a Sovol account."
+msgstr "サービスの利用にはEmailアドレスが必要です"
+
+#: templates/user/acquire_email.html:17
+msgid "REGISTER"
+msgstr "登録"
+
+#: templates/user/detail.html:5
+msgid "About Me"
+msgstr "ユーザー詳細"
 
 #: templates/user/detail.html:13
 #, fuzzy
@@ -869,17 +882,53 @@ msgstr "ボランティア実績"
 msgid "Edit profile"
 msgstr "プロフィール編集"
 
+#: templates/user/edit.html:13
+msgid "Input up to 15 characters."
+msgstr "(15文字以内)"
+
+#: templates/user/edit.html:21
+msgid "Your photo"
+msgstr "プロフィール画像"
+
 #: templates/user/edit.html:28 templates/user/user_header.html:24
 msgid "Region"
 msgstr "地域"
 
-#: templates/user/edit.html:66 user/models.py:72
+#: templates/user/edit.html:38
+msgid "Sex"
+msgstr "性別"
+
+#: templates/user/edit.html:41
+msgid "Male"
+msgstr "男性"
+
+#: templates/user/edit.html:42
+msgid "Female"
+msgstr "女性"
+
+#: templates/user/edit.html:43
+msgid "Prefer not to disclose"
+msgstr "秘密"
+
+#: templates/user/edit.html:49
+msgid "Birthday"
+msgstr "生年月日"
+
+#: templates/user/edit.html:66 user/models.py:73
 msgid "Language"
 msgstr "言語"
 
 #: templates/user/edit.html:81 templates/user/user_header.html:67
 msgid "Following tags"
 msgstr "フォローしているタグ"
+
+#: templates/user/edit.html:88
+msgid "Change password"
+msgstr "パスワードを変更する"
+
+#: templates/user/edit.html:90
+msgid "Apply"
+msgstr "適用"
 
 #: templates/user/user_header.html:29
 msgid "Sovolage"
@@ -892,6 +941,13 @@ msgstr "獲得トロフィー"
 #: templates/user/user_header.html:75
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
+
+#: user/models.py:86
+#, fuzzy, python-format
+#| msgid "You need %(points_to_next)d more Sovolage to the next level!"
+msgid "You need %(points_to_next)d more Sovolage to the next level!"
+msgid_plural "You need %(points_to_next)d more Sovolages to the next level!"
+msgstr[0] "次のレベルまであと%(points_to_next)dソボレージ！"
 
 #, fuzzy
 #~| msgid "Waiting List"

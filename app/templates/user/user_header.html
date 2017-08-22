@@ -35,7 +35,7 @@
           </div>
       </div>
         <div class="panel-body" style="padding-top: 0;">
-          <span>次のレベルまであと{{ user.get_points_to_next_level }}ソボレージ！</span>
+          <span>{{ user.msg_you_need_more_xxx_sovolage_to_the_next_level }}</span>
           <div class="progress" style="margin-bottom: 0;">
             <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ user.get_level_percentage }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ user.get_level_percentage }}%;">
             <span>{{user.get_level_percentage}}%</span>

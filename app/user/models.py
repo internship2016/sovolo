@@ -6,6 +6,7 @@ from django.conf import settings
 from django.apps import apps
 
 from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import ungettext
 
 from datetime import datetime
 from django.utils import timezone
@@ -77,6 +78,15 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    # XXX: Nuts, poor django template engine doesn't allow spaces in args
+    def msg_you_need_more_xxx_sovolage_to_the_next_level(self):
+        points_to_next = self.get_points_to_next_level()
+        return ungettext(
+            "You need %(points_to_next)d more Sovolage to the next level!",
+            "You need %(points_to_next)d more Sovolages to the next level!",
+            points_to_next
+        ) % {"points_to_next": points_to_next}
 
     def get_about_age(self):
         today = datetime.today()
