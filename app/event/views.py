@@ -317,6 +317,7 @@ class EventDeleteView(UserPassesTestMixin, DeleteView):
         messages.info(self.request, "ボランティアを削除しました")
         return reverse_lazy('top')
 
+
 class EventParticipantsView(DetailView):
     model = Event
     template_name = 'event/participants.html'
