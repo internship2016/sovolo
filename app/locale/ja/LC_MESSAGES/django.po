@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 02:49+0900\n"
+"POT-Creation-Date: 2017-08-23 02:58+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -840,6 +840,22 @@ msgstr "所属グループ一覧"
 #| msgid "Groups"
 msgid "No groups"
 msgstr "所属しているグループがありません"
+
+#: templates/user/detail.html:35
+#, fuzzy
+#| msgid "Groups I organize:"
+msgid "List of Events I organize"
+msgstr "管理しているボランティア一覧"
+
+#: templates/user/detail.html:37
+msgid "List of Events I attend"
+msgstr "管理しているボランティア一覧"
+
+#: templates/user/detail.html:38
+#, fuzzy
+#| msgid "Event image"
+msgid "Event Archievements"
+msgstr "ボランティア実績"
 
 #: templates/user/edit.html:4 templates/user/user_header.html:32
 #, fuzzy
