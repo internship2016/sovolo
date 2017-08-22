@@ -371,7 +371,7 @@ class EventSearchResultsView(ListView):
 
         query = Q()
 
-        #Free Word
+        # Free Word
         if 'q' in self.request.GET:
             user_entry = self.request.GET['q']
             if user_entry is not None and user_entry != "":
@@ -382,7 +382,7 @@ class EventSearchResultsView(ListView):
                 else:
                     query = query & freeword_query
 
-        #Date
+        # Date
         if 'date' in self.request.GET:
             begin_date_string = self.request.GET['date']
             if begin_date_string is not None and begin_date_string != "":
@@ -397,7 +397,7 @@ class EventSearchResultsView(ListView):
                 date_query = Q(start_time__lt=date)
                 query = query & date_query
 
-        #Tag
+        # Tag
         if 'tags' in self.request.GET:
             tags = [int(t) for t in self.request.GET.getlist('tags')]
 
@@ -412,7 +412,7 @@ class EventSearchResultsView(ListView):
                         tag_query = tag_query | Q(tag=tag)
                 query = query & tag_query
 
-        #Place
+        # Place
         if 'region' in self.request.GET:
             place = self.request.GET['region']
 
@@ -420,7 +420,7 @@ class EventSearchResultsView(ListView):
                 place_query = Q(region=place)
                 query = query & place_query
 
-        #Group
+        # Group
         if 'group' in self.request.GET:
             group = self.request.GET['group']
 
@@ -448,18 +448,18 @@ class EventSearchResultsView(ListView):
 
             results = results.order_by(criterion)
 
-        #Include events with no openings?
+        # Include events with no openings?
         if 'exclude_full_events' in self.request.GET and self.request.GET['exclude_full_events'] == "on":
             results = [event for event in results if not event.is_full()]
 
-        #Include events that are already over?
+        # Include events that are already over?
         if 'exclude_closed_events' in self.request.GET and self.request.GET['exclude_closed_events'] == "on":
             results = [event for event in results if not event.is_closed()]
 
         if len(results)==0:
             messages.error(self.request, "検索結果に一致するボランティアが見つかりませんでした")
 
-        #Filter based on page and number per page
+        # Filter based on page and number per page
         if 'numperpage' in self.request.GET:
             num_per_page = self.request.GET["numperpage"]
             if num_per_page is not None and num_per_page!="":
