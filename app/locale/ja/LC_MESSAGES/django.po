@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 04:00+0900\n"
+"POT-Creation-Date: 2017-08-22 20:09+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -271,7 +271,8 @@ msgstr "ボランティア作成"
 msgid "Register"
 msgstr "ユーザー登録"
 
-#: templates/base.html:85
+#: templates/base.html:85 templates/user/login_page.html:6
+#: templates/user/login_page.html:11 templates/user/login_page.html:27
 msgid "Log in"
 msgstr "ログイン"
 
@@ -929,6 +930,30 @@ msgstr "パスワードを変更する"
 #: templates/user/edit.html:90
 msgid "Apply"
 msgstr "適用"
+
+#: templates/user/login_page.html:15
+msgid "Log in with your email address"
+msgstr "メールアドレスでログイン"
+
+#: templates/user/login_page.html:28
+msgid "Forgot your password?"
+msgstr "パスワードを忘れた方はこちら"
+
+#: templates/user/login_page.html:37
+msgid "Log in using the following services"
+msgstr "SNSアカウントでログイン"
+
+#: templates/user/login_page.html:41
+msgid "Log in with Twitter"
+msgstr "Twitterでログイン"
+
+#: templates/user/login_page.html:52
+msgid "Not registered with us yet?"
+msgstr "Facebookでログイン"
+
+#: templates/user/login_page.html:55
+msgid "Join Now"
+msgstr "新規登録"
 
 #: templates/user/user_header.html:29
 msgid "Sovolage"
