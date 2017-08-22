@@ -199,7 +199,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return [event for event in events if not event.is_over()]
 
     def get_future_participating_events(self):
-        return [event for event in self.participating_event.all().order_by('start_time') if not event.is_over()]
+        events = self.participating_event \
+                     .all() \
+                     .order_by('start_time')
+        return [event for event in events if not event.is_over()]
 
     def get_past_participated_events(self):
         return [event for event in self.participating_event.all().order_by('start_time') if event.is_over()]
