@@ -13,12 +13,9 @@ from django.utils import timezone
 from tag.models import Tag
 from base.models import AbstractBaseModel
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import BytesIO as StringIO
-
-import sys, os, math
+import sys
+import os
+import math
 
 # review
 from django.core.validators import MinValueValidator, MaxValueValidator
