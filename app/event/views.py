@@ -580,9 +580,12 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
                                          user=self.request.user)
 
     def get_success_url(self):
-
         if self.object.status == "参加中":
-            waiting_list = self.object.frame.participation_set.filter(status="キャンセル待ち").order_by('created')
+            participations = self.object.frame.participation_set
+
+            waiting_list = participations.filter(status="キャンセル待ち") \
+                                         .order_by('created')
+
             if len(waiting_list) > 0:
                 carry_up = waiting_list.first()
                 carry_up.status = "参加中"
