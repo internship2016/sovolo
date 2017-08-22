@@ -4,7 +4,7 @@
 {% load event_tags %}
 {% load user_tags %}
 
-{% block title %}{{ event.name }} ボランティア詳細 | Sovol{% endblock %}
+{% block title %}{{ event.name }} {% trans "Details" %} | Sovol{% endblock %}
 {% block content %}
 <script type="text/javascript"
   src="//maps.googleapis.com/maps/api/js?key=AIzaSyAW5PZqv_tJA9Pd-il4UeG-Mk9622Ub7R0">
@@ -17,7 +17,7 @@
 
         <div class="panel panel-primary">
           <div class="panel-heading">
-            参加状況
+              {% trans "Availability" %}
           </div>
           <div class="panel-body">
             <div class="list-group">
@@ -28,42 +28,42 @@
               <li class="list-group-item">
                 <div class="row">
                   <div class="col-md-9">
-                    <h5>参加枠{{ forloop.counter }}:
+                    <h5>{% trans "Position " %}{{ forloop.counter }}:
                       {% if frame.deadline %}
-                        (締切: {{ frame.deadline_format }})
+                        ({% trans "Deadline" %}: {{ frame.deadline_format }})
                       {% else %}
-                        (締切: {{ event.start_time_format }})
+                        ({% trans "Deadline" %}: {{ event.start_time_format }})
                       {% endif %}
 
                       <!-- 参加枠の状態のラベル -->
                       {% if request.user in event.admin.all %}<!-- 管理者 -->
                       {% elif request.user.id in frame.reserved_id_list %}<!--参加予定-->
                         {% if event.is_over %}<!--参加予定/終了-->
-                          <span class="label label-info">参加しました</span>
+                          <span class="label label-info">{% trans "Participated" %}</span>
                         {% elif event.is_started %}<!--参加予定/開催中-->
-                          <span class="label label-info">参加中</span>
+                          <span class="label label-info">{% trans "Ongoing" %}</span>
                         {% elif frame.is_closed %}<!--参加予定/締切済-->
-                          <span class="label label-info">参加確定</span>
+                          <span class="label label-info">{% trans "Confirmed" %}</span>
                         {% else %}<!--参加予定/募集中-->
-                          <span class="label label-info">参加予定</span>
+                          <span class="label label-info">{% trans "Participating" %}</span>
                         {% endif %}
                       {% elif request.user.id in frame.waiting_id_list %}<!--キャンセル待ち-->
                         {% if event.is_over %}<!--キャンセル待ち/終了-->
-                          <span class="label label-info">終了しました</span>
+                          <span class="label label-info">{% trans "Finished" %}</span>
                         {% elif event.is_started %}<!--キャンセル待ち/開催中-->
-                          <span class="label label-info">参加不可</span>
+                          <span class="label label-info">{% trans "Closed" %}</span>
                         {% elif frame.is_closed %}<!--キャンセル待ち/締切済-->
-                          <span class="label label-info">参加不可</span>
+                          <span class="label label-info">{% trans "Closed" %}</span>
                         {% else %}<!--キャンセル待ち/募集中-->
-                          <span class="label label-info">キャンセル待ち</span>
+                          <span class="label label-info">{% trans "Waiting List" %}</span>
                         {% endif %}
                       {% else %}<!--未応募 -->
                         {% if event.is_over %}<!--未応募/終了-->
-                          <span class="label label-info">終了しました</span>
+                          <span class="label label-info">{% trans "Finished" %}</span>
                         {% elif event.is_started %}<!--未応募/開催中-->
-                          <span class="label label-info">開催中</span>
+                          <span class="label label-info">{% trans "In Session" %}</span>
                         {% elif frame.is_closed %}<!--未応募/締切済-->
-                          <span class="label label-info">参加不可</span>
+                          <span class="label label-info">{% trans "Closed" %}</span>
                         {% else %}<!--未応募/募集中-->
                           {% if frame.is_full %}<!--未応募/募集中/参加枠満員-->
                           {% else %}<!--未応募/募集中/参加枠満員-->
@@ -83,38 +83,38 @@
                         {% elif frame.is_closed %}<!--参加予定/締切済-->
                           <form method="post" action="{% url 'event:cancel' event.id %}">
                             {% csrf_token %}
-                            <button class="btn btn-primary">キャンセル</button>
+                            <button class="btn btn-primary">{% trans "Cancel" %}</button>
                           </form>
                         {% else %}<!--参加予定/募集中-->
                           <form method="post" action="{% url 'event:cancel' event.id %}">
                             {% csrf_token %}
-                            <button class="btn btn-primary">キャンセル</button>
+                            <button class="btn btn-primary">{% trans "Cancel" %}</button>
                           </form>
                         {% endif %}
                       {% elif request.user.id in frame.waiting_id_list %}<!--キャンセル待ち-->
                         {% if event.is_over %}<!--キャンセル待ち/終了-->
                         {% elif event.is_started %}<!--キャンセル待ち/開催中-->
-                          <button class="btn btn-primary" disabled>締切済</button>
+                          <button class="btn btn-primary" disabled>{% trans "Closed" %}</button>
                         {% elif frame.is_closed %}<!--キャンセル待ち/締切済-->
-                          <button class="btn btn-primary" disabled>締切済</button>
+                          <button class="btn btn-primary" disabled>{% trans "Closed" %}</button>
                         {% else %}<!--キャンセル待ち/募集中-->
                           <form method="post" action="{% url 'event:cancel' event.id %}">
                             {% csrf_token %}
-                            <button class="btn btn-primary">キャンセル</button>
+                            <button class="btn btn-primary">{% trans "Cancel" %}</button>
                           </form>
                         {% endif %}
                       {% else %}<!--未応募 -->
                         {% if not request.user in event.participant.all %}<!--他の枠に参加中でなければ-->
                           {% if event.is_over %}<!--未応募/終了-->
                           {% elif event.is_started %}<!--未応募/開催中-->
-                            <button class="btn btn-primary" disabled>締切済</button>
+                            <button class="btn btn-primary" disabled>{% trans "Closed" %}</button>
                           {% elif frame.is_closed %}<!--未応募/締切済-->
-                            <button class="btn btn-primary" disabled>締切済</button>
+                            <button class="btn btn-primary" disabled>{% trans "Closed" %}</button>
                           {% else %}<!--未応募/募集中-->
                             {% if frame.is_full %}<!--未応募/募集中/参加枠満員-->
-                              <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">キャンセル待ち</a>
+                              <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">{% trans "Waiting List" %}</a>
                             {% else %}<!--未応募/募集中/参加枠空き有-->
-                              <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">参加</a>
+                              <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">{% trans "Join" %}</a>
                             {% endif %}
                           {% endif %}
                         {% endif %}
@@ -125,12 +125,12 @@
                       {% if not frame.upper_limit is None %}
                         <p>
                           <span style="font-size: 200%;">{{ frame.reserved_id_list.count }}</span>
-                          /{{ frame.upper_limit }}人
+                          /{{ frame.upper_limit }}{% trans " " %}
                         </p>
                       {% else %}
                         <p>
-                          <span style="font-size: 200%;">{{ frame.participation_set.count }}</span>人
-                          <span class="label label-warning">上限なし</span>
+                          <span style="font-size: 200%;">{{ frame.participation_set.count }}</span>{% trans " " %}
+                          <span class="label label-warning">{% trans "Unlimited" %}</span>
                         </p>
                       {% endif %}
                     </div>
@@ -164,30 +164,30 @@
           </div>
         </div>
         <div class="panel panel-primary">
-          <div class="panel-heading">募集詳細</div>
+          <div class="panel-heading">{% trans "About this event" %}</div>
           <div class="panel-body">
             <table class="table">
               <tr>
-                <th style="border-top: none;">日時</th>
+                <th style="border-top: none;">{% trans "When:" %}</th>
                 <td style="border-top: none;">{{ event.start_time_format }} ～ {{ event.end_time_format }}</td>
               </tr>
               <tr>
-                <th>説明</th>
+                <th>{% trans "Details:" %}</th>
                 <td>{{ event.details | linebreaks }}</td>
               </tr>
               <tr>
-                <th>連絡事項</th>
+                <th>{% trans "Informations:" %}</th>
                 <td>{{ event.notes | linebreaks }}</td>
               </tr>
               <tr>
-                <th>連絡先</th>
+                <th>{% trans "Contact:" %}</th>
                 <td>{{ event.contact }}</td>
               </tr>
             </table>
           </div>
         </div>
         <div class="panel panel-primary">
-          <div class="panel-heading">集合場所</div>
+          <div class="panel-heading">{% trans "Meet at:" %}</div>
           <div class="panel-body">
             <p>{{ event.meeting_place }}</p>
             {% if event.latitude and event.longitude %}
@@ -202,7 +202,7 @@
         {% if event.private_notes and request.user in event.participant.all %}
           <div class="panel panel-primary">
             <div class="panel-heading">
-              参加者への連絡事項（応募していないユーザーには見えません）
+                {% trans "Comments to the participants: (This won't be shown to nonapplicants.)" %}
             </div>
             <div class="panel-body">
               {{ event.private_notes }}

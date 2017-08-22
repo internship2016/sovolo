@@ -71,10 +71,18 @@ nav{
 }
 
 /* Google Maps */
-$map-size :400px;
 #map_canvas{
-  height:$map-size;
-  width:$map-size;
+  min-height: 300px;
+  min-width: 300px;
+  height:100%;
+  width:100%;
+  margin-top:10px;
+}
+#map_canvas2{
+  min-height: 400px;
+  min-width: 400px;
+  height:100%;
+  width:100%;
   margin-top:10px;
 }
 
@@ -415,6 +423,7 @@ $logo-height :65px;
 
 .input-loc{
   padding: 0;
+  border: none;
   &-btn{
   border-width: 1px 0 1px;
   border-style: solid;
@@ -424,6 +433,7 @@ $logo-height :65px;
   box-sizing: border-box;
   height: 34px;
     &_2{
+      font-size: 14px !important;
       height: 34px;
     }
   }

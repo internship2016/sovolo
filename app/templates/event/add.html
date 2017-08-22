@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load bootstrap3 %}
 
-{% block title %}ボランティア新規作成 | Sovol{% endblock %}
+{% block title %}{% trans "Create a new event" %} | Sovol{% endblock %}
 {% block content %}
 <!-- テスト用のForm -->
 <div class="row mt15">
@@ -10,7 +10,7 @@
   <div class="col-xs-12 col-md-8 col-md-offset-2">
     <div class="panel panel-primary">
       <div class="panel-heading">
-        新規ボランティア作成
+          {% trans "Create a new event" %}
       </div>
       <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
         <div class="panel-body">
@@ -18,12 +18,12 @@
           {% include 'event/form_template.html' %}
         </div>
         <div class="panel-footer" style="text-align:center">
-          <button class="btn btn-primary" type="submit">送信</button>
+          <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
         </div>
       </form>
     </div>
     <div style="text-align: right">
-      <h4><a class="btn btn-primary" href="{% url 'group:add' %}">新規グループ作成</a></h4>
+      <h4><a class="btn btn-primary" href="{% url 'group:add' %}">{% trans "Create a new group" %}</a></h4>
     </div>
   </div>
 </div>

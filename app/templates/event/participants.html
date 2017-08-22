@@ -3,7 +3,7 @@
 {% load bootstrap3 %}
 {% load event_tags %}
 {% load user_tags %}
-{% block title %}参加者一覧 | {{ event.name }} | Sovol{% endblock %}
+{% block title %}{% trans "Participants" %} | {{ event.name }} | Sovol{% endblock %}
 {% block content %}
 {% include "event/event_header.html" %}
 
@@ -11,12 +11,12 @@
     {% user_list_large event.admin.all "管理者" %}
 
     <div class="panel panel-primary">
-        <div class="panel-heading">参加者</div>
+        <div class="panel-heading">{% trans "Participants" %}</div>
         <div class="panel-body">
             {% for frame in event.frame_set.all %}
                 {% user_list_large frame.get_reserved_users frame.description %}
             {% empty %}
-                <p>参加者がいません</p>
+                <p>{% trans "There are no participants." %}</p>
             {% endfor %}
         </div>
     </div>

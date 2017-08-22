@@ -11,16 +11,16 @@
 
 <div id="event_header">
  {% if event.is_over %}
-  <div class="alert alert-danger">このボランティアは終了しました</div>
+  <div class="alert alert-danger">{% trans "EVENT CLOSED" %}</div>
   {% else %}
   {% if request.user in event.participant.all %}
   {% if participation.status == "参加中" %}
   <div class="alert alert-info">
-    参加しています
+      {% trans "You're participating this event." %}
   </div>
   {% elif participation.status == "キャンセル待ち" %}
   <div class="alert alert-info">
-    キャンセル待ちです
+      {% trans "You're on the waiting list." %}
   </div>
   {% endif %}
   {% endif %}
@@ -39,13 +39,13 @@
         <div class="clearfix">
           <p> <i class="fa fa-calendar" aria-hidden="true"></i> {{ event.start_time_format }} 〜 {{ event.end_time_format }} <i class="fa fa-map-marker" aria-hidden="true"></i> {{ event.get_region_kanji }}</p>
           <p>
-            応援数 <span class="emphasis">{{ event.supporter.all|length }}</span>
+              {% trans "Liked by:" %} <span class="emphasis">{{ event.supporter.all|length }}</span>
           </p>
           {% if not event.is_over %}
           {% if request.user in event.supporter.all %}
-          <button class="btn btn-default">応援済み</button>
+          <button class="btn btn-default">{% trans "Liked" %}</button>
           {% else %}
-          <a class="btn btn-primary" href="{% url 'event:support' event.id %}">応援する</a>
+          <a class="btn btn-primary" href="{% url 'event:support' event.id %}">{% trans "Like" %}</a>
           {% endif %}
           {% endif %}
           <div id="likes" class="pull-right">
@@ -60,7 +60,7 @@
                  data-mobile-iframe="true">
               <a class="fb-xfbml-parse-ignore" target="_blank"
                  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsovol.earth%2F&amp;src=sdkpreparse">
-                シェア
+                 {% trans "Share" %}
               </a>
             </div>
             <div style="display: inline-block;">
@@ -81,8 +81,8 @@
 
         <div style="text-align: right; margin-top: 2px;">
           {% if request.user in event.admin.all or request.user == event.host_user %}
-          <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">内容変更</a>
-          <a href="{% url 'event:message' event.id %}" type="button" class="btn btn-default">メール一斉送信</a>
+          <a href="{% url 'event:edit' event.id %}" type="button" class="btn btn-default">{% trans "Edit this event" %}</a>
+          <a href="{% url 'event:message' event.id %}" type="button" class="btn btn-default">{% trans "Send email to all participants" %}</a>
           {% endif %}
         </div>
       </div>
