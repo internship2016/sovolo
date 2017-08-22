@@ -11,7 +11,6 @@ from django.contrib.auth import views as auth_views
 import uuid
 from django.contrib.auth import login
 
-from django.utils import timezone
 from .models import User, UserActivation, UserPasswordResetting, UserReviewList
 from .form import UserReviewListForm
 from django.urls import reverse
