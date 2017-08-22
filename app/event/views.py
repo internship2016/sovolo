@@ -88,8 +88,11 @@ class EventCreate(CreateView):
             event.admin.add(admin_id)
         event.admin.add(event.host_user.id)
 
-        for name in set(raw_admins) - set(new_admins.values_list('username', flat=True)):
-            messages.error(self.request, "ユーザー名 " + name + " に一致するユーザーはいませんでした。")
+        new_admin_names = new_admins.values_list('username', flat=True)
+        for name in set(raw_admins) - set(new_admin_names):
+            error_msg = ("ユーザー名 %(name)s に一致する"
+                         "ユーザーはいませんでした。") % {'name': name}
+            messages.error(self.request, error_msg)
 
         # Groups
         event.group_set.clear()
