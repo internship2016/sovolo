@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 20:52+0000\n"
+"POT-Creation-Date: 2017-08-22 21:27+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -61,6 +61,23 @@ msgstr "災害"
 #: base/management/commands/seed_data.py:469
 msgid "Animals"
 msgstr "動物"
+
+#: event/views.py:87
+#, python-format
+msgid "There is no user named %(name)s."
+msgstr "ユーザー名 %(name)s に一致するユーザーはいませんでした。"
+
+#: event/views.py:139
+#, fuzzy
+#| msgid "User profile was successfully edited."
+msgid "Your event was successfully added."
+msgstr "ボランティアを登録しました。"
+
+#: event/views.py:169
+#, fuzzy
+#| msgid "Tags not found"
+msgid "Event not found."
+msgstr "そのボランティアは存在しません。"
 
 #: sovolo/settings.py:146
 msgid "English"
@@ -867,7 +884,7 @@ msgstr "サービスの利用にはEmailアドレスが必要です"
 msgid "REGISTER"
 msgstr "登録"
 
-#: templates/user/detail.html:5
+#: templates/user/detail.html:5 templates/user/user_header.html:11
 msgid "About Me"
 msgstr "ユーザー詳細"
 
@@ -891,6 +908,14 @@ msgstr "管理しているボランティア一覧"
 msgid "Event Achievements"
 msgstr "ボランティア実績"
 
+#: templates/user/detail.html:42
+msgid "View all reviews posted"
+msgstr "すべてのレビューを見る"
+
+#: templates/user/detail.html:46
+msgid "Reviews not yet posted"
+msgstr "未レビューを見る"
+
 #: templates/user/edit.html:4 templates/user/user_header.html:32
 msgid "Edit profile"
 msgstr "プロフィール編集"
@@ -903,7 +928,7 @@ msgstr "(15文字以内)"
 msgid "Your photo"
 msgstr "プロフィール画像"
 
-#: templates/user/edit.html:28 templates/user/user_header.html:24
+#: templates/user/edit.html:28
 msgid "Region"
 msgstr "地域"
 
@@ -1017,6 +1042,22 @@ msgstr "新しいパスワードを入力してください"
 #: templates/user/reset_password.html:12
 msgid "Your new pasword"
 msgstr "新しいパスワード"
+
+#: templates/user/user_header.html:19
+msgid "Age Group:"
+msgstr "年代："
+
+#: templates/user/user_header.html:19
+msgid "'s"
+msgstr "代"
+
+#: templates/user/user_header.html:22
+msgid "Sex:"
+msgstr "性別："
+
+#: templates/user/user_header.html:24
+msgid "Region:"
+msgstr "地域："
 
 #: templates/user/user_header.html:29
 msgid "Sovolage"

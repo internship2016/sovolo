@@ -12,7 +12,7 @@ import uuid
 from django.contrib.auth import login
 
 from django.utils import timezone
-from .models import UserActivation, UserPasswordResetting
+from .models import UserActivation, UserPasswordResetting, UserReviewList
 from .form import UserReviewListForm
 from django.urls import reverse
 from django.forms import formset_factory
@@ -250,32 +250,53 @@ class UserPostReviewView(FormView):
             context['to_user'] = self.joined_event
         return context
 
-    # 重複なしで、イベント参加者の判定を行う。
-
     def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        if 'event_id' in self.request.GET:
-            self.joined_event = Event.objects.get(pk=self.request.GET['event_id'])
 
+        if 'event_id' in self.request.GET:
+            joined_event = Event.objects.get(pk=self.request.GET['event_id'])
+        else:
+            messages.error(self.request, "Url Error")
+            return self.form_invalid(form)
+
+        # Host User review participant (True)
         if 'to_user_id' in self.request.GET:
-            self.to_user = User.objects.get(pk=self.request.GET['to_user_id'])
-            form.instance.to_rate_user_id = self.to_user.id
+            to_user = User.objects.get(pk=self.request.GET['to_user_id'])
             form.instance.event_host = True
         else:
-            form.instance.to_rate_user_id = self.joined_event.host_user.id # pkを取得 評価対象
+            to_user = User.objects.get(pk=joined_event.host_user.id) # pkを取得 評価対象
 
+        # Set Instanse
+        form.instance.to_rate_user_id = to_user.id
         form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
-        form.instance.joined_event_id = self.joined_event.id
-        form.save()
-        return super(UserPostReviewView, self).form_valid(form)
+        form.instance.joined_event_id = joined_event.id
 
-    # レビュー投稿時にレビュー結果ページに帰還
+        ## Validators
+        from_reviews = self.request.user.from_rate_user.all()
+        to_from_event_list = []
+        for review in from_reviews:
+            to_from_event_list.append([review.to_rate_user,
+                                       review.from_rate_user,
+                                       review.joined_event])
+
+        # User is Host or Participant
+        if (self.request.user not in joined_event.participant.all()) and (self.request.user != joined_event.host_user):
+            # form.add_error('rating', 'Incident with this email already exist')
+            messages.error(self.request, "You didn't Join event")
+            return self.form_invalid(form)
+        # Check Already Reviewed or not
+        elif [to_user, self.request.user, joined_event] in to_from_event_list:
+                messages.error(self.request, "You Already Reviewd")
+                return self.form_invalid(form)
+        else:
+            form.save()
+            return super(UserPostReviewView, self).form_valid(form)
+
+    # レビュー投稿時に未レビューページに帰還
     def get_success_url(self, **kwargs):
-        messages.info(self.request, "レビューを送信しました。")
+        messages.info(self.request, "Your review was successfully sent")
         return reverse('user:unreviewed')
 
-## Review
+
 class UserUnReviewedView(ListView):
     # なぜ model and form_class がセットでも動くのかわかりません。
     model = User
