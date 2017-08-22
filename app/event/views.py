@@ -27,6 +27,7 @@ from tag.models import Tag
 from user.models import User
 from django.conf import settings
 from django.core.files import File
+from django.utils.translation import ugettext_lazy as _
 
 import sys
 import re
