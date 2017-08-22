@@ -18,8 +18,8 @@ class Event(AbstractBaseModel):
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
     meeting_place = models.CharField(max_length=400)
-    longitude = models.FloatField(default=35.7291)
-    latitude = models.FloatField(default=139.7191)
+    longitude = models.FloatField(default=139.7191)
+    latitude = models.FloatField(default=35.7291)
     image = models.ImageField(upload_to='events/', null=True, blank=True)
     contact = models.CharField(max_length=200)
     details = models.TextField()
@@ -60,7 +60,11 @@ class Event(AbstractBaseModel):
         ordering = ['-start_time']
 
     def __str__(self):
-        return self.name + ": " + self.start_time.strftime("%Y-%m-%d") + " ~ " + self.end_time.strftime("%Y-%m-%d")
+        return "%(name)s: %(since)s ~ %(until)s" % {
+            'name': self.name,
+            'since': self.start_time.strftime("%Y-%m-%d"),
+            'until': self.end_time.strftime("%Y-%m-%d"),
+        }
 
     def get_absolute_url(self):
         return reverse('event:detail', kwargs={'pk': self.id})
@@ -126,17 +130,25 @@ class Event(AbstractBaseModel):
         return self.end_time
 
     def get_reserved_users(self):
-        return [participation.user for participation in self.participation_set.filter(status="参加中")]
+        participations = self.participation_set \
+                             .filter(status="参加中")
+        return [p.user for p in participations]
 
     def get_waiting_users(self):
-        return [participation.user for participation in self.participation_set.filter(status="キャンセル待ち").order_by('created')]
+        participations = self.participation_set \
+                             .filter(status="キャンセル待ち") \
+                             .order_by('created')
+        return [p.user for p in participations]
 
     def get_host_user_as_list(self):
         return [self.host_user]
 
     @classmethod
     def get_events_in_range(cls, ne_lat, sw_lat, ne_lng, sw_lng):
-        return cls.objects.filter(latitude__range=(ne_lat, sw_lat), longitude__range=(ne_lng, sw_lng))
+        return cls.objects.filter(latitude__gte=sw_lat,
+                                  latitude__lte=ne_lat,
+                                  longitude__gte=sw_lng,
+                                  longitude__lte=ne_lng)
 
 
 class Frame(AbstractBaseModel):
@@ -158,11 +170,10 @@ class Frame(AbstractBaseModel):
         if self.upper_limit is None:
             return False
         else:
-            participant_query = Q(frame=self)
-            status_query = Q(status="参加中")
-            num_participants = Participation.objects.filter(participant_query & status_query).count()
+            participants = Participation.objects \
+                .filter(Q(frame=self) & Q(status="参加中"))
 
-            return num_participants >= self.upper_limit
+            return participants.count() >= self.upper_limit
 
     def is_closed(self):
         return timezone.now() > self.deadline
@@ -175,16 +186,21 @@ class Frame(AbstractBaseModel):
         return self.deadline
 
     def participant_id_list(self):
-        return self.participation_set.all().values_list('user',flat=True)
+        return self.participation_set.all().values_list('user', flat=True)
 
     def reserved_id_list(self):
-        return self.participation_set.filter(status="参加中").values_list('user',flat=True)
+        return self.participation_set \
+                   .filter(status="参加中") \
+                   .values_list('user', flat=True)
 
     def get_reserved_users(self):
-        return [participation.user for participation in self.participation_set.filter(status="参加中")]
+        participations = self.participation_set.filter(status="参加中")
+        return [p.user for p in participations]
 
     def waiting_id_list(self):
-        return self.participation_set.filter(status="キャンセル待ち").values_list('user',flat=True)
+        return self.participation_set \
+                   .filter(status="キャンセル待ち") \
+                   .values_list('user', flat=True)
 
     def get_filled_rate(self):
         """Calculate participant capacity ratio.
@@ -215,7 +231,10 @@ class Participation(AbstractBaseModel):
         unique_together = (('event', 'user'),)
 
     def __str__(self):
-        return "Participant:" + self.user.username +", Status: " + self.status
+        return "Participant: %(username)s, Status: %(status)s" % {
+            'username': self.user.username,
+            'status': self.status,
+        }
 
     def save(self, *args, **kwargs):
         return super(Participation, self).save(*args, **kwargs)
