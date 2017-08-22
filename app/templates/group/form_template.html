@@ -90,7 +90,7 @@
         </label>
       {% endfor %}
 
-      <h4>自分の管理しているボランティア</h4>
+      <h4>{% trans 'Events I organize' %}</h4>
       {% for event in request.user.admin_event.all %}
         <label>
           <input type="checkbox" name="events" value="{{ event.id }}" {% if event in group.event.all %}checked{% endif %}>
@@ -116,7 +116,7 @@
            </div>
         </label>
       {% empty %}
-        <p>管理しているボランティア活動はありません。</p>
+        <p>{% trans 'No events I organize' %}</p>
       {% endfor %}
     </div>
   </div>

@@ -9,6 +9,7 @@
           maxlength="300"
           name="meeting_place"
           type="text"
+          placeholder="地名を入力"
           required/>
         <span class="input-group-addon input-loc">
           <span class="btn btn-link input-loc-btn" onClick="getnow(); return false;">
@@ -22,12 +23,26 @@
         </span>
       </div>
 
-      <form id="bound_data" type="hidden" action="{% url 'event:range_search' %}" method="post">
+      <form id="bound_data" action="{% url 'event:range_search' %}" method="post">
         {% csrf_token %}
-        <input id="ne_lat" type="hidden" name="ne_lat" value="">
-        <input id="sw_lat" type="hidden" name="sw_lat" value="">
-        <input id="ne_lng" type="hidden" name="ne_lng" value="">
-        <input id="sw_lng" type="hidden" name="sw_lng" value="">
+        <div class="row">
+          <div class="checkbox col-xs-12 col-md-8">
+            {% for tag in all_tags %}
+              <label>
+                <input type="checkbox" checked name="tags" value="{{ tag.pk }}" {% if tag.pk in checked_tags %}checked{% endif %}>{{ tag.name }}
+              </label>
+            {% endfor %}
+          </div>
+          <div class="col-xs-12 col-md-4" id="filter_submit">
+            <button class="btn btn-primary input-loc-btn_2 input-loc-btn_3" onClick="get_events(); return false;">
+              タグで絞り込む
+            </button>
+          </div>
+          <input id="ne_lat" type="hidden" name="ne_lat" value="">
+          <input id="sw_lat" type="hidden" name="sw_lat" value="">
+          <input id="ne_lng" type="hidden" name="ne_lng" value="">
+          <input id="sw_lng" type="hidden" name="sw_lng" value="">
+       </div>
       </form>
 
       <div id="map_canvas2" class="center-block"></div>
@@ -68,6 +83,7 @@
               </div>
             </div>
           </div>
+          <input type="hidden" value="{{markernum}}">
         </div>
         {{/each}}
       </section>
@@ -183,15 +199,15 @@
       markers[i].setMap(null);
     }
     markers = current==-1 ? [] : [markers[current]];
-    console.log("clear");
   }
 
   function markerSet(context){
-      for(var data of context['events_in_range']){
-        data['start_time'] = moment(data['start_time']).format("M月D日(ddd)");
-        data['label_brand'] = label_convert[data['status']];
-        data['status'] = label_trans[data['status']];
-      }
+      context['events_in_range'].forEach(function(val,index,arr){
+        val['start_time'] = moment(val['start_time']).format("M月D日(ddd)");
+        val['label_brand'] = label_convert[val['status']];
+        val['status'] = label_trans[val['status']];
+        val['markernum'] = index;
+      });
     $('#map-event-list').html(map_event_template(context));
     context['events_in_range'].forEach(function(val,index,arr){
       var marker = new google.maps.Marker({
@@ -202,7 +218,8 @@
         map: gmap,
       });
       var infoWindowOpts = {
-          content : val.name
+          content : val.name,
+          maxWidth : 400
       };
       var infoWindow = new google.maps.InfoWindow(infoWindowOpts);
       marker.addListener("click", function(m){
@@ -219,6 +236,10 @@
       });
       markers.push(marker);
     });
+    $('.media').on('mouseenter',function(){
+      console.log($(this).find('input'));
+      google.maps.event.trigger(markers[parseInt($(this).find('input').attr('value'))], 'click');;
+    })
   }
    
   $(function(){

@@ -21,6 +21,8 @@ from event.models import Event
 from django.utils import translation
 from django.conf import settings
 
+from django.utils.translation import ugettext_lazy as _
+
 
 class UserCreateView(CreateView):
     model = User
@@ -208,7 +210,7 @@ class UserEditView(UpdateView):
 
         self.request.session[translation.LANGUAGE_SESSION_KEY] = user.language
 
-        messages.info(self.request, "ユーザー情報を編集しました。")
+        messages.info(self.request, _("User profile was successfully edited."))
         return super(UserEditView, self).form_valid(form)
 
 
@@ -223,7 +225,7 @@ class AcquireEmail(View):
 
 
 def logout(request):
-    messages.info(request, "ログアウトしました。")
+    messages.info(request, _("You have been successfully logged out."))
     return auth_views.logout(request, next_page="/")
 
 

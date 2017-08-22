@@ -436,9 +436,17 @@ $logo-height :65px;
       font-size: 14px !important;
       height: 34px;
     }
+    &_3{
+      margin: 10px 0 !important;
+    }
   }
 }
 
 #id_meeting_place{
   border-right: none;
+}
+
+.side-search-btn{
+  margin: 0 auto;
+  display: block;
 }
