@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 17:46+0000\n"
+"POT-Creation-Date: 2017-08-23 02:49+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -736,6 +736,18 @@ msgstr "関連しているグループはありません"
 #: templates/event/side_info.html:29
 msgid "There are no filters attached."
 msgstr "このボランティアはタグ付けされていません"
+
+#: templates/group/form_template.html:93
+#, fuzzy
+#| msgid "Groups I organize:"
+msgid "Events I organize"
+msgstr "自分の管理しているボランティア"
+
+#: templates/group/form_template.html:119
+#, fuzzy
+#| msgid "Groups I organize:"
+msgid "No events I organize"
+msgstr "管理しているボランティア活動はありません。"
 
 #: templates/map.html:99 templates/top.html:167
 msgid "Onging"
