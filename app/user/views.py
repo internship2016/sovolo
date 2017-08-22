@@ -229,6 +229,7 @@ class UserPostReviewView(FormView):
         if 'to_user_id' in self.request.GET:
             self.to_user = User.objects.get(pk=self.request.GET['to_user_id'])
             form.instance.to_rate_user_id = self.to_user.id
+            form.instance.event_host = True
         else:
             form.instance.to_rate_user_id = self.joined_event.host_user.id # pkを取得 評価対象
 
