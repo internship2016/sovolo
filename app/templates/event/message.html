@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load bootstrap3 %}
 
-{% block title %}メッセージ一斉送信 | {{ event.name }} | Sovol{% endblock %}
+{% block title %}{% trans "Send email to all participants" %}  | {{ event.name }} | Sovol{% endblock %}
 
 {% block content %}
 {% include "event/event_header.html" %}
@@ -11,20 +11,20 @@
     <form action="" method="post">
       {% csrf_token %}
       <div class="form-group">
-        <label for="target" class="control-label">宛先</label>
+        <label for="target" class="control-label">{% trans "Recipients:" %} </label>
         <select id="target" name="target" required class="form-control">
-          <option value="admin">管理者</option>
-          <option value="participants">管理者・参加者全員（キャンセル待ち含む）</option>
-          <option value="members">管理者・参加者（キャンセル待ち除く）</option>
-          <option value="waiting">管理者・キャンセル待ち</option>
+          <option value="admin">{% trans "Organizer" %} </option>
+          <option value="participants">{% trans "Organizer & Participants (Including ones on the Waiting List)" %} </option>
+          <option value="members">{% trans "Organizer & Participants (Excluding ones on the Waiting List)" %} </option>
+          <option value="waiting">{% trans "Organizer & ones on the Waiting List" %} </option>
         </select>
       </div>
       <div class="form-group">
-        <label for="message" class="control-label">本文</label>
+        <label for="message" class="control-label">{% trans "Body:" %}</label>
         <textarea id="message" class="form-control" name="message" rows="20" cols="80"></textarea>
       </div>
       <div class="form-group" style="text-align: center;">
-        <button class="btn btn-primary" type="submit">送信</button>
+        <button class="btn btn-primary" type="submit">{% trans "Send" %}</button>
       </div>
     </form>
   </div>

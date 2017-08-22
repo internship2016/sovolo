@@ -1,10 +1,9 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
-from django.views.generic.edit import CreateView, UpdateView, DeleteView, FormView
-from django.views.generic import DetailView, ListView, View
-from django.contrib  import messages
+from django.views.generic.edit import CreateView, UpdateView, FormView
+from django.views.generic import DetailView, View
+from django.contrib import messages
 from django.shortcuts import get_object_or_404
-from django.core.urlresolvers import reverse_lazy
 from .models import User, Skill
 from tag.models import Tag
 from base.utils import send_template_mail
@@ -13,7 +12,6 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
-from django.utils import timezone
 from .models import User, UserActivation, UserPasswordResetting, UserReviewList
 from .form import UserReviewListForm
 from django.urls import reverse
@@ -21,6 +19,7 @@ from django.contrib.auth.mixins import UserPassesTestMixin
 
 from django.utils import translation
 from django.conf import settings
+
 
 class UserCreateView(CreateView):
     model = User
@@ -38,7 +37,9 @@ class UserCreateView(CreateView):
         activation.save()
 
         base_url = "/".join(self.request.build_absolute_uri().split("/")[:3])
-        activation_url = "{0}/user/activation/{1}".format(base_url, activation_key)
+
+        activation_url = "{0}/user/activation/{1}".format(base_url,
+                                                          activation_key)
 
         send_template_mail(
             "email/activation.txt",
@@ -47,7 +48,10 @@ class UserCreateView(CreateView):
             [user.email],
         )
 
-        messages.info(self.request, "記入したメールアドレス"+user.email+"に確認メールを送信しました。")
+        info_msg = "記入したメールアドレス%(email)sに確認メールを送信しました。" % {
+            'email': user.email,
+        }
+        messages.info(self.request, info_msg)
         return redirect("top")
 
         key = uuid.uuid4().hex
@@ -90,8 +94,13 @@ class RequestPasswordReset(View):
             else:
                 UserPasswordResetting(user=user, key=reset_key).save()
 
-            base_url = "/".join(self.request.build_absolute_uri().split("/")[:3])
-            reset_url = "{0}/user/reset_password/{1}".format(base_url, reset_key)
+            # XXX: What does 3 mean?
+            # XXX: os.path?
+            absolute_uri = self.request.build_absolute_uri()
+            base_url = "/".join(absolute_uri.split("/")[:3])
+
+            reset_url = "{0}/user/reset_password/{1}".format(base_url,
+                                                             reset_key)
 
             send_template_mail(
                 "email/reset_password.txt",
@@ -100,7 +109,11 @@ class RequestPasswordReset(View):
                 [user.email]
             )
 
-        messages.info(request, "リクエストを受け付けました。メールアドレスが登録されている場合、アドレスにパスワード再設定のリンクが送信されます。")
+        info_msg = ("リクエストを受け付けました。"
+                    "メールアドレスが登録されている場合、"
+                    "アドレスにパスワード再設定のリンクが送信されます。")
+
+        messages.info(request, info_msg)
         return redirect("top")
 
     def create_reset_key(self):
@@ -199,7 +212,8 @@ class UserEditView(UpdateView):
 class AcquireEmail(View):
     def get(self, request, *args, **kwargs):
         """
-        Request email for the create user flow for logins that don't specify their email address.
+        Request email for the create user flow for logins that don't specify
+        their email address.
         """
         backend = request.session['partial_pipeline']['backend']
         return render(request, 'user/acquire_email.html', {"backend": backend})
@@ -210,7 +224,7 @@ def logout(request):
     return auth_views.logout(request, next_page="/")
 
 
-## Review
+# Review
 class UserReviewView(DetailView):
     model = User
     template_name = 'user/user_review.html'
@@ -224,8 +238,8 @@ class UserPostReviewView(FormView):
         # This method is called when valid form data has been POSTed.
         # It should return an HttpResponse.
         # form.send_email()
-        form.instance.to_rate_user_id = self.kwargs.get('pk') # pkを取得 評価対象
-        form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
+        form.instance.to_rate_user_id = self.kwargs.get('pk')  # pkを取得 評価対象
+        form.instance.from_rate_user_id = self.request.user.id  # 評価者 <--
         form.instance.joined_event_id = 2
         form.save()
         return super(UserPostReviewView, self).form_valid(form)

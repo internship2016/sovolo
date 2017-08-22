@@ -6,14 +6,14 @@
 
 
 <div class="form-group">
-  <label for="id_name" class="col-sm-3">ボランティア名<br><small><i>(20文字以内)</i></small></label>
+  <label for="id_name" class="col-sm-3">{% trans "Event Name" %}<br><small><i>{% trans "(Input up to 20 characters)" %}</i></small></label>
   <div class="col-sm-9">
     <input id="id_name" class="form-control" maxlength="20" name="name" type="text" value="{{ event.name }}" required/>
   </div>
 </div>
 
 <div class="form-group">
-  <label for="id_start_time" class="col-sm-3">開始</label>
+  <label for="id_start_time" class="col-sm-3">{% trans "Start at:" %}</label>
   <div class="col-sm-9">
     <div class="input-group date datetimepicker start-date">
       <input id="id_start_time"
@@ -31,7 +31,7 @@
 </div>
 
 <div class="form-group">
-  <label for="id_end_time" class="col-sm-3">終了</label>
+  <label for="id_end_time" class="col-sm-3">{% trans "End by:" %}</label>
   <div class="col-sm-9">
     <div class="input-group date datetimepicker end-date">
       <input id="id_end_time"
@@ -50,7 +50,7 @@
 
 
 <div class="form-group">
-  <label for="id_region" class="col-sm-3">開催地域</label>
+  <label for="id_region" class="col-sm-3">{% trans "Location:" %}</label>
   <div class="col-sm-9">
     <select class="form-control" id="id_region" name="region">
       {% for v,pref in user.region_list %}
@@ -61,7 +61,7 @@
 </div>
 
 <div class="form-group">
-  <label for="id_meeting_place" class="col-sm-3">集合場所</label>
+  <label for="id_meeting_place" class="col-sm-3">{% trans "Meet at:" %}</label>
   <div class="col-sm-9">
     <div class="input-group">
       <input id="id_meeting_place"
@@ -78,7 +78,7 @@
       </span>
       <span class="input-group-btn">
         <button class="btn btn-primary input-loc-btn_2" onClick="getlatlng(); return false;">
-          検索
+            {% trans "Search" %}
         </button>
       </span>
     </div>
@@ -86,7 +86,7 @@
     <input id="id_latitude" type="hidden" name="latitude" value="{{event.latitude}}">
     <input id="id_longitude" type="hidden" name="longitude" value="{{event.longitude}}" >
 
-    <p>詳細な位置はピンで指定してください</p>
+    <p>{% trans "Drag your pin to set to more detailed location" %}</p>
     <div id="map_canvas" class="center-block"></div>
 
   </div>
@@ -133,7 +133,7 @@
             }
         });
     }, function() {
-        alert('位置情報取得に失敗しました');
+        alert('{% trans "Failed to get location" %}');
     });
   }
 
@@ -145,7 +145,7 @@
           gmap.setCenter(results[0].geometry.location);
           setPin(results[0].geometry.location);
         } else {
-          alert("緯度経度情報を取得できませんでした。");
+          alert('{% trans "Failed to get latitude and longitude" %}');
         }
     });
   }
@@ -168,7 +168,7 @@
               $('#id_meeting_place').val(results[0].formatted_address);
               gmap.setCenter(results[0].geometry.location);
             } else {
-              alert("緯度経度情報を取得できませんでした。");
+              alert('{% trans "Failed to get latitude and longitude" %}');
             }
         });
       })
@@ -181,20 +181,20 @@
 
 
 <div class="form-group">
-  <label for="id_image" class="col-sm-3">ボランティア画像</label>
+  <label for="id_image" class="col-sm-3">{% trans "Event image" %}</label>
   <div class="col-sm-9">
     {% if event.image %}
-      <p>現在の画像：</p>
+      <p>{% trans "Image:" %}</p>
       <div class="custom_thumbnail event_detail-thumbnail" style="background-image: url({{event.get_image_url}});"></div>
       <input id="id_image_url" type="hidden" name="image_url" value="{{ event.get_image_url }}">
-      <p>画像を再設定する：</p>
+      <p>{% trans "Change image to:" %}</p>
     {% endif %}
-      <input class="filestyle" id="id_image" name="image" type="file" data-buttonName="btn-primary" data-buttonText="選択..." />
+      <input class="filestyle" id="id_image" name="image" type="file" data-buttonName="btn-primary" data-buttonText="{% trans 'Browse...' %}" />
   </div>
 </div>
 
 <div class="form-group">
-  <label for="id_contact" class="col-sm-3">主催者連絡先</label>
+  <label for="id_contact" class="col-sm-3">{% trans "Organizer's contact information" %}</label>
   <div class="col-sm-9">
     {% if event.contact != null %}
       <input id="id_contact" class="form-control" maxlength="200" name="contact" type="text" value="{{ event.contact }}"
@@ -207,21 +207,21 @@
 </div>
 
 <div class="form-group">
-  <label for="id_details" class="col-sm-3">詳細説明</label>
+  <label for="id_details" class="col-sm-3">{% trans "Details:" %}</label>
   <div class="col-sm-9">
     <textarea cols="40" id="id_details" class="form-control" name="details" rows="10" required>{{ event.details }}</textarea>
   </div>
 </div>
 
 <div class="form-group">
-  <label for="id_notes" class="col-sm-3">注意事項<br> （全員に表示）</label>
+  <label for="id_notes" class="col-sm-3">{% trans "Informations:" %}<br> {% trans "(shown to anyone)" %}</label>
   <div class="col-sm-9">
-    <textarea cols="40" id="id_notes" class="form-control" name="notes" rows="10" placeholder="目安人数など">{{ event.notes }}</textarea>
+    <textarea cols="40" id="id_notes" class="form-control" name="notes" rows="10" placeholder="{% trans 'e.g.)a rough quota' %}">{{ event.notes }}</textarea>
   </div>
 </div>
 
 <div class="form-group">
-  <label for="id_notes" class="col-sm-3">注意事項<br>（応募者のみに表示）</label>
+  <label for="id_notes" class="col-sm-3">{% trans "Informations:" %}<br>{% trans "(shown only to applicants)" %}</label>
   <div class="col-sm-9">
     <textarea cols="40" id="id_private_notes" class="form-control" name="private_notes"
               rows="10">{{ event.private_notes }}</textarea>
@@ -229,7 +229,7 @@
 </div>
 
 <div class="form-group">
-  <label class="col-sm-3">管理者</label>
+  <label class="col-sm-3">{% trans "Organizer:" %}</label>
   <div class="col-sm-9">
     <div id="admins">
       {% for admin in event.admin.all %}
@@ -239,7 +239,7 @@
       {% endfor %}
     </div>
     <div class="input-group" id="adder">
-      <input class="form-control" type="text" id="admin_name" placeholder="ニックネーム">
+      <input class="form-control" type="text" id="admin_name" placeholder="{% trans 'Nickname' %}">
       <span class="input-group-btn">
         <button class="btn btn-primary" id="add_admin" type="button">
           <span class="glyphicon glyphicon-plus"></span>
@@ -274,7 +274,7 @@
 
 
 <div class="form-group">
-  <label class="col-sm-3">参加枠</label>
+  <label class="col-sm-3">{% trans "Position" %}</label>
   <div class="col-sm-9">
     <div id="frames">
       {% for frame in event.frame_set.all %}
@@ -284,17 +284,17 @@
             {% if not request.GET.copy_event_id %}
               <input type="hidden" name="frame_{{ forloop.counter }}_id" value="{{ frame.id }}">
             {% endif %}
-            <label class="col-sm-3">仕事内容</label>
+            <label class="col-sm-3">{% trans "Job Description:" %}</label>
             <div class="col-sm-9">
               <textarea class="form-control"
                         name="frame_{{ forloop.counter }}_description">{{ frame.description }}</textarea>
             </div>
-            <label class="col-sm-3">上限人数</label>
+            <label class="col-sm-3">{% trans "The fixed number:" %}</label>
             <div class="col-sm-9">
               <input class="form-control" type="number" min="1" max="2147483647" step="1" name="frame_{{ forloop.counter }}_upperlimit"
                      value="{{ frame.upper_limit|default_if_none:'' }}">
             </div>
-            <label class="col-sm-3">応募締め切り</label>
+            <label class="col-sm-3">{% trans "Deadline:" %}</label>
             <div class='col-sm-9'>
               <input class="form-control datetimepicker" name="frame_{{ forloop.counter }}_deadline" type="text"
                      value="{{ frame.deadline }}">
@@ -388,7 +388,7 @@
 {% endverbatim %}
 
 <div class="form-group">
-  <label class="col-sm-3">関連付けるタグ</label>
+  <label class="col-sm-3">{% trans "Related to:" %}</label>
   <div class="checkbox col-sm-9">
     {% for tag in all_tags %}
       <label><input type="checkbox" name="tags" value="{{ tag.id }}"
@@ -398,12 +398,12 @@
 </div>
 
 <div class="form-group">
-  <label class="col-sm-3">グループの紐づけ</label>
+  <label class="col-sm-3">{% trans "Related group:" %}</label>
   <div class="col-sm-9">
     <div class="checkbox" id="events">
       {% for group in event.group_set.all %}
         {% if forloop.first %}
-          <h4>ボランティアに紐づけされたグループ</h4>
+          <h4>{% trans "Groups related to this event:" %}</h4>
         {% endif %}
         <label>
           <input type="checkbox" name="groups" value="{{ group.id }}" checked>
@@ -421,7 +421,7 @@
         </label>
       {% endfor %}
 
-      <h4>自分の管理しているグループ</h4>
+      <h4>{% trans "Groups I organize:" %}</h4>
       {% for group in request.user.admin_group.all %}
         {% if group not in event.group_set.all %}
           <label>
@@ -440,7 +440,7 @@
           </label>
         {% endif %}
       {% empty %}
-        <p>管理しているグループはありません。</p>
+        <p>{% trans "I don't organize any group." %}</p>
       {% endfor %}
     </div>
   </div>

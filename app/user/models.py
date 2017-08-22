@@ -14,12 +14,8 @@ from django.utils import timezone
 from tag.models import Tag
 from base.models import AbstractBaseModel
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import BytesIO as StringIO
-
-import sys, os, math
+import os
+import math
 
 # review
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -56,11 +52,18 @@ class User(AbstractBaseModel, AbstractBaseUser):
     sex = models.NullBooleanField()  # True:Men, False:Women
     occupation = models.CharField(max_length=100, null=True)
     # regionは都道府県で指定
+    # XXX: dup
     prefectures = settings.PREFECTURES
+    prefs = prefectures.items()
+    prefs = sorted(prefs, key=lambda x: x[1][1])
+    region_list = [(k, v[0]) for k, v in prefs]
 
-    region_list = [(key, value[0]) for key, value in sorted(prefectures.items(), key=lambda x:x[1][1])]
     region = models.CharField(max_length=10, choices=region_list)
-    follow_tag = models.ManyToManyField(Tag, related_name='follower', blank=True)
+
+    follow_tag = models.ManyToManyField(Tag,
+                                        related_name='follower',
+                                        blank=True)
+
     image = models.ImageField(upload_to='users/', null=True, blank=True)
     objects = UserManager()
     is_active = models.BooleanField(default=True)
@@ -77,33 +80,46 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     def get_about_age(self):
         today = datetime.today()
-        age = today.year - self.birthday.year
-        if (today.month, today.day) <= (self.birthday.month, self.birthday.day):
+        birthday = self.birthday
+        age = today.year - birthday.year
+
+        if (today.month, today.day) <= (birthday.month, birthday.day):
             age -= 1
+
         return math.floor(age / 10) * 10
 
     def is_manager_for(self, event):
-        return event in self.admin_event.all() or event in self.host_event.all()
+        if event in self.admin_event.all():
+            return True
+
+        if event in self.host_event.all():
+            return True
+
+        return False
 
     def get_point(self):
-        return self.participating_event.filter(supporter__isnull=False).values_list('supporter', flat=True).count()
+        return self.participating_event \
+                   .filter(supporter__isnull=False) \
+                   .values_list('supporter', flat=True) \
+                   .count()
 
     def get_level(self):
-        #return math.floor(self.get_point() / 13) + 1
         point = self.get_point()
         level = 1
+
+        # FIXME: Deterministic, this shouldn't be using while statement
         while(self.is_level(level, point)):
             level += 1
 
         return level
 
     def level_threshold(self, level):
-        #有効数字2桁
+        # 有効数字2桁
         base = 1.08
         tmp = 10 * math.pow(base, level)
         digit = int(math.log10(tmp)) + 1
 
-        return int(round(tmp, -digit+2))
+        return int(round(tmp, -digit + 2))
 
     def is_level(self, level, point):
         return self.level_threshold(level) <= point
@@ -112,7 +128,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return self.level_threshold(self.get_level()) - self.get_point()
 
     def get_level_percentage(self):
-        return math.floor(float(self.get_point())/float(self.level_threshold(self.get_level()))*100)
+        point = float(self.get_point())
+        threshold = float(self.level_threshold(self.get_level()))
+        return math.floor(point * 100 / threshold)
 
     def get_full_name(self):
         return self.email
@@ -147,7 +165,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
         if self.image:
             return self.image.url
         else:
-            return os.path.join(settings.MEDIA_URL, 'users/', "default_user_image.png")
+            return os.path.join(settings.MEDIA_URL,
+                                'users/',  # FIXME: trailing slash?
+                                "default_user_image.png")
 
     def save(self, *args, **kwargs):
         return super(User, self).save(*args, **kwargs)
@@ -162,28 +182,48 @@ class User(AbstractBaseModel, AbstractBaseUser):
         Event = apps.get_model('event', 'Event')
         group_list = self.group_set.all()
 
-        return Event.objects.filter(group__in=group_list).distinct().order_by('-created')[:5]
+        return Event.objects \
+                    .filter(group__in=group_list) \
+                    .distinct() \
+                    .order_by('-created')[:5]
 
     def get_new_region_events(self):
         Event = apps.get_model('event', 'Event')
 
-        return [event for event in Event.objects.filter(region=self.region).distinct().order_by('-created') if not event.is_over()]
+        events = Event.objects \
+                      .filter(region=self.region) \
+                      .distinct() \
+                      .order_by('-created')
+
+        # TODO: Consider using 'filter()' to return an iterator
+        return [event for event in events if not event.is_over()]
+
     def get_future_participating_events(self):
-        return [event for event in self.participating_event.all().order_by('start_time') if not event.is_over()]
+        events = self.participating_event \
+                     .all() \
+                     .order_by('start_time')
+        return [event for event in events if not event.is_over()]
 
     def get_past_participated_events(self):
-        return [event for event in self.participating_event.all().order_by('start_time') if event.is_over()]
-
+        events = self.participating_event \
+                     .all() \
+                     .order_by('start_time')
+        return [event for event in events if event.is_over()]
 
     def get_new_tag_events(self):
         Event = apps.get_model('event', 'Event')
         tag_list = self.follow_tag.all()
 
-        return Event.objects.filter(tag__in=tag_list).distinct().order_by('-created')[:5]
+        return Event.objects \
+                    .filter(tag__in=tag_list) \
+                    .distinct() \
+                    .order_by('-created')[:5]
 
     def trophy_list(self):
         date = timezone.now()
-        participated = self.participating_event.all().filter(end_time__lte=date)
+        participated = self.participating_event \
+                           .all() \
+                           .filter(end_time__lte=date)
 
         trophies = []
         for tag in Tag.objects.all():
@@ -228,27 +268,23 @@ class UserPasswordResetting(models.Model):
 
 class UserReviewList(models.Model):
 
-    to_rate_user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='to_rate_user',
-        )
+    to_rate_user = models.ForeignKey(User,
+                                     on_delete=models.CASCADE,
+                                     related_name='to_rate_user')
 
     rating = models.IntegerField(validators=[MinValueValidator(0),
-                                       MaxValueValidator(5)])
+                                             MaxValueValidator(5)])
 
     comment = models.CharField(max_length=200, null=True)
 
-    from_rate_user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='from_rate_user',
-        )
+    from_rate_user = models.ForeignKey(User,
+                                       on_delete=models.CASCADE,
+                                       related_name='from_rate_user')
 
     joined_event = models.ForeignKey('event.Event', null=True)
 
-    # post_day = models.DateTimeField(default=timezone.now, editable=False, null=True)
     post_day = models.DateTimeField(default=timezone.now, null=True)
+
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
         return str(self.to_rate_user)

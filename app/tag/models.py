@@ -1,5 +1,4 @@
 # coding=utf-8
-from django.utils import timezone
 from django.db import models
 from base.models import AbstractBaseModel
 from django.contrib import admin
