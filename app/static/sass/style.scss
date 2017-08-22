@@ -178,24 +178,12 @@ _::-webkit-:not(:root:root), .detail-thumbnail {
   }
 }
 
-.detail-header{
-  display:flex;
-  align-items: stretch;
-  flex-wrap: nowrap;
-  margin-bottom: 10px;
-}
-
-.detail-header-left{
-  display:inline-block;
-  flex-basis: 250px;
-}
-
-.detail-header-right{
-  display: inline-block;
-}
-
-.detail-header-right .panel{
-  margin-bottom: 0;
+.detail{
+  $detail-img-size : 250px;
+  &-thumbnail{
+    width: $detail-img-size;
+    height: $detail-img-size;
+  }
 }
 
 /* Event Details page */
@@ -444,4 +432,9 @@ $logo-height :65px;
 
 #id_meeting_place{
   border-right: none;
+}
+
+.side-search-btn{
+  margin: 0 auto;
+  display: block;
 }

@@ -1,10 +1,11 @@
 亜cクゥ{% extends "container.html" %}
 {% load i18n %}
 
-{% block title %}ユーザー新規登録 | Sovol{% endblock %}
+{% block title %}{% trans "Register" %} | Sovol{% endblock %}
 
 {% block content %}
-  <h2>サービスの利用にはEmailアドレスが必要です</h2>
+  <h2>{% trans "Register" %}</h2>
+  <h4>{% trans "You need an email address to create a Sovol account." %}</h4>
   <form action="{% url "social:complete" backend=backend %}" class="form-horizontal" method="post">
     {% csrf_token %}
     <div class="form-group">
@@ -13,6 +14,6 @@
         <input class="form-control" id="email" type="email" name="email" value="" required>
       </div>
     </div>
-    <div style="text-align: center"><input type="submit" class="btn btn-default btn-lg" value="登録"/></div>
+    <div style="text-align: center"><input type="submit" class="btn btn-default btn-lg" value="{% trans 'REGISTER' %}"/></div>
   </form>
 {% endblock %}

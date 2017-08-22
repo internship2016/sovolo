@@ -10,7 +10,7 @@
       <div class="panel-body">
         {% csrf_token %}
         <div class="form-group">
-          <label for="username-form" class="col-sm-3 col-lg-2 control-label">ニックネーム<br><small><i>(15文字以内)</i></small></label>
+          <label for="username-form" class="col-sm-3 col-lg-2 control-label">{% trans "Nickname" %}<br><small><i>({% trans "Input up to 15 characters." %})</i></small></label>
           <div class="col-sm-9 col-lg-9"> <input id="username-form" class="form-control" name="username" maxlength="15" value="{{ user.username }}"/> </div>
         </div>
         <div class="form-group">
@@ -18,9 +18,9 @@
           <div class="col-sm-9 col-lg-9 "> <input id="email-form" class="form-control" name="email" value="{{ user.email }} "/> </div>
         </div>
         <div class="form-group">
-          <label for="icon-form" class="col-sm-3 col-lg-2 control-label">プロフィール画像</label>
+          <label for="icon-form" class="col-sm-3 col-lg-2 control-label">{% trans "Your photo" %}</label>
           <div class="col-sm-9 col-lg-9 ">
-            <input class="filestyle" id="icon-form" name="image" type="file" data-buttonName="btn-primary" data-buttonText="選択..."/>
+            <input class="filestyle" id="icon-form" name="image" type="file" data-buttonName="btn-primary" data-buttonText="{% trans 'Browse' %}..."/>
           </div>
           <script type="text/javascript">$('#icon-form').croppieUpload();</script>
         </div>
@@ -35,18 +35,18 @@
           </div>
         </div>
         <div class="form-group">
-          <label for="form-sex" class="col-sm-3 col-lg-2 control-label">性別</label>
+          <label for="form-sex" class="col-sm-3 col-lg-2 control-label">{% trans "Sex" %}</label>
           <div class="col-sm-9 col-lg-9">
             <select class="form-control" id="form-sex" name="sex">
-              <option value="True" {% if user.sex is True %}selected{% endif %}>男性</option>
-              <option value="False" {% if user.sex is False %}selected{% endif %}>女性</option>
-              <option value="None" {% if user.sex is None %}selected{% endif %}>秘密</option>
+              <option value="True" {% if user.sex is True %}selected{% endif %}>{% trans "Male" %}</option>
+              <option value="False" {% if user.sex is False %}selected{% endif %}>{% trans "Female" %}</option>
+              <option value="None" {% if user.sex is None %}selected{% endif %}>{% trans "Prefer not to disclose" %}</option>
             </select>
           </div>
         </div>
 
         <div class="form-group">
-          <label for="form-birthday" class="control-label col-sm-3 col-lg-2">生年月日</label>
+          <label for="form-birthday" class="control-label col-sm-3 col-lg-2">{% trans "Birthday" %}</label>
           <div class="col-sm-9 col-lg-9">
             <input id="form-birthday" class="form-control" name="birthday" value="{{ user.birthday|date:'Y-m-d' }}" >
             <script>
@@ -85,10 +85,9 @@
                 {% endfor %}
             </div>
         </div>
-        
-        <input type="button" onclick="location.href='../request_password_reset'" value="passwordを変更する">
+        <input type="button" onclick="location.href='../request_password_reset'" value="{% trans 'Change password' %}">
         <div class="row">
-          <input type="submit" class="btn btn-primary btn-lg col-sm-4 col-sm-offset-4 col-lg-2 col-lg-offset-5 col-xs-8 col-xs-offset-2" value="適用"/>
+          <input type="submit" class="btn btn-primary btn-lg col-sm-4 col-sm-offset-4 col-lg-2 col-lg-offset-5 col-xs-8 col-xs-offset-2" value="{% trans 'Apply' %}"/>
         </div>
       </div>
     </div>

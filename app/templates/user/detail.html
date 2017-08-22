@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load event_tags %}
 
-{% block title %}{{ user.username }} ユーザー詳細 | Sovol{% endblock %}
+{% block title %}{{ user.username }} {% trans "About Me" %} | Sovol{% endblock %}
 
 {% block content %}
 
@@ -32,18 +32,18 @@
 </div>
 
 {% if user.admin_event.all %}
-{% event_list user.admin_event.all _("List of Events I organize") %}
+{% event_list user.admin_event.all _("List of Events Organizing") %}
 {% endif %}
-{% event_list user.get_future_participating_events _("List of Events I attend") %}
+{% event_list user.get_future_participating_events _("List of Events Attending") %}
 {% event_list user.get_past_participated_events _("Event Achievements") %}
 
 
 <a class="btn btn-primary" href="{% url 'user:review' user.id %}">
-  Go to User Review Page
+    {% trans "Reviews posted" %}
 </a>
 
 <a class="btn btn-primary" href="{% url 'user:unreviewed' %}">
-  Go to User UnReviewed Page
+    {% trans "Reviews not yet posted" %}
 </a>
 
 {% endblock %}

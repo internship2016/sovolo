@@ -302,6 +302,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
                 user_unreviewed_list.append(user_list)
         return user_unreviewed_list
 
+    # send html template
     def get_ziped_unreview_hoseted(self):
         return zip(self.get_unreviewed_past_hosted_events(),
                    self.get_unreviewed_paticipant_of_past_hosted_events_poped_per_event())
@@ -343,7 +344,7 @@ class UserReviewList(models.Model):
     rating = models.IntegerField(validators=[MinValueValidator(0),
                                        MaxValueValidator(5)])
 
-    comment = models.CharField(max_length=200, null=True)
+    comment = models.CharField(max_length=200, null=True, blank=True)
 
     joined_event = models.ForeignKey('event.Event', null=True)
 

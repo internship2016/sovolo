@@ -1,6 +1,6 @@
 {% load i18n %}
  <div id="user-header">
-  <div class="detail-header row">
+  <div class="detail-header row mt15">
     <div class="detail-header-left col-sm-4 col-md-3" style="text-align: center">
       <div class="media-object custom_thumbnail detail-thumbnail" style="background-image:url({{ user.get_image_url }});"></div>
     </div>
@@ -8,7 +8,7 @@
       <div class="panel panel-primary">
         <div class="panel-heading">
           <h3 class="panel-title">
-            プロフィール
+              {% trans "About Me" %}
           </h3>
         </div>
         <div class="row"  style="padding-left:1em; padding-right: 1em;">
@@ -16,12 +16,12 @@
             <h1>{{ user.username }}</h1>
 
             {% if user.birthday != null %}
-            <p>年齢： {{ user.get_about_age }}代</p>
+            <p>{% trans "Age Group:" %} {{ user.get_about_age }}{% trans "'s" %}</p>
             {% endif %}
             {% if user.sex != null %}
-            <p>性別: {{ user.sex|yesno:"男,女,秘密" }}</p>
+            <p>{% trans "Sex:" %} {{ user.sex|yesno:"男,女,秘密" }}</p>
             {% endif %}
-            <p>{% trans 'Region' %}: {{ user.get_region_kanji }}</p>
+            <p>{% trans 'Region:' %} {{ user.get_region_kanji }}</p>
           </div>
 
           <div class="panel-body col-sm-5 col-md-4" style="padding-bottom: 5px;">

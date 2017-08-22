@@ -12,6 +12,7 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
+from django.utils import timezone
 from .models import User, UserActivation, UserPasswordResetting, UserReviewList
 from .form import UserReviewListForm
 from django.urls import reverse
@@ -23,6 +24,8 @@ from event.models import Event
 
 from django.utils import translation
 from django.conf import settings
+
+from django.utils.translation import ugettext_lazy as _
 
 
 class UserCreateView(CreateView):
@@ -209,7 +212,7 @@ class UserEditView(UpdateView):
 
         self.request.session[translation.LANGUAGE_SESSION_KEY] = user.language
 
-        messages.info(self.request, "ユーザー情報を編集しました。")
+        messages.info(self.request, _("User profile was successfully edited."))
         return super(UserEditView, self).form_valid(form)
 
 
@@ -224,7 +227,7 @@ class AcquireEmail(View):
 
 
 def logout(request):
-    messages.info(request, "ログアウトしました。")
+    messages.info(request, _("You have been successfully logged out."))
     return auth_views.logout(request, next_page="/")
 
 
@@ -240,41 +243,91 @@ class UserPostReviewView(FormView):
     model = User
 
     def get_context_data(self, **kwargs):
+
         context = super(UserPostReviewView, self).get_context_data(**kwargs)
         if 'event_id' in self.request.GET:
-            self.joined_event = Event.objects.get(pk=self.request.GET['event_id'])
-            context['review_event'] = self.joined_event
+            joined_event = Event.objects.get(pk=self.request.GET['event_id'])
+            context['review_event'] = joined_event
         if 'to_user_id' in self.request.GET:
-            self.to_user = User.objects.get(pk=self.request.GET['to_user_id'])
-            context['to_user'] = self.joined_event
+            to_user = User.objects.get(pk=self.request.GET['to_user_id'])
+            context['to_user'] = to_user
         return context
 
-    # 重複なしで、イベント参加者の判定を行う。
-
     def form_valid(self, form):
-        # This method is called when valid form data has been POSTed.
-        # It should return an HttpResponse.
-        if 'event_id' in self.request.GET:
-            self.joined_event = Event.objects.get(pk=self.request.GET['event_id'])
 
+        if 'event_id' in self.request.GET:
+            joined_event = Event.objects.get(pk=self.request.GET['event_id'])
+        else:
+            messages.error(self.request, "Url Error")
+            return self.form_invalid(form)
+
+        # Host User review participant (True)
         if 'to_user_id' in self.request.GET:
-            self.to_user = User.objects.get(pk=self.request.GET['to_user_id'])
-            form.instance.to_rate_user_id = self.to_user.id
+            to_user = User.objects.get(pk=self.request.GET['to_user_id'])
             form.instance.event_host = True
         else:
-            form.instance.to_rate_user_id = self.joined_event.host_user.id # pkを取得 評価対象
+            to_user = User.objects.get(pk=joined_event.host_user.id) # pkを取得 評価対象
 
+
+        ## Validators
+
+        # params
+        from_reviews = self.request.user.from_rate_user.all()
+        to_from_event_list = []
+        for review in from_reviews:
+            to_from_event_list.append([review.to_rate_user,
+                                       review.from_rate_user,
+                                       review.joined_event])
+
+        # Past joined_or_hosted_event or not
+        if (joined_event not in self.request.user.get_past_participated_events()) and (joined_event not in self.request.user.get_past_hosted_events()):
+            messages.error(self.request, "Invalid Review")
+            return self.form_invalid(form)
+
+        # from_User is Host or Participant
+        if (self.request.user not in joined_event.participant.all()) and (self.request.user != joined_event.host_user):
+            # form.add_error('rating', 'Incident with this email already exist')
+            messages.error(self.request, "Invalid Review")
+            return self.form_invalid(form)
+
+        # to_User is Host or Participant
+        if (to_user not in joined_event.participant.all()) and (to_user != joined_event.host_user):
+            # form.add_error('rating', 'Incident with this email already exist')
+            messages.error(self.request, "Invalid Review")
+            return self.form_invalid(form)
+
+        # from user Participant -> Host or not
+        if (self.request.user in joined_event.participant.all()) and (to_user != joined_event.host_user):
+            messages.error(self.request, "Invalid Review")
+            return self.form_invalid(form)
+
+        # rom user Host -> Participant or not
+        if (self.request.user == joined_event.host_user) and (to_user not in joined_event.participant.all()):
+            messages.error(self.request, "Invalid Review")
+            return self.form_invalid(form)
+
+        # Check Already Reviewed or not
+        if [to_user, self.request.user, joined_event] in to_from_event_list:
+                messages.error(self.request, "You Already Reviewd")
+                return self.form_invalid(form)
+
+
+
+
+        # Set Instanse
+        form.instance.to_rate_user_id = to_user.id
         form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
-        form.instance.joined_event_id = self.joined_event.id
+        form.instance.joined_event_id = joined_event.id
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
 
-    # レビュー投稿時にレビュー結果ページに帰還
+    # レビュー投稿時に未レビューページに帰還
     def get_success_url(self, **kwargs):
-        messages.info(self.request, "レビューを送信しました。")
+
+        messages.info(self.request, "Your review was successfully sent")
         return reverse('user:unreviewed')
 
-## Review
+
 class UserUnReviewedView(ListView):
     # なぜ model and form_class がセットでも動くのかわかりません。
         model = User
