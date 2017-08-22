@@ -323,12 +323,14 @@ class Command(BaseCommand):
                 demoevent = Event(
                     name=name,
                     start_time=timezone.now() - timezone.timedelta(days=301),
-                    end_time = timezone.now() - timezone.timedelta(days=300),
+                    end_time = timezone.now() + timezone.timedelta(days=300),
                     meeting_place="池袋駅東口母子像前",
                     contact="testvol@sovol.earth",
                     details=eventdetail_sample,
                     host_user=host_user,
                     region=prefec_list[i%47],
+                    longitude=139.7191 + 0.01 * (20*((j-1)//2+(j-1)%2)+i),
+                    latitude=35.7291 + 0.01 * (20*((j-1)//2+(j-1)%2-1)+i)
                 )
                 demoevent.save()
                 demoevent.admin = User.objects.filter(pk=i)

@@ -35,14 +35,14 @@
     </div>
   </div>
   <div class="col-xs-12 col-md-4">
-    <div id="event-list">
+    <div id="map-event-list">
 
     </div>
   </div>
   {% verbatim %}
     <script id="map-event-template" type="text/x-handlebars-template">
       <section class="inner">
-      {{#each filtered_events}}
+      {{#each events_in_range}}
         <div class="media">
           <div class="media-left">
             <a href="/event/{{id}}">
@@ -63,7 +63,7 @@
               </div>
               <div class="media-heading">
                 <a href="/event/{{id}}">
-                  <h4>{{name}}</h4>
+                  <h5>{{name}}</h5>
                 </a>
               </div>
             </div>
@@ -78,7 +78,22 @@
 <script>
   var gmap;
   var geocoder;
-  var marker;
+  var markers = [];
+  var map_event_template;
+
+  var label_convert={
+    '開催中' : 'success',
+    '募集中' : 'info',
+    '管理者' : 'primary',
+    '終了' : 'default',
+  };
+
+  var label_trans={
+    '開催中' : '{% trans "Onging" %}',
+    '募集中' : '{% trans "Wanted" %}',
+    '管理者' : '{% trans "Organizer" %}',
+    '終了' :  '{% trans "Finished" %}',
+  }
 
   function initialize(){
     var lat = 35.7291213;
@@ -147,12 +162,42 @@
       'dataType':'json',
     }).done(function(response){
       console.log(response);
+      markerClear();
+      markerSet(response);
     }).fail(function(){
       console.log('{% trans "There is no event nearby." %}');
     });
   }
+
+  function markerClear(){
+    for (var i = 0; i < markers.length; i++) {
+      markers[i].setMap(null);
+    }
+    markers = [];
+    console.log("hoge");
+  }
+
+  function markerSet(context){
+      for(var data of context['events_in_range']){
+        data['start_time'] = moment(data['start_time']).format("M月D日(ddd)");
+        data['label_brand'] = label_convert[data['status']];
+        data['status'] = label_trans[data['status']];
+      }
+    $('#map-event-list').html(map_event_template(context));
+    for(var data of context['events_in_range']){
+      markers.push(new google.maps.Marker({
+        position: {lat: data.latitude,lng: data.longitude},
+        map: gmap,
+      }));
+    }
+  }
    
   $(function(){
+    moment.updateLocale('ja', {
+      weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
+      weekdaysShort: ['{% trans "Sun" %}','{% trans "Mon" %}','{% trans "Tue" %}','{% trans "Wed" %}','{% trans "Thu" %}','{% trans "Fri" %}','{% trans "Sat" %}'],
+    });
+    map_event_template = Handlebars.compile($("#map-event-template").html());
     initialize();
   });
 </script>
