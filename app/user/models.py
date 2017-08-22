@@ -214,7 +214,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
         Event = apps.get_model('event', 'Event')
         tag_list = self.follow_tag.all()
 
-        return Event.objects.filter(tag__in=tag_list).distinct().order_by('-created')[:5]
+        return Event.objects \
+                    .filter(tag__in=tag_list) \
+                    .distinct() \
+                    .order_by('-created')[:5]
 
     def trophy_list(self):
         date = timezone.now()
