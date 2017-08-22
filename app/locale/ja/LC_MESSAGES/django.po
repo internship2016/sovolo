@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-21 23:44+0000\n"
+"POT-Creation-Date: 2017-08-22 04:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -252,9 +252,9 @@ msgstr "ボランティアをはじめる"
 msgid "Event photo"
 msgstr "トップ画像"
 
-#: templates/container_top.html:34
-msgid "Add to Favorites"
-msgstr "お気に入りに登録"
+#: templates/container_top.html:34 templates/event/event_header.html:48
+msgid "Like"
+msgstr "いいね"
 
 #: templates/event/add.html:5 templates/event/add.html:13
 #, fuzzy
@@ -266,11 +266,9 @@ msgstr "ボランティア作成"
 msgid "Submit"
 msgstr "送信"
 
-#: templates/event/add.html:26
-#, fuzzy
-#| msgid "Create an event"
+#: templates/event/add.html:26 templates/event/event_list.html:54
 msgid "Create a new group"
-msgstr "ボランティア作成"
+msgstr "グループを作成"
 
 #: templates/event/check_delete.html:5
 msgid "Are you sure you want to delete "
@@ -309,7 +307,7 @@ msgid "Availability"
 msgstr "参加状況"
 
 #: templates/event/detail.html:31
-msgid "Role "
+msgid "Position "
 msgstr "参加枠"
 
 #: templates/event/detail.html:33 templates/event/detail.html:35
@@ -377,11 +375,12 @@ msgstr "募集詳細"
 msgid "When:"
 msgstr "日時"
 
-#: templates/event/detail.html:175
+#: templates/event/detail.html:175 templates/event/form_template.html:210
 msgid "Details:"
 msgstr "説明"
 
-#: templates/event/detail.html:179
+#: templates/event/detail.html:179 templates/event/form_template.html:217
+#: templates/event/form_template.html:224
 msgid "Informations:"
 msgstr "連絡事項"
 
@@ -389,12 +388,12 @@ msgstr "連絡事項"
 msgid "Contact:"
 msgstr "連絡先"
 
-#: templates/event/detail.html:190
+#: templates/event/detail.html:190 templates/event/form_template.html:64
 msgid "Meet at:"
 msgstr "集合場所"
 
 #: templates/event/detail.html:205
-msgid "Comments to the participants: (This won't be showen to nonapplicants.)"
+msgid "Comments to the participants: (This won't be shown to nonapplicants.)"
 msgstr "参加者への連絡事項（応募していないユーザーには見えません）"
 
 #: templates/event/edit.html:3
@@ -413,9 +412,285 @@ msgstr "このボランティアを雛形に新しいボランティアを作成
 msgid "Delete this event"
 msgstr "ボランティアを削除する"
 
-#: templates/map.html:20
+#: templates/event/event_header.html:14
+msgid "EVENT CLOSED"
+msgstr "このボランティアは終了しました"
+
+#: templates/event/event_header.html:19
+msgid "You're participating this event."
+msgstr "参加しています"
+
+#: templates/event/event_header.html:23
+msgid "You're on the waiting list."
+msgstr "キャンセル待ちです"
+
+#: templates/event/event_header.html:42
+msgid "Liked by:"
+msgstr "いいねされた数"
+
+#: templates/event/event_header.html:46
+msgid "Liked"
+msgstr "いいねしました"
+
+#: templates/event/event_header.html:63
+msgid "Share"
+msgstr "シェア"
+
+#: templates/event/event_header.html:84
+msgid "Edit this event"
+msgstr "内容変更"
+
+#: templates/event/event_header.html:85 templates/event/message.html:5
+msgid "Send email to all participants"
+msgstr "メール一斉送信"
+
+#: templates/event/event_list.html:50
+msgid "There are no events"
+msgstr "イベントはありません"
+
+#: templates/event/event_list.html:55
+msgid "View all groups"
+msgstr "すべてのグループを見る"
+
+#: templates/event/form_template.html:9
+msgid "Event Name"
+msgstr "ボランティア名"
+
+#: templates/event/form_template.html:9
+msgid "(Input up to 20 characters)"
+msgstr "(20文字以内)"
+
+#: templates/event/form_template.html:16
+msgid "Start at:"
+msgstr "開始"
+
+#: templates/event/form_template.html:34
+msgid "End by:"
+msgstr "終了"
+
+#: templates/event/form_template.html:53
+msgid "Location:"
+msgstr "開催地域"
+
+#: templates/event/form_template.html:81 templates/event/search_form.html:69
+#: templates/event/search_form_side.html:69 templates/map.html:20
 msgid "Search"
 msgstr "検索"
+
+#: templates/event/form_template.html:89
+msgid "Drag your pin to set to more detailed location"
+msgstr "詳細な位置はピンで指定してください"
+
+#: templates/event/form_template.html:136
+msgid "Failed to get location"
+msgstr "位置情報取得に失敗しました"
+
+#: templates/event/form_template.html:148
+#: templates/event/form_template.html:171
+msgid "Failed to get latitude and longitude"
+msgstr "緯度経度情報を取得できませんでした"
+
+#: templates/event/form_template.html:184
+msgid "Event image"
+msgstr "ボランティア画像"
+
+#: templates/event/form_template.html:187
+msgid "Image:"
+msgstr "現在の画像："
+
+#: templates/event/form_template.html:190
+msgid "Change image to:"
+msgstr "画像を再設定する："
+
+#: templates/event/form_template.html:192
+msgid "Browse..."
+msgstr "選択..."
+
+#: templates/event/form_template.html:197
+msgid "Organizer's contact information"
+msgstr "主催者連絡先"
+
+#: templates/event/form_template.html:217
+msgid "(shown to anyone)"
+msgstr "（全員に表示）"
+
+#: templates/event/form_template.html:219
+msgid "e.g.)a rough quota"
+msgstr "目安人数など"
+
+#: templates/event/form_template.html:224
+msgid "(shown only to applicants)"
+msgstr "（応募者のみに表示）"
+
+#: templates/event/form_template.html:232
+msgid "Organizer:"
+msgstr "管理者"
+
+#: templates/event/form_template.html:242
+msgid "Nickname"
+msgstr "ニックネーム"
+
+#: templates/event/form_template.html:277
+msgid "Position"
+msgstr "参加枠"
+
+#: templates/event/form_template.html:287
+msgid "Job Description:"
+msgstr "仕事内容"
+
+#: templates/event/form_template.html:292
+msgid "The fixed number:"
+msgstr "上限人数"
+
+#: templates/event/form_template.html:297
+msgid "Deadline:"
+msgstr "応募締切"
+
+#: templates/event/form_template.html:391
+msgid "Related to:"
+msgstr "関連付けるタグ"
+
+#: templates/event/form_template.html:401
+msgid "Related group:"
+msgstr "グループの紐づけ"
+
+#: templates/event/form_template.html:406
+msgid "Groups related to this event:"
+msgstr "ボランティアに紐づけされたグループ"
+
+#: templates/event/form_template.html:424
+msgid "Groups I organize:"
+msgstr "自分の管理しているグループ"
+
+#: templates/event/form_template.html:443
+msgid "I don't organize any group."
+msgstr "管理しているグループはありません。"
+
+#: templates/event/index.html:3
+msgid "View all new events"
+msgstr "新着ボランティア一覧"
+
+#: templates/event/message.html:14
+msgid "Recipients:"
+msgstr "宛先"
+
+#: templates/event/message.html:16 templates/top.html:169
+msgid "Organizer"
+msgstr "管理者"
+
+#: templates/event/message.html:17
+msgid "Organizer & Participants (Including ones on the Waiting List)"
+msgstr "管理者・参加者全員（キャンセル待ち含む）"
+
+#: templates/event/message.html:18
+msgid "Organizer & Participants (Excluding ones on the Waiting List)"
+msgstr "管理者・参加者全員（キャンセル待ち覗く）"
+
+#: templates/event/message.html:19
+msgid "Organizer & ones on the Waiting List"
+msgstr "管理者・キャンセル待ち"
+
+#: templates/event/message.html:23
+msgid "Body:"
+msgstr "本文"
+
+#: templates/event/message.html:27
+msgid "Send"
+msgstr "送信"
+
+#: templates/event/participants.html:6 templates/event/participants.html:14
+msgid "Participants"
+msgstr "参加者一覧"
+
+#: templates/event/participants.html:19
+msgid "There are no participants."
+msgstr "参加者がいません"
+
+#: templates/event/search_form.html:4 templates/event/search_form_side.html:4
+msgid "Search for events"
+msgstr "ボランティア検索"
+
+#: templates/event/search_form.html:17
+#: templates/event/search_form_side.html:17
+msgid "Keywords"
+msgstr "キーワード"
+
+#: templates/event/search_form.html:23
+#: templates/event/search_form_side.html:23 templates/event/side_info.html:24
+msgid "Filters"
+msgstr "タグ"
+
+#: templates/event/search_form.html:33
+#: templates/event/search_form_side.html:33 templates/top.html:13
+msgid "Location"
+msgstr "場所"
+
+#: templates/event/search_form.html:36
+#: templates/event/search_form_side.html:36
+msgid "Not selected"
+msgstr "未選択"
+
+#: templates/event/search_form.html:44
+#: templates/event/search_form_side.html:44
+msgid "Sort by"
+msgstr "並び順"
+
+#: templates/event/search_form.html:47
+#: templates/event/search_form_side.html:47
+msgid "Start Date (Ascending)"
+msgstr "開始日（昇順）"
+
+#: templates/event/search_form.html:48
+#: templates/event/search_form_side.html:48
+msgid "Start Date (Descending)"
+msgstr "開始日（降順）"
+
+#: templates/event/search_form.html:53
+#: templates/event/search_form_side.html:53
+msgid "Display"
+msgstr "表示件数"
+
+#: templates/event/search_form.html:56 templates/event/search_form.html:57
+#: templates/event/search_form.html:58
+#: templates/event/search_form_side.html:56
+#: templates/event/search_form_side.html:57
+#: templates/event/search_form_side.html:58
+msgid " events/page"
+msgstr "件/ページ"
+
+#: templates/event/search_form.html:63
+#: templates/event/search_form_side.html:63
+msgid "Status"
+msgstr "ステータス"
+
+#: templates/event/search_form.html:65
+#: templates/event/search_form_side.html:65
+msgid "Show closed events"
+msgstr "締め切られたボランティアを表示"
+
+#: templates/event/search_results.html:4
+msgid "Results"
+msgstr "検索結果"
+
+#: templates/event/search_results.html:16
+msgid "Previous"
+msgstr "前へ"
+
+#: templates/event/search_results.html:38
+msgid "Next"
+msgstr "次へ"
+
+#: templates/event/side_info.html:13
+msgid "Groups"
+msgstr "グループ"
+
+#: templates/event/side_info.html:18
+msgid "There are no groups related to this event."
+msgstr "関連しているグループはありません"
+
+#: templates/event/side_info.html:29
+msgid "There are no filters attached."
+msgstr "このボランティアはタグ付けされていません"
 
 #: templates/map.html:113
 msgid "Failed to get location."
@@ -426,7 +701,7 @@ msgid "Failed to get information."
 msgstr "情報を取得できませんでした"
 
 #: templates/map.html:151
-msgid "There is no event nearby."
+msgid "There are no events nearby."
 msgstr "周辺イベントはありません"
 
 #: templates/top.html:6
@@ -436,10 +711,6 @@ msgstr "ソーシァルボランティアプラットフォーム"
 #: templates/top.html:12
 msgid "Browse"
 msgstr "イベント"
-
-#: templates/top.html:13
-msgid "Location"
-msgstr "地図で探す"
 
 #: templates/top.html:14
 msgid "Calender"
@@ -500,10 +771,6 @@ msgstr "開催中"
 #: templates/top.html:168
 msgid "Wanted"
 msgstr "募集中"
-
-#: templates/top.html:169
-msgid "Organizer"
-msgstr "管理者"
 
 #: templates/user/edit.html:66 user/models.py:70
 msgid "Language"
