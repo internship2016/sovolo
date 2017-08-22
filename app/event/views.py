@@ -703,7 +703,7 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
 
         messages.success(self.request, "メッセージの送信が完了しました。")
         return redirect(reverse_lazy('event:message',
-                                     kwargs={'pk':kwargs['pk']}))
+                                     kwargs={'pk': kwargs['pk']}))
 
     def test_func(self):
         return self.request.user.is_authenticated and self.request.user.is_manager_for(self.get_object())
