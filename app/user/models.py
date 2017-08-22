@@ -89,7 +89,13 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return math.floor(age / 10) * 10
 
     def is_manager_for(self, event):
-        return event in self.admin_event.all() or event in self.host_event.all()
+        if event in self.admin_event.all():
+            return True
+
+        if event in self.host_event.all():
+            return True
+
+        return False
 
     def get_point(self):
         return self.participating_event.filter(supporter__isnull=False).values_list('supporter', flat=True).count()
