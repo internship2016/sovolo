@@ -37,10 +37,10 @@ import re
 from datetime import datetime
 import sys
 import io
-sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 import uuid
 import urllib
 import json, requests
+sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 @method_decorator(login_required, name='dispatch')
 class EventCreate(CreateView):
