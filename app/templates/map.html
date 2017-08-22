@@ -9,6 +9,7 @@
           maxlength="300"
           name="meeting_place"
           type="text"
+          placeholder="地名を入力"
           required/>
         <span class="input-group-addon input-loc">
           <span class="btn btn-link input-loc-btn" onClick="getnow(); return false;">
@@ -68,6 +69,7 @@
               </div>
             </div>
           </div>
+          <input type="hidden" value="{{markernum}}">
         </div>
         {{/each}}
       </section>
@@ -187,11 +189,12 @@
   }
 
   function markerSet(context){
-      for(var data of context['events_in_range']){
-        data['start_time'] = moment(data['start_time']).format("M月D日(ddd)");
-        data['label_brand'] = label_convert[data['status']];
-        data['status'] = label_trans[data['status']];
-      }
+      context['events_in_range'].forEach(function(val,index,arr){
+        val['start_time'] = moment(val['start_time']).format("M月D日(ddd)");
+        val['label_brand'] = label_convert[val['status']];
+        val['status'] = label_trans[val['status']];
+        val['markernum'] = index;
+      });
     $('#map-event-list').html(map_event_template(context));
     context['events_in_range'].forEach(function(val,index,arr){
       var marker = new google.maps.Marker({
@@ -202,7 +205,8 @@
         map: gmap,
       });
       var infoWindowOpts = {
-          content : val.name
+          content : val.name,
+          maxWidth : 400
       };
       var infoWindow = new google.maps.InfoWindow(infoWindowOpts);
       marker.addListener("click", function(m){
@@ -219,6 +223,10 @@
       });
       markers.push(marker);
     });
+    $('.media').on('mouseenter',function(){
+      console.log($(this).find('input'));
+      google.maps.event.trigger(markers[parseInt($(this).find('input').attr('value'))], 'click');;
+    })
   }
    
   $(function(){
