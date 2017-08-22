@@ -662,7 +662,9 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
     model = Event
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'event/message.html', {'event': self.get_object()})
+        return render(request, 'event/message.html', {
+            'event': self.get_object()
+        })
 
     def post(self, request, *args, **kwargs):
         target = request.POST.get('target')
