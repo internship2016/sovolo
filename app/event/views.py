@@ -684,7 +684,8 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
                          .filter(participation__status__in=["管理者", "キャンセル待ち"])
         else:
             messages.error(request, "不正な送信先です")
-            return redirect(reverse_lazy('event:message', kwargs={'pk': kwargs['pk']}))
+            return redirect(reverse_lazy('event:message',
+                                         kwargs={'pk': kwargs['pk']}))
 
         for user in users:
             send_template_mail(
