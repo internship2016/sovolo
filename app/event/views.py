@@ -193,7 +193,10 @@ class EventIndexView(ListView):
 
     def get_queryset(self):
         date = timezone.now()
-        return Event.objects.filter(start_time__gte=date).order_by('start_time')
+
+        return Event.objects \
+                    .filter(start_time__gte=date) \
+                    .order_by('start_time')
 
 
 class EventEditView(UserPassesTestMixin, UpdateView):
