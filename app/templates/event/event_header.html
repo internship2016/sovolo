@@ -9,7 +9,6 @@
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 
-<div id="event_header">
  {% if event.is_over %}
   <div class="alert alert-danger">{% trans "EVENT CLOSED" %}</div>
   {% else %}
@@ -25,11 +24,12 @@
   {% endif %}
   {% endif %}
   {% endif %}
+  <!--row-->
   <div class="detail-header row">
-    <div id="event_header-left" class="detail-header-left col-sm-4 col-md-3">
+    <div class="col-xs-12 col-md-3">
       <div class="custom_thumbnail detail-thumbnail" style="background-image:url({{ event.get_image_url }})"></div>
     </div>
-    <div id="event_header-right" class="detail-header-right col-sm-8 col-md-9">
+    <div class="col-xs-12 col-md-9">
 
       <div class="event-head-title panel panel-primary" style="padding: 1em;">
 
@@ -88,4 +88,4 @@
       </div>
     </div>
   </div>
-</div>
+  <!--end of row-->
