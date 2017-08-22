@@ -98,7 +98,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return False
 
     def get_point(self):
-        return self.participating_event.filter(supporter__isnull=False).values_list('supporter', flat=True).count()
+        return self.participating_event \
+                   .filter(supporter__isnull=False) \
+                   .values_list('supporter', flat=True) \
+                   .count()
 
     def get_level(self):
         #return math.floor(self.get_point() / 13) + 1
