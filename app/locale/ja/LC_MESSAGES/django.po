@@ -21,7 +21,7 @@ msgstr ""
 #: event/views.py:87
 #, python-format
 msgid "There is no user named %(name)s."
-msgstr ""
+msgstr "ユーザー名 %(name)s に一致するユーザーはいませんでした。"
 
 #: event/views.py:139
 #, fuzzy
