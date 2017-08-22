@@ -576,7 +576,8 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
     model = Participation
 
     def get_object(self, event_id=None, queryset=None):
-        return Participation.objects.get(event_id=self.kwargs['event_id'], user=self.request.user)
+        return Participation.objects.get(event_id=self.kwargs['event_id'],
+                                         user=self.request.user)
 
     def get_success_url(self):
 
