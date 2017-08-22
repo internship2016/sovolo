@@ -108,7 +108,11 @@ class RequestPasswordReset(View):
                 [user.email]
             )
 
-        messages.info(request, "リクエストを受け付けました。メールアドレスが登録されている場合、アドレスにパスワード再設定のリンクが送信されます。")
+        info_msg = ("リクエストを受け付けました。"
+                    "メールアドレスが登録されている場合、"
+                    "アドレスにパスワード再設定のリンクが送信されます。")
+
+        messages.info(request, info_msg)
         return redirect("top")
 
     def create_reset_key(self):
