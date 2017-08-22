@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 02:58+0900\n"
+"POT-Creation-Date: 2017-08-23 03:09+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -387,6 +387,7 @@ msgid "Closed"
 msgstr "締切済"
 
 #: templates/event/detail.html:58 templates/event/detail.html:115
+#: templates/event/side_info.html:9
 msgid "Waiting List"
 msgstr "キャンセル待ち"
 
@@ -618,8 +619,8 @@ msgstr "新着ボランティア一覧"
 msgid "Recipients:"
 msgstr "宛先"
 
-#: templates/event/message.html:16 templates/map.html:101
-#: templates/top.html:169
+#: templates/event/message.html:16 templates/event/side_info.html:5
+#: templates/map.html:101 templates/top.html:169
 msgid "Organizer"
 msgstr "管理者"
 
@@ -644,6 +645,7 @@ msgid "Send"
 msgstr "送信"
 
 #: templates/event/participants.html:6 templates/event/participants.html:14
+#: templates/event/side_info.html:7
 msgid "Participants"
 msgstr "参加者一覧"
 
@@ -724,6 +726,10 @@ msgstr "前へ"
 #: templates/event/search_results.html:38
 msgid "Next"
 msgstr "次へ"
+
+#: templates/event/side_info.html:6
+msgid "Owner"
+msgstr "オーナー"
 
 #: templates/event/side_info.html:13
 msgid "Groups"
@@ -886,3 +892,8 @@ msgstr "獲得トロフィー"
 #: templates/user/user_header.html:75
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
+
+#, fuzzy
+#~| msgid "Waiting List"
+#~ msgid "Waitlist"
+#~ msgstr "キャンセル待ち"

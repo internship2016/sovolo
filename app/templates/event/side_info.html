@@ -2,11 +2,11 @@
 {% load event_tags %}
 {% load user_tags %}
 
-{% user_list event.get_host_user_as_list "主催者" %}
-{% user_list event.admin.all "管理者" %}
-{% user_list event.get_reserved_users "参加者" %}
+{% user_list event.get_host_user_as_list _("Organizer") %}
+{% user_list event.admin.all _("Owner") %}
+{% user_list event.get_reserved_users _("Participants") %}
 {% if event.is_full %}
-  {% user_list event.get_waiting_users "キャンセル待ち" %}
+  {% user_list event.get_waiting_users _("Waiting List") %}
 {% endif %}
 
 <div class="panel panel-primary">
