@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 07:47+0900\n"
+"POT-Creation-Date: 2017-08-22 23:05+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -250,15 +250,15 @@ msgstr "ユーザー登録"
 msgid "Log in"
 msgstr "ログイン"
 
-#: templates/base.html:94
+#: templates/base.html:103
 msgid "Profile"
 msgstr "プロフィール"
 
-#: templates/base.html:95
+#: templates/base.html:104
 msgid "Log out"
 msgstr "ログアウト"
 
-#: templates/base.html:106
+#: templates/base.html:115
 msgid "Change language"
 msgstr "言語切り替え"
 
@@ -343,9 +343,10 @@ msgstr "締切"
 msgid "Participated"
 msgstr "参加しました"
 
-#: templates/event/detail.html:46
+#: templates/event/detail.html:46 templates/map.html:113
+#: templates/top.html:167
 msgid "Ongoing"
-msgstr "参加中"
+msgstr "開催中"
 
 #: templates/event/detail.html:48
 msgid "Confirmed"
@@ -758,10 +759,6 @@ msgstr "地名を入力"
 msgid "Search with filters"
 msgstr "タグで絞り込む"
 
-#: templates/map.html:113 templates/top.html:167
-msgid "Onging"
-msgstr "開催中"
-
 #: templates/map.html:114 templates/top.html:168
 msgid "Wanted"
 msgstr "募集中"
@@ -851,30 +848,22 @@ msgid "REGISTER"
 msgstr "登録"
 
 #: templates/user/detail.html:13
-msgid "List of My Groups"
-msgstr "所属グループ一覧"
-
-#: templates/user/detail.html:29
-msgid "No groups"
-msgstr "所属しているグループがありません"
-
-#: templates/user/detail.html:35
 msgid "List of Events Organizing"
 msgstr "管理しているボランティア一覧"
 
-#: templates/user/detail.html:37
+#: templates/user/detail.html:15
 msgid "List of Events Attending"
 msgstr "管理しているボランティア一覧"
 
-#: templates/user/detail.html:38
+#: templates/user/detail.html:16
 msgid "Event Achievements"
 msgstr "ボランティア実績"
 
-#: templates/user/detail.html:42
+#: templates/user/detail.html:20
 msgid "Reviews posted"
 msgstr "すべてのレビューを見る"
 
-#: templates/user/detail.html:46
+#: templates/user/detail.html:24
 msgid "Reviews not yet posted"
 msgstr "未レビューを見る"
 
@@ -1095,3 +1084,4 @@ msgstr "ユーザー情報を編集しました。"
 #: user/views.py:228
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
+
