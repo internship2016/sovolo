@@ -82,8 +82,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
         today = datetime.today()
         birthday = self.birthday
         age = today.year - birthday.year
+
         if (today.month, today.day) <= (birthday.month, birthday.day):
             age -= 1
+
         return math.floor(age / 10) * 10
 
     def is_manager_for(self, event):
