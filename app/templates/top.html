@@ -172,13 +172,10 @@
 
 
     function show_events(context){
-      for(var i=0;i<context['filtered_events'].length;i++){
-        context['filtered_events'][i]['start_time'] 
-        = moment(context['filtered_events'][i]['start_time']).format("M月D日(ddd)");
-        context['filtered_events'][i]['label_brand']
-        = label_convert[context['filtered_events'][i]['status']];
-        context['filtered_events'][i]['status']
-        = label_trans[context['filtered_events'][i]['status']];
+      for(var data of context['filtered_events']){
+        data['start_time'] = moment(data['start_time']).format("M/D(ddd)");
+        data['label_brand'] = label_convert[data['status']];
+        data['status'] = label_trans[data['status']];
       }
       $('#event-area').html(template(context));
     }
