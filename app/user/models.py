@@ -273,7 +273,7 @@ class UserReviewList(models.Model):
                                      related_name='to_rate_user')
 
     rating = models.IntegerField(validators=[MinValueValidator(0),
-                                       MaxValueValidator(5)])
+                                             MaxValueValidator(5)])
 
     comment = models.CharField(max_length=200, null=True)
 
