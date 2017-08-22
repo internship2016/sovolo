@@ -688,9 +688,15 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
                                          kwargs={'pk': kwargs['pk']}))
 
         for user in users:
+            # XXX: Hardcoded From address
             send_template_mail(
                 "email/message.txt",
-                {"event": event, "user": user, "sender": request.user, "message": message},
+                {
+                    "event": event,
+                    "user": user,
+                    "sender": request.user,
+                    "message": message,
+                },
                 "Sovol Info <info@sovol.earth>",
                 [user.email],
             )
