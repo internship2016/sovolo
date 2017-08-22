@@ -639,7 +639,7 @@ class CommentCreate(RedirectView):
             return reverse_lazy('event:detail', kwargs={'pk': event_id})
 
         text = self.request.POST["text"]
-        if text.strip()!="":
+        if text.strip() != "":
             comment = Comment(
                 user=self.request.user,
                 event=Event.objects.get(pk=event_id),
