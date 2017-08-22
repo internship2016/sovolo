@@ -189,7 +189,9 @@ class Frame(AbstractBaseModel):
         return self.participation_set.all().values_list('user', flat=True)
 
     def reserved_id_list(self):
-        return self.participation_set.filter(status="参加中").values_list('user',flat=True)
+        return self.participation_set \
+                   .filter(status="参加中") \
+                   .values_list('user', flat=True)
 
     def get_reserved_users(self):
         return [participation.user for participation in self.participation_set.filter(status="参加中")]
