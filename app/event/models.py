@@ -142,7 +142,7 @@ class Event(AbstractBaseModel):
 
     def get_host_user_as_list(self):
         return [self.host_user]
-    
+
     @classmethod
     def get_events_in_range(cls, ne_lat, sw_lat, ne_lng, sw_lng):
             return cls.objects.filter(latitude__gte=sw_lat, latitude__lte=ne_lat, longitude__gte=sw_lng, longitude__lte=ne_lng)
