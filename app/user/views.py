@@ -238,10 +238,11 @@ class UserPostReviewView(FormView):
 class UserSkillView(DetailView):
     model = User
     template_name = "user/user_skill.html"
-    
+
+
 class UserSkillEditView(UpdateView):
     model = Skill
-    tamplate_name = 'user/skill_form.html'
+    tamplate_name = 'user/user_form.html'
     fields = ['skilltodo']
 
     
@@ -264,6 +265,7 @@ class UserSkillEditView(UpdateView):
         context = super(UserSkillEditView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
         return context
+
 
 @method_decorator(login_required, name='dispatch')
 class UserSkillAddView(CreateView):

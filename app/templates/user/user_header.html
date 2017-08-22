@@ -30,7 +30,7 @@
             <div style="text-align: right">
             {% if user.id == request.user.id %}
               <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">プロフィール編集</a>
-              <a class="btn btn-default btn-sm" href="../1/skill">スキル一覧を見る</a>
+              <a class="btn btn-default btn-sm" href="{% url 'user:skill' user.id %}">スキル一覧を見る</a>
             {% endif %}
             </div>
           </div>
