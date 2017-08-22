@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-22 21:27+0000\n"
+"POT-Creation-Date: 2017-08-22 21:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -329,6 +329,7 @@ msgstr "ボランティア作成"
 #: templates/event/add.html:21 templates/event/edit.html:19
 #: templates/user/request_password_reset.html:17
 #: templates/user/reset_password.html:17
+#: templates/user/user_post_review.html:24
 msgid "Submit"
 msgstr "送信"
 
@@ -522,6 +523,7 @@ msgid "View all groups"
 msgstr "すべてのグループを見る"
 
 #: templates/event/form_template.html:9
+#: templates/user/user_post_review.html:12
 msgid "Event Name"
 msgstr "ボランティア名"
 
@@ -768,7 +770,7 @@ msgstr "前へ"
 msgid "Next"
 msgstr "次へ"
 
-#: templates/event/side_info.html:6
+#: templates/event/side_info.html:6 templates/user/user_post_review.html:11
 msgid "Owner"
 msgstr "オーナー"
 
@@ -909,7 +911,7 @@ msgid "Event Achievements"
 msgstr "ボランティア実績"
 
 #: templates/user/detail.html:42
-msgid "View all reviews posted"
+msgid "Reviews posted"
 msgstr "すべてのレビューを見る"
 
 #: templates/user/detail.html:46
@@ -922,7 +924,7 @@ msgstr "プロフィール編集"
 
 #: templates/user/edit.html:13
 msgid "Input up to 15 characters."
-msgstr "(15文字以内)"
+msgstr "15文字以内"
 
 #: templates/user/edit.html:21
 msgid "Your photo"
@@ -1071,6 +1073,31 @@ msgstr "獲得トロフィー"
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
 
+#: templates/user/user_post_review.html:3
+#: templates/user/user_post_review.html:7
+msgid "Post your review"
+msgstr "レビュー投稿"
+
+#: templates/user/user_post_review.html:9
+msgid "Please post a review about this event."
+msgstr "このボランティアのレビューをおこないます。"
+
+#: templates/user/user_post_review.html:10
+msgid "Event ID"
+msgstr "ボランティアID"
+
+#: templates/user/user_post_review.html:15
+msgid "Please post a review about this user."
+msgstr "このユーザーのレビューをおこないます。"
+
+#: templates/user/user_post_review.html:16
+msgid "User ID"
+msgstr "ユーザーID"
+
+#: templates/user/user_post_review.html:17
+msgid "User Name"
+msgstr "ユーザー名"
+
 #: user/models.py:86
 #, python-format
 msgid "You need %(points_to_next)d more Sovolage to the next level!"
@@ -1084,3 +1111,6 @@ msgstr "ユーザー情報を編集しました。"
 #: user/views.py:228
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
+
+#~ msgid "View all reviews posted"
+#~ msgstr "すべてのレビューを見る"
