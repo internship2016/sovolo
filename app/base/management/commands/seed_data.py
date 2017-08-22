@@ -9,6 +9,7 @@ from tag.models import Tag
 import csv
 import os
 import glob
+import random
 
 
 username_sample=[
@@ -316,6 +317,7 @@ class Command(BaseCommand):
         prefec_list = list(self.prefectures)
 
         #ポイント稼ぎ用ボランティア
+        random.seed(1)
         for i in range(1,21):
             for j in range(1,4):
                 name = "【第%d回】"%j + eventname_sample[i]["name"]
@@ -329,8 +331,8 @@ class Command(BaseCommand):
                     details=eventdetail_sample,
                     host_user=host_user,
                     region=prefec_list[i%47],
-                    longitude=139.7191 + 0.01 * (20*((j-1)//2+(j-1)%2)+i),
-                    latitude=35.7291 + 0.01 * (20*((j-1)//2+(j-1)%2-1)+i)
+                    longitude=139.7191 + 0.01 * random.uniform(-2.0,2.0),
+                    latitude=35.7291 + 0.01 * random.uniform(-2.0,2.0)
                 )
                 demoevent.save()
                 demoevent.admin = User.objects.filter(pk=i)

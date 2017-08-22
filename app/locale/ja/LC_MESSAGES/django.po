@@ -431,7 +431,7 @@ msgstr "周辺イベントはありません"
 
 #: templates/top.html:6
 msgid "Social Volunteering Network"
-msgstr "ソーシァルボランティアプラットフォーム"
+msgstr "ソーシャルボランティアプラットフォーム"
 
 #: templates/top.html:12
 msgid "Browse"

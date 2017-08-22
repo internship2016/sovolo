@@ -80,6 +80,11 @@
   var geocoder;
   var markers = [];
   var map_event_template;
+  var currentWindow;
+  var currentWindowInfo={
+    'lat' : '',
+    'lng' : ''
+  };
 
   var label_convert={
     '開催中' : 'success',
@@ -145,7 +150,6 @@
   function get_events(){
     //四隅の情報を取得
     var bounds = gmap.getBounds();
-    console.log(bounds)
     map_ne_lat = bounds.getNorthEast().lat();
     map_sw_lat = bounds.getSouthWest().lat();
     map_ne_lng = bounds.getNorthEast().lng();
@@ -161,7 +165,6 @@
       'type':'POST',
       'dataType':'json',
     }).done(function(response){
-      console.log(response);
       markerClear();
       markerSet(response);
     }).fail(function(){
@@ -170,11 +173,17 @@
   }
 
   function markerClear(){
+    var current = -1;
     for (var i = 0; i < markers.length; i++) {
+      if(currentWindowInfo.lat==markers[i].position.lat()&&
+        currentWindowInfo.lng==markers[i].position.lng()){
+          current = i;
+          continue;
+        }
       markers[i].setMap(null);
     }
-    markers = [];
-    console.log("hoge");
+    markers = current==-1 ? [] : [markers[current]];
+    console.log("clear");
   }
 
   function markerSet(context){
@@ -184,12 +193,32 @@
         data['status'] = label_trans[data['status']];
       }
     $('#map-event-list').html(map_event_template(context));
-    for(var data of context['events_in_range']){
-      markers.push(new google.maps.Marker({
-        position: {lat: data.latitude,lng: data.longitude},
+    context['events_in_range'].forEach(function(val,index,arr){
+      var marker = new google.maps.Marker({
+        position: {
+          lat: val.latitude,
+          lng: val.longitude
+        },
         map: gmap,
-      }));
-    }
+      });
+      var infoWindowOpts = {
+          content : val.name
+      };
+      var infoWindow = new google.maps.InfoWindow(infoWindowOpts);
+      marker.addListener("click", function(m){
+          //先に開いた情報ウィンドウがあれば、closeする
+          if (currentWindow) {
+              currentWindow.close();
+          }
+          //情報ウィンドウを開く
+          infoWindow.open(gmap, marker);
+          //開いた情報ウィンドウを記録しておく
+          currentWindow = infoWindow;
+          currentWindowInfo.lat = m.latLng.lat();
+          currentWindowInfo.lng = m.latLng.lng();
+      });
+      markers.push(marker);
+    });
   }
    
   $(function(){
