@@ -87,11 +87,6 @@ class EventCreate(CreateView):
             error_msg = _( "There is no user named %(name)s.") % {'name': name}
             messages.error(self.request, error_msg)
 
-        # Groups
-        event.group_set.clear()
-        for group_id in self.request.POST.getlist('groups'):
-            event.group_set.add(int(group_id))
-
         # Tags
         event.tag.clear()
         for tag_id in self.request.POST.getlist('tags'):
@@ -234,13 +229,6 @@ class EventEditView(UserPassesTestMixin, UpdateView):
             error_msg = ("ユーザー名 %(name)s に一致する"
                          "ユーザーはいませんでした。") % {'name': name}
             messages.error(self.request, error_msg)
-
-        # Groups
-        # XXX: Bad naming: group_ids
-        event.group_set.clear()
-        group_ids = set([int(g) for g in self.request.POST.getlist('groups')])
-        for group_id in group_ids:
-            event.group_set.add(group_id)
 
         # Tags
         new_tags = set([int(t) for t in self.request.POST.getlist('tags')])
@@ -423,20 +411,6 @@ class EventSearchResultsView(ListView):
                 place_query = Q(region=place)
                 query = query & place_query
 
-        # Group
-        if 'group' in self.request.GET:
-            group = self.request.GET['group']
-
-            if group is not None and group != "":
-                Group = apps.get_model('group', 'Group')
-                try:
-                    g = Group.objects.get(pk=int(group))
-                except ObjectDoesNotExist:
-                    messages.error(self.request, "検索結果に一致するボランティアが見つかりませんでした")
-                    return Event.objects.none()
-                group_list = [g]
-                group_query = Q(group__in=group_list)
-                query = query & group_query
 
         results = Event.objects.filter(query)
 
