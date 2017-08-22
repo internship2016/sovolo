@@ -325,8 +325,13 @@ class EventParticipantsView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(EventParticipantsView, self).get_context_data(**kwargs)
-        context['participants'] = [p.user for p in self.object.participation_set.all()]
+
+        participation_objects = self.object.participation_set.all()
+        context['participants'] = [p.user for p in participation_objects]
+
+        # XXX: user for user ???
         context['admins'] = [user for user in self.object.admin.all()]
+
         return context
 
 
