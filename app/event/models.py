@@ -194,7 +194,8 @@ class Frame(AbstractBaseModel):
                    .values_list('user', flat=True)
 
     def get_reserved_users(self):
-        return [participation.user for participation in self.participation_set.filter(status="参加中")]
+        participations = self.participation_set.filter(status="参加中")
+        return [p.user for p in participations]
 
     def waiting_id_list(self):
         return self.participation_set.filter(status="キャンセル待ち").values_list('user',flat=True)
