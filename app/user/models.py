@@ -182,7 +182,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
         Event = apps.get_model('event', 'Event')
         group_list = self.group_set.all()
 
-        return Event.objects.filter(group__in=group_list).distinct().order_by('-created')[:5]
+        return Event.objects \
+                    .filter(group__in=group_list) \
+                    .distinct() \
+                    .order_by('-created')[:5]
 
     def get_new_region_events(self):
         Event = apps.get_model('event', 'Event')
