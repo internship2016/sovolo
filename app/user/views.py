@@ -46,7 +46,10 @@ class UserCreateView(CreateView):
             [user.email],
         )
 
-        messages.info(self.request, "記入したメールアドレス"+user.email+"に確認メールを送信しました。")
+        info_msg = "記入したメールアドレス%(email)sに確認メールを送信しました。" % {
+            'email': user.email,
+        }
+        messages.info(self.request, info_msg)
         return redirect("top")
 
     def create_activation_key(self):
