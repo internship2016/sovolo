@@ -607,7 +607,10 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
                           [carry_up.user.email])
 
         messages.success(self.request, "参加をキャンセルしました。")
-        return reverse_lazy('event:detail', kwargs={'pk': self.kwargs['event_id']})
+
+        return reverse_lazy('event:detail', kwargs={
+            'pk': self.kwargs['event_id']
+        })
 
     def test_func(self):
         return True
