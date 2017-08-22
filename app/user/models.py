@@ -1,6 +1,5 @@
 # coding=utf-8
 from django.db import models
-from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -14,12 +13,8 @@ from django.utils import timezone
 from tag.models import Tag
 from base.models import AbstractBaseModel
 
-try:
-    from StringIO import StringIO
-except ImportError:
-    from io import BytesIO as StringIO
-
-import sys, os, math
+import os
+import math
 
 # review
 from django.core.validators import MinValueValidator, MaxValueValidator
@@ -57,11 +52,18 @@ class User(AbstractBaseModel, AbstractBaseUser):
     occupation = models.CharField(max_length=100, null=True)
 
     # regionは都道府県で指定
+    # XXX: dup
     prefectures = settings.PREFECTURES
+    prefs = prefectures.items()
+    prefs = sorted(prefs, key=lambda x: x[1][1])
+    region_list = [(k, v[0]) for k, v in prefs]
 
-    region_list = [(key, value[0]) for key, value in sorted(prefectures.items(), key=lambda x:x[1][1])]
     region = models.CharField(max_length=10, choices=region_list)
-    follow_tag = models.ManyToManyField(Tag, related_name='follower', blank=True)
+
+    follow_tag = models.ManyToManyField(Tag,
+                                        related_name='follower',
+                                        blank=True)
+
     image = models.ImageField(upload_to='users/', null=True, blank=True)
     objects = UserManager()
     is_active = models.BooleanField(default=True)

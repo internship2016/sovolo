@@ -2,23 +2,19 @@ import os
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
-from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
-from django.urls import reverse
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import UpdateView
 from django.views.generic.edit import DeleteView
-from django.views.generic.edit import FormView
 from django.views.generic.detail import SingleObjectMixin
 from django.views.generic import DetailView, ListView, RedirectView, View
-from django import forms
 from django.core.urlresolvers import reverse_lazy
 from django.db.models import Q
 from django.db import IntegrityError
 from django.http import HttpResponseForbidden
 from django.contrib import messages
 from django.contrib.auth.mixins import UserPassesTestMixin
-from .models import Event, Participation, Comment, Question, Answer, Frame
+from .models import Event, Participation, Comment, Frame
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.utils import timezone
@@ -35,10 +31,7 @@ from django.core.files import File
 import sys
 import re
 from datetime import datetime
-import sys
 import io
-import uuid
-import urllib
 import json
 import requests
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
@@ -127,11 +120,12 @@ class EventCreate(CreateView):
             frame.save()
 
         # Lng, Lat
-        if 'latitude' in self.request.POST and 'longitude' in self.request.POST:
-            if self.request.POST['latitude']!="" and self.request.POST['longitude']!="":
-                event.latitude = self.request.POST['latitude']
-                event.longitude = self.request.POST['longitude']
-                event.save()
+        latitude = self.request.POST.get('latitude')
+        longitude = self.request.POST.get('longitude')
+        if latitude and longitude:
+            event.latitude = latitude
+            event.longitude = longitude
+            event.save()
 
         # Image
         if 'image_url' in self.request.POST and not event.image:
@@ -147,7 +141,6 @@ class EventCreate(CreateView):
 
     def form_invalid(self, form):
         return super(EventCreate, self).form_invalid(form)
-
 
     def get_success_url(self):
         self.object.admin.add(self.request.user)
@@ -200,7 +193,10 @@ class EventIndexView(ListView):
 
     def get_queryset(self):
         date = timezone.now()
-        return Event.objects.filter(start_time__gte=date).order_by('start_time')
+
+        return Event.objects \
+                    .filter(start_time__gte=date) \
+                    .order_by('start_time')
 
 
 class EventEditView(UserPassesTestMixin, UpdateView):
@@ -231,12 +227,17 @@ class EventEditView(UserPassesTestMixin, UpdateView):
             event.admin.add(admin_id)
         event.admin.add(event.host_user.id)
 
-        for name in set(raw_admins) - set(new_admins.values_list('username', flat=True)):
-            messages.error(self.request, "ユーザー名 " + name + " に一致するユーザーはいませんでした。")
+        new_admin_names = new_admins.values_list('username', flat=True)
+        for name in set(raw_admins) - set(new_admin_names):
+            error_msg = ("ユーザー名 %(name)s に一致する"
+                         "ユーザーはいませんでした。") % {'name': name}
+            messages.error(self.request, error_msg)
 
         # Groups
+        # XXX: Bad naming: group_ids
         event.group_set.clear()
-        for group_id in set([int(g) for g in self.request.POST.getlist('groups')]):
+        group_ids = set([int(g) for g in self.request.POST.getlist('groups')])
+        for group_id in group_ids:
             event.group_set.add(group_id)
 
         # Tags
@@ -250,26 +251,35 @@ class EventEditView(UserPassesTestMixin, UpdateView):
             event.tag.remove(tag_id)
 
         # Frames
-        frame_numbers = self.request.POST.getlist('frame_number')
+        # XXX: Unspecified large numbere of Frames via POST
+        # FIXME: dup
+        req_post = self.request.POST
 
-        for number in frame_numbers:
-            frame_id = self.request.POST.get('frame_' + number + '_id')
+        for n in req_post.getlist('frame_number'):
+            frame_id = self.request.POST.get('frame_' + n + '_id')
             if frame_id is None:
                 frame = Frame(event=event)
             else:
                 frame = Frame.objects.get(pk=frame_id)
 
-            frame.description = self.request.POST.get('frame_' + number + '_description')
-            frame.upper_limit = self.request.POST.get('frame_' + number + '_upperlimit') or None
-            frame.deadline = self.request.POST.get('frame_' + number + '_deadline') or event.end_time
+            description_key = 'frame_' + n + '_description'
+            frame.description = req_post.get(description_key)
+
+            upperlimit_key = 'frame_' + n + '_upperlimit'
+            frame.upper_limit = req_post.get(upperlimit_key) or None
+
+            deadline_key = 'frame_' + n + '_deadline'
+            frame.deadline = req_post.get(deadline_key) or event.end_time
+
             frame.save()
 
         # Lng, Lat
-        if 'latitude' in self.request.POST and 'longitude' in self.request.POST:
-            if self.request.POST['latitude'] != "" and self.request.POST['longitude'] != "":
-                event.latitude = self.request.POST['latitude']
-                event.longitude = self.request.POST['longitude']
-                event.save()
+        latitude = self.request.POST.get('latitude')
+        longitude = self.request.POST.get('longitude')
+        if latitude and longitude:
+            event.latitude = latitude
+            event.longitude = longitude
+            event.save()
 
         messages.info(self.request, "ボランティア情情報を編集しました。")
         return form_redirect
@@ -307,6 +317,7 @@ class EventDeleteView(UserPassesTestMixin, DeleteView):
         messages.info(self.request, "ボランティアを削除しました")
         return reverse_lazy('top')
 
+
 class EventParticipantsView(DetailView):
     model = Event
     template_name = 'event/participants.html'
@@ -314,8 +325,13 @@ class EventParticipantsView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(EventParticipantsView, self).get_context_data(**kwargs)
-        context['participants'] = [ p.user for p in self.object.participation_set.all() ]
-        context['admins'] = [ user for user in self.object.admin.all() ]
+
+        participation_objects = self.object.participation_set.all()
+        context['participants'] = [p.user for p in participation_objects]
+
+        # XXX: user for user ???
+        context['admins'] = [user for user in self.object.admin.all()]
+
         return context
 
 
@@ -355,7 +371,7 @@ class EventSearchResultsView(ListView):
 
         query = Q()
 
-        #Free Word
+        # Free Word
         if 'q' in self.request.GET:
             user_entry = self.request.GET['q']
             if user_entry is not None and user_entry != "":
@@ -366,7 +382,7 @@ class EventSearchResultsView(ListView):
                 else:
                     query = query & freeword_query
 
-        #Date
+        # Date
         if 'date' in self.request.GET:
             begin_date_string = self.request.GET['date']
             if begin_date_string is not None and begin_date_string != "":
@@ -377,38 +393,39 @@ class EventSearchResultsView(ListView):
         if 'end_date' in self.request.GET:
             end_date_string = self.request.GET['end_date']
             if end_date_string is not None and end_date_string != "":
-                date = datetime.strptime(end_date_string, "%Y-%m-%d") + datetime.timedelta(days=1)
+                end_date = datetime.strptime(end_date_string, "%Y-%m-%d")
+                date = end_date + datetime.timedelta(days=1)
                 date_query = Q(start_time__lt=date)
                 query = query & date_query
 
-        #Tag
+        # Tag
         if 'tags' in self.request.GET:
             tags = [int(t) for t in self.request.GET.getlist('tags')]
 
-            if len(tags)>0:
+            if len(tags) > 0:
                 Tag = apps.get_model('tag', 'Tag')
                 tag_query = None
                 for t in tags:
                     tag = Tag.objects.get(pk=t)
-                    if tag_query==None:
+                    if tag_query is None:
                         tag_query = Q(tag=tag)
                     else:
                         tag_query = tag_query | Q(tag=tag)
                 query = query & tag_query
 
-        #Place
+        # Place
         if 'region' in self.request.GET:
             place = self.request.GET['region']
 
-            if place is not None and place!="":
+            if place is not None and place != "":
                 place_query = Q(region=place)
                 query = query & place_query
 
-        #Group
+        # Group
         if 'group' in self.request.GET:
             group = self.request.GET['group']
 
-            if group is not None and group!="":
+            if group is not None and group != "":
                 Group = apps.get_model('group', 'Group')
                 try:
                     g = Group.objects.get(pk=int(group))
@@ -432,32 +449,40 @@ class EventSearchResultsView(ListView):
 
             results = results.order_by(criterion)
 
-        #Include events with no openings?
-        if 'exclude_full_events' in self.request.GET and self.request.GET['exclude_full_events'] == "on":
+        # Include events with no openings?
+        if self.request.GET.get('exclude_full_events') == "on":
             results = [event for event in results if not event.is_full()]
 
-        #Include events that are already over?
-        if 'exclude_closed_events' in self.request.GET and self.request.GET['exclude_closed_events'] == "on":
+        # Include events that are already over?
+        if self.request.GET.get('exclude_closed_events') == "on":
             results = [event for event in results if not event.is_closed()]
 
-        if len(results)==0:
+        if len(results) == 0:
             messages.error(self.request, "検索結果に一致するボランティアが見つかりませんでした")
 
-        #Filter based on page and number per page
+        # Filter based on page and number per page
         if 'numperpage' in self.request.GET:
             num_per_page = self.request.GET["numperpage"]
-            if num_per_page is not None and num_per_page!="":
+            if num_per_page is not None and num_per_page != "":
                 self.paginate_by = int(num_per_page)
 
         return results
 
     def get_context_data(self, **kwargs):
-        context = super(EventSearchResultsView, self).get_context_data(**kwargs)
+        context = super().get_context_data(**kwargs)
+
         context["all_tags"] = Tag.objects.all()
-        context['prefectures'] = [(key, value[0]) for key, value in sorted(settings.PREFECTURES.items(), key=lambda x:x[1][1])]
-        context['checked_tags'] = [int(t) for t in self.request.GET.getlist('tags')]
+
+        prefectures = settings.PREFECTURES
+        prefs = prefectures.items()
+        prefs = sorted(prefs, key=lambda x: x[1][1])
+        context['prefectures'] = [(k, v[0]) for k, v in prefs]
+
+        tags = self.request.GET.getlist('tags')
+        context['checked_tags'] = [int(t) for t in tags]
 
         return context
+
 
 @method_decorator(login_required, name='dispatch')
 class EventJoinView(RedirectView):
@@ -551,30 +576,45 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
     model = Participation
 
     def get_object(self, event_id=None, queryset=None):
-        return Participation.objects.get(event_id=self.kwargs['event_id'], user=self.request.user)
+        return Participation.objects.get(event_id=self.kwargs['event_id'],
+                                         user=self.request.user)
 
     def get_success_url(self):
-
         if self.object.status == "参加中":
-            waiting_list = self.object.frame.participation_set.filter(status="キャンセル待ち").order_by('created')
+            participations = self.object.frame.participation_set
+
+            waiting_list = participations.filter(status="キャンセル待ち") \
+                                         .order_by('created')
+
             if len(waiting_list) > 0:
                 carry_up = waiting_list.first()
                 carry_up.status = "参加中"
                 carry_up.save()
-                #Send Email
+
+                # Send Email
                 template = get_template("email/carry_up.txt")
-                context = Context({'user': carry_up.user, 'event': carry_up.event})
+
+                context = Context({'user': carry_up.user,
+                                   'event': carry_up.event})
+
                 content = template.render(context)
-                subject = content.split("\n", 1)[0]
-                message = content.split("\n", 1)[1]
-                send_mail(subject, message, "reminder@sovol.earth", [carry_up.user.email])
+                subject, message = content.split("\n", 1)
+
+                # XXX: Hardcoded From address
+                send_mail(subject,
+                          message,
+                          "reminder@sovol.earth",
+                          [carry_up.user.email])
 
         messages.success(self.request, "参加をキャンセルしました。")
-        return reverse_lazy('event:detail', kwargs={'pk': self.kwargs['event_id']})
+
+        return reverse_lazy('event:detail', kwargs={
+            'pk': self.kwargs['event_id']
+        })
 
     def test_func(self):
+        # FIXME: Not in use?
         return True
-        return self.request.user in Event.objects.get(pk=self.request.event_id).participant.all()
 
     def handle_no_permission(self):
         return HttpResponseForbidden()
@@ -599,7 +639,7 @@ class CommentCreate(RedirectView):
             return reverse_lazy('event:detail', kwargs={'pk': event_id})
 
         text = self.request.POST["text"]
-        if text.strip()!="":
+        if text.strip() != "":
             comment = Comment(
                 user=self.request.user,
                 event=Event.objects.get(pk=event_id),
@@ -622,7 +662,9 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
     model = Event
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'event/message.html', {'event': self.get_object()})
+        return render(request, 'event/message.html', {
+            'event': self.get_object()
+        })
 
     def post(self, request, *args, **kwargs):
         target = request.POST.get('target')
@@ -630,30 +672,43 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
         event = self.get_object()
 
         if target == "admin":
-            users = event.participant.filter(participation__status__in=["管理者"])
+            users = event.participant \
+                         .filter(participation__status__in=["管理者"])
         elif target == "participants":
             users = event.participant.all()
         elif target == "members":
-            users = event.participant.filter(participation__status__in=["管理者","参加中"])
+            users = event.participant \
+                         .filter(participation__status__in=["管理者", "参加中"])
         elif target == "waiting":
-            users = event.participant.filter(participation__status__in=["管理者","キャンセル待ち"])
+            users = event.participant \
+                         .filter(participation__status__in=["管理者", "キャンセル待ち"])
         else:
             messages.error(request, "不正な送信先です")
-            return redirect(reverse_lazy('event:message', kwargs={'pk': kwargs['pk']}))
+            return redirect(reverse_lazy('event:message',
+                                         kwargs={'pk': kwargs['pk']}))
 
         for user in users:
+            # XXX: Hardcoded From address
             send_template_mail(
                 "email/message.txt",
-                {"event": event, "user": user, "sender": request.user, "message": message},
+                {
+                    "event": event,
+                    "user": user,
+                    "sender": request.user,
+                    "message": message,
+                },
                 "Sovol Info <info@sovol.earth>",
                 [user.email],
             )
 
         messages.success(self.request, "メッセージの送信が完了しました。")
-        return redirect(reverse_lazy('event:message', kwargs={'pk':kwargs['pk']}))
+        return redirect(reverse_lazy('event:message',
+                                     kwargs={'pk': kwargs['pk']}))
 
     def test_func(self):
-        return self.request.user.is_authenticated and self.request.user.is_manager_for(self.get_object())
+        is_authenticated = self.request.user.is_authenticated
+        is_manager = self.request.user.is_manager_for(self.get_object())
+        return is_authenticated and is_manager
 
     def handle_no_permission(self):
         return HttpResponseForbidden()
