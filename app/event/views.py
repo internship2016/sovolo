@@ -613,8 +613,8 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
         })
 
     def test_func(self):
+        # FIXME: Not in use?
         return True
-        return self.request.user in Event.objects.get(pk=self.request.event_id).participant.all()
 
     def handle_no_permission(self):
         return HttpResponseForbidden()
