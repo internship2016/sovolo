@@ -39,7 +39,8 @@ import sys
 import io
 import uuid
 import urllib
-import json, requests
+import json
+import requests
 sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
 
 @method_decorator(login_required, name='dispatch')
