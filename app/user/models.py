@@ -13,7 +13,6 @@ from django.utils import timezone
 from tag.models import Tag
 from base.models import AbstractBaseModel
 
-import sys
 import os
 import math
 
