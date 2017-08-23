@@ -303,7 +303,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return user_unreviewed_list
 
     # send html template
-    def get_ziped_unreview_hoseted(self):
+    def get_ziped_unreviewed_hosted(self):
         return zip(self.get_unreviewed_past_hosted_events(),
                    self.get_unreviewed_paticipant_of_past_hosted_events_poped_per_event())
 
