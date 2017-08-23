@@ -438,7 +438,7 @@ class EventSearchResultsView(ListView):
                 group_query = Q(group__in=group_list)
                 query = query & group_query
 
-        results = Event.objects.filter(query)
+        results = Event.objects.filter(query).order_by('-id').distinct()
 
         if 'order_by' in self.request.GET:
             order_by = self.request.GET['order_by']

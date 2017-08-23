@@ -26,10 +26,10 @@
           <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
           <p> {% trans 'Sovolage' %}<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
           <div style="text-align: right">
-          {% if user.id == request.user.id %}
-            <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">{% trans 'Edit profile' %}</a>
-            <a class="btn btn-default btn-sm" href="{% url 'user:skill' user.id %}">スキル一覧を見る</a>↲
-          {% endif %}
+            {% if user.id == request.user.id %}
+              <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">{% trans 'Edit profile' %}</a>
+              <a class="btn btn-default btn-sm" href="{% url 'user:skill' user.id %}">{% trans "View skills" %}</a>
+            {% endif %}
           </div>
         </div>
     </div>
