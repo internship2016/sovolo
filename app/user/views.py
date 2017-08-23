@@ -69,7 +69,7 @@ class UserCreateView(CreateView):
         form = super().get_form()
         form.fields['password'].widget = forms.PasswordInput()
         form.fields['username'].maxlength = 15
-        form.fields['username'].label = _("Username (Up to 15 characters)")
+        form.fields['username'].label = _("Username（Up to 15 characters)")
         return form
 
     
@@ -116,9 +116,15 @@ class RequestPasswordReset(View):
                 [user.email]
             )
 
-        info_msg = (_("A password reset was requested.")
-                    _("If the email address is registered,")
-                    _("URL for resetting your password will be sent."))
+<<<<<<< HEAD
+        info_msg = (_("A password reset was requested. "
+                    "If the email address is registered, "
+                    "URL for resetting your password will be sent."))
+=======
+        info_msg = _("A password reset was requested."
+                     "If the email address is registered, "
+                     "URL for resetting your password will be sent.")
+>>>>>>> 31fc13728f90453548fce6724c910d72bbc651bf
 
         messages.info(request, info_msg)
         return redirect("top")
@@ -144,7 +150,7 @@ class ResetPassword(View):
         if resetting .exists():
             resetting = resetting .first()
         else:
-            messages.error(request, _("Failed to reset your password.")
+            messages.error(request, _("Failed to reset your password."))
             return redirect("top")
 
         user = resetting.user
