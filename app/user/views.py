@@ -144,7 +144,7 @@ class ResetPassword(View):
         if resetting .exists():
             resetting = resetting .first()
         else:
-            messages.error(request, _("Failed to reset your password.")
+            messages.error(request, _("Failed to reset your password."))
             return redirect("top")
 
         user = resetting.user
