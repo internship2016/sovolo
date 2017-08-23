@@ -16,7 +16,6 @@ from .models import User, Skill, UserActivation, UserPasswordResetting
 from .form import UserReviewListForm
 from django.urls import reverse
 
-from django.utils import timezone
 from django.forms import formset_factory
 from event.models import Event
 
