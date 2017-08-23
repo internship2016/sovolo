@@ -33,7 +33,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'event.apps.EventConfig',
-    'group.apps.GroupConfig',
     'tag.apps.TagConfig',
     'user.apps.UserConfig',
     'base.apps.BaseConfig',
