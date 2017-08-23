@@ -3,18 +3,18 @@
 {% load event_tags %}
 {% load user_tags %}
 
-{% block title %}{{ user.name }} ユーザー詳細 | Sovol{% endblock %}
+{% block title %}{{ user.name }} {% trans "Skills" %} | Sovol{% endblock %}
 
 {% block content %}
 <div class="panel paneli-primary">
   <div class="panel-heading">
-    スキル変更
+      {% trans "Edit skills" %}
   </div>
   <form class="form-horizontal" action="" method="post" enctype="multipart/form-date">
     <!--  {{ form.as_ul }} -->
       {% csrf_token %}
     <div class="form-group">
-    <label class="col-sm-3">スキルのタグ</label>
+    <label class="col-sm-3">{% trans "Related tags" %}</label>
       <div class="">
         {% for tag in all_tags %}
           <label><input type="checkbox" name="tags" value="{{ tag.id }}" {% if tag in skill.tag.all %}checked{% endif %}>{{ tag.name }}</label>
@@ -23,13 +23,13 @@
     </div>
 
     <div class="form-group">
-    <label class="col-sm-3">できる内容</label>
+    <label class="col-sm-3">{% trans "I can do" %}:</label>
       <div class="col-sm-9">
         <input id="id_name" class="form-control" name="skilltodo" type="text" value="{{ skill.skilltodo }}" required/>
       </div>
     </div>
     <div class="panel-footer" style="text-align:center">
-      <button class="btn btn-primary" type="submit">更新</button>
+      <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
     </div>
   </form>
   

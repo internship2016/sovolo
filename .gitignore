@@ -128,3 +128,5 @@ ENV/
 
 .DS_Store
 Thumbs.db
+
+.*.sw[a-z]

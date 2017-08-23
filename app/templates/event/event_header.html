@@ -13,11 +13,11 @@
   <div class="alert alert-danger">{% trans "EVENT CLOSED" %}</div>
   {% else %}
   {% if request.user in event.participant.all %}
-  {% if participation.status == "参加中" %}
+  {% if participation.status == _("Onging") %}
   <div class="alert alert-info">
       {% trans "You're participating this event." %}
   </div>
-  {% elif participation.status == "キャンセル待ち" %}
+  {% elif participation.status == _("Waiting List") %}
   <div class="alert alert-info">
       {% trans "You're on the waiting list." %}
   </div>

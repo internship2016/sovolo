@@ -3,7 +3,7 @@
 {% load event_tags %}
 {% load user_tags %}
 
-{% block title %}{{ user.name }}ユーザー詳細{% trans "Skills" %} | Sovol{% endblock %}
+{% block title %}{{ user.name }}{% trans "Skills" %} | Sovol{% endblock %}
 {% block content %}
 
 {% include "user/user_header.html" %}
@@ -30,7 +30,7 @@
           </label>
         {% if user.id == request.user.id %}
           <div style="text-align: right; margin-top: 2px;">
-            <a href="{% url 'user:skill_edit' skill.id %}" type="button" class="btn btn-default">内容変更</a>
+            <a href="{% url 'user:skill_edit' skill.id %}" type="button" class="btn btn-default">{% trans "Edit" %}</a>
           </div>
         {% endif %}
         </div>
@@ -38,7 +38,7 @@
     {% endfor %}
     {% if user.id == request.user.id %}
     <div style="text-align: center; margin-top: 4px;">
-      <a href=" ./add" type="button" class="btn btn-default">新スキル作成</a>
+      <a href=" ./add" type="button" class="btn btn-default">{% trans "Add a new skill" %}</a>
     </div>
     {% endif %}
   </div>
