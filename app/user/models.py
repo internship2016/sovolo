@@ -350,11 +350,9 @@ class UserReviewList(models.Model):
                                      on_delete=models.CASCADE,
                                      related_name='to_rate_user')
 
-    from_rate_user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='from_rate_user',
-        )
+    from_rate_user = models.ForeignKey(User,
+                                       on_delete=models.CASCADE,
+                                       related_name='from_rate_user')
 
     rating = models.IntegerField(validators=[MinValueValidator(0),
                                        MaxValueValidator(5)])
