@@ -39,3 +39,11 @@ def show_map(request):
     context['all_tags'] = Tag.objects.all()
 
     return render(request, 'map.html',context)
+
+
+def index_user(request):
+    context = {}
+
+    context['all_tags'] = Tag.objects.all()
+    return render(request, 'top_user.html', context)
+
