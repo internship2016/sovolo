@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 16:40+0000\n"
+"POT-Creation-Date: 2017-08-23 17:03+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -997,7 +997,7 @@ msgstr "地域："
 msgid "Sovolage"
 msgstr "ソボレージ"
 
-#: templates/user/user_header.html:31
+#: templates/user/user_header.html:32
 msgid "View skills"
 msgstr "スキル一覧を見る"
 
@@ -1073,6 +1073,54 @@ msgid "You need %(points_to_next)d more Sovolage to the next level!"
 msgid_plural "You need %(points_to_next)d more Sovolages to the next level!"
 msgstr[0] "次のレベルまであと%(points_to_next)dソボレージ！"
 
+#: user/views.py:58
+msgid "Confirmation email has been sent to your email address."
+msgstr ""
+
+#: user/views.py:72
+#, fuzzy
+#| msgid "Input up to 15 characters."
+msgid "Username (Up to 15 characters)"
+msgstr "15文字以内"
+
+#: user/views.py:83
+#, fuzzy
+#| msgid "You have been successfully logged out."
+msgid "You have successfully registered!"
+msgstr "ログアウトしました。"
+
+#: user/views.py:119
+msgid "A password reset was requested."
+msgstr ""
+
+#: user/views.py:120
+msgid "If the email address is registered,"
+msgstr ""
+
+#: user/views.py:121
+msgid "URL for resetting your password will be sent."
+msgstr ""
+
+#: user/views.py:135
+msgid "Invalid URL"
+msgstr ""
+
+#: user/views.py:147
+#, fuzzy
+#| msgid "Reset your password"
+msgid "Failed to reset your password."
+msgstr "パスワード再設定"
+
+#: user/views.py:155
+#, fuzzy
+#| msgid "Your new pasword"
+msgid "Your new password has been set."
+msgstr "新しいパスワード"
+
+#: user/views.py:168
+msgid "No user found"
+msgstr ""
+
 #: user/views.py:215
 msgid "User profile was successfully edited."
 msgstr "ユーザー情報を編集しました。"
@@ -1080,3 +1128,9 @@ msgstr "ユーザー情報を編集しました。"
 #: user/views.py:230
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
+
+#: user/views.py:395
+#, fuzzy
+#| msgid "Your event was successfully added."
+msgid "Your new skill has been added successfully."
+msgstr "ボランティア情報を編集しました。"
