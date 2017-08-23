@@ -26,16 +26,19 @@
           <div class="col-sm-9">
             <a class="form-control" name="skill_{{ forloop.counter }}_skilltodo">{{ skill.skilltodo }}</a>
           </div>
-
+        {% if user.id == request.user.id %}
           <div style="text-align: right; margin-top: 2px;">
             <a href="{% url 'user:skill_edit' skill.id %}" type="button" class="btn btn-default">{% trans "Edit" %}</a>
           </div>
+        {% endif %}
         </div>
       </div>
     {% endfor %}
+    {% if user.id == request.user.id %}
     <div style="text-align: center; margin-top: 4px;">
       <a href=" ./add" type="button" class="btn btn-default">{% trans "Add a new skill" %}</a>
     </div>
+    {% endif %}
   </div>
 </div>
 
