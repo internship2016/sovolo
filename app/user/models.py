@@ -369,6 +369,7 @@ class UserReviewList(models.Model):
         # Built-in attribute of django.contrib.auth.models.User !
         return str(self.to_rate_user)
 
+
 class Skill(AbstractBaseModel):
     userskill = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     description = models.TextField(default='ボランティアできること')
