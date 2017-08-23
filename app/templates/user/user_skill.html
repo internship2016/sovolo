@@ -3,14 +3,14 @@
 {% load event_tags %}
 {% load user_tags %}
 
-{% block title %}{{ user.name }}{% trans "My skills" %} | Sovol{% endblock %}
+{% block title %}{{ user.name }}{% trans "Skills" %} | Sovol{% endblock %}
 {% block content %}
 
 {% include "user/user_header.html" %}
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <h1 class="panel-title">{% trans "My skills" %}</h1>
+    <h1 class="panel-title">{% trans "Skills" %}</h1>
   </div>
   <div class="panel-body">
     {% for skill in user.skill_set.all %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 00:04+0000\n"
+"POT-Creation-Date: 2017-08-23 00:23+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -639,7 +639,7 @@ msgid "Keywords"
 msgstr "キーワード"
 
 #: templates/event/search_form.html:23
-#: templates/event/search_form_side.html:23 templates/event/side_info.html:24
+#: templates/event/search_form_side.html:23 templates/event/side_info.html:13
 msgid "Filters"
 msgstr "タグ"
 
@@ -707,15 +707,7 @@ msgstr "次へ"
 msgid "Owner"
 msgstr "オーナー"
 
-#: templates/event/side_info.html:13
-msgid "Groups"
-msgstr "グループ"
-
 #: templates/event/side_info.html:18
-msgid "There are no groups related to this event."
-msgstr "関連しているグループはありません"
-
-#: templates/event/side_info.html:29
 msgid "There are no filters attached."
 msgstr "このボランティアはタグ付けされていません"
 
@@ -1066,7 +1058,7 @@ msgid "Posted on"
 msgstr "投稿日"
 
 #: templates/user/user_skill.html:6 templates/user/user_skill.html:13
-msgid "My skills"
+msgid "Skills"
 msgstr "スキル一覧"
 
 #: templates/user/user_skill.html:20
