@@ -390,6 +390,7 @@ class Skill(AbstractBaseModel):
     def get_absolute_url(self):
         return reverse('user:detail', kwargs={'pk': self.id})
 
+
 class SkillAdmin(admin.ModelAdmin):
     list_display22 = (
         'pk',
