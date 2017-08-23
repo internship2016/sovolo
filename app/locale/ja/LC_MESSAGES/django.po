@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 16:35+0000\n"
+"POT-Creation-Date: 2017-08-23 16:40+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -281,7 +281,7 @@ msgstr "ボランティア作成"
 #: templates/event/add.html:21 templates/event/edit.html:19
 #: templates/user/request_password_reset.html:17
 #: templates/user/reset_password.html:17 templates/user/skill_add.html:31
-#: templates/user/user_post_review.html:27
+#: templates/user/skill_form.html:32 templates/user/user_post_review.html:27
 msgid "Submit"
 msgstr "送信"
 
@@ -959,13 +959,23 @@ msgstr "新しいパスワード"
 msgid "Add a new skill"
 msgstr "スキル新規作成"
 
-#: templates/user/skill_add.html:16
+#: templates/user/skill_add.html:16 templates/user/skill_form.html:17
 msgid "Related tags"
 msgstr "関連付けるタグ"
 
-#: templates/user/skill_add.html:25 templates/user/user_skill.html:26
+#: templates/user/skill_add.html:25 templates/user/skill_form.html:26
+#: templates/user/user_skill.html:26
 msgid "I can do"
 msgstr "できる内容"
+
+#: templates/user/skill_form.html:6 templates/user/user_skill.html:6
+#: templates/user/user_skill.html:13
+msgid "Skills"
+msgstr "スキル一覧"
+
+#: templates/user/skill_form.html:11
+msgid "Edit skills"
+msgstr "スキル変更"
 
 #: templates/user/user_header.html:17
 msgid "Age Group:"
@@ -1048,10 +1058,6 @@ msgstr "評価"
 #: templates/user/user_review.html:20
 msgid "Comment"
 msgstr "コメント"
-
-#: templates/user/user_skill.html:6 templates/user/user_skill.html:13
-msgid "Skills"
-msgstr "スキル一覧"
 
 #: templates/user/user_skill.html:20
 msgid "Skill "
