@@ -412,7 +412,7 @@ class EventSearchResultsView(ListView):
                 query = query & place_query
 
 
-        results = Event.objects.filter(query)
+        results = Event.objects.filter(query).order_by('-id').distinct()
 
         if 'order_by' in self.request.GET:
             order_by = self.request.GET['order_by']
