@@ -15,7 +15,6 @@ from django.utils import timezone
 from .models import User, Skill, UserActivation, UserPasswordResetting
 from .form import UserReviewListForm
 from django.urls import reverse
-from django.contrib.auth.mixins import UserPassesTestMixin
 
 from django.utils import timezone
 from django.forms import formset_factory
