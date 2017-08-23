@@ -4,13 +4,25 @@ from django.utils import timezone
 from django.conf import settings
 from event.models import Event, Participation, Frame, Comment, Question, Answer
 from group.models import Group, Membership
-from user.models import User
+from user.models import User, UserReviewList
 from tag.models import Tag
 import csv
 import os
 import glob
 import random
 
+def weight_choise(lists, weight): 
+    num = 10
+    for i in weight:
+        if (i*100)%10!=0:
+            num = 100
+    weight_n = [int(i*num) for i in weight]
+    choise_list =[]
+    for i, w in zip(lists, weight_n):
+        for _ in range(w):
+            choise_list.append(i)
+
+    return random.choice(choise_list)
 
 username_sample=[
 "koshiba_takahiro"
@@ -115,7 +127,35 @@ comment_sample=[
     """
 ]
 
+review_comment_sample = {
+    '',
+    'It was beyond my wildest dreams.',
 
+    """
+    商品が届きました！
+    想像していた以上に素敵なお品でとても気に入りました！
+    大切に使わせて頂きます。
+    出品さまのおかげで気持ちのよい取引になり大変嬉しく思っています。
+    またのご縁があることを楽しみにしております。この度はありがとうございました。
+    """,
+
+    """
+    商品が、届きました！
+    とても欲しくて探していたので、落札できて感激です（＾o＾）ありがとうございました。
+    """,
+
+    """
+    本日受け取りました*^-^*とても可愛らしく嬉しいです☆
+    大切にいたしますね。
+    本当にありがとうございました！またぜひ御縁がありますように♪
+    """,
+
+    """
+    2週間お待ちしましたが、
+    取引していただけないものと判断させて頂き評価を入れさせていただきました。
+    """
+
+}
 class Command(BaseCommand):
     help = """
     This is a custom command created to seed the database with test data.
@@ -189,6 +229,12 @@ class Command(BaseCommand):
         parser.add_argument(
             '-user',
             dest='user',
+            action='store_true',
+            default=False,
+        )
+        parser.add_argument(
+            '-userreviewlist',
+            dest='userreviewlist',
             action='store_true',
             default=False,
         )
@@ -542,4 +588,34 @@ class Command(BaseCommand):
                 self._create_questions_and_answers()
 
 
+    def _create_userreviewlists(self):
+        past_event_list = [event for event in Event.objects.all() if event.is_closed()]
+        for c_event in past_event_list:
+            for c_participant in c_event.participant.all():
 
+                d_weight = [0.3,0.7]
+                if weight_choise([0,1], weight=d_weight): # Did_or_Not_Did
+                    # H-> P
+                    userreviewlists_hp = UserReviewList(
+                        to_rate_user = c_participant.id,
+                        from_rate_user = c_event.host_user.id,
+                        rating = weight_choise([1,2,3,4,5],weight=[0.05,0.1,0.2,0.35,0.3]),
+                        comment = weight_choise(review_comment_sample, weight=[0.4,0.1,0.1,0.2,0.19,0.01]),
+                        joined_event = c_event.id,
+                        post_day = c_event.end_time + random.choice(range(1,20)) * timezone.timedelta(days=1),
+                        event_host = True,
+                    )
+                    userreviewlists_hp.save()
+
+                if weight_choise([0,1], weight=d_weight): # Did_or_Not_Did
+                    # P-> H
+                    userreviewlists_ph = UserReviewList(
+                        to_rate_user = c_event.host_user.id,
+                        from_rate_user = c_participant.id,
+                        rating = weight_choise([1,2,3,4,5],weight=[0.05,0.1,0.2,0.35,0.3]),
+                        comment = weight_choise(review_comment_sample, weight=[0.4,0.1,0.1,0.2,0.15,0.05]),
+                        joined_event = c_event.id,
+                        post_day = c_event.end_time + random.choice(range(1,20)) * timezone.timedelta(days=1),
+                        event_host = False,
+                    )
+                    userreviewlists_ph.save()

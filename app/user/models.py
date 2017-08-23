@@ -383,5 +383,3 @@ class SkillAdmin(admin.ModelAdmin):
         'description',
         'skilltodo',
     )
-
-
