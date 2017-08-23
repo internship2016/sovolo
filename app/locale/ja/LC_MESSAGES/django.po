@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 16:19+0000\n"
+"POT-Creation-Date: 2017-08-23 16:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -901,7 +901,7 @@ msgstr "Facebookでログイン"
 
 #: templates/user/login_page.html:52
 msgid "Not registered with us yet?"
-msgstr "Facebookでログイン"
+msgstr "登録がお済みでない方はこちら"
 
 #: templates/user/login_page.html:55
 msgid "Join Now"
