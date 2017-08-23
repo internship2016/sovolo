@@ -11,7 +11,6 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
-from django.utils import timezone
 from .models import User, Skill, UserActivation, UserPasswordResetting
 from .form import UserReviewListForm
 from django.urls import reverse
