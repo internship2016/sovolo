@@ -8,7 +8,6 @@
 
 {% include "user/user_header.html" %}
 
-
 {% if user.admin_event.all %}
 {% event_list user.admin_event.all _("List of Events Organizing") %}
 {% endif %}

@@ -1,82 +1,109 @@
 {% load i18n %}
- <div id="user-header">
-  <div class="detail-header row mt15">
-    <div class="detail-header-left col-sm-4 col-md-3" style="text-align: center">
-      <div class="media-object custom_thumbnail detail-thumbnail" style="background-image:url({{ user.get_image_url }});"></div>
-    </div>
-    <div class="detail-header-right col-sm-8 col-md-9">
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h1 class="panel-title">
-              {{ user.username }}
-          </h1>
-        </div>
-        <div class="row"  style="padding-left:1em; padding-right: 1em;">
-          <div class="panel-body col-sm-7 col-md-8" style="overflow-wrap: break-word;">
-            
-            {% if user.birthday != null %}
-            <p>{% trans "Age Group:" %} {{ user.get_about_age }}{% trans "'s" %}</p>
-            {% endif %}
-            {% if user.sex != null %}
-            <p>{% trans "Sex:" %} {{ user.sex|yesno:"男,女,秘密" }}</p>
-            {% endif %}
-            <p>{% trans 'Region:' %} {{ user.get_region_kanji }}</p>
-          </div>
-
-          <div class="panel-body col-sm-5 col-md-4" style="padding-bottom: 5px;">
-            <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
-            <p> {% trans 'Sovolage' %}<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
-            <div style="text-align: right">
-            {% if user.id == request.user.id %}
-              <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">{% trans 'Edit profile' %}</a>
-              <a class="btn btn-default btn-sm" href="{% url 'user:skill' user.id %}">スキル一覧を見る</a>↲
-            {% endif %}
-            </div>
-          </div>
+<div class="detail-header row mt15">
+  <div class="col-xs-12 col-sm-4 col-md-3" style="text-align: center">
+    <div class="media-object custom_thumbnail detail-thumbnail" style="background-image:url({{ user.get_image_url }});"></div>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-md-9">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+            {{ user.username }}
+        </h3>
       </div>
-        <div class="panel-body" style="padding-top: 0;">
-          <span>{{ user.msg_you_need_more_xxx_sovolage_to_the_next_level }}</span>
-          <div class="progress" style="margin-bottom: 0;">
-            <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ user.get_level_percentage }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ user.get_level_percentage }}%;">
-            <span>{{user.get_level_percentage}}%</span>
-            </div>
+      <div class="row"  style="padding-left:1em; padding-right: 1em;">
+        <div class="panel-body col-sm-7 col-md-8" style="overflow-wrap: break-word;">
+
+          {% if user.birthday != null %}
+          <p>{% trans "Age Group:" %} {{ user.get_about_age }}{% trans "'s" %}</p>
+          {% endif %}
+          {% if user.sex != null %}
+          <p>{% trans "Sex:" %} {{ user.sex|yesno:"男,女,秘密" }}</p>
+          {% endif %}
+          <p>{% trans 'Region:' %} {{ user.get_region_kanji }}</p>
+        </div>
+
+        <div class="panel-body col-sm-5 col-md-4" style="padding-bottom: 5px;">
+          <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
+          <p> {% trans 'Sovolage' %}<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
+          <div style="text-align: right">
+          {% if user.id == request.user.id %}
+            <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">{% trans 'Edit profile' %}</a>
+            <a class="btn btn-default btn-sm" href="{% url 'user:skill' user.id %}">スキル一覧を見る</a>↲
+          {% endif %}
+          </div>
+        </div>
+    </div>
+      <div class="panel-body" style="padding-top: 0;">
+        <span>{{ user.msg_you_need_more_xxx_sovolage_to_the_next_level }}</span>
+        <div class="progress" style="margin-bottom: 0;">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ user.get_level_percentage }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ user.get_level_percentage }}%;">
+          <span>{{user.get_level_percentage}}%</span>
           </div>
         </div>
       </div>
     </div>
   </div>
-   <div>
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">{% trans 'Trophies' %}</h3>
-        </div>
-        <div class="panel-body">
-          {% for trophy in user.trophy_list %}
-            <div class="trophy-box">
-              <div class="trophy-hedding">{{ trophy.name }}</div>
-              <div class="trophy-icon"><img src="/media/common/trophy/{{ trophy.type }}.svg" style="padding: 0;"></div>
-            </div>
-          {% endfor %}
-        </div>
-      </div>
-    </div>
-  <div>
-      <div id="user-info" class="panel panel-primary">
-        <div class="panel-heading">
-          <h3 class="panel-title">
-            {% trans 'Following tags' %}
-          </h3>
-        </div>
-        <div class="panel-body container-fluid">
-          <div>
-              {% for tag in user.follow_tag.all %}
-                <a class="tag" href="{% url 'event:search' %}?tags={{ tag.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
-              {% empty %}
-                <p>{% trans 'Tags not found' %}</p>
-              {% endfor %}
-            </div>
+</div>
 
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">{% trans "Reviews" %}</h3>
+  </div>
+  <div class="panel-body">
+    {{ user.to_rate_user.all.count }} {% trans "reviews" %}
+    {{ user.get_mean_rating }}
+    <ul class="list-unstyled">
+    
+    {% for rate in user.to_rate_user.all %}
+      <li class="media">
+        <div class="media-left">
+          <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{ rate.from_rate_user.get_image_url }});"></div>
         </div>
+        <div class="media-body">
+          <h5 class="">
+            <span>{{ rate.rating }}</span>
+            <span class="ml5">{% trans "Rated by" %} {{ rate.from_rate_user.username }}</span>
+            <span class="ml5"></span>
+          </h5>
+          <p>{{ rate.comment }}</p>
+          <p>
+            {% trans "Event Name" %} ： {{ rate.joined_event.name }}
+            {% trans "Posted on" %} ： {{ rate.post_day }}
+          </p>
+        </div>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">{% trans 'Trophies' %}</h3>
+  </div>
+  <div class="panel-body">
+    {% for trophy in user.trophy_list %}
+      <div class="trophy-box">
+        <div class="trophy-hedding">{{ trophy.name }}</div>
+        <div class="trophy-icon"><img src="/media/common/trophy/{{ trophy.type }}.svg" style="padding: 0;"></div>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div id="user-info" class="panel panel-primary">
+  <div class="panel-heading">
+    <h3 class="panel-title">
+      {% trans 'Following tags' %}
+    </h3>
+  </div>
+  <div class="panel-body container-fluid">
+    <div>
+        {% for tag in user.follow_tag.all %}
+          <a class="tag" href="{% url 'event:search' %}?tags={{ tag.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
+        {% empty %}
+          <p>{% trans 'Tags not found' %}</p>
+        {% endfor %}
       </div>
   </div>
 </div>
