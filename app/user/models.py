@@ -279,7 +279,11 @@ class User(AbstractBaseModel, AbstractBaseUser):
         user_reviewed_list = []
         for event in self.get_past_hosted_events():
             reviews = self.from_rate_user.all()
-            users = [r.to_rate_user for r in reviews if r.joined_event == event]
+
+            users = [r.to_rate_user for r
+                     in reviews
+                     if r.joined_event == event]
+
             user_reviewed_list.append(users)
         return user_reviewed_list
 
