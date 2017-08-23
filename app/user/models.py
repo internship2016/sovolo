@@ -284,10 +284,14 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     def get_unreviewed_participant_of_past_hosted_events(self):
         user_unreviewed_list = []
-        for user_list_all, user_list_re  in zip(self.get_participant_of_past_hosted_events(),
-                             self.get_reviewed_participant_of_past_hosted_events()):
+
+        zipped = zip(self.get_participant_of_past_hosted_events(),
+                     self.get_reviewed_participant_of_past_hosted_events())
+
+        for user_list_all, user_list_re in zipped:
             temp = [user for user in user_list_all if user not in user_list_re]
             user_unreviewed_list.append(temp)
+
         return user_unreviewed_list
 
     # pop Null
