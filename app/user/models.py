@@ -310,9 +310,12 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     def get_unreviewed_participant_of_past_hosted_events_poped_per_event(self):
         user_unreviewed_list = []
+
         for user_list in self.get_unreviewed_participant_of_past_hosted_events():
-            if not len(user_list) == 0:
-                user_unreviewed_list.append(user_list)
+            if len(user_list) == 0:
+                continue
+            user_unreviewed_list.append(user_list)
+
         return user_unreviewed_list
 
     # send html template
