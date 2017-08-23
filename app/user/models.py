@@ -321,6 +321,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return zip(self.get_unreviewed_past_hosted_events(),
                    user_unreviewed_list)
 
+
 class UserActivation(models.Model):
     user = models.OneToOneField(User)
     key = models.CharField(max_length=255, unique=True)
