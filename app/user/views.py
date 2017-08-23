@@ -4,7 +4,6 @@ from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic import DetailView, View, ListView
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-from .models import User, Skill
 from tag.models import Tag
 from base.utils import send_template_mail
 from django.contrib.auth import views as auth_views
@@ -13,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
 from django.utils import timezone
-from .models import User, UserActivation, UserPasswordResetting, UserReviewList
+from .models import User, Skill, UserActivation, UserPasswordResetting, UserReviewList
 from .form import UserReviewListForm
 from django.urls import reverse
 from django.contrib.auth.mixins import UserPassesTestMixin
