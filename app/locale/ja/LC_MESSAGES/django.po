@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 23:35+0000\n"
+"POT-Creation-Date: 2017-08-23 23:55+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -361,7 +361,7 @@ msgid "Closed"
 msgstr "締切済"
 
 #: templates/event/detail.html:60 templates/event/detail.html:117
-#: templates/event/side_info.html:9
+#: templates/event/event_header.html:20 templates/event/side_info.html:9
 msgid "Waiting List"
 msgstr "キャンセル待ち"
 
@@ -434,6 +434,10 @@ msgstr "ボランティアを削除する"
 #: templates/event/event_header.html:13
 msgid "EVENT CLOSED"
 msgstr "このボランティアは終了しました"
+
+#: templates/event/event_header.html:16
+msgid "Onging"
+msgstr ""
 
 #: templates/event/event_header.html:18
 msgid "You're participating this event."
@@ -1094,8 +1098,6 @@ msgid "Confirmation email has been sent to your email address."
 msgstr "記入したメールアドレスに確認メールを送信しました。"
 
 #: user/views.py:72
-#, fuzzy
-#| msgid "Username (Up to 15 characters)"
 msgid "Username（Up to 15 characters)"
 msgstr "ニックネーム（15文字以内）"
 
@@ -1104,11 +1106,12 @@ msgid "You have successfully registered!"
 msgstr "本登録が完了しました。"
 
 #: user/views.py:119
+msgid ""
 "A password reset was requested.If the email address is registered, URL for "
 "resetting your password will be sent."
 msgstr ""
-"リクエストを受け付けました。メールアドレスが登録されている場合、アドレスに"
-"パスワード再設定のリンクが送信されます。"
+"リクエストを受け付けました。メールアドレスが登録されている場合、アドレスにパ"
+"スワード再設定のリンクが送信されます。"
 
 #: user/views.py:135
 msgid "Invalid URL"
