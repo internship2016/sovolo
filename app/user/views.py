@@ -116,9 +116,9 @@ class RequestPasswordReset(View):
                 [user.email]
             )
 
-        info_msg = (_("A password reset was requested.")
-                    _("If the email address is registered,")
-                    _("URL for resetting your password will be sent."))
+        info_msg = _("A password reset was requested."
+                     "If the email address is registered, "
+                     "URL for resetting your password will be sent.")
 
         messages.info(request, info_msg)
         return redirect("top")
