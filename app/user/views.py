@@ -55,7 +55,7 @@ class UserCreateView(CreateView):
             [user.email],
         )
 
-        info_msg = "記入したメールアドレス%(email)sに確認メールを送信しました。" % {
+        info_msg = _("Confirmation email has been sent to your email address.") % {
             'email': user.email,
         }
         messages.info(self.request, info_msg)
@@ -69,7 +69,7 @@ class UserCreateView(CreateView):
         form = super().get_form()
         form.fields['password'].widget = forms.PasswordInput()
         form.fields['username'].maxlength = 15
-        form.fields['username'].label = "ニックネーム（15文字以内)"
+        form.fields['username'].label = _("Username (Up to 15 characters)")
         return form
 
     
@@ -80,7 +80,7 @@ class UserActivationView(View):
         user.is_active = True
         user.save()
         login(request, user, "django.contrib.auth.backends.ModelBackend")
-        messages.info(request, "本登録が完了しました。")
+        messages.info(request, _("You have successfully registered!"))
         return redirect("top")
 
 
@@ -116,9 +116,9 @@ class RequestPasswordReset(View):
                 [user.email]
             )
 
-        info_msg = ("リクエストを受け付けました。"
-                    "メールアドレスが登録されている場合、"
-                    "アドレスにパスワード再設定のリンクが送信されます。")
+        info_msg = (_("A password reset was requested.")
+                    _("If the email address is registered,")
+                    _("URL for resetting your password will be sent."))
 
         messages.info(request, info_msg)
         return redirect("top")
@@ -132,7 +132,7 @@ class ResetPassword(View):
     def get(self, request, *args, **kwargs):
         resetting = UserPasswordResetting.objects.filter(key=kwargs['key'])
         if not resetting.exists():
-            messages.error(request, "無効なURLです")
+            messages.error(request, _("Invalid URL"))
             return redirect("top")
         else:
             return render(request, 'user/reset_password.html')
@@ -144,7 +144,7 @@ class ResetPassword(View):
         if resetting .exists():
             resetting = resetting .first()
         else:
-            messages.error(request, "パスワードの再設定に失敗しました。")
+            messages.error(request, _("Failed to reset your password.")
             return redirect("top")
 
         user = resetting.user
@@ -152,7 +152,7 @@ class ResetPassword(View):
         user.save()
         login(request, user, "django.contrib.auth.backends.ModelBackend")
 
-        messages.info(request, "パスワードを再設定しました。")
+        messages.info(request, _("Your new password has been set."))
         return redirect("top")
 
 
@@ -165,7 +165,7 @@ class UserDetailView(DetailView):
         try:
             self.object = self.get_object()
         except Http404:
-            messages.error(request, "そのユーザーは存在しません")
+            messages.error(request, _("No user found"))
             return redirect('top')
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
@@ -392,7 +392,7 @@ class UserSkillAddView(CreateView):
         return form_redirect
 
     def get_success_url(self, **kwargs):
-        messages.info(self.request, "新規スキルを作成しました")
+        messages.info(self.request, _("Your new skill has been added successfully."))
         userskill_id = self.request.user.id
         return reverse('user:skill', kwargs={'pk': userskill_id})
 
