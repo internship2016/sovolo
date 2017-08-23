@@ -317,7 +317,8 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def get_zipped_unreviewed_hosted(self):
         user_unreviewed_list = []
 
-        for user_list in self.get_unreviewed_participant_of_past_hosted_events():
+        events = self.get_unreviewed_participant_of_past_hosted_events()
+        for user_list in events:
             if len(user_list) == 0:
                 continue
             user_unreviewed_list.append(user_list)
