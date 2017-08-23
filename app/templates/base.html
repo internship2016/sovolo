@@ -81,6 +81,17 @@
             <!--right menu-->
             <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_anonymous %}
+            <!--言語切り替え-->
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                  language  
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href="">English</a></li>
+                  <li><a href="">日本語</a></li>
+                </ul>
+              </li>
               <li class="pull-left"><a href="{% url 'user:register' %}">{% trans "Register" %}</a></li>
               <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
             {% else %}

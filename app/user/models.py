@@ -264,48 +264,61 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     # Review (using by host)
     def get_past_hosted_events(self):
-        return [event for event in self.host_event.all().order_by('start_time') if event.is_over()]
+        host_events = self.host_event.all().order_by('start_time')
+        return [e for e in host_events if e.is_over()]
 
     def get_participant_of_past_hosted_events(self):
         user_reviewed_list = []
         for event in self.get_past_hosted_events():
-            user_reviewed_list.append([ p_user.user for p_user in event.participation_set.all()])
+            users = [p.user for p in event.participation_set.all()]
+            user_reviewed_list.append(users)
         return user_reviewed_list
 
     def get_reviewed_participant_of_past_hosted_events(self):
         user_reviewed_list = []
         for event in self.get_past_hosted_events():
-            temp = [review.to_rate_user for review in self.from_rate_user.all() if review.joined_event == event]
-            user_reviewed_list.append(temp)
+            reviews = self.from_rate_user.all()
+            users = [r.to_rate_user for r in reviews if r.joined_event == event]
+            user_reviewed_list.append(users)
         return user_reviewed_list
 
     def get_unreviewed_participant_of_past_hosted_events(self):
         user_unreviewed_list = []
-        for user_list_all, user_list_re  in zip(self.get_participant_of_past_hosted_events(),
-                             self.get_reviewed_participant_of_past_hosted_events()):
+
+        zipped = zip(self.get_participant_of_past_hosted_events(),
+                     self.get_reviewed_participant_of_past_hosted_events())
+
+        for user_list_all, user_list_re in zipped:
             temp = [user for user in user_list_all if user not in user_list_re]
             user_unreviewed_list.append(temp)
+
         return user_unreviewed_list
 
     # pop Null
     def get_unreviewed_past_hosted_events(self):
         user_unreviewed_list = []
-        for event, unreviewed in zip(self.get_past_hosted_events(), self.get_unreviewed_participant_of_past_hosted_events()):
-            if not len(unreviewed) == 0:
-                user_unreviewed_list.append(event)
-        return user_unreviewed_list
 
-    def get_unreviewed_participant_of_past_hosted_events_poped_per_event(self):
-        user_unreviewed_list = []
-        for user_list in self.get_unreviewed_participant_of_past_hosted_events():
-            if not len(user_list) == 0:
-                user_unreviewed_list.append(user_list)
+        zipped = zip(self.get_past_hosted_events(),
+                     self.get_unreviewed_participant_of_past_hosted_events())
+
+        for event, unreviewed in zipped:
+            if len(unreviewed) == 0:
+                continue
+            user_unreviewed_list.append(event)
+
         return user_unreviewed_list
 
     # send html template
     def get_zipped_unreviewed_hosted(self):
+        user_unreviewed_list = []
+
+        for user_list in self.get_unreviewed_participant_of_past_hosted_events():
+            if len(user_list) == 0:
+                continue
+            user_unreviewed_list.append(user_list)
+
         return zip(self.get_unreviewed_past_hosted_events(),
-                   self.get_unreviewed_participant_of_past_hosted_events_poped_per_event())
+                   user_unreviewed_list)
 
 class UserActivation(models.Model):
     user = models.OneToOneField(User)
