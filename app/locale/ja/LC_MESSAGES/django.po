@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 16:29+0000\n"
+"POT-Creation-Date: 2017-08-23 16:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -235,15 +235,14 @@ msgstr "ボランティアを検索"
 msgid "Create an event"
 msgstr "ボランティア作成"
 
-#: templates/base.html:84 templates/participator/registor.html:7
-#: templates/user/acquire_email.html:4 templates/user/acquire_email.html:7
-#: templates/user/register.html:21
+#: templates/base.html:84 templates/user/acquire_email.html:4
+#: templates/user/acquire_email.html:7 templates/user/register.html:21
 msgid "Register"
 msgstr "ユーザー登録"
 
-#: templates/base.html:85 templates/participator/registor.html:42
-#: templates/user/login_page.html:6 templates/user/login_page.html:11
-#: templates/user/login_page.html:27 templates/user/register.html:45
+#: templates/base.html:85 templates/user/login_page.html:6
+#: templates/user/login_page.html:11 templates/user/login_page.html:27
+#: templates/user/register.html:45
 msgid "Log in"
 msgstr "ログイン"
 
@@ -768,31 +767,6 @@ msgstr "金"
 msgid "Sat"
 msgstr "土"
 
-#: templates/participator/registor.html:11
-msgid "Register as a volunteer"
-msgstr "新規ユーザー登録（ボランティアしたい人）"
-
-#: templates/participator/registor.html:15 templates/user/register.html:15
-msgid "Register with email address"
-msgstr "メールアドレスで登録"
-
-#: templates/participator/registor.html:21
-#: templates/user/acquire_email.html:17
-msgid "REGISTER"
-msgstr "登録"
-
-#: templates/participator/registor.html:29 templates/user/register.html:29
-msgid "Register with the following services"
-msgstr "SNSアカウントで登録"
-
-#: templates/participator/registor.html:32 templates/user/register.html:35
-msgid "Register with Facebook"
-msgstr "Facebookで登録"
-
-#: templates/participator/registor.html:39 templates/user/register.html:42
-msgid "Already have an account?"
-msgstr "アカウントをお持ちの方はこちら"
-
 #: templates/top.html:6
 msgid "Social Volunteering Network"
 msgstr "ソーシャルボランティアプラットフォーム"
@@ -828,6 +802,10 @@ msgstr "取得に失敗"
 #: templates/user/acquire_email.html:8
 msgid "You need an email address to create a Sovol account."
 msgstr "サービスの利用にはEmailアドレスが必要です"
+
+#: templates/user/acquire_email.html:17
+msgid "REGISTER"
+msgstr "登録"
 
 #: templates/user/detail.html:12
 msgid "List of Events Organizing"
@@ -933,9 +911,25 @@ msgstr "新規登録"
 msgid "Join Sovol"
 msgstr "ユーザー新規登録"
 
+#: templates/user/register.html:15
+msgid "Register with email address"
+msgstr "メールアドレスで登録"
+
+#: templates/user/register.html:29
+msgid "Register with the following services"
+msgstr "SNSアカウントで登録"
+
 #: templates/user/register.html:32
 msgid "Register with Twitter"
 msgstr "Twitterで登録"
+
+#: templates/user/register.html:35
+msgid "Register with Facebook"
+msgstr "Facebookで登録"
+
+#: templates/user/register.html:42
+msgid "Already have an account?"
+msgstr "アカウントをお持ちの方はこちら"
 
 #: templates/user/request_password_reset.html:4
 #: templates/user/request_password_reset.html:7
