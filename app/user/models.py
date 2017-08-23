@@ -264,7 +264,8 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     # Review (using by host)
     def get_past_hosted_events(self):
-        return [event for event in self.host_event.all().order_by('start_time') if event.is_over()]
+        host_events = self.host_event.all().order_by('start_time')
+        return [e for e in host_events if e.is_over()]
 
     def get_participant_of_past_hosted_events(self):
         user_reviewed_list = []
@@ -303,7 +304,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return user_unreviewed_list
 
     # send html template
-    def get_ziped_unreview_hoseted(self):
+    def get_zipped_unreviewed_hosted(self):
         return zip(self.get_unreviewed_past_hosted_events(),
                    self.get_unreviewed_participant_of_past_hosted_events_poped_per_event())
 
