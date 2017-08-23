@@ -270,7 +270,8 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def get_participant_of_past_hosted_events(self):
         user_reviewed_list = []
         for event in self.get_past_hosted_events():
-            user_reviewed_list.append([ p_user.user for p_user in event.participation_set.all()])
+            users = [p.user for p in event.participation_set.all()]
+            user_reviewed_list.append(users)
         return user_reviewed_list
 
     def get_reviewed_participant_of_past_hosted_events(self):
