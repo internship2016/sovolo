@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-23 00:23+0000\n"
+"POT-Creation-Date: 2017-08-23 00:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -959,7 +959,7 @@ msgid "Your new pasword"
 msgstr "新しいパスワード"
 
 #: templates/user/skill_add.html:6 templates/user/skill_add.html:10
-#: templates/user/user_skill.html:37
+#: templates/user/user_skill.html:41
 msgid "Add a new skill"
 msgstr "スキル新規作成"
 
@@ -968,7 +968,7 @@ msgid "Categories"
 msgstr "スキルのタグ"
 
 #: templates/user/skill_add.html:25 templates/user/skill_form.html:26
-#: templates/user/user_skill.html:25
+#: templates/user/user_skill.html:26
 msgid "I can do"
 msgstr "できる内容"
 
@@ -997,7 +997,7 @@ msgid "Sovolage"
 msgstr "ソボレージ"
 
 #: templates/user/user_header.html:34
-msgid "View my skills"
+msgid "View skills"
 msgstr "スキル一覧を見る"
 
 #: templates/user/user_header.html:53
@@ -1065,7 +1065,7 @@ msgstr "スキル一覧"
 msgid "Skill "
 msgstr "スキル"
 
-#: templates/user/user_skill.html:31
+#: templates/user/user_skill.html:33
 msgid "Edit"
 msgstr "内容変更"
 
