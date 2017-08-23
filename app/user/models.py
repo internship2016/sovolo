@@ -308,7 +308,8 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
         return user_unreviewed_list
 
-    def get_unreviewed_participant_of_past_hosted_events_poped_per_event(self):
+    # send html template
+    def get_zipped_unreviewed_hosted(self):
         user_unreviewed_list = []
 
         for user_list in self.get_unreviewed_participant_of_past_hosted_events():
@@ -316,12 +317,8 @@ class User(AbstractBaseModel, AbstractBaseUser):
                 continue
             user_unreviewed_list.append(user_list)
 
-        return user_unreviewed_list
-
-    # send html template
-    def get_zipped_unreviewed_hosted(self):
         return zip(self.get_unreviewed_past_hosted_events(),
-                   self.get_unreviewed_participant_of_past_hosted_events_poped_per_event())
+                   user_unreviewed_list)
 
 class UserActivation(models.Model):
     user = models.OneToOneField(User)
