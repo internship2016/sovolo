@@ -2,6 +2,9 @@ from django.shortcuts import render
 from event.models import Event
 from tag.models import Tag
 from django.conf import settings
+from user.models import User, Skill
+from django.views.generic import ListView
+from django.db.models import Q
 
 
 def index(request):
@@ -46,4 +49,38 @@ def index_user(request):
 
     context['all_tags'] = Tag.objects.all()
     return render(request, 'top_user.html', context)
+
+class UserSearchListView(ListView):
+    models = Skill
+    template_name = 'user/user_search.html'
+    context_object_name ='search_user'
+    paginate_by = 10
+
+    def get_queryset(self):
+        query = Q()
+
+        if 'tags' in self.request.GET:
+            tags = [int(t) for t in self.request.GET.getlist('tags')]
+
+            if len(tags) > 0:
+                Tag = apps.get_model('tag', 'Tag')
+                tag_query = None
+                for t in tags:
+                    tag = Tag.objects.get(pk=t)
+                    if tag_qeuery is None:
+                        tag_query = Q(tag=tag)
+                    else:
+                        tag_query = tag_query | Q(tag=tag)
+                query = tag_query
+        results = Skill.objects.filter(query).order_by('-id').distinction()
+        return results
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context["all_tags"] = Tag.obhexts.all()
+        tags = self.request.GET.getlist('tags')
+        context['checked_tags'] = [int(t) for t in tags]
+
+        return context
 
