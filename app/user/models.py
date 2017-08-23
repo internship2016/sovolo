@@ -303,7 +303,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return user_unreviewed_list
 
     # send html template
-    def get_ziped_unreview_hoseted(self):
+    def get_ziped_unreviewed_hosted(self):
         return zip(self.get_unreviewed_past_hosted_events(),
                    self.get_unreviewed_paticipant_of_past_hosted_events_poped_per_event())
 
@@ -331,6 +331,14 @@ class UserPasswordResetting(models.Model):
 
 class UserReviewList(models.Model):
 
+    NUM_CHOICES = (
+      (1, "1"),
+      (2, "2"),
+      (3, "3"),
+      (4, "4"),
+      (5, "5")
+    )
+
     to_rate_user = models.ForeignKey(User,
                                      on_delete=models.CASCADE,
                                      related_name='to_rate_user')
@@ -341,7 +349,7 @@ class UserReviewList(models.Model):
         related_name='from_rate_user',
         )
 
-    rating = models.IntegerField(validators=[MinValueValidator(0),
+    rating = models.IntegerField(default=1, choices=NUM_CHOICES, validators=[MinValueValidator(0),
                                        MaxValueValidator(5)])
 
     comment = models.CharField(max_length=200, null=True, blank=True)
