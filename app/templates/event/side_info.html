@@ -9,16 +9,6 @@
   {% user_list event.get_waiting_users _("Waiting List") %}
 {% endif %}
 
-<div class="panel panel-primary">
-  <div class="panel-heading">{% trans "Groups" %}</div>
-  <div class="panel-body">
-    {% for group in event.group_set.all %}
-      <a class="group_list-element" href="{% url 'group:detail' group.id %}"><div class="thumbnail group_list-thumbnail" style="background-image:url({{group.get_image_url}});"></div><div class="group_list-description">{{ group.name }}</div></a>
-    {% empty %}
-      <p>{% trans "There are no groups related to this event." %}</p>
-    {% endfor %}
-  </div>
-</div>
 
 <div class="panel panel-primary">
   <div class="panel-heading">{% trans "Filters" %}</div>
