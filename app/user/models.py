@@ -277,8 +277,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def get_reviewed_participant_of_past_hosted_events(self):
         user_reviewed_list = []
         for event in self.get_past_hosted_events():
-            temp = [review.to_rate_user for review in self.from_rate_user.all() if review.joined_event == event]
-            user_reviewed_list.append(temp)
+            reviews = self.from_rate_user.all()
+            users = [r.to_rate_user for r in reviews if r.joined_event == event]
+            user_reviewed_list.append(users)
         return user_reviewed_list
 
     def get_unreviewed_participant_of_past_hosted_events(self):
