@@ -382,7 +382,7 @@ class Skill(AbstractBaseModel):
     skilltodo = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return "Skill #" + str(self.pk) + " in User #" +str(self.userskill_id)
+        return "Skill #" + str(self.pk) + " in User #" + str(self.userskill_id)
 
     def get_tags_as_string(self):
         return "\n".join([tag.name for tag in self.tag.all()])
