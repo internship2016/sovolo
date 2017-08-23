@@ -25,7 +25,6 @@ urlpatterns = [
     url(r'^$', views.index, name='top'),
     url(r'^admin/', admin.site.urls),
     url(r'^event/', include('event.urls')),
-    url(r'^group/', include('group.urls')),
     url(r'^tag/', include('tag.urls')),
     url(r'^user/', include('user.urls')),
     url(r'^map/', views.show_map ,name='show_map'),
