@@ -297,9 +297,15 @@ class User(AbstractBaseModel, AbstractBaseUser):
     # pop Null
     def get_unreviewed_past_hosted_events(self):
         user_unreviewed_list = []
-        for event, unreviewed in zip(self.get_past_hosted_events(), self.get_unreviewed_participant_of_past_hosted_events()):
-            if not len(unreviewed) == 0:
-                user_unreviewed_list.append(event)
+
+        zipped = zip(self.get_past_hosted_events(),
+                     self.get_unreviewed_participant_of_past_hosted_events())
+
+        for event, unreviewed in zipped:
+            if len(unreviewed) == 0:
+                continue
+            user_unreviewed_list.append(event)
+
         return user_unreviewed_list
 
     def get_unreviewed_participant_of_past_hosted_events_poped_per_event(self):
