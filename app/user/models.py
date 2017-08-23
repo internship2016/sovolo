@@ -388,7 +388,7 @@ class Skill(AbstractBaseModel):
         return "\n".join([tag.name for tag in self.tag.all()])
 
     def get_absolute_url(self):
-        return reverse('user:detail', kwargs={'pk' : self.id})
+        return reverse('user:detail', kwargs={'pk': self.id})
 
 class SkillAdmin(admin.ModelAdmin):
     list_display22 = (
