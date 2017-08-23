@@ -264,7 +264,8 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     # Review (using by host)
     def get_past_hosted_events(self):
-        return [event for event in self.host_event.all().order_by('start_time') if event.is_over()]
+        host_events = self.host_event.all().order_by('start_time')
+        return [e for e in host_events if e.is_over()]
 
     def get_participant_of_past_hosted_events(self):
         user_reviewed_list = []
