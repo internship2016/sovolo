@@ -259,7 +259,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
     def get_past_participated_and_unreviewed_events(self):
         finished_list = [event for event in self.participating_event.all() if event.is_over()]
         reviewed_list_id = [event.id for event in self.get_reviewed_events()]
-        unreviewed_event = [event for event in finished_list if not event.id in reviewed_list_id]
+        unreviewed_event = [event for event in finished_list if event.id not in reviewed_list_id]
         return unreviewed_event
 
     # Review (using by host)
