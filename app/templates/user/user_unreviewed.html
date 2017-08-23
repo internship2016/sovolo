@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load event_tags %}
 
-{% block title %} {{ user.username }} ユーザー未レビュー | Sovol{% endblock %}
+{% block title %} {{ user.username }} {% trans "Reviews Not Yet Posted" %} | Sovol{% endblock %}
 
 
 {% block content %}
@@ -11,7 +11,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-      <div class="panel-title">参加後かつ未レビューのボランティア一覧(Participant)</div>
+      <div class="panel-title">{% trans "Events not yet reviewed" %}</div>
     </div>
     <div class="panel-body">
   {% for event in user.get_past_participated_and_unreviewed_events %}
@@ -56,7 +56,7 @@
 
         <div class="media-heading">
           <a class="btn btn-primary" href="{% url 'user:post_review' %}?event_id={{event.id}}">
-            Go to Event Review Post Page
+              {% trans "Write and post reviews about events"}
           </a>
         </div>
 
@@ -64,7 +64,7 @@
     </div>
   </div>
   {% empty %}
-  <p>未レビューのボランティアがありません</p>
+  <p>{% trans "You have reviewed all the events participated!" %}</p>
   {% endfor %}
   </div>
 </div>
@@ -73,7 +73,7 @@
 
 <div class="panel panel-primary">
     <div class="panel-heading">
-      <div class="panel-title">開催後かつ未レビューの参加者一覧(Host)</div>
+      <div class="panel-title">{% trans "Participants not yet reviewed" %}</div>
     </div>
     <div class="panel-body">
   {% for event, user_list in user.get_ziped_unreview_hoseted %}
@@ -127,13 +127,13 @@
     <h5>User ID : {{ p_user.id }}</h5>
     <h5>User Name : {{ p_user.username }}</h5>
     <a class="btn btn-primary" href="{% url 'user:post_review' %}?event_id={{event.id}}&to_user_id={{p_user.pk}}">
-      Go to User Review Post Page
+        {% trans "Write and post reviews about users" %}
     </a>
   {% endfor %}
 
 
   {% empty %}
-    <p>未レビューの参加者はいません</p>
+    <p>{% trans "You have reviewed all the participants!" %}</p>
   {% endfor %}
   </div>
 </div>
