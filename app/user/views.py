@@ -264,7 +264,6 @@ class UserPostReviewView(FormView):
             # pkを取得 評価対象
             to_user = User.objects.get(pk=joined_event.host_user.id)
 
-
         ## Validators
 
         # params
