@@ -83,7 +83,7 @@ class EventCreate(CreateView):
 
         new_admin_names = new_admins.values_list('username', flat=True)
         for name in set(raw_admins) - set(new_admin_names):
-            error_msg = _( "There is no user named %(name)s.") % {'name': name}
+            error_msg = _("There is no user named %(name)s.") % {'name': name}
             messages.error(self.request, error_msg)
 
 
