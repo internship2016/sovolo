@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 06:19+0900\n"
+"POT-Creation-Date: 2017-08-25 06:47+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,35 +18,35 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: event/models.py:106 templates/event/detail.html:54
+#: event/models.py:100 templates/event/detail.html:54
 #: templates/event/detail.html:64 templates/map.html:116
-#: templates/top.html:164
+#: templates/top.html:172
 msgid "Finished"
 msgstr "終了"
 
-#: event/models.py:108 templates/event/detail.html:56
+#: event/models.py:102 templates/event/detail.html:56
 #: templates/event/detail.html:66 templates/event/detail.html:99
 #: templates/event/detail.html:112 templates/map.html:113
-#: templates/top.html:161
+#: templates/top.html:169
 msgid "In Session"
 msgstr "開催中"
 
-#: event/models.py:110 templates/event/detail.html:58
+#: event/models.py:104 templates/event/detail.html:58
 #: templates/event/detail.html:68 templates/event/detail.html:101
 #: templates/event/detail.html:114
 msgid "Closed"
 msgstr "締切済"
 
-#: event/models.py:112
+#: event/models.py:106
 msgid "Full"
 msgstr "満員"
 
-#: event/models.py:114 templates/event/detail.html:119 templates/map.html:114
-#: templates/top.html:162
+#: event/models.py:108 templates/event/detail.html:119 templates/map.html:114
+#: templates/top.html:170
 msgid "Wanted"
 msgstr "募集中"
 
-#: event/models.py:119
+#: event/models.py:113
 msgid "Not provided"
 msgstr "未設定"
 
@@ -372,8 +372,7 @@ msgstr "締切"
 msgid "Participated"
 msgstr "参加しました"
 
-#: templates/event/detail.html:46 templates/map.html:113
-#: templates/top.html:169
+#: templates/event/detail.html:46
 msgid "Ongoing"
 msgstr "参加中"
 
@@ -384,18 +383,6 @@ msgstr "参加確定"
 #: templates/event/detail.html:50
 msgid "Participating"
 msgstr "参加予定"
-
-#: templates/event/detail.html:54 templates/event/detail.html:64
-#: templates/map.html:116 templates/top.html:172
-msgid "Finished"
-msgstr "終了"
-
-#: templates/event/detail.html:56 templates/event/detail.html:58
-#: templates/event/detail.html:68 templates/event/detail.html:99
-#: templates/event/detail.html:101 templates/event/detail.html:112
-#: templates/event/detail.html:114
-msgid "Closed"
-msgstr "締切済"
 
 #: templates/event/detail.html:60 templates/event/detail.html:117
 #: templates/event/event_header.html:20 templates/event/participants.html:23
@@ -751,10 +738,6 @@ msgstr "地名を入力"
 #: templates/map.html:38
 msgid "Search with filters"
 msgstr "タグで絞り込む"
-
-#: templates/map.html:114 templates/top.html:170
-msgid "Wanted"
-msgstr "募集中"
 
 #: templates/map.html:149
 msgid "Failed to get location."
