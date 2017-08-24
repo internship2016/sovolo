@@ -1,5 +1,8 @@
 from django.http import JsonResponse
 from event.models import Event
+from django.apps import apps
+from django.db.models import Q
+from tag.models import Tag
 
 DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
@@ -17,7 +20,6 @@ def event_filter(request, event_kind, *args, **kwargs):
     if not user.is_anonymous():
         events.update({
                 'future_participating_events' : user.get_future_participating_events,
-                'new_group_events' : user.get_new_group_events,
                 'new_region_events' : user.get_new_region_events,
                 'new_tag_events' : user.get_new_tag_events
                 })
@@ -39,7 +41,7 @@ def event_range_search(request, *args, **kwargs):
     if request.method != 'POST':
         # FIXME: 405 Method Not Allowed
         return None
-
+    query = Q()
     res = {'events_in_range': []}
     range_value = dict(request.POST)
     keys = ['ne_lat', 'sw_lat', 'ne_lng', 'sw_lng']
@@ -52,8 +54,19 @@ def event_range_search(request, *args, **kwargs):
                                        range_value['sw_lng'])
 
 
-    events = [event for event in events if not event.is_over()]
-    #events = events.objects.filter(hashtag='')
+
+    tags = [int(t) for t in request.POST.getlist('tags')]
+    if len(tags) > 0:
+        Tag = apps.get_model('tag', 'Tag')
+        tag_query = None
+        for t in tags:
+            tag = Tag.objects.get(pk=t)
+            if tag_query is None:
+                tag_query = Q(tag=tag)
+            else:
+                tag_query = tag_query | Q(tag=tag)
+        query = query & tag_query
+    events = [event for event in events.all().filter(query).order_by('-id').distinct() if not event.is_over()]
 
     for event in events:
         res['events_in_range'].append({

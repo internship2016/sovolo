@@ -3,7 +3,6 @@ from django.core.files import File
 from django.utils import timezone
 from django.conf import settings
 from event.models import Event, Participation, Frame, Comment, Question, Answer
-from group.models import Group, Membership
 from user.models import User, UserReviewList
 from tag.models import Tag
 import csv
@@ -92,26 +91,20 @@ comment_sample=[
 
 review_comment_sample = [
     '',
-    'It was beyond my wildest dreams.',
+    '感謝感激です。',
     """
-    商品が届きました！
-    想像していた以上に素敵なお品でとても気に入りました！
-    大切に使わせて頂きます。
-    出品さまのおかげで気持ちのよい取引になり大変嬉しく思っています。
-    またのご縁があることを楽しみにしております。この度はありがとうございました。
+    とても助かりました。
+    またのご縁があることを楽しみにしております。
+    この度はありがとうございました。
     """,
     """
-    商品が、届きました！
-    とても欲しくて探していたので、落札できて感激です（＾o＾）ありがとうございました。
+    ありがとうございました。（＾o＾）
     """,
     """
-    本日受け取りました*^-^*とても可愛らしく嬉しいです☆
-    大切にいたしますね。
     本当にありがとうございました！またぜひ御縁がありますように♪
     """,
     """
-    2週間お待ちしましたが、
-    取引していただけないものと判断させて頂き評価を入れさせていただきました。
+    最悪な１日でした。
     """
 ]
 

@@ -7,8 +7,8 @@
 {% block content %}
 {% include "event/event_header.html" %}
 
-    {% user_list_large event.get_host_user_as_list "主催者" %}
-    {% user_list_large event.admin.all "管理者" %}
+    {% user_list_large event.get_host_user_as_list _("Owner") %}
+    {% user_list_large event.admin.all _("Organizer") %}
 
     <div class="panel panel-default">
         <div class="panel-heading">{% trans "Participants" %}</div>
@@ -20,6 +20,6 @@
             {% endfor %}
         </div>
     </div>
-    {% user_list_large event.get_waiting_users "キャンセル待ち" %}
+    {% user_list_large event.get_waiting_users _("Waiting List") %}
 
 {% endblock %}

@@ -257,10 +257,10 @@ class UserPostReviewView(FormView):
             to_user = User.objects.get(pk=self.request.GET['to_user_id'])
             form.instance.event_host = True
         else:
-            to_user = User.objects.get(pk=joined_event.host_user.id)  # pkを取得 評価対象
+            # pkを取得 評価対象
+            to_user = User.objects.get(pk=joined_event.host_user.id)
 
-
-        ## Validators
+        # Validators
 
         # params
         from_reviews = self.request.user.from_rate_user.all()
@@ -270,14 +270,21 @@ class UserPostReviewView(FormView):
                                        review.from_rate_user,
                                        review.joined_event])
 
+        req_user = self.request.user
+
         # Past joined_or_hosted_event or not
-        if (joined_event not in self.request.user.get_past_participated_events()) and (joined_event not in self.request.user.get_past_hosted_events()):
+        joined = joined_event in req_user.get_past_participated_events()
+        hosted = joined_event in req_user.get_past_hosted_events()
+
+        if not joined and not hosted:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # from_User is Host or Participant
-        if (self.request.user not in joined_event.participant.all()) and (self.request.user != joined_event.host_user):
-            # form.add_error('rating', 'Incident with this email already exist')
+        is_not_participant = req_user not in joined_event.participant.all()
+        is_not_host = req_user != joined_event.host_user
+
+        if (is_not_participant and is_not_host):
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 

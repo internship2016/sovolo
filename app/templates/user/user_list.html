@@ -5,15 +5,15 @@
     {% for user in users|slice:":10" %}
       <a href="{% url 'user:detail' user.id %}" title="{{ user.username }}">
         <div class="custom_thumbnail user-list-thumbnail" style="background-image: url({{ user.get_image_url }});"></div>
-        {% if title == "主催者" %}
+        {% if title == _("Organizer") %}
         <p>{{ user.username }}</p>
         {% endif %}
       </a>
     {% empty %}
-      <p>{{ title }}はいません</p>
+      <p>{{ title }}{% trans " not found" %}</p>
     {% endfor %}
-    {% if title == "参加者" %}
-      <a href="{% url 'event:participants' object.id %}" class="pull-right">もっと見る</a>
+    {% if title == _("Participants") %}
+      <a href="{% url 'event:participants' object.id %}" class="pull-right">{% trans "See more" %}</a>
     {% endif %}
   </div>
 </div>
