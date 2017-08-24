@@ -278,6 +278,8 @@ class UserPostReviewView(FormView):
         sender_has_joined = joined_event in past_participated_events
         sender_has_hosted = joined_event in past_hosted_events
 
+        # XXX: Samy
+
         if not sender_has_joined and not sender_has_hosted:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
