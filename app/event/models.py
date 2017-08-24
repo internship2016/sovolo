@@ -7,6 +7,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.utils import timezone
 from tag.models import Tag
+from django.utils.translation import ugettext_lazy as _
 
 import os
 import math
