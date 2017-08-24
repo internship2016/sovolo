@@ -368,7 +368,7 @@ class UserReviewList(models.Model):
 
     post_day = models.DateTimeField(default=timezone.now, null=True)
 
-    event_host = models.NullBooleanField(default=False, null=True)
+    from_event_host = models.NullBooleanField(default=False, null=True)
 
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
