@@ -401,8 +401,8 @@ class UserSkillAddView(CreateView):
         return reverse('user:skill', kwargs={'pk': userskill_id})
 
 class UserListView(ListView):
-    models = Skill
-    template_name ='user_list.tml'
+    model = Skill
+    template_name ='user/skill_list.html'
     context_object_name = 'search_user'
     paginate_by = 10
 
@@ -427,6 +427,7 @@ class UserListView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context["all_tags"] = Tag.objects.all()
         tags = self.request.GET.getlist('tags')
         context['checked_tags'] = [int(t) for t in tags]
 

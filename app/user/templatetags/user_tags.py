@@ -20,3 +20,10 @@ def user_list_large(context, users, title):
 def skill_list(context, skills, title):
     request = context['request']
     return {'skills':skills, 'title':title, 'user':request.user}
+
+@register.simple_tag
+def query_transform(request, **kwargs):
+    updated = request.GET.copy()
+    for key, value in kwargs.items():
+        updated[key] = value
+    return updated.urlencode()
