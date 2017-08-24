@@ -72,7 +72,13 @@ def event_range_search(request, *args, **kwargs):
             else:
                 tag_query = tag_query | Q(tag=tag)
         query = query & tag_query
-    events = [event for event in events.all().filter(query).order_by('-id').distinct() if not event.is_over()]
+
+    events = events.all() \
+                   .filter(query) \
+                   .order_by('-id') \
+                   .distinct()
+
+    events = [e for e in events if not e.is_over()]
 
     for event in events:
         res['events_in_range'].append({
