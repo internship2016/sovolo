@@ -34,9 +34,17 @@
             <li>
               <form method="post" action="{% url 'event:new_events'%}" class="event-filter">
                 {% csrf_token %}
+                {% trans "View New Events" %}
+              </form>
+            </li>
+            {% if not request.user.is_anonymous %}
+            <li>
+              <form method="post" action="{% url 'event:new_events'%}" class="event-filter">
+                {% csrf_token %}
                 {% trans "View All Events" %}
               </form>
             </li>
+            {% endif %}
           </ul>
         </div>
         <div id="event-area" class="col-xs-12 col-md-8 col-md-pull-4">

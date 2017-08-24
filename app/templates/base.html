@@ -96,12 +96,15 @@
               <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
             {% else %}
               <li class="dropdown">
+                <span class="badge badge-notification">4</span>
                 <a href="#" id="notification" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <i class="fa fa-bell-o" aria-hidden="true"></i>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="dUser">
                   <li><a href="">uhhhhhhhhhh</a></li>
                   <li><a href="">hogegege</a></li>
+                  <li role="separator" class="divider"></li>
+                  <li><a href="{% url 'user:unreviewed' %}">{% trans "View All Notifications" %}</a></li>
                 </ul>
               </li>
               <li class="dropdown">

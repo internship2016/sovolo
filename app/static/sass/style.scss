@@ -441,3 +441,11 @@ $logo-height :65px;
   margin: 0 auto;
   display: block;
 }
+
+.badge-notification{
+  background-color: #ec1a2e;
+  position: absolute;
+  z-index: 10;
+  top: 14px;
+  left: 17px;
+}

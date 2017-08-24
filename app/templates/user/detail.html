@@ -14,8 +14,4 @@
 {% collapse_event_list user.get_future_participating_events _("List of Events Attending") "participating-event" %}
 {% collapse_event_list user.get_past_participated_events _("Event Achievements") "participated-event" %}
 
-<a class="btn btn-primary" href="{% url 'user:unreviewed' %}">
-    {% trans "Reviews not yet posted" %}
-</a>
-
 {% endblock %}
