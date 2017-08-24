@@ -284,7 +284,7 @@ class UserPostReviewView(FormView):
         is_not_participant = req_user not in joined_event.participant.all()
         is_not_host = req_user != joined_event.host_user
 
-        if (is_not_participant and is_not_host):
+        if is_not_participant and is_not_host:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
