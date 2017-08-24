@@ -343,7 +343,7 @@ class UserSkillEditView(UpdateView):
     tamplate_name = 'user/user_form.html'
     fields = ['skilltodo']
 
-    def form_valid(self,form):
+    def form_valid(self, form):
         form_redirect = super(UserSkillEditView, self).form_valid(form)
         skill = form.save(commit=False)
 
@@ -367,6 +367,7 @@ class UserSkillEditView(UpdateView):
         messages.info(self.request, "スキル内容を変更しました")
         userskill_id = self.request.user.id
         return reverse('user:skill', kwargs={'pk': userskill_id})
+
 
 @method_decorator(login_required, name='dispatch')
 class UserSkillAddView(CreateView):
