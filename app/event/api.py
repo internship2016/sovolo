@@ -31,7 +31,7 @@ def event_filter(request, event_kind, *args, **kwargs):
             'all_events': all_events
         })
     if event_kind in events.keys():
-        res_obj = {'filtered_events':[]}
+        res_obj = {'filtered_events': []}
         for event in events[event_kind]()[:10]:
             res_obj['filtered_events'].append({
                 'id' : event.id,
