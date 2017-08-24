@@ -83,17 +83,11 @@ class Event(AbstractBaseModel):
 
     def is_full(self):
         frames = Frame.objects.filter(event=self)
-        for frame in frames:
-            if not frame.is_full():
-                return False
-        return True
+        return all(frame.is_full() for frame in frames)
 
     def is_closed(self):
         frames = Frame.objects.filter(event=self)
-        for frame in frames:
-            if not frame.is_closed():
-                return False
-        return True
+        return all(frame.is_closed() for frame in frames)
 
     def is_started(self):
         return timezone.now() > self.start_time
