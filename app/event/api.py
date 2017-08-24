@@ -14,8 +14,10 @@ def event_filter(request, event_kind, *args, **kwargs):
     """
     if request.method != 'POST':
         return JsonResponse(dict())
+
     def all_events():
         return Event.objects.all().order_by('-created')[:10]
+
     def new_events():
         return [event for event in all_events() if not event.is_over()]
 
