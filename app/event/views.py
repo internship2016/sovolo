@@ -86,8 +86,6 @@ class EventCreate(CreateView):
             error_msg = _("There is no user named %(name)s.") % {'name': name}
             messages.error(self.request, error_msg)
 
-
-
         # Tags
         event.tag.clear()
         for tag_id in self.request.POST.getlist('tags'):
@@ -230,7 +228,6 @@ class EventEditView(UserPassesTestMixin, UpdateView):
             error_msg = ("ユーザー名 %(name)s に一致する"
                          "ユーザーはいませんでした。") % {'name': name}
             messages.error(self.request, error_msg)
-
 
         # Tags
         new_tags = set([int(t) for t in self.request.POST.getlist('tags')])
@@ -413,7 +410,6 @@ class EventSearchResultsView(ListView):
                 place_query = Q(region=place)
                 query = query & place_query
 
-
         results = Event.objects.filter(query).order_by('-id').distinct()
 
         if 'order_by' in self.request.GET:
@@ -430,7 +426,6 @@ class EventSearchResultsView(ListView):
         # Include events that are already over?
         if self.request.GET.get('exclude_full_events') == "on":
             results = [event for event in results if event.is_full()]
-
 
         # Include events with no openings?
         if self.request.GET.get('exclude_closed_events') == "on":
