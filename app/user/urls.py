@@ -25,5 +25,5 @@ urlpatterns = [
     url(r'^post_review/$', views.UserPostReviewView.as_view(), name='post_review'),
     url(r'^unreviewed/$', views.UserUnReviewedView.as_view(), name='unreviewed'),
     # unreview_list -> top.html
-    url(r'^filter/unreviewd_list$', api.get_unreview_list, {'unreview_kind':'unreviewd_list'}, name='unreviewd_list'),
+    url(r'^filter/get_unreviewd_list$', api.get_unreview_list, name='get_unreviewd_list'),
 ]
