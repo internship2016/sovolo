@@ -63,6 +63,8 @@
             <label for="searchform-closed" class="col-lg-4 control-label">{% trans "Status" %}</label>
             <div class="checkbox col-lg-8">
               <input type="checkbox" style="margin-left:0" name="exclude_closed_events" id="searchform-closed" {% if request.GET.exclude_closed_events == 'on' %}checked{% endif %}>　 {% trans "Show closed events" %}
+              <br>
+              <input type="checkbox" style="margin-left:0" name="exclude_full_events" id="searchform-full" {% if request.GET.exclude_full_events == 'on' %}checked{% endif %}>　 {% trans "Show full events" %}
             </div>
           </div>
           <div class="row">
