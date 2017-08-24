@@ -28,10 +28,10 @@ class Event(AbstractBaseModel):
     private_notes = models.TextField(blank=True)
     hashtag = models.CharField(max_length=100, blank=True)
     share_message = models.CharField(max_length=100, blank=True)
-    host_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name='host_event',
-    )
+
+    host_user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                  related_name='host_event')
+
     supporter = models.ManyToManyField(User,
                                        related_name="support",
                                        blank=True)
@@ -43,17 +43,14 @@ class Event(AbstractBaseModel):
     region_list = [(k, v[0]) for k, v in prefs]
     region = models.CharField(max_length=10, choices=region_list)
 
-    participant = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        related_name='participating_event',
-        through='Participation',
-        blank=True,
-    )
-    admin = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        related_name='admin_event',
-        blank=True,
-    )
+    participant = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                         related_name='participating_event',
+                                         through='Participation',
+                                         blank=True)
+
+    admin = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                   related_name='admin_event',
+                                   blank=True)
 
     tag = models.ManyToManyField(Tag, blank=True)
 
@@ -77,11 +74,9 @@ class Event(AbstractBaseModel):
         if self.image:
             return self.image.url
         else:
-            return os.path.join(
-                settings.MEDIA_URL,
-                'events/',
-                "default_event_image.svg",
-            )
+            return os.path.join(settings.MEDIA_URL,
+                                'events/',
+                                "default_event_image.svg")
 
     def get_tags_as_string(self):
         return "\n".join([tag.name for tag in self.tag.all()])
@@ -157,12 +152,11 @@ class Frame(AbstractBaseModel):
     description = models.TextField(default='通常参加枠')
     upper_limit = models.IntegerField(blank=True, null=True)
     deadline = models.DateTimeField()
-    participant = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        related_name='participating_frame',
-        through='Participation',
-        blank=True,
-    )
+
+    participant = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                         related_name='participating_frame',
+                                         through='Participation',
+                                         blank=True)
 
     def __str__(self):
         return "Frame #" + str(self.pk) + " in Event #" + str(self.event_id)
@@ -245,25 +239,19 @@ class Comment(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
-    reply_to = models.ForeignKey(
-        'self',
-        on_delete=models.CASCADE,
-        related_name='replies',
-        null=True
-    )
+    reply_to = models.ForeignKey('self',
+                                 on_delete=models.CASCADE,
+                                 related_name='replies',
+                                 null=True)
 
     def __str__(self):
         if self.reply_to:
-            return ">> %s\n%s :\"%s" % (
-                str(self.reply_to),
-                self.user.username,
-                self.text,
-            )
+            return ">> %s\n%s :\"%s" % (str(self.reply_to),
+                                        self.user.username,
+                                        self.text)
         else:
-            return "%s: \"%s\"" % (
-                self.user.username,
-                self.text,
-            )
+            return "%s: \"%s\"" % (self.user.username,
+                                   self.text)
 
     def get_absolute_url(self):
         return reverse('event:detail', kwargs={'pk': self.event.id})
@@ -273,11 +261,10 @@ class Comment(AbstractBaseModel):
 
 
 class Question(models.Model):
-    event = models.ForeignKey(
-        Event,
-        on_delete=models.CASCADE,
-        related_name='question',
-    )
+    event = models.ForeignKey(Event,
+                              on_delete=models.CASCADE,
+                              related_name='question')
+
     question = models.TextField()
 
     def __str__(self):
@@ -285,16 +272,14 @@ class Question(models.Model):
 
 
 class Answer(AbstractBaseModel):
-    question = models.ForeignKey(
-        Question,
-        on_delete=models.CASCADE,
-        related_name='answer',
-    )
-    participation = models.ForeignKey(
-        Participation,
-        on_delete=models.CASCADE,
-        related_name='answer',
-    )
+    question = models.ForeignKey(Question,
+                                 on_delete=models.CASCADE,
+                                 related_name='answer')
+
+    participation = models.ForeignKey(Participation,
+                                      on_delete=models.CASCADE,
+                                      related_name='answer')
+
     text = models.TextField()
 
     def __str__(self):
