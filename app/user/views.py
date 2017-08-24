@@ -207,7 +207,7 @@ class UserEditView(UpdateView):
 
         self.request.session[translation.LANGUAGE_SESSION_KEY] = user.language
 
-        messages.info(self.request, _("User profile has been successfully edited."))
+        messages.info(self.request, _("User profile was successfully edited."))
         return super(UserEditView, self).form_valid(form)
 
 
@@ -281,7 +281,7 @@ class UserPostReviewView(FormView):
         # XXX: Samy
 
         if not sender_has_joined and not sender_has_hosted:
-            messages.error(self.request, _("Invalid Review"))
+            messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # from_User is Host or Participant
@@ -289,7 +289,7 @@ class UserPostReviewView(FormView):
         sender_is_host = req_user == joined_event.host_user
 
         if not sender_is_participant and not sender_is_host:
-            messages.error(self.request, _("Invalid Review"))
+            messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # to_User is Host or Participant
@@ -297,22 +297,22 @@ class UserPostReviewView(FormView):
         recipient_is_host = to_user == joined_event.host_user
 
         if not recipient_has_joined and not recipient_is_host:
-            messages.error(self.request, _("Invalid Review"))
+            messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # from user Participant -> Host or not
         if sender_is_participant and not recipient_is_host:
-            messages.error(self.request, _("Invalid Review"))
+            messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # from user Host -> Participant or not
         if sender_is_host and not recipient_has_joined:
-            messages.error(self.request, _("Invalid Review"))
+            messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # Check Already Reviewed or not
         if [to_user, req_user, joined_event] in to_from_event_list:
-            messages.error(self.request, _("You've already reviewd"))
+            messages.error(self.request, "You Already Reviewd")
             return self.form_invalid(form)
 
         # Set Instanse
@@ -325,7 +325,7 @@ class UserPostReviewView(FormView):
     # レビュー投稿時に未レビューページに帰還
     def get_success_url(self, **kwargs):
 
-        messages.info(self.request, _("Your review has been successfully posted!"))
+        messages.info(self.request, "Your review was successfully sent")
         return reverse('user:unreviewed')
 
 
@@ -366,7 +366,7 @@ class UserSkillEditView(UpdateView):
         return context
 
     def get_success_url(self, **kwargs):
-        messages.info(self.request, _("Your skill has been edited successfully."))
+        messages.info(self.request, "スキル内容を変更しました")
         userskill_id = self.request.user.id
         return reverse('user:skill', kwargs={'pk': userskill_id})
 

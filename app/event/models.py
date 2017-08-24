@@ -107,20 +107,20 @@ class Event(AbstractBaseModel):
 
     def get_status(self):
         if self.is_over():
-            return _("Finished")
+            return "終了"
         elif self.is_started():
-            return _("In Session")
+            return "開催中"
         elif self.is_closed():
-            return _("Closed")
+            return "締切済"
         elif self.is_full():
-            return _("Full")
+            return "満員"
         else:
-            return _("Wanted")
+            return "募集中"
 
     def get_region_kanji(self):
         region = self.prefectures.get(self.region)
         if not region:
-            return _('Not provided')  # XXX: regionがこない場合は未設定でいいのか
+            return '未設定'  # XXX: regionがこない場合は未設定でいいのか
         return region[0]
 
     def start_time_format(self):
@@ -131,12 +131,12 @@ class Event(AbstractBaseModel):
 
     def get_reserved_users(self):
         participations = self.participation_set \
-                             .filter(status=_("Participating"))
+                             .filter(status="参加中")
         return [p.user for p in participations]
 
     def get_waiting_users(self):
         participations = self.participation_set \
-                             .filter(status=_("Waiting List")) \
+                             .filter(status="キャンセル待ち") \
                              .order_by('created')
         return [p.user for p in participations]
 
@@ -171,7 +171,7 @@ class Frame(AbstractBaseModel):
             return False
         else:
             participants = Participation.objects \
-                .filter(Q(frame=self) & Q(status=_("Participating")))
+                .filter(Q(frame=self) & Q(status="参加中"))
 
             return participants.count() >= self.upper_limit
 
@@ -179,7 +179,7 @@ class Frame(AbstractBaseModel):
         return timezone.now() > self.deadline
 
     def num_participants(self):
-        status_query = Q(status=_("Participating"))
+        status_query = Q(status="参加中")
         return self.participation_set.filter(status_query).count()
 
     def deadline_format(self):
@@ -190,16 +190,16 @@ class Frame(AbstractBaseModel):
 
     def reserved_id_list(self):
         return self.participation_set \
-                   .filter(status=_("Participating")) \
+                   .filter(status="参加中") \
                    .values_list('user', flat=True)
 
     def get_reserved_users(self):
-        participations = self.participation_set.filter(status=_("Participating"))
+        participations = self.participation_set.filter(status="参加中")
         return [p.user for p in participations]
 
     def waiting_id_list(self):
         return self.participation_set \
-                   .filter(status=_("Waiting List")) \
+                   .filter(status="キャンセル待ち") \
                    .values_list('user', flat=True)
 
     def get_filled_rate(self):

@@ -53,7 +53,7 @@
                     {% if event.is_over %}<!--キャンセル待ち/終了-->
                       <span class="label label-info">{% trans "Finished" %}</span>
                     {% elif event.is_started %}<!--キャンセル待ち/開催中-->
-                      <span class="label label-info">{% trans "In Session" %}</span>
+                      <span class="label label-info">{% trans "Closed" %}</span>
                     {% elif frame.is_closed %}<!--キャンセル待ち/締切済-->
                       <span class="label label-info">{% trans "Closed" %}</span>
                     {% else %}<!--キャンセル待ち/募集中-->
@@ -96,7 +96,7 @@
                   {% elif request.user.id in frame.waiting_id_list %}<!--キャンセル待ち-->
                     {% if event.is_over %}<!--キャンセル待ち/終了-->
                     {% elif event.is_started %}<!--キャンセル待ち/開催中-->
-                      <button class="btn btn-primary" disabled>{% trans "In Session" %}</button>
+                      <button class="btn btn-primary" disabled>{% trans "Closed" %}</button>
                     {% elif frame.is_closed %}<!--キャンセル待ち/締切済-->
                       <button class="btn btn-primary" disabled>{% trans "Closed" %}</button>
                     {% else %}<!--キャンセル待ち/募集中-->
@@ -109,14 +109,14 @@
                     {% if not request.user in event.participant.all %}<!--他の枠に参加中でなければ-->
                       {% if event.is_over %}<!--未応募/終了-->
                       {% elif event.is_started %}<!--未応募/開催中-->
-                        <button class="btn btn-primary" disabled>{% trans "In Session" %}</button>
+                        <button class="btn btn-primary" disabled>{% trans "Closed" %}</button>
                       {% elif frame.is_closed %}<!--未応募/締切済-->
                         <button class="btn btn-primary" disabled>{% trans "Closed" %}</button>
                       {% else %}<!--未応募/募集中-->
                         {% if frame.is_full %}<!--未応募/募集中/参加枠満員-->
                           <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">{% trans "Waiting List" %}</a>
                         {% else %}<!--未応募/募集中/参加枠空き有-->
-                          <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">{% trans "Wanted" %}</a>
+                          <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">{% trans "Join" %}</a>
                         {% endif %}
                       {% endif %}
                     {% endif %}
