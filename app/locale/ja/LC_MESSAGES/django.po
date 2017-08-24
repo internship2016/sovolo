@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 21:50+0000\n"
+"POT-Creation-Date: 2017-08-24 22:02+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -278,15 +278,19 @@ msgstr "ユーザー登録"
 msgid "Log in"
 msgstr "ログイン"
 
-#: templates/base.html:114
+#: templates/base.html:106
+msgid "View All Notifications"
+msgstr "全ての通知を見る"
+
+#: templates/base.html:116
 msgid "Profile"
 msgstr "プロフィール"
 
-#: templates/base.html:115
+#: templates/base.html:117
 msgid "Log out"
 msgstr "ログアウト"
 
-#: templates/base.html:126
+#: templates/base.html:128
 msgid "Change language"
 msgstr "言語切り替え"
 
@@ -844,10 +848,6 @@ msgstr "管理しているボランティア一覧"
 msgid "Event Achievements"
 msgstr "ボランティア実績"
 
-#: templates/user/detail.html:18
-msgid "Reviews not yet posted"
-msgstr "未レビューを見る"
-
 #: templates/user/edit.html:4 templates/user/edit.html:35
 #: templates/user/user_header.html:30
 msgid "Edit profile"
@@ -1186,6 +1186,9 @@ msgstr "スキルを編集しました。"
 #: user/views.py:400
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
+
+#~ msgid "Reviews not yet posted"
+#~ msgstr "未レビューを見る"
 
 #~ msgid "Reviews posted"
 #~ msgstr "すべてのレビューを見る"
