@@ -2,7 +2,6 @@ from django.http import JsonResponse
 from event.models import Event
 from django.apps import apps
 from django.db.models import Q
-from tag.models import Tag
 
 DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
