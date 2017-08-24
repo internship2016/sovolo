@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 22:02+0000\n"
+"POT-Creation-Date: 2017-08-24 22:19+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -65,11 +65,7 @@ msgstr "ボランティアがありません"
 
 #: sovolo/settings.py:145
 msgid "English"
-msgstr "英語"
-
-#: sovolo/settings.py:146
-msgid "Japanese"
-msgstr "日本語"
+msgstr "English"
 
 #: sovolo/settings.py:212
 msgid "Hokkaido"
@@ -267,30 +263,30 @@ msgstr "ボランティアを検索"
 msgid "Create an event"
 msgstr "ボランティア作成"
 
-#: templates/base.html:95 templates/user/acquire_email.html:4
+#: templates/base.html:98 templates/user/acquire_email.html:4
 #: templates/user/acquire_email.html:7 templates/user/register.html:21
 msgid "Register"
 msgstr "ユーザー登録"
 
-#: templates/base.html:96 templates/user/login_page.html:6
+#: templates/base.html:99 templates/user/login_page.html:6
 #: templates/user/login_page.html:11 templates/user/login_page.html:27
 #: templates/user/register.html:45
 msgid "Log in"
 msgstr "ログイン"
 
-#: templates/base.html:106
+#: templates/base.html:109
 msgid "View All Notifications"
 msgstr "全ての通知を見る"
 
-#: templates/base.html:116
+#: templates/base.html:119
 msgid "Profile"
 msgstr "プロフィール"
 
-#: templates/base.html:117
+#: templates/base.html:120
 msgid "Log out"
 msgstr "ログアウト"
 
-#: templates/base.html:128
+#: templates/base.html:131
 msgid "Change language"
 msgstr "言語切り替え"
 
@@ -1186,6 +1182,9 @@ msgstr "スキルを編集しました。"
 #: user/views.py:400
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
+
+#~ msgid "Japanese"
+#~ msgstr "日本語"
 
 #~ msgid "Reviews not yet posted"
 #~ msgstr "未レビューを見る"
