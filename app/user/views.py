@@ -393,6 +393,7 @@ class UserSkillAddView(CreateView):
         return form_redirect
 
     def get_success_url(self, **kwargs):
-        messages.info(self.request, _("Your new skill has been added successfully."))
+        info_msg = _("Your new skill has been added successfully.")
+        messages.info(self.request, info_msg)
         userskill_id = self.request.user.id
         return reverse('user:skill', kwargs={'pk': userskill_id})
