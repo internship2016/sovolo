@@ -10,7 +10,7 @@
     {% user_list_large event.get_host_user_as_list "主催者" %}
     {% user_list_large event.admin.all "管理者" %}
 
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
         <div class="panel-heading">{% trans "Participants" %}</div>
         <div class="panel-body">
             {% for frame in event.frame_set.all %}
