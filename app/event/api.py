@@ -61,8 +61,6 @@ def event_range_search(request, *args, **kwargs):
                                        range_value['ne_lng'],
                                        range_value['sw_lng'])
 
-
-
     tags = [int(t) for t in request.POST.getlist('tags')]
     if len(tags) > 0:
         Tag = apps.get_model('tag', 'Tag')
