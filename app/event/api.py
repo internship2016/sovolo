@@ -44,6 +44,7 @@ def event_filter(request, event_kind, *args, **kwargs):
             })
         return JsonResponse(res_obj)
 
+
 def event_range_search(request, *args, **kwargs):
     if request.method != 'POST':
         # FIXME: 405 Method Not Allowed
