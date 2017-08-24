@@ -255,7 +255,7 @@ class UserPostReviewView(FormView):
         # Host User review participant (True)
         if 'to_user_id' in self.request.GET:
             to_user = User.objects.get(pk=self.request.GET['to_user_id'])
-            form.instance.event_host = True
+            form.instance.from_event_host = True
         else:
             # pkを取得 評価対象
             to_user = User.objects.get(pk=joined_event.host_user.id)
@@ -330,9 +330,8 @@ class UserPostReviewView(FormView):
 
 
 class UserUnReviewedView(ListView):
-    # なぜ model and form_class がセットでも動くのかわかりません。
-        model = User
-        template_name = 'user/user_unreviewed.html'
+    model = User
+    template_name = 'user/user_unreviewed.html'
 
 
 class UserSkillView(DetailView):
