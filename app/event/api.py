@@ -25,10 +25,10 @@ def event_filter(request, event_kind, *args, **kwargs):
     events = {'new_events': new_events}
     if not user.is_anonymous():
         events.update({
-            'future_participating_events' : user.get_future_participating_events,
-            'new_region_events' : user.get_new_region_events,
-            'new_tag_events' : user.get_new_tag_events,
-            'all_events' : all_events
+            'future_participating_events': user.get_future_participating_events,
+            'new_region_events': user.get_new_region_events,
+            'new_tag_events': user.get_new_tag_events,
+            'all_events': all_events
         })
     if event_kind in events.keys():
         res_obj = {'filtered_events':[]}
