@@ -313,9 +313,6 @@ class UserPostReviewView(FormView):
             messages.error(self.request, "You Already Reviewd")
             return self.form_invalid(form)
 
-
-
-
         # Set Instanse
         form.instance.to_rate_user_id = to_user.id
         form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
