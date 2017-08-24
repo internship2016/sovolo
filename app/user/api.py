@@ -15,6 +15,8 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
     if user.is_anonymous():
         return JsonResponse(res_obj)
 
+    # href="{% url 'user:unreviewed' %}"
+
     # href="{% url 'user:post_review' %}?event_id={{event_id}}"
     if user.roll == 'helper':
         unreview_list = user.get_past_participated_and_unreviewed_events() # event
@@ -22,13 +24,13 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
 
             res_obj['unreviewd_list'].append({
                 'event_id': event.id,
-                'name': event.name,
-                'host': event.host_user,
-                'img': event.get_image_url(),
+                'event_name': event.name,
+                'event_host': event.host_user,
+                'event_img': event.get_image_url(),
                 'message' : event.name + 'へのレビューをおねがいします。'
             })
 
-    # href="{% url 'user:post_review' %}?event_id={{event_id}}&to_user_id={{p_user_id}}"
+    # href="{% url 'user:post_review' %}?event_id={{event_id}}&to_user_id={{helper_id}}"
     else:
         counter = 0
         unreview_list = user.get_zipped_unreviewed_hosted() # zip(event, user_list)
@@ -41,10 +43,12 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
                     break
                 res_obj['unreviewd_list'].append({
                     'event_id': event.id,
-                    'name': event.name,
-                    'p_user_name': h_user.username,
-                    'p_user_id': h_user.pk,
-                    'img': event.get_image_url(),
+                    'event_name': event.name,
+                    'event_host': event.host_user,
+                    'event_img': event.get_image_url(),
+                    'helper_name': h_user.username,
+                    'helper_id': h_user.pk,
+                    'helper_img': h_user.get_image_url(),
                     'message' : h_user.username + 'さんへのレビューをおねがいします。'
                 })
                 counter += 1
