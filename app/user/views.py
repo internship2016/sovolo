@@ -4,7 +4,6 @@ from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic import DetailView, View, ListView
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-from .models import User, Skill
 from tag.models import Tag
 from base.utils import send_template_mail
 from django.contrib.auth import views as auth_views
@@ -12,14 +11,10 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
-from django.utils import timezone
-from .models import User, UserActivation, UserPasswordResetting, UserReviewList
+from .models import User, Skill, UserActivation, UserPasswordResetting
 from .form import UserReviewListForm
 from django.urls import reverse
-from django.contrib.auth.mixins import UserPassesTestMixin
 
-from django.utils import timezone
-from django.forms import formset_factory
 from event.models import Event
 
 from django.utils import translation
@@ -27,7 +22,7 @@ from django.conf import settings
 
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
-
+from django.apps import apps
 class UserCreateView(CreateView):
     model = User
     fields = ['email', 'password', 'username']
@@ -55,9 +50,9 @@ class UserCreateView(CreateView):
             [user.email],
         )
 
-        info_msg = "記入したメールアドレス%(email)sに確認メールを送信しました。" % {
-            'email': user.email,
-        }
+        info_msg = _("Confirmation email has been "
+                     "sent to your email address.") % {'email': user.email}
+
         messages.info(self.request, info_msg)
         return redirect("top")
 
@@ -69,10 +64,10 @@ class UserCreateView(CreateView):
         form = super().get_form()
         form.fields['password'].widget = forms.PasswordInput()
         form.fields['username'].maxlength = 15
-        form.fields['username'].label = "ニックネーム（15文字以内)"
+        form.fields['username'].label = _("Username（Up to 15 characters)")
         return form
 
-    
+
 class UserActivationView(View):
     def get(self, request, *args, **kwargs):
         activation = get_object_or_404(UserActivation, key=kwargs['key'])
@@ -80,7 +75,7 @@ class UserActivationView(View):
         user.is_active = True
         user.save()
         login(request, user, "django.contrib.auth.backends.ModelBackend")
-        messages.info(request, "本登録が完了しました。")
+        messages.info(request, _("You have successfully registered!"))
         return redirect("top")
 
 
@@ -116,9 +111,9 @@ class RequestPasswordReset(View):
                 [user.email]
             )
 
-        info_msg = ("リクエストを受け付けました。"
-                    "メールアドレスが登録されている場合、"
-                    "アドレスにパスワード再設定のリンクが送信されます。")
+        info_msg = _("A password reset was requested."
+                     "If the email address is registered, "
+                     "URL for resetting your password will be sent.")
 
         messages.info(request, info_msg)
         return redirect("top")
@@ -132,7 +127,7 @@ class ResetPassword(View):
     def get(self, request, *args, **kwargs):
         resetting = UserPasswordResetting.objects.filter(key=kwargs['key'])
         if not resetting.exists():
-            messages.error(request, "無効なURLです")
+            messages.error(request, _("Invalid URL"))
             return redirect("top")
         else:
             return render(request, 'user/reset_password.html')
@@ -144,7 +139,7 @@ class ResetPassword(View):
         if resetting .exists():
             resetting = resetting .first()
         else:
-            messages.error(request, "パスワードの再設定に失敗しました。")
+            messages.error(request, _("Failed to reset your password."))
             return redirect("top")
 
         user = resetting.user
@@ -152,7 +147,7 @@ class ResetPassword(View):
         user.save()
         login(request, user, "django.contrib.auth.backends.ModelBackend")
 
-        messages.info(request, "パスワードを再設定しました。")
+        messages.info(request, _("Your new password has been set."))
         return redirect("top")
 
 
@@ -165,7 +160,7 @@ class UserDetailView(DetailView):
         try:
             self.object = self.get_object()
         except Http404:
-            messages.error(request, "そのユーザーは存在しません")
+            messages.error(request, _("No user found"))
             return redirect('top')
         context = self.get_context_data(object=self.object)
         return self.render_to_response(context)
@@ -232,10 +227,6 @@ def logout(request):
 
 
 # Review
-class UserReviewView(DetailView):
-    model = User
-    template_name = 'user/user_review.html'
-
 
 class UserPostReviewView(FormView):
     template_name = 'user/user_post_review.html'
@@ -266,10 +257,10 @@ class UserPostReviewView(FormView):
             to_user = User.objects.get(pk=self.request.GET['to_user_id'])
             form.instance.event_host = True
         else:
-            to_user = User.objects.get(pk=joined_event.host_user.id) # pkを取得 評価対象
+            # pkを取得 評価対象
+            to_user = User.objects.get(pk=joined_event.host_user.id)
 
-
-        ## Validators
+        # Validators
 
         # params
         from_reviews = self.request.user.from_rate_user.all()
@@ -279,44 +270,54 @@ class UserPostReviewView(FormView):
                                        review.from_rate_user,
                                        review.joined_event])
 
+        req_user = self.request.user
+        past_participated_events = req_user.get_past_participated_events()
+        past_hosted_events = req_user.get_past_hosted_events()
+
         # Past joined_or_hosted_event or not
-        if (joined_event not in self.request.user.get_past_participated_events()) and (joined_event not in self.request.user.get_past_hosted_events()):
+        sender_has_joined = joined_event in past_participated_events
+        sender_has_hosted = joined_event in past_hosted_events
+
+        # XXX: Samy
+
+        if not sender_has_joined and not sender_has_hosted:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # from_User is Host or Participant
-        if (self.request.user not in joined_event.participant.all()) and (self.request.user != joined_event.host_user):
-            # form.add_error('rating', 'Incident with this email already exist')
+        sender_is_participant = req_user in joined_event.participant.all()
+        sender_is_host = req_user == joined_event.host_user
+
+        if not sender_is_participant and not sender_is_host:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # to_User is Host or Participant
-        if (to_user not in joined_event.participant.all()) and (to_user != joined_event.host_user):
-            # form.add_error('rating', 'Incident with this email already exist')
+        recipient_has_joined = to_user in joined_event.participant.all()
+        recipient_is_host = to_user == joined_event.host_user
+
+        if not recipient_has_joined and not recipient_is_host:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # from user Participant -> Host or not
-        if (self.request.user in joined_event.participant.all()) and (to_user != joined_event.host_user):
+        if sender_is_participant and not recipient_is_host:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
-        # rom user Host -> Participant or not
-        if (self.request.user == joined_event.host_user) and (to_user not in joined_event.participant.all()):
+        # from user Host -> Participant or not
+        if sender_is_host and not recipient_has_joined:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # Check Already Reviewed or not
-        if [to_user, self.request.user, joined_event] in to_from_event_list:
-                messages.error(self.request, "You Already Reviewd")
-                return self.form_invalid(form)
-
-
-
+        if [to_user, req_user, joined_event] in to_from_event_list:
+            messages.error(self.request, "You Already Reviewd")
+            return self.form_invalid(form)
 
         # Set Instanse
         form.instance.to_rate_user_id = to_user.id
-        form.instance.from_rate_user_id = self.request.user.id # 評価者 <--
+        form.instance.from_rate_user_id = self.request.user.id  # 評価者 <--
         form.instance.joined_event_id = joined_event.id
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
@@ -333,6 +334,7 @@ class UserUnReviewedView(ListView):
         model = User
         template_name = 'user/user_unreviewed.html'
 
+
 class UserSkillView(DetailView):
     model = User
     template_name = "user/user_skill.html"
@@ -343,8 +345,7 @@ class UserSkillEditView(UpdateView):
     tamplate_name = 'user/user_form.html'
     fields = ['skilltodo']
 
-    
-    def form_valid(self,form):
+    def form_valid(self, form):
         form_redirect = super(UserSkillEditView, self).form_valid(form)
         skill = form.save(commit=False)
 
@@ -369,20 +370,22 @@ class UserSkillEditView(UpdateView):
         userskill_id = self.request.user.id
         return reverse('user:skill', kwargs={'pk': userskill_id})
 
+
 @method_decorator(login_required, name='dispatch')
 class UserSkillAddView(CreateView):
     model = Skill
     fields = ['skilltodo']
     success_url = "../../"
     template_name = "user/skill_add.html"
+
     def get_context_data(self, **kwargs):
         context = super(UserSkillAddView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
-        return context       
+        return context
 
     def form_valid(self, form):
         form_redirect = super(UserSkillAddView, self).form_valid(form)
-        skill = form.save() 
+        skill = form.save()
         skill.tag.clear()
         for tag_id in self.request.POST.getlist('tags'):
             skill.tag.add(int(tag_id))
@@ -392,10 +395,10 @@ class UserSkillAddView(CreateView):
         return form_redirect
 
     def get_success_url(self, **kwargs):
-        messages.info(self.request, "新規スキルを作成しました")
+        info_msg = _("Your new skill has been added successfully.")
+        messages.info(self.request, info_msg)
         userskill_id = self.request.user.id
         return reverse('user:skill', kwargs={'pk': userskill_id})
-
 
 class UserListView(ListView):
     models = Skill

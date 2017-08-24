@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-heading">{{ title }}</div>
   <div class="panel-body">
     <div class="row">
@@ -9,7 +9,7 @@
             <div>{{ user.username }}</div>
           </div>
       {% empty %}
-      <div>{{ title }}はいません</div>
+      <div>{{ title }}{% trans " not found" %}</div>
       {% endfor %}
     </div>
   </div>

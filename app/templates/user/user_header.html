@@ -4,7 +4,7 @@
     <div class="media-object custom_thumbnail detail-thumbnail" style="background-image:url({{ user.get_image_url }});"></div>
   </div>
   <div class="col-xs-12 col-sm-8 col-md-9">
-    <div class="panel panel-primary">
+    <div class="panel panel-info">
       <div class="panel-heading">
         <h3 class="panel-title">
             {{ user.username }}
@@ -17,7 +17,7 @@
           <p>{% trans "Age Group:" %} {{ user.get_about_age }}{% trans "'s" %}</p>
           {% endif %}
           {% if user.sex != null %}
-          <p>{% trans "Sex:" %} {{ user.sex|yesno:"男,女,秘密" }}</p>
+          <p>{% trans "Sex:" %} {{ user.sex|yesno:_("Male,Female,Prefer not to disclose") }}</p>
           {% endif %}
           <p>{% trans 'Region:' %} {{ user.get_region_kanji }}</p>
         </div>
@@ -28,8 +28,8 @@
           <div style="text-align: right">
             {% if user.id == request.user.id %}
               <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">{% trans 'Edit profile' %}</a>
-              <a class="btn btn-default btn-sm" href="{% url 'user:skill' user.id %}">{% trans "View skills" %}</a>
             {% endif %}
+              <a class="btn btn-default btn-sm" href="{% url 'user:skill' user.id %}">{% trans "View skills" %}</a>
           </div>
         </div>
     </div>
@@ -45,53 +45,63 @@
   </div>
 </div>
 
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">{% trans "Reviews" %}</h3>
+    <a data-toggle="collapse" href="#collapse-review">
+      <h3 class="panel-title">
+        {% trans "Reviews" %}
+      </h3>
+    </a>
   </div>
-  <div class="panel-body">
-    {{ user.to_rate_user.all.count }} {% trans "reviews" %}
-    {{ user.get_mean_rating }}
-    <ul class="list-unstyled">
-    
-    {% for rate in user.to_rate_user.all %}
-      <li class="media">
-        <div class="media-left">
-          <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{ rate.from_rate_user.get_image_url }});"></div>
-        </div>
-        <div class="media-body">
-          <h5 class="">
-            <span>{{ rate.rating }}</span>
-            <span class="ml5">{% trans "Rated by" %} {{ rate.from_rate_user.username }}</span>
-            <span class="ml5"></span>
-          </h5>
-          <p>{{ rate.comment }}</p>
-          <p>
-            {% trans "Event Name" %} ： {{ rate.joined_event.name }}
-            {% trans "Posted on" %} ： {{ rate.post_day }}
-          </p>
-        </div>
-      </li>
-    {% endfor %}
-    </ul>
+  <div id="collapse-review" class="panel-collapse collapse in">
+    <div class="panel-body">
+      {{ user.to_rate_user.all.count }} {% trans "reviews" %}
+      {{ user.get_mean_rating }}
+      <ul class="list-unstyled">
+      
+      {% for rate in user.to_rate_user.all %}
+        <li class="media">
+          <div class="media-left">
+            <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{ rate.from_rate_user.get_image_url }});"></div>
+          </div>
+          <div class="media-body">
+            <h5 class="">
+              <span>{{ rate.rating }}</span>
+              <span class="ml5">{% trans "Rated by" %} {{ rate.from_rate_user.username }}</span>
+              <span class="ml5"></span>
+            </h5>
+            <p>{{ rate.comment }}</p>
+            <p>
+              {% trans "Event Name" %} ： {{ rate.joined_event.name }}
+              {% trans "Posted on" %} ： {{ rate.post_day }}
+            </p>
+          </div>
+        </li>
+      {% endfor %}
+      </ul>
+    </div>
   </div>
 </div>
 
-<div class="panel panel-primary">
+<div class="panel panel-default">
   <div class="panel-heading">
-    <h3 class="panel-title">{% trans 'Trophies' %}</h3>
+    <a data-toggle="collapse" href="#collapse-trophie">
+      <h3 class="panel-title">{% trans 'Trophies' %}</h3>
+    </a>
   </div>
-  <div class="panel-body">
-    {% for trophy in user.trophy_list %}
-      <div class="trophy-box">
-        <div class="trophy-hedding">{{ trophy.name }}</div>
-        <div class="trophy-icon"><img src="/media/common/trophy/{{ trophy.type }}.svg" style="padding: 0;"></div>
-      </div>
-    {% endfor %}
+  <div id="collapse-trophie"  class="panel-collapse collapse in">
+    <div class="panel-body">
+      {% for trophy in user.trophy_list %}
+        <div class="trophy-box">
+          <div class="trophy-hedding">{{ trophy.name }}</div>
+          <div class="trophy-icon"><img src="/media/common/trophy/{{ trophy.type }}.svg" style="padding: 0;"></div>
+        </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
 
-<div id="user-info" class="panel panel-primary">
+<div id="user-info" class="panel panel-default">
   <div class="panel-heading">
     <h3 class="panel-title">
       {% trans 'Following tags' %}

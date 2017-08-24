@@ -257,55 +257,75 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return [event.joined_event for event in self.from_rate_user.all()]
 
     def get_past_participated_and_unreviewed_events(self):
-        finished_list = [event for event in self.participating_event.all() if event.is_over()]
-        reviewed_list_id = [event.id for event in self.get_reviewed_events()]
-        unreviewed_event = [event for event in finished_list if not event.id in reviewed_list_id]
-        return unreviewed_event
+        participating_events = self.participating_event.all()
+        finished = [e for e in participating_events if e.is_over()]
+        reviewed = [e.id for e in self.get_reviewed_events()]
+        unreviewed = [e for e in finished if e.id not in reviewed]
+        return unreviewed
 
     # Review (using by host)
     def get_past_hosted_events(self):
-        return [event for event in self.host_event.all().order_by('start_time') if event.is_over()]
+        host_events = self.host_event.all().order_by('start_time')
+        return [e for e in host_events if e.is_over()]
 
-    def get_paticipant_of_past_hosted_events(self):
+    def get_participant_of_past_hosted_events(self):
         user_reviewed_list = []
         for event in self.get_past_hosted_events():
-            user_reviewed_list.append([ p_user.user for p_user in event.participation_set.all()])
+            users = [p.user for p in event.participation_set.all()]
+            user_reviewed_list.append(users)
         return user_reviewed_list
 
-    def get_reviewed_paticipant_of_past_hosted_events(self):
+    def get_reviewed_participant_of_past_hosted_events(self):
         user_reviewed_list = []
         for event in self.get_past_hosted_events():
-            temp = [review.to_rate_user for review in self.from_rate_user.all() if review.joined_event == event]
-            user_reviewed_list.append(temp)
+            reviews = self.from_rate_user.all()
+
+            users = [r.to_rate_user for r
+                     in reviews
+                     if r.joined_event == event]
+
+            user_reviewed_list.append(users)
         return user_reviewed_list
 
-    def get_unreviewed_paticipant_of_past_hosted_events(self):
+    def get_unreviewed_participant_of_past_hosted_events(self):
         user_unreviewed_list = []
-        for user_list_all, user_list_re  in zip(self.get_paticipant_of_past_hosted_events(),
-                             self.get_reviewed_paticipant_of_past_hosted_events()):
+
+        zipped = zip(self.get_participant_of_past_hosted_events(),
+                     self.get_reviewed_participant_of_past_hosted_events())
+
+        for user_list_all, user_list_re in zipped:
             temp = [user for user in user_list_all if user not in user_list_re]
             user_unreviewed_list.append(temp)
+
         return user_unreviewed_list
 
     # pop Null
     def get_unreviewed_past_hosted_events(self):
         user_unreviewed_list = []
-        for event, unreviewed in zip(self.get_past_hosted_events(), self.get_unreviewed_paticipant_of_past_hosted_events()):
-            if not len(unreviewed) == 0:
-                user_unreviewed_list.append(event)
-        return user_unreviewed_list
 
-    def get_unreviewed_paticipant_of_past_hosted_events_poped_per_event(self):
-        user_unreviewed_list = []
-        for user_list in self.get_unreviewed_paticipant_of_past_hosted_events():
-            if not len(user_list) == 0:
-                user_unreviewed_list.append(user_list)
+        zipped = zip(self.get_past_hosted_events(),
+                     self.get_unreviewed_participant_of_past_hosted_events())
+
+        for event, unreviewed in zipped:
+            if len(unreviewed) == 0:
+                continue
+            user_unreviewed_list.append(event)
+
         return user_unreviewed_list
 
     # send html template
-    def get_ziped_unreview_hoseted(self):
+    def get_zipped_unreviewed_hosted(self):
+        user_unreviewed_list = []
+
+        events = self.get_unreviewed_participant_of_past_hosted_events()
+        for user_list in events:
+            if len(user_list) == 0:
+                continue
+            user_unreviewed_list.append(user_list)
+
         return zip(self.get_unreviewed_past_hosted_events(),
-                   self.get_unreviewed_paticipant_of_past_hosted_events_poped_per_event())
+                   user_unreviewed_list)
+
 
 class UserActivation(models.Model):
     user = models.OneToOneField(User)
@@ -335,14 +355,12 @@ class UserReviewList(models.Model):
                                      on_delete=models.CASCADE,
                                      related_name='to_rate_user')
 
-    from_rate_user = models.ForeignKey(
-        User,
-        on_delete=models.CASCADE,
-        related_name='from_rate_user',
-        )
+    from_rate_user = models.ForeignKey(User,
+                                       on_delete=models.CASCADE,
+                                       related_name='from_rate_user')
 
     rating = models.IntegerField(validators=[MinValueValidator(0),
-                                       MaxValueValidator(5)])
+                                             MaxValueValidator(5)])
 
     comment = models.CharField(max_length=200, null=True, blank=True)
 
@@ -356,6 +374,7 @@ class UserReviewList(models.Model):
         # Built-in attribute of django.contrib.auth.models.User !
         return str(self.to_rate_user)
 
+
 class Skill(AbstractBaseModel):
     userskill = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     description = models.TextField(default='ボランティアできること')
@@ -368,13 +387,14 @@ class Skill(AbstractBaseModel):
     skilltodo = models.CharField(max_length=200, null=True)
 
     def __str__(self):
-        return "Skill #" + str(self.pk) + " in User #" +str(self.userskill_id)
+        return "Skill #" + str(self.pk) + " in User #" + str(self.userskill_id)
 
     def get_tags_as_string(self):
         return "\n".join([tag.name for tag in self.tag.all()])
 
     def get_absolute_url(self):
-        return reverse('user:detail', kwargs={'pk' : self.id})
+        return reverse('user:detail', kwargs={'pk': self.id})
+
 
 class SkillAdmin(admin.ModelAdmin):
     list_display22 = (
@@ -383,5 +403,3 @@ class SkillAdmin(admin.ModelAdmin):
         'description',
         'skilltodo',
     )
-
-

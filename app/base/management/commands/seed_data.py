@@ -3,14 +3,12 @@ from django.core.files import File
 from django.utils import timezone
 from django.conf import settings
 from event.models import Event, Participation, Frame, Comment, Question, Answer
-from group.models import Group, Membership
-from user.models import User
+from user.models import User, UserReviewList
 from tag.models import Tag
 import csv
 import os
 import glob
 import random
-
 
 username_sample=[
 "koshiba_takahiro"
@@ -74,30 +72,6 @@ eventname_sample=[
 eventdetail_sample = """これから、はじめてボランティア活動をしようという個人を対象にした基本的なオリエンテーションです。
 「ボランティアってなに？」「どうやって活動を始めるの？」などの、素朴な質問にお答えします。お気軽にご参加ください。"""
 
-groupname_sample=[
-    "早稲田大学キッズラブ同好会",
-    "ボランティアビジネス会VBG",
-    "奥多摩の自然を守る会",
-    "立命館高校落語研究会ボランティア",
-    "キッズボランティアいんたーりんく",
-    "PLO児童支援団体",
-    "御徒町地域清掃ＮＰＯ団体",
-    "自閉症児支援団体",
-    "上川町自治体",
-    "としま区わくわくボランティア",
-    "ボランティア団体ＳＯＶＯＬ",
-    "国際協力ＮＧＯシャプラニー",
-    "児童教育団体",
-    "寝屋川市活性化団体",
-    "シルバー支援会温故知新",
-    "東京大学情報理工学系研究科ITボランティアサークル UT-VOLIT",
-    "被災地支援総合ボランティア団体",
-    "地震研究会支援支部",
-    "海外青年協力隊プラットフォーム",
-    "ＮＰＯ法人キャピタルアース",
-    "ＮＰＯ法人山口組",
-    "動物愛護団体スワローズ",
-]
 
 comment_sample=[
     """Samsung Z2は、“世界初の4G LTE通信対応Tizenスマートフォン” という肩書きを除けば、非常に平凡なローエンド端末であると言えます。
@@ -115,6 +89,24 @@ comment_sample=[
     """
 ]
 
+review_comment_sample = [
+    '',
+    '感謝感激です。',
+    """
+    とても助かりました。
+    またのご縁があることを楽しみにしております。
+    この度はありがとうございました。
+    """,
+    """
+    ありがとうございました。（＾o＾）
+    """,
+    """
+    本当にありがとうございました！またぜひ御縁がありますように♪
+    """,
+    """
+    最悪な１日でした。
+    """
+]
 
 class Command(BaseCommand):
     help = """
@@ -125,13 +117,11 @@ class Command(BaseCommand):
     -frame: Adds frames. Requires users and events to exist.
     -participation: Adds participations. Requires users, events, and frames to exist.
     -comment: Adds comments. Requires users, events, frames, and participations to exist.
-    -group: Adds groups. Requires users to exist.
-    -member: Adds members to groups. Requires users and groups to exist.
     -tag: Adds tags. Requires users to exist.
     -qanda: Adds questions and answers. Requires users, events, frames, and participations to exist.
     """
 
-    attributes = ('user', 'event', 'frame', 'participation', 'comment', 'group', 'member', 'tag', 'qanda')
+    attributes = ('user', 'event', 'frame', 'participation', 'comment', 'tag', 'qanda')
 
     prefectures = {
         "Hokkaido": "北海道",
@@ -217,18 +207,6 @@ class Command(BaseCommand):
             default=False,
         )
         parser.add_argument(
-            '-group',
-            dest='group',
-            action='store_true',
-            default=False,
-        )
-        parser.add_argument(
-            '-member',
-            dest='member',
-            action='store_true',
-            default=False,
-        )
-        parser.add_argument(
             '-tag',
             dest='tag',
             action='store_true',
@@ -237,6 +215,12 @@ class Command(BaseCommand):
         parser.add_argument(
             '-qanda',
             dest='qanda',
+            action='store_true',
+            default=False,
+        )
+        parser.add_argument(
+            '-userreviewlist',
+            dest='userreviewlist',
             action='store_true',
             default=False,
         )
@@ -424,39 +408,7 @@ class Command(BaseCommand):
                 )
                 comment.save()
 
-    def _create_groups(self):
-        for i in range(20):
-            name = groupname_sample[i]
-            description = "完全非営利活動法人のボランティア団体です。詳しい団体説明はホームページをご覧ください。http://google.com"
-            group = Group(
-                name=name,
-                description=description,
-                )
-            group.save()
-            event = Event.objects.get(pk=group.pk)
-            group.event.add(event)
 
-    def _create_memberships(self):
-        for group in Group.objects.all():
-            for i in range(1,21):
-                if group.pk in [1, 2] or group.pk==i:
-                    member = User.objects.get(username=username_sample[i-1])
-                    membership = Membership(
-                        member=member,
-                        group=group,
-                    )
-                    membership.save()
-
-            if group.pk==1:
-                continue
-
-            membership = Membership(
-                member=User.objects.get(pk=1),
-                group=group,
-                role='admin',
-            )
-
-            membership.save()
 
     def _create_tags(self):
         taglist = (
@@ -508,6 +460,35 @@ class Command(BaseCommand):
                 )
                 answer.save()
 
+    def _create_userreviewlists(self):
+        past_event_list = [event for event in Event.objects.all() if event.is_closed()]
+        for c_event in past_event_list:
+            for c_participant in c_event.participant.all():
+                if random.choice([0,0,1,1,1,1,1,1,1,1]): # Did_or_Not_Did
+                    # H-> P
+                    userreviewlists_hp = UserReviewList(
+                        to_rate_user = c_participant,
+                        from_rate_user = c_event.host_user,
+                        rating = random.choice([1,2,2,3,3,3,3,4,4,4,4,4,4,5,5,5,5]),
+                        comment = review_comment_sample[random.choice([0,0,0,0,0,1,1,1,2,2,2,3,3,3,3,4,4,4,5])],
+                        joined_event = c_event,
+                        post_day = c_event.end_time + random.choice(range(1,20)) * timezone.timedelta(days=1),
+                        event_host = True,
+                    )
+                    userreviewlists_hp.save()
+                if random.choice([0,0,0,1,1,1,1,1,1,1]): # Did_or_Not_Did
+                    # P-> H
+                    userreviewlists_ph = UserReviewList(
+                        to_rate_user = c_event.host_user,
+                        from_rate_user = c_participant,
+                        rating = random.choice([1,2,2,3,3,3,3,4,4,4,4,4,4,5,5,5,5]),
+                        comment = review_comment_sample[random.choice([0,0,0,0,0,1,1,1,2,2,2,3,3,3,3,4,4,4,5])],
+                        joined_event = c_event,
+                        post_day = c_event.end_time + random.choice(range(1,20)) * timezone.timedelta(days=1),
+                        event_host = False,
+                    )
+                    userreviewlists_ph.save()
+
     def handle(self, *args, **options):
         arg_exist = False
         for attr in self.attributes:
@@ -519,10 +500,9 @@ class Command(BaseCommand):
             self._create_frames()
             self._create_participants()
             self._create_comments()
-            self._create_groups()
-            self._create_memberships()
             self._create_tags()
             self._create_questions_and_answers()
+            self._create_userreviewlists()
         else:
             if options['user']:
                 self._create_users()
@@ -534,12 +514,9 @@ class Command(BaseCommand):
                 self._create_participants()
             if options['comment']:
                 self._create_comments()
-            if options['member']:
-                self._create_memberships()
             if options['tag']:
                 self._create_tags()
             if options['qanda']:
                 self._create_questions_and_answers()
-
-
-
+            if option['userreviewlist']:
+                self._create_userreviewlists()

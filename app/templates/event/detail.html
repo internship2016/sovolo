@@ -17,7 +17,7 @@
   </div>
   <div class="col-xs-12 col-md-9 col-md-pull-3">
 
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
       <div class="panel-heading">
           {% trans "Availability" %}
       </div>
@@ -165,7 +165,7 @@
         </div>
       </div>
     </div>
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
       <div class="panel-heading">{% trans "About this event" %}</div>
       <div class="panel-body">
         <table class="table">
@@ -188,7 +188,7 @@
         </table>
       </div>
     </div>
-    <div class="panel panel-primary">
+    <div class="panel panel-default">
       <div class="panel-heading">{% trans "Meet at:" %}</div>
       <div class="panel-body">
         <p>{{ event.meeting_place }}</p>
@@ -202,7 +202,7 @@
 
 
         {% if event.private_notes and request.user in event.participant.all %}
-          <div class="panel panel-primary">
+          <div class="panel panel-default">
             <div class="panel-heading">
                 {% trans "Comments to the participants: (This won't be shown to nonapplicants.)" %}
             </div>
