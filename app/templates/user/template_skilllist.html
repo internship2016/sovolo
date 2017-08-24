@@ -5,8 +5,25 @@
   </div>
   <div class="panel-body">
     {% for skill in skills %}
-    <div class="mediai-heading">
-      <a href="/user/{{userskill.pk}}">
+    <div class="media">
+    <div class="media-left">
+      <a href="/user/{{skill.userskill.id}}">
+        <div class="media-object custom_thumbnail list-thumbnail" style="background-image:url({{ skill.userskill.get_image_url }});"></div>
+      </a>
+    </div>
+    <div class="media-heading">
+    <div>
+       <a href="/user/{{skill.userskill.id}}">
+         <h1>{{skill.userskill.username}}</h1>
+       </a>
+    </div>
+    <div>
+      {% for tag in skill.tag.all %}
+        <a class="tag" ><i class="fa fa-tag" aria-hidden="ture"></i>{{ tag.name }}</a>
+      {% endfor %}
+    </div>
+    <div class="media-body">
+      <a href="/user/{{skill.userskill.id}}">
         <h4>{{skill.skilltodo}}</h4>
       </a>
     </div>
