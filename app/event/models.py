@@ -7,6 +7,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.utils import timezone
 from tag.models import Tag
+from django.utils.translation import ugettext_lazy as _
 
 import os
 import math
@@ -107,20 +108,20 @@ class Event(AbstractBaseModel):
 
     def get_status(self):
         if self.is_over():
-            return "終了"
+            return _("Finished")
         elif self.is_started():
-            return "開催中"
+            return _("In Session")
         elif self.is_closed():
-            return "締切済"
+            return _("Closed")
         elif self.is_full():
-            return "満員"
+            return _("Full")
         else:
-            return "募集中"
+            return _("Wanted")
 
     def get_region_kanji(self):
         region = self.prefectures.get(self.region)
         if not region:
-            return '未設定'  # XXX: regionがこない場合は未設定でいいのか
+            return _('Not provided')  # XXX: regionがこない場合は未設定でいいのか
         return region[0]
 
     def start_time_format(self):

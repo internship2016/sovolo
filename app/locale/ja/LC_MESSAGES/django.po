@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 00:32+0000\n"
+"POT-Creation-Date: 2017-08-24 12:15+0900\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,38 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+
+#: event/models.py:110 templates/event/detail.html:54
+#: templates/event/detail.html:64 templates/map.html:116
+#: templates/top.html:164
+msgid "Finished"
+msgstr "終了"
+
+#: event/models.py:112 templates/event/detail.html:56
+#: templates/event/detail.html:66 templates/event/detail.html:99
+#: templates/event/detail.html:112 templates/map.html:113
+#: templates/top.html:161
+msgid "In Session"
+msgstr "開催中"
+
+#: event/models.py:114 templates/event/detail.html:58
+#: templates/event/detail.html:68 templates/event/detail.html:101
+#: templates/event/detail.html:114
+msgid "Closed"
+msgstr "締切済"
+
+#: event/models.py:116
+msgid "Full"
+msgstr "満員"
+
+#: event/models.py:118 templates/event/detail.html:119 templates/map.html:114
+#: templates/top.html:162
+msgid "Wanted"
+msgstr "募集中"
+
+#: event/models.py:123
+msgid "Not provided"
+msgstr "未設定"
 
 #: event/views.py:87
 #, python-format
@@ -340,10 +372,9 @@ msgstr "締切"
 msgid "Participated"
 msgstr "参加しました"
 
-#: templates/event/detail.html:46 templates/map.html:113
-#: templates/top.html:161
+#: templates/event/detail.html:46
 msgid "Ongoing"
-msgstr "開催中"
+msgstr "参加中"
 
 #: templates/event/detail.html:48
 msgid "Confirmed"
@@ -353,36 +384,16 @@ msgstr "参加確定"
 msgid "Participating"
 msgstr "参加予定"
 
-#: templates/event/detail.html:54 templates/event/detail.html:64
-#: templates/map.html:116 templates/top.html:164
-msgid "Finished"
-msgstr "終了"
-
-#: templates/event/detail.html:56 templates/event/detail.html:58
-#: templates/event/detail.html:68 templates/event/detail.html:99
-#: templates/event/detail.html:101 templates/event/detail.html:112
-#: templates/event/detail.html:114
-msgid "Closed"
-msgstr "締切済"
-
 #: templates/event/detail.html:60 templates/event/detail.html:117
 #: templates/event/event_header.html:20 templates/event/participants.html:23
 #: templates/event/side_info.html:9
 msgid "Waiting List"
 msgstr "キャンセル待ち"
 
-#: templates/event/detail.html:66
-msgid "In Session"
-msgstr "開催中"
-
 #: templates/event/detail.html:88 templates/event/detail.html:93
 #: templates/event/detail.html:105
 msgid "Cancel"
 msgstr "キャンセル"
-
-#: templates/event/detail.html:119
-msgid "Join"
-msgstr "参加"
 
 #: templates/event/detail.html:130 templates/event/detail.html:134
 msgid " "
@@ -474,7 +485,7 @@ msgid "Send email to all participants"
 msgstr "メール一斉送信"
 
 #: templates/event/form_template.html:9 templates/user/user_header.html:75
-#: templates/user/user_post_review.html:16 templates/user/user_review.html:19
+#: templates/user/user_post_review.html:16
 msgid "Event Name"
 msgstr "ボランティア名"
 
@@ -728,10 +739,6 @@ msgstr "地名を入力"
 msgid "Search with filters"
 msgstr "タグで絞り込む"
 
-#: templates/map.html:114 templates/top.html:162
-msgid "Wanted"
-msgstr "募集中"
-
 #: templates/map.html:149
 msgid "Failed to get location."
 msgstr "位置情報取得に失敗しました"
@@ -788,15 +795,15 @@ msgstr "地図"
 msgid "Calender"
 msgstr "カレンダー"
 
-#: templates/top.html:61
+#: templates/top.html:24
 msgid "Events I'm going"
 msgstr "参加予定のボランティア"
 
-#: templates/top.html:67
+#: templates/top.html:30
 msgid "Events Nearby"
 msgstr "地域の新着ボランティア"
 
-#: templates/top.html:74
+#: templates/top.html:37
 msgid "View All Events"
 msgstr "すべてのボランティア"
 
@@ -824,11 +831,7 @@ msgstr "管理しているボランティア一覧"
 msgid "Event Achievements"
 msgstr "ボランティア実績"
 
-#: templates/user/detail.html:19
-msgid "Reviews posted"
-msgstr "すべてのレビューを見る"
-
-#: templates/user/detail.html:23
+#: templates/user/detail.html:18
 msgid "Reviews not yet posted"
 msgstr "未レビューを見る"
 
@@ -1010,20 +1013,19 @@ msgstr "ソボレージ"
 msgid "View skills"
 msgstr "スキル一覧を見る"
 
-#: templates/user/user_header.html:52 templates/user/user_review.html:3
-#: templates/user/user_review.html:8
+#: templates/user/user_header.html:52
 msgid "Reviews"
 msgstr "レビュー"
 
-#: templates/user/user_header.html:58 templates/user/user_review.html:11
+#: templates/user/user_header.html:58
 msgid "reviews"
 msgstr "件"
 
-#: templates/user/user_header.html:70 templates/user/user_review.html:18
+#: templates/user/user_header.html:70
 msgid "Rated by"
 msgstr "投稿者"
 
-#: templates/user/user_header.html:76 templates/user/user_review.html:21
+#: templates/user/user_header.html:76
 msgid "Posted on"
 msgstr "投稿日"
 
@@ -1067,14 +1069,6 @@ msgstr "ユーザーID"
 #: templates/user/user_post_review.html:20
 msgid "User Name"
 msgstr "ユーザー名"
-
-#: templates/user/user_review.html:17
-msgid "Rating"
-msgstr "評価"
-
-#: templates/user/user_review.html:20
-msgid "Comment"
-msgstr "コメント"
 
 #: templates/user/user_skill.html:20
 msgid "Skill "
@@ -1151,13 +1145,30 @@ msgid "No user found"
 msgstr "そのユーザーは存在しません"
 
 #: user/views.py:210
-msgid "User profile was successfully edited."
+msgid "User profile has been successfully edited."
 msgstr "ユーザー情報を編集しました。"
 
 #: user/views.py:225
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
 
-#: user/views.py:391
+#: user/views.py:284 user/views.py:292 user/views.py:300 user/views.py:305
+#: user/views.py:310
+msgid "Invalid Review"
+msgstr "無効なレビューです"
+
+#: user/views.py:315
+msgid "You've already reviewd"
+msgstr "既にレビュー済みです"
+
+#: user/views.py:328
+msgid "Your review has been successfully posted!"
+msgstr "レビューを投稿しました。"
+
+#: user/views.py:369
+msgid "Your skill has been edited successfully."
+msgstr "スキルを編集しました。"
+
+#: user/views.py:398
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
