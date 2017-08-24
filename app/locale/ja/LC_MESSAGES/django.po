@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 06:47+0900\n"
+"POT-Creation-Date: 2017-08-24 21:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -505,7 +505,7 @@ msgstr "終了"
 msgid "Location:"
 msgstr "開催地域"
 
-#: templates/event/form_template.html:81 templates/event/search_form.html:69
+#: templates/event/form_template.html:81 templates/event/search_form.html:71
 #: templates/event/search_form_side.html:69 templates/map.html:21
 msgid "Search"
 msgstr "検索"
@@ -710,6 +710,15 @@ msgid "Status"
 msgstr "ステータス"
 
 #: templates/event/search_form.html:65
+#, fuzzy
+#| msgid "Show closed events"
+msgid "Exclude closed events"
+msgstr "締め切られたボランティアを除外"
+
+#: templates/event/search_form.html:67
+msgid "Exclude full events"
+msgstr "満員になったボランティアを除外"
+
 #: templates/event/search_form_side.html:65
 msgid "Show closed events"
 msgstr "締め切られたボランティアを表示"
