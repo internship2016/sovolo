@@ -375,6 +375,7 @@ class UserSkillAddView(CreateView):
     fields = ['skilltodo']
     success_url = "../../"
     template_name = "user/skill_add.html"
+
     def get_context_data(self, **kwargs):
         context = super(UserSkillAddView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
