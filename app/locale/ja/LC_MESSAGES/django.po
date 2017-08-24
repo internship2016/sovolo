@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 00:32+0000\n"
+"POT-Creation-Date: 2017-08-24 01:46+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -341,7 +341,7 @@ msgid "Participated"
 msgstr "参加しました"
 
 #: templates/event/detail.html:46 templates/map.html:113
-#: templates/top.html:161
+#: templates/top.html:169
 msgid "Ongoing"
 msgstr "開催中"
 
@@ -354,7 +354,7 @@ msgid "Participating"
 msgstr "参加予定"
 
 #: templates/event/detail.html:54 templates/event/detail.html:64
-#: templates/map.html:116 templates/top.html:164
+#: templates/map.html:116 templates/top.html:172
 msgid "Finished"
 msgstr "終了"
 
@@ -474,7 +474,7 @@ msgid "Send email to all participants"
 msgstr "メール一斉送信"
 
 #: templates/event/form_template.html:9 templates/user/user_header.html:75
-#: templates/user/user_post_review.html:16 templates/user/user_review.html:19
+#: templates/user/user_post_review.html:16
 msgid "Event Name"
 msgstr "ボランティア名"
 
@@ -603,7 +603,7 @@ msgstr "宛先"
 
 #: templates/event/message.html:16 templates/event/participants.html:11
 #: templates/event/side_info.html:5 templates/map.html:115
-#: templates/top.html:163 templates/user/user_list.html:8
+#: templates/top.html:171 templates/user/user_list.html:8
 msgid "Organizer"
 msgstr "管理者"
 
@@ -728,7 +728,7 @@ msgstr "地名を入力"
 msgid "Search with filters"
 msgstr "タグで絞り込む"
 
-#: templates/map.html:114 templates/top.html:162
+#: templates/map.html:114 templates/top.html:170
 msgid "Wanted"
 msgstr "募集中"
 
@@ -744,31 +744,31 @@ msgstr "情報を取得できませんでした"
 msgid "There are no events nearby."
 msgstr "周辺イベントはありません"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Sun"
 msgstr "日"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Mon"
 msgstr "月"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Tue"
 msgstr "火"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Wed"
 msgstr "水"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Thu"
 msgstr "木"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Fri"
 msgstr "金"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Sat"
 msgstr "土"
 
@@ -788,19 +788,23 @@ msgstr "地図"
 msgid "Calender"
 msgstr "カレンダー"
 
-#: templates/top.html:61
+#: templates/top.html:24
 msgid "Events I'm going"
 msgstr "参加予定のボランティア"
 
-#: templates/top.html:67
+#: templates/top.html:30
 msgid "Events Nearby"
 msgstr "地域の新着ボランティア"
 
-#: templates/top.html:74
+#: templates/top.html:37
+msgid "View New Events"
+msgstr "新着のボランティア"
+
+#: templates/top.html:44
 msgid "View All Events"
 msgstr "すべてのボランティア"
 
-#: templates/top.html:135 templates/top.html:148
+#: templates/top.html:143 templates/top.html:156
 msgid "Failed to get information"
 msgstr "取得に失敗"
 
@@ -824,11 +828,7 @@ msgstr "管理しているボランティア一覧"
 msgid "Event Achievements"
 msgstr "ボランティア実績"
 
-#: templates/user/detail.html:19
-msgid "Reviews posted"
-msgstr "すべてのレビューを見る"
-
-#: templates/user/detail.html:23
+#: templates/user/detail.html:18
 msgid "Reviews not yet posted"
 msgstr "未レビューを見る"
 
@@ -1010,20 +1010,19 @@ msgstr "ソボレージ"
 msgid "View skills"
 msgstr "スキル一覧を見る"
 
-#: templates/user/user_header.html:52 templates/user/user_review.html:3
-#: templates/user/user_review.html:8
+#: templates/user/user_header.html:52
 msgid "Reviews"
 msgstr "レビュー"
 
-#: templates/user/user_header.html:58 templates/user/user_review.html:11
+#: templates/user/user_header.html:58
 msgid "reviews"
 msgstr "件"
 
-#: templates/user/user_header.html:70 templates/user/user_review.html:18
+#: templates/user/user_header.html:70
 msgid "Rated by"
 msgstr "投稿者"
 
-#: templates/user/user_header.html:76 templates/user/user_review.html:21
+#: templates/user/user_header.html:76
 msgid "Posted on"
 msgstr "投稿日"
 
@@ -1067,14 +1066,6 @@ msgstr "ユーザーID"
 #: templates/user/user_post_review.html:20
 msgid "User Name"
 msgstr "ユーザー名"
-
-#: templates/user/user_review.html:17
-msgid "Rating"
-msgstr "評価"
-
-#: templates/user/user_review.html:20
-msgid "Comment"
-msgstr "コメント"
 
 #: templates/user/user_skill.html:20
 msgid "Skill "
@@ -1158,6 +1149,15 @@ msgstr "ユーザー情報を編集しました。"
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
 
-#: user/views.py:391
+#: user/views.py:393
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
+
+#~ msgid "Reviews posted"
+#~ msgstr "すべてのレビューを見る"
+
+#~ msgid "Rating"
+#~ msgstr "評価"
+
+#~ msgid "Comment"
+#~ msgstr "コメント"
