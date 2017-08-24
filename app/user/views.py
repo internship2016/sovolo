@@ -317,7 +317,7 @@ class UserPostReviewView(FormView):
 
         # Set Instanse
         form.instance.to_rate_user_id = to_user.id
-        form.instance.from_rate_user_id = self.request.user.id  # 評価者 <--
+        form.instance.from_rate_user_id = req_user.id  # 評価者 <--
         form.instance.joined_event_id = joined_event.id
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
