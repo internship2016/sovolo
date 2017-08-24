@@ -42,6 +42,7 @@ urlpatterns = [
     url(r'^filter/new_region_events$', api.event_filter, {'event_kind':'new_region_events'}, name='new_region_events'),
     url(r'^filter/new_tag_events$', api.event_filter, {'event_kind':'new_tag_events'}, name='new_tag_events'),
     url(r'^filter/new_events$', api.event_filter, {'event_kind':'new_events'}, name='new_events'),
+    url(r'filter/all_events$', api.event_filter, {'event_kind':'all_events'}, name='all_events'),
 
     url(r'^filter/(?P<event_kind>[\w_]+)$', api.event_filter, name='filter'),
     url(r'^range_search/$', api.event_range_search, name='range_search'),
