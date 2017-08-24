@@ -1,31 +1,27 @@
 {% load i18n %}
 <div class="panel panel-default">
   <div class="panel-heading">
-    <div class="panel-title">{{ title }}</div>
-  </div>
-  <div class="panel-body">
-    {% for skill in skills %}
-    <div class="media">
-    <div class="media-left">
-      <a href="/user/{{skill.userskill.id}}">
-        <div class="media-object custom_thumbnail list-thumbnail" style="background-image:url({{ skill.userskill.get_image_url }});"></div>
-      </a>
-    </div>
-    <div class="media-heading">
-    <div>
-       <a href="/user/{{skill.userskill.id}}">
-         <h1>{{skill.userskill.username}}</h1>
-       </a>
-    </div>
+    <div class="panel-title">ユーザー一覧</div>
+    <div class="panel-body">
+      {% for skill in skills %}
+      <div class="media">
+        <div class="media-left">
+          <a href="/user/{{skill.userskill.id}}">
+          <div class="media-object custom_thumbnail list-thumbnail" style="background-image:url({{ skill.userskill.get_image_url }});"></div>
+          </a>
+          <div class="madia-body">
+          <a href="/user/{{skill.userskill.id}}">
+           <h1>{{skill.userskill.username}}</h1>
+          </a>
+          <i class="fa fa-map-marker" aria-hidden="true"></i>
+          {{ skill.userskill.get_region_kanji}}
+          </div>
     <div>
       {% for tag in skill.tag.all %}
         <a class="tag" ><i class="fa fa-tag" aria-hidden="ture"></i>{{ tag.name }}</a>
       {% endfor %}
     </div>
-    <div class="media-body">
-      <a href="/user/{{skill.userskill.id}}">
         <h4>{{skill.skilltodo}}</h4>
-      </a>
     </div>
   </div>
   {% empty %}
