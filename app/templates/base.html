@@ -82,15 +82,18 @@
             <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_anonymous %}
             <!--言語切り替え-->
-            <li class="dropdown">
-                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  Language  
-                  <span class="caret"></span>
-                </a>
-                <ul class="dropdown-menu">
-                  <li><a href="">English</a></li>
-                  <li><a href="">日本語</a></li>
-                </ul>
+              <li>
+                {% get_available_languages as LANGUAGES %}
+                <form action="/i18n/setlang/" method="post" id="languagetab">{% csrf_token %}
+                  <input name="next" type="hidden" value="/" />
+                    {% csrf_token %}
+                    <select name="language">
+                      {% for lang in LANGUAGES %}
+                        <option value="{{ lang.0 }}">{{ lang.1 }}</option>
+                      {% endfor %}
+                    </select>
+                  <input type="submit" value="change" />
+                </form>
               </li>
               <li class="pull-left"><a href="{% url 'user:register' %}">{% trans "Register" %}</a></li>
               <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
