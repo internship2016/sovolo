@@ -15,7 +15,6 @@ from .models import User, Skill, UserActivation, UserPasswordResetting
 from .form import UserReviewListForm
 from django.urls import reverse
 
-from django.forms import formset_factory
 from event.models import Event
 
 from django.utils import translation
@@ -51,9 +50,9 @@ class UserCreateView(CreateView):
             [user.email],
         )
 
-        info_msg = _("Confirmation email has been sent to your email address.") % {
-            'email': user.email,
-        }
+        info_msg = _("Confirmation email has been "
+                     "sent to your email address.") % {'email': user.email}
+
         messages.info(self.request, info_msg)
         return redirect("top")
 
