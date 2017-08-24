@@ -289,7 +289,10 @@ class UserPostReviewView(FormView):
             return self.form_invalid(form)
 
         # to_User is Host or Participant
-        if (to_user not in joined_event.participant.all()) and (to_user != joined_event.host_user):
+        recipient_has_joined = to_user in joined_event.participant.all()
+        recipient_is_not_host = to_user != joined_event.host_user
+
+        if not recipient_has_joined and recipient_is_not_host:
             # form.add_error('rating', 'Incident with this email already exist')
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
