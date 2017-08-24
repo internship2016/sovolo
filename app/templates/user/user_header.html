@@ -29,7 +29,6 @@
             {% if user.id == request.user.id %}
               <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">{% trans 'Edit profile' %}</a>
             {% endif %}
-              <a class="btn btn-default btn-sm" href="{% url 'user:skill' user.id %}">{% trans "View skills" %}</a>
           </div>
         </div>
     </div>
