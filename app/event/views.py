@@ -1,6 +1,5 @@
 import os
 
-from django.core.exceptions import ObjectDoesNotExist
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView
@@ -84,10 +83,8 @@ class EventCreate(CreateView):
 
         new_admin_names = new_admins.values_list('username', flat=True)
         for name in set(raw_admins) - set(new_admin_names):
-            error_msg = _( "There is no user named %(name)s.") % {'name': name}
+            error_msg = _("There is no user named %(name)s.") % {'name': name}
             messages.error(self.request, error_msg)
-
-
 
         # Tags
         event.tag.clear()
@@ -231,7 +228,6 @@ class EventEditView(UserPassesTestMixin, UpdateView):
             error_msg = ("ユーザー名 %(name)s に一致する"
                          "ユーザーはいませんでした。") % {'name': name}
             messages.error(self.request, error_msg)
-
 
         # Tags
         new_tags = set([int(t) for t in self.request.POST.getlist('tags')])
@@ -414,7 +410,6 @@ class EventSearchResultsView(ListView):
                 place_query = Q(region=place)
                 query = query & place_query
 
-
         results = Event.objects.filter(query).order_by('-id').distinct()
 
         if 'order_by' in self.request.GET:
@@ -431,7 +426,6 @@ class EventSearchResultsView(ListView):
         # Include events that are already over?
         if self.request.GET.get('exclude_full_events') == "on":
             results = [event for event in results if event.is_full()]
-
 
         # Include events with no openings?
         if self.request.GET.get('exclude_closed_events') == "on":

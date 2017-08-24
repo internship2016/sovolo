@@ -18,6 +18,38 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: event/models.py:110 templates/event/detail.html:54
+#: templates/event/detail.html:64 templates/map.html:116
+#: templates/top.html:164
+msgid "Finished"
+msgstr "終了"
+
+#: event/models.py:112 templates/event/detail.html:56
+#: templates/event/detail.html:66 templates/event/detail.html:99
+#: templates/event/detail.html:112 templates/map.html:113
+#: templates/top.html:161
+msgid "In Session"
+msgstr "開催中"
+
+#: event/models.py:114 templates/event/detail.html:58
+#: templates/event/detail.html:68 templates/event/detail.html:101
+#: templates/event/detail.html:114
+msgid "Closed"
+msgstr "締切済"
+
+#: event/models.py:116
+msgid "Full"
+msgstr "満員"
+
+#: event/models.py:118 templates/event/detail.html:119 templates/map.html:114
+#: templates/top.html:162
+msgid "Wanted"
+msgstr "募集中"
+
+#: event/models.py:123
+msgid "Not provided"
+msgstr "未設定"
+
 #: event/views.py:87
 #, python-format
 msgid "There is no user named %(name)s."
@@ -343,7 +375,7 @@ msgstr "参加しました"
 #: templates/event/detail.html:46 templates/map.html:113
 #: templates/top.html:169
 msgid "Ongoing"
-msgstr "開催中"
+msgstr "参加中"
 
 #: templates/event/detail.html:48
 msgid "Confirmed"
@@ -371,18 +403,10 @@ msgstr "締切済"
 msgid "Waiting List"
 msgstr "キャンセル待ち"
 
-#: templates/event/detail.html:66
-msgid "In Session"
-msgstr "開催中"
-
 #: templates/event/detail.html:88 templates/event/detail.html:93
 #: templates/event/detail.html:105
 msgid "Cancel"
 msgstr "キャンセル"
-
-#: templates/event/detail.html:119
-msgid "Join"
-msgstr "参加"
 
 #: templates/event/detail.html:130 templates/event/detail.html:134
 msgid " "
@@ -1142,14 +1166,31 @@ msgid "No user found"
 msgstr "そのユーザーは存在しません"
 
 #: user/views.py:210
-msgid "User profile was successfully edited."
+msgid "User profile has been successfully edited."
 msgstr "ユーザー情報を編集しました。"
 
 #: user/views.py:225
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
 
-#: user/views.py:393
+#: user/views.py:284 user/views.py:292 user/views.py:300 user/views.py:305
+#: user/views.py:310
+msgid "Invalid Review"
+msgstr "無効なレビューです"
+
+#: user/views.py:315
+msgid "You've already reviewd"
+msgstr "既にレビュー済みです"
+
+#: user/views.py:328
+msgid "Your review has been successfully posted!"
+msgstr "レビューを投稿しました。"
+
+#: user/views.py:369
+msgid "Your skill has been edited successfully."
+msgstr "スキルを編集しました。"
+
+#: user/views.py:398
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
 

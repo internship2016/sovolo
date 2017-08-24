@@ -2,9 +2,9 @@ from django.http import JsonResponse
 from event.models import Event
 from django.apps import apps
 from django.db.models import Q
-from tag.models import Tag
 
 DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
+
 
 def event_filter(request, event_kind, *args, **kwargs):
     """Event Filter.
@@ -13,29 +13,36 @@ def event_filter(request, event_kind, *args, **kwargs):
     """
     if request.method != 'POST':
         return JsonResponse(dict())
-    def new_events():
+
+    def all_events():
         return Event.objects.all().order_by('-created')[:10]
+
+    def new_events():
+        return [event for event in all_events() if not event.is_over()]
+
     user = request.user
-    events = {'new_events' : new_events}
+    events = {'new_events': new_events}
     if not user.is_anonymous():
         events.update({
-                'future_participating_events' : user.get_future_participating_events,
-                'new_region_events' : user.get_new_region_events,
-                'new_tag_events' : user.get_new_tag_events
-                })
+            'future_participating_events': user.get_future_participating_events,
+            'new_region_events': user.get_new_region_events,
+            'new_tag_events': user.get_new_tag_events,
+            'all_events': all_events
+        })
     if event_kind in events.keys():
-        res_obj = {'filtered_events':[]}
+        res_obj = {'filtered_events': []}
         for event in events[event_kind]()[:10]:
             res_obj['filtered_events'].append({
-                'id' : event.id,
-                'name' : event.name,
-                'start_time' : event.start_time.strftime(DATETIME_FORMAT),
-                'end_time' : event.end_time.strftime(DATETIME_FORMAT),
-                'place' : event.meeting_place,
-                'img' : event.get_image_url(),
-                'status' : event.get_status()
-                })
+                'id': event.id,
+                'name': event.name,
+                'start_time': event.start_time.strftime(DATETIME_FORMAT),
+                'end_time': event.end_time.strftime(DATETIME_FORMAT),
+                'place': event.meeting_place,
+                'img': event.get_image_url(),
+                'status': event.get_status()
+            })
         return JsonResponse(res_obj)
+
 
 def event_range_search(request, *args, **kwargs):
     if request.method != 'POST':
@@ -53,8 +60,6 @@ def event_range_search(request, *args, **kwargs):
                                        range_value['ne_lng'],
                                        range_value['sw_lng'])
 
-
-
     tags = [int(t) for t in request.POST.getlist('tags')]
     if len(tags) > 0:
         Tag = apps.get_model('tag', 'Tag')
@@ -66,7 +71,13 @@ def event_range_search(request, *args, **kwargs):
             else:
                 tag_query = tag_query | Q(tag=tag)
         query = query & tag_query
-    events = [event for event in events.all().filter(query).order_by('-id').distinct() if not event.is_over()]
+
+    events = events.all() \
+                   .filter(query) \
+                   .order_by('-id') \
+                   .distinct()
+
+    events = [e for e in events if not e.is_over()]
 
     for event in events:
         res['events_in_range'].append({
