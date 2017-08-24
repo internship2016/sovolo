@@ -335,11 +335,12 @@ class UserUnReviewedView(ListView):
     model = User
     template_name = 'user/user_unreviewed.html'
 
-
+'''
+消したけど一応
 class UserSkillView(DetailView):
     model = User
     template_name = "user/user_skill.html"
-
+'''
 
 class UserSkillEditView(UpdateView):
     model = Skill
@@ -370,7 +371,7 @@ class UserSkillEditView(UpdateView):
         info_msg = _("Your skill has been edited successfully.")
         messages.info(self.request, info_msg)
         userskill_id = self.request.user.id
-        return reverse('user:skill', kwargs={'pk': userskill_id})
+        return reverse('user:detail', kwargs={'pk': userskill_id})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -400,4 +401,4 @@ class UserSkillAddView(CreateView):
         info_msg = _("Your new skill has been added successfully.")
         messages.info(self.request, info_msg)
         userskill_id = self.request.user.id
-        return reverse('user:skill', kwargs={'pk': userskill_id})
+        return reverse('user:detail', kwargs={'pk': userskill_id})
