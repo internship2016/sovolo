@@ -4,7 +4,6 @@ from django.views.generic.edit import CreateView, UpdateView, FormView
 from django.views.generic import DetailView, View, ListView
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
-from .models import User, Skill
 from tag.models import Tag
 from base.utils import send_template_mail
 from django.contrib.auth import views as auth_views
@@ -12,14 +11,10 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
-from django.utils import timezone
-from .models import User, UserActivation, UserPasswordResetting, UserReviewList
+from .models import User, Skill, UserActivation, UserPasswordResetting
 from .form import UserReviewListForm
 from django.urls import reverse
-from django.contrib.auth.mixins import UserPassesTestMixin
 
-from django.utils import timezone
-from django.forms import formset_factory
 from event.models import Event
 
 from django.utils import translation
@@ -55,9 +50,9 @@ class UserCreateView(CreateView):
             [user.email],
         )
 
-        info_msg = _("Confirmation email has been sent to your email address.") % {
-            'email': user.email,
-        }
+        info_msg = _("Confirmation email has been "
+                     "sent to your email address.") % {'email': user.email}
+
         messages.info(self.request, info_msg)
         return redirect("top")
 
@@ -72,7 +67,7 @@ class UserCreateView(CreateView):
         form.fields['username'].label = _("Username（Up to 15 characters)")
         return form
 
-    
+
 class UserActivationView(View):
     def get(self, request, *args, **kwargs):
         activation = get_object_or_404(UserActivation, key=kwargs['key'])
@@ -266,7 +261,7 @@ class UserPostReviewView(FormView):
             to_user = User.objects.get(pk=self.request.GET['to_user_id'])
             form.instance.event_host = True
         else:
-            to_user = User.objects.get(pk=joined_event.host_user.id) # pkを取得 評価対象
+            to_user = User.objects.get(pk=joined_event.host_user.id)  # pkを取得 評価対象
 
 
         ## Validators
@@ -301,7 +296,7 @@ class UserPostReviewView(FormView):
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
-        # rom user Host -> Participant or not
+        # from user Host -> Participant or not
         if (self.request.user == joined_event.host_user) and (to_user not in joined_event.participant.all()):
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
@@ -343,7 +338,7 @@ class UserSkillEditView(UpdateView):
     tamplate_name = 'user/user_form.html'
     fields = ['skilltodo']
 
-    
+
     def form_valid(self,form):
         form_redirect = super(UserSkillEditView, self).form_valid(form)
         skill = form.save(commit=False)
@@ -378,11 +373,11 @@ class UserSkillAddView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(UserSkillAddView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
-        return context       
+        return context
 
     def form_valid(self, form):
         form_redirect = super(UserSkillAddView, self).form_valid(form)
-        skill = form.save() 
+        skill = form.save()
         skill.tag.clear()
         for tag_id in self.request.POST.getlist('tags'):
             skill.tag.add(int(tag_id))
@@ -395,4 +390,3 @@ class UserSkillAddView(CreateView):
         messages.info(self.request, _("Your new skill has been added successfully."))
         userskill_id = self.request.user.id
         return reverse('user:skill', kwargs={'pk': userskill_id})
-

@@ -3,13 +3,13 @@ from django.core.files import File
 from django.utils import timezone
 from django.conf import settings
 from event.models import Event, Participation, Frame, Comment, Question, Answer
-from user.models import User
+from group.models import Group, Membership
+from user.models import User, UserReviewList
 from tag.models import Tag
 import csv
 import os
 import glob
 import random
-
 
 username_sample=[
 "koshiba_takahiro"
@@ -90,6 +90,30 @@ comment_sample=[
     """
 ]
 
+review_comment_sample = [
+    '',
+    'It was beyond my wildest dreams.',
+    """
+    商品が届きました！
+    想像していた以上に素敵なお品でとても気に入りました！
+    大切に使わせて頂きます。
+    出品さまのおかげで気持ちのよい取引になり大変嬉しく思っています。
+    またのご縁があることを楽しみにしております。この度はありがとうございました。
+    """,
+    """
+    商品が、届きました！
+    とても欲しくて探していたので、落札できて感激です（＾o＾）ありがとうございました。
+    """,
+    """
+    本日受け取りました*^-^*とても可愛らしく嬉しいです☆
+    大切にいたしますね。
+    本当にありがとうございました！またぜひ御縁がありますように♪
+    """,
+    """
+    2週間お待ちしましたが、
+    取引していただけないものと判断させて頂き評価を入れさせていただきました。
+    """
+]
 
 class Command(BaseCommand):
     help = """
@@ -198,6 +222,12 @@ class Command(BaseCommand):
         parser.add_argument(
             '-qanda',
             dest='qanda',
+            action='store_true',
+            default=False,
+        )
+        parser.add_argument(
+            '-userreviewlist',
+            dest='userreviewlist',
             action='store_true',
             default=False,
         )
@@ -437,6 +467,35 @@ class Command(BaseCommand):
                 )
                 answer.save()
 
+    def _create_userreviewlists(self):
+        past_event_list = [event for event in Event.objects.all() if event.is_closed()]
+        for c_event in past_event_list:
+            for c_participant in c_event.participant.all():
+                if random.choice([0,0,1,1,1,1,1,1,1,1]): # Did_or_Not_Did
+                    # H-> P
+                    userreviewlists_hp = UserReviewList(
+                        to_rate_user = c_participant,
+                        from_rate_user = c_event.host_user,
+                        rating = random.choice([1,2,2,3,3,3,3,4,4,4,4,4,4,5,5,5,5]),
+                        comment = review_comment_sample[random.choice([0,0,0,0,0,1,1,1,2,2,2,3,3,3,3,4,4,4,5])],
+                        joined_event = c_event,
+                        post_day = c_event.end_time + random.choice(range(1,20)) * timezone.timedelta(days=1),
+                        event_host = True,
+                    )
+                    userreviewlists_hp.save()
+                if random.choice([0,0,0,1,1,1,1,1,1,1]): # Did_or_Not_Did
+                    # P-> H
+                    userreviewlists_ph = UserReviewList(
+                        to_rate_user = c_event.host_user,
+                        from_rate_user = c_participant,
+                        rating = random.choice([1,2,2,3,3,3,3,4,4,4,4,4,4,5,5,5,5]),
+                        comment = review_comment_sample[random.choice([0,0,0,0,0,1,1,1,2,2,2,3,3,3,3,4,4,4,5])],
+                        joined_event = c_event,
+                        post_day = c_event.end_time + random.choice(range(1,20)) * timezone.timedelta(days=1),
+                        event_host = False,
+                    )
+                    userreviewlists_ph.save()
+
     def handle(self, *args, **options):
         arg_exist = False
         for attr in self.attributes:
@@ -450,6 +509,7 @@ class Command(BaseCommand):
             self._create_comments()
             self._create_tags()
             self._create_questions_and_answers()
+            self._create_userreviewlists()
         else:
             if options['user']:
                 self._create_users()
@@ -465,3 +525,5 @@ class Command(BaseCommand):
                 self._create_tags()
             if options['qanda']:
                 self._create_questions_and_answers()
+            if option['userreviewlist']:
+                self._create_userreviewlists()
