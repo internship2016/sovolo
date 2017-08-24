@@ -9,10 +9,10 @@
 {% include "user/user_header.html" %}
 
 {% if user.admin_event.all %}
-{% event_list user.admin_event.all _("List of Events Organizing") %}
+{% collapse_event_list user.admin_event.all _("List of Events Organizing") admin_event %}
 {% endif %}
-{% event_list user.get_future_participating_events _("List of Events Attending") %}
-{% event_list user.get_past_participated_events _("Event Achievements") %}
+{% collapse_event_list user.get_future_participating_events _("List of Events Attending") participating_event %}
+{% collapse_event_list user.get_past_participated_events _("Event Achievements") participated_event %}
 
 
 <a class="btn btn-primary" href="{% url 'user:review' user.id %}">
