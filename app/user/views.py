@@ -50,9 +50,9 @@ class UserCreateView(CreateView):
             [user.email],
         )
 
-        info_msg = _("Confirmation email has been sent to your email address.") % {
-            'email': user.email,
-        }
+        info_msg = _("Confirmation email has been "
+                     "sent to your email address.") % {'email': user.email}
+
         messages.info(self.request, info_msg)
         return redirect("top")
 
