@@ -261,7 +261,8 @@ class UserPostReviewView(FormView):
             to_user = User.objects.get(pk=self.request.GET['to_user_id'])
             form.instance.event_host = True
         else:
-            to_user = User.objects.get(pk=joined_event.host_user.id)  # pkを取得 評価対象
+            # pkを取得 評価対象
+            to_user = User.objects.get(pk=joined_event.host_user.id)
 
 
         ## Validators
