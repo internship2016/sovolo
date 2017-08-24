@@ -22,7 +22,7 @@ def event_filter(request, event_kind, *args, **kwargs):
         return [event for event in all_events() if not event.is_over()]
 
     user = request.user
-    events = {'new_events' : new_events}
+    events = {'new_events': new_events}
     if not user.is_anonymous():
         events.update({
                 'future_participating_events' : user.get_future_participating_events,
