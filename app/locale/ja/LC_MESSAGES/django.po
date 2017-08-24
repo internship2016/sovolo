@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 00:12+0000\n"
+"POT-Creation-Date: 2017-08-24 00:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -293,6 +293,11 @@ msgstr "　"
 msgid "?"
 msgstr "を本当に削除しますか？"
 
+#: templates/event/collapse_event_list.html:53
+#: templates/event/event_list.html:50
+msgid "There are no events"
+msgstr "イベントはありません"
+
 #: templates/event/comments.html:3
 msgid "Comments"
 msgstr "コメント欄"
@@ -468,10 +473,6 @@ msgstr "内容変更"
 msgid "Send email to all participants"
 msgstr "メール一斉送信"
 
-#: templates/event/event_list.html:53
-msgid "There are no events"
-msgstr "イベントはありません"
-
 #: templates/event/form_template.html:9 templates/user/user_header.html:75
 #: templates/user/user_post_review.html:16 templates/user/user_review.html:19
 msgid "Event Name"
@@ -602,7 +603,7 @@ msgstr "宛先"
 
 #: templates/event/message.html:16 templates/event/participants.html:11
 #: templates/event/side_info.html:5 templates/map.html:115
-#: templates/top.html:163
+#: templates/top.html:163 templates/user/user_list.html:8
 msgid "Organizer"
 msgstr "管理者"
 
@@ -627,9 +628,9 @@ msgid "Send"
 msgstr "送信"
 
 #: templates/event/participants.html:6 templates/event/participants.html:14
-#: templates/event/side_info.html:7
+#: templates/event/side_info.html:7 templates/user/user_list.html:15
 msgid "Participants"
-msgstr "参加者一覧"
+msgstr "参加者"
 
 #: templates/event/participants.html:10 templates/event/side_info.html:6
 #: templates/user/user_post_review.html:15
@@ -993,6 +994,10 @@ msgstr "代"
 msgid "Sex:"
 msgstr "性別："
 
+#: templates/user/user_header.html:20
+msgid "Male,Female,Prefer not to disclose"
+msgstr "男,女,秘密"
+
 #: templates/user/user_header.html:22
 msgid "Region:"
 msgstr "地域："
@@ -1029,6 +1034,14 @@ msgstr "獲得トロフィー"
 #: templates/user/user_header.html:115
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
+
+#: templates/user/user_list.html:13 templates/user/user_list_large.html:12
+msgid " not found"
+msgstr "はいません"
+
+#: templates/user/user_list.html:16
+msgid "See more"
+msgstr "もっと見る"
 
 #: templates/user/user_post_review.html:3
 #: templates/user/user_post_review.html:7
@@ -1101,19 +1114,19 @@ msgid "You need %(points_to_next)d more Sovolage to the next level!"
 msgid_plural "You need %(points_to_next)d more Sovolages to the next level!"
 msgstr[0] "次のレベルまであと%(points_to_next)dソボレージ！"
 
-#: user/views.py:58
+#: user/views.py:53
 msgid "Confirmation email has been sent to your email address."
 msgstr "記入したメールアドレスに確認メールを送信しました。"
 
-#: user/views.py:72
+#: user/views.py:67
 msgid "Username（Up to 15 characters)"
 msgstr "ニックネーム（15文字以内）"
 
-#: user/views.py:83
+#: user/views.py:78
 msgid "You have successfully registered!"
 msgstr "本登録が完了しました。"
 
-#: user/views.py:119
+#: user/views.py:114
 msgid ""
 "A password reset was requested.If the email address is registered, URL for "
 "resetting your password will be sent."
@@ -1121,30 +1134,30 @@ msgstr ""
 "リクエストを受け付けました。メールアドレスが登録されている場合、アドレスにパ"
 "スワード再設定のリンクが送信されます。"
 
-#: user/views.py:135
+#: user/views.py:130
 msgid "Invalid URL"
 msgstr "無効なURLです"
 
-#: user/views.py:147
+#: user/views.py:142
 msgid "Failed to reset your password."
 msgstr "パスワードの再設定に失敗しました。"
 
-#: user/views.py:155
+#: user/views.py:150
 msgid "Your new password has been set."
 msgstr "パスワードを再設定しました。"
 
-#: user/views.py:168
+#: user/views.py:163
 msgid "No user found"
 msgstr "そのユーザーは存在しません"
 
-#: user/views.py:215
+#: user/views.py:210
 msgid "User profile was successfully edited."
 msgstr "ユーザー情報を編集しました。"
 
-#: user/views.py:230
+#: user/views.py:225
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
 
-#: user/views.py:395
+#: user/views.py:391
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"

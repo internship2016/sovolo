@@ -17,7 +17,7 @@
           <p>{% trans "Age Group:" %} {{ user.get_about_age }}{% trans "'s" %}</p>
           {% endif %}
           {% if user.sex != null %}
-          <p>{% trans "Sex:" %} {{ user.sex|yesno:"男,女,秘密" }}</p>
+          <p>{% trans "Sex:" %} {{ user.sex|yesno:_("Male,Female,Prefer not to disclose") }}</p>
           {% endif %}
           <p>{% trans 'Region:' %} {{ user.get_region_kanji }}</p>
         </div>
