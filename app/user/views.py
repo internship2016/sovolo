@@ -271,46 +271,47 @@ class UserPostReviewView(FormView):
                                        review.joined_event])
 
         req_user = self.request.user
+        past_participated_events = req_user.get_past_participated_events()
+        past_hosted_events = req_user.get_past_hosted_events()
 
         # Past joined_or_hosted_event or not
-        joined = joined_event in req_user.get_past_participated_events()
-        hosted = joined_event in req_user.get_past_hosted_events()
+        sender_has_joined = joined_event in past_participated_events
+        sender_has_hosted = joined_event in past_hosted_events
 
-        if not joined and not hosted:
+        if not sender_has_joined and not sender_has_hosted:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # from_User is Host or Participant
-        is_not_participant = req_user not in joined_event.participant.all()
-        is_not_host = req_user != joined_event.host_user
+        sender_is_participant = req_user in joined_event.participant.all()
+        sender_is_host = req_user == joined_event.host_user
 
-        if (is_not_participant and is_not_host):
+        if not sender_is_participant and not sender_is_host:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # to_User is Host or Participant
-        if (to_user not in joined_event.participant.all()) and (to_user != joined_event.host_user):
-            # form.add_error('rating', 'Incident with this email already exist')
+        recipient_has_joined = to_user in joined_event.participant.all()
+        recipient_is_host = to_user == joined_event.host_user
+
+        if not recipient_has_joined and not recipient_is_host:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # from user Participant -> Host or not
-        if (self.request.user in joined_event.participant.all()) and (to_user != joined_event.host_user):
+        if sender_is_participant and not recipient_is_host:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # from user Host -> Participant or not
-        if (self.request.user == joined_event.host_user) and (to_user not in joined_event.participant.all()):
+        if sender_is_host and not recipient_has_joined:
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
         # Check Already Reviewed or not
-        if [to_user, self.request.user, joined_event] in to_from_event_list:
-                messages.error(self.request, "You Already Reviewd")
-                return self.form_invalid(form)
-
-
-
+        if [to_user, req_user, joined_event] in to_from_event_list:
+            messages.error(self.request, "You Already Reviewd")
+            return self.form_invalid(form)
 
         # Set Instanse
         form.instance.to_rate_user_id = to_user.id
