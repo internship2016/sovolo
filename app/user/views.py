@@ -368,6 +368,7 @@ class UserSkillEditView(UpdateView):
         userskill_id = self.request.user.id
         return reverse('user:skill', kwargs={'pk': userskill_id})
 
+
 @method_decorator(login_required, name='dispatch')
 class UserSkillAddView(CreateView):
     model = Skill
