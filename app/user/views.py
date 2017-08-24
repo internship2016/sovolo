@@ -293,7 +293,6 @@ class UserPostReviewView(FormView):
         recipient_is_not_host = to_user != joined_event.host_user
 
         if not recipient_has_joined and recipient_is_not_host:
-            # form.add_error('rating', 'Incident with this email already exist')
             messages.error(self.request, "Invalid Review")
             return self.form_invalid(form)
 
