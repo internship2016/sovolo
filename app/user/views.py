@@ -207,7 +207,8 @@ class UserEditView(UpdateView):
 
         self.request.session[translation.LANGUAGE_SESSION_KEY] = user.language
 
-        messages.info(self.request, _("User profile has been successfully edited."))
+        info_msg = _("User profile has been successfully edited.")
+        messages.info(self.request, info_msg)
         return super(UserEditView, self).form_valid(form)
 
 
@@ -325,7 +326,8 @@ class UserPostReviewView(FormView):
     # レビュー投稿時に未レビューページに帰還
     def get_success_url(self, **kwargs):
 
-        messages.info(self.request, _("Your review has been successfully posted!"))
+        info_msg = _("Your review has been successfully posted!")
+        messages.info(self.request, info_msg)
         return reverse('user:unreviewed')
 
 
@@ -365,7 +367,8 @@ class UserSkillEditView(UpdateView):
         return context
 
     def get_success_url(self, **kwargs):
-        messages.info(self.request, _("Your skill has been edited successfully."))
+        info_msg = _("Your skill has been edited successfully.")
+        messages.info(self.request, info_msg)
         userskill_id = self.request.user.id
         return reverse('user:skill', kwargs={'pk': userskill_id})
 
