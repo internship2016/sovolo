@@ -6,6 +6,7 @@ from tag.models import Tag
 
 DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
+
 def event_filter(request, event_kind, *args, **kwargs):
     """Event Filter.
     リクエストのあったイベントを新規イベントは作成日時順、
