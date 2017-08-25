@@ -19,13 +19,9 @@ def index(request):
     """New Events
     新規イベント
     """
-    ev_all = [event for event in Event.objects.all().order_by('-created') if not event.is_over()][:10]
-    """
-    if request.user.is_anonymous():
-        context['new_events'] = ev_all[:20]
-    else:
-        context['new_events'] = ev_all[:5]
-    """
+    context['new_events']  = [event for event in Event.objects.all().order_by('-created') if not event.is_over()][:10]
+
+
     """Prefectures
     日本の(!)県名
     """
@@ -51,4 +47,3 @@ def index_user(request):
 
     context['all_tags'] = Tag.objects.all()
     return render(request, 'top_user.html', context)
-
