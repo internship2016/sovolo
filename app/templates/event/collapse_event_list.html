@@ -1,7 +1,7 @@
 {% load i18n %}
 <div class="panel panel-default">
   <div class="panel-heading">
-    <a href="#collapse-event-{{ event_id }}" data-toggle="collapse">
+    <a  class="collapsed"  href="#collapse-event-{{ event_id }}" data-toggle="collapse">
       <div class="panel-title">{{ title }}</div>
     </a>
   </div>
@@ -19,7 +19,7 @@
             <div>
               {% if event.is_over %}
                 <span class="label label-default" style="margin-right: 1em;">
-                  {{ event.get_status }}
+                  {{ event.get_status.msg }}
                 </span>
               {% else %}
                 {% if event in user.participating_event.all %}
@@ -32,7 +32,7 @@
                   {% endfor %}
                 {% else %}
                   <span class="label label-info" style="margin-right: 1em;">
-                    {{ event.get_status }}
+                    {{ event.get_status.msg }}
                   </span>
                 {% endif %}
               {% endif %}

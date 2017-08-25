@@ -2,7 +2,6 @@ from django.http import JsonResponse
 from event.models import Event
 from django.apps import apps
 from django.db.models import Q
-from tag.models import Tag
 
 DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
@@ -33,6 +32,7 @@ def event_filter(request, event_kind, *args, **kwargs):
     if event_kind in events.keys():
         res_obj = {'filtered_events': []}
         for event in events[event_kind]()[:10]:
+            status = event.get_status()
             res_obj['filtered_events'].append({
                 'id': event.id,
                 'name': event.name,
@@ -40,7 +40,8 @@ def event_filter(request, event_kind, *args, **kwargs):
                 'end_time': event.end_time.strftime(DATETIME_FORMAT),
                 'place': event.meeting_place,
                 'img': event.get_image_url(),
-                'status': event.get_status()
+                'status': status['msg'],
+                'label': status['label'],
             })
         return JsonResponse(res_obj)
 
@@ -81,6 +82,7 @@ def event_range_search(request, *args, **kwargs):
     events = [e for e in events if not e.is_over()]
 
     for event in events:
+        status = event.get_status()
         res['events_in_range'].append({
             'id': event.id,
             'name': event.name,
@@ -90,7 +92,8 @@ def event_range_search(request, *args, **kwargs):
             'longitude': event.longitude,
             'latitude': event.latitude,
             'img': event.get_image_url(),
-            'status': event.get_status()
+            'status': status['msg'],
+            'label': status['label'],
         })
 
     return JsonResponse(res)

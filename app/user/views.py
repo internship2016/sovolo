@@ -207,7 +207,8 @@ class UserEditView(UpdateView):
 
         self.request.session[translation.LANGUAGE_SESSION_KEY] = user.language
 
-        messages.info(self.request, _("User profile was successfully edited."))
+        info_msg = _("User profile has been successfully edited.")
+        messages.info(self.request, info_msg)
         return super(UserEditView, self).form_valid(form)
 
 
@@ -255,7 +256,7 @@ class UserPostReviewView(FormView):
         # Host User review participant (True)
         if 'to_user_id' in self.request.GET:
             to_user = User.objects.get(pk=self.request.GET['to_user_id'])
-            form.instance.event_host = True
+            form.instance.from_event_host = True
         else:
             # pkを取得 評価対象
             to_user = User.objects.get(pk=joined_event.host_user.id)
@@ -281,7 +282,7 @@ class UserPostReviewView(FormView):
         # XXX: Samy
 
         if not sender_has_joined and not sender_has_hosted:
-            messages.error(self.request, "Invalid Review")
+            messages.error(self.request, _("Invalid Review"))
             return self.form_invalid(form)
 
         # from_User is Host or Participant
@@ -289,7 +290,7 @@ class UserPostReviewView(FormView):
         sender_is_host = req_user == joined_event.host_user
 
         if not sender_is_participant and not sender_is_host:
-            messages.error(self.request, "Invalid Review")
+            messages.error(self.request, _("Invalid Review"))
             return self.form_invalid(form)
 
         # to_User is Host or Participant
@@ -297,27 +298,27 @@ class UserPostReviewView(FormView):
         recipient_is_host = to_user == joined_event.host_user
 
         if not recipient_has_joined and not recipient_is_host:
-            messages.error(self.request, "Invalid Review")
+            messages.error(self.request, _("Invalid Review"))
             return self.form_invalid(form)
 
         # from user Participant -> Host or not
         if sender_is_participant and not recipient_is_host:
-            messages.error(self.request, "Invalid Review")
+            messages.error(self.request, _("Invalid Review"))
             return self.form_invalid(form)
 
         # from user Host -> Participant or not
         if sender_is_host and not recipient_has_joined:
-            messages.error(self.request, "Invalid Review")
+            messages.error(self.request, _("Invalid Review"))
             return self.form_invalid(form)
 
         # Check Already Reviewed or not
         if [to_user, req_user, joined_event] in to_from_event_list:
-            messages.error(self.request, "You Already Reviewd")
+            messages.error(self.request, _("You've already reviewd"))
             return self.form_invalid(form)
 
         # Set Instanse
         form.instance.to_rate_user_id = to_user.id
-        form.instance.from_rate_user_id = self.request.user.id  # 評価者 <--
+        form.instance.from_rate_user_id = req_user.id  # 評価者 <--
         form.instance.joined_event_id = joined_event.id
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
@@ -325,20 +326,21 @@ class UserPostReviewView(FormView):
     # レビュー投稿時に未レビューページに帰還
     def get_success_url(self, **kwargs):
 
-        messages.info(self.request, "Your review was successfully sent")
+        info_msg = _("Your review has been successfully posted!")
+        messages.info(self.request, info_msg)
         return reverse('user:unreviewed')
 
 
 class UserUnReviewedView(ListView):
-    # なぜ model and form_class がセットでも動くのかわかりません。
-        model = User
-        template_name = 'user/user_unreviewed.html'
+    model = User
+    template_name = 'user/user_unreviewed.html'
 
-
+'''
+消したけど一応
 class UserSkillView(DetailView):
     model = User
     template_name = "user/user_skill.html"
-
+'''
 
 class UserSkillEditView(UpdateView):
     model = Skill
@@ -366,9 +368,10 @@ class UserSkillEditView(UpdateView):
         return context
 
     def get_success_url(self, **kwargs):
-        messages.info(self.request, "スキル内容を変更しました")
+        info_msg = _("Your skill has been edited successfully.")
+        messages.info(self.request, info_msg)
         userskill_id = self.request.user.id
-        return reverse('user:skill', kwargs={'pk': userskill_id})
+        return reverse('user:detail', kwargs={'pk': userskill_id})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -398,7 +401,7 @@ class UserSkillAddView(CreateView):
         info_msg = _("Your new skill has been added successfully.")
         messages.info(self.request, info_msg)
         userskill_id = self.request.user.id
-        return reverse('user:skill', kwargs={'pk': userskill_id})
+        return reverse('user:detail', kwargs={'pk': userskill_id})
 
 class UserListView(ListView):
     model = Skill

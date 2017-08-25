@@ -7,6 +7,7 @@ from django.conf import settings
 from django.db.models import Q
 from django.utils import timezone
 from tag.models import Tag
+from django.utils.translation import ugettext_lazy as _
 
 import os
 import math
@@ -27,10 +28,10 @@ class Event(AbstractBaseModel):
     private_notes = models.TextField(blank=True)
     hashtag = models.CharField(max_length=100, blank=True)
     share_message = models.CharField(max_length=100, blank=True)
-    host_user = models.ForeignKey(
-        settings.AUTH_USER_MODEL,
-        related_name='host_event',
-    )
+
+    host_user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                  related_name='host_event')
+
     supporter = models.ManyToManyField(User,
                                        related_name="support",
                                        blank=True)
@@ -42,17 +43,14 @@ class Event(AbstractBaseModel):
     region_list = [(k, v[0]) for k, v in prefs]
     region = models.CharField(max_length=10, choices=region_list)
 
-    participant = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        related_name='participating_event',
-        through='Participation',
-        blank=True,
-    )
-    admin = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        related_name='admin_event',
-        blank=True,
-    )
+    participant = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                         related_name='participating_event',
+                                         through='Participation',
+                                         blank=True)
+
+    admin = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                   related_name='admin_event',
+                                   blank=True)
 
     tag = models.ManyToManyField(Tag, blank=True)
 
@@ -76,28 +74,20 @@ class Event(AbstractBaseModel):
         if self.image:
             return self.image.url
         else:
-            return os.path.join(
-                settings.MEDIA_URL,
-                'events/',
-                "default_event_image.svg",
-            )
+            return os.path.join(settings.MEDIA_URL,
+                                'events/',
+                                "default_event_image.svg")
 
     def get_tags_as_string(self):
         return "\n".join([tag.name for tag in self.tag.all()])
 
     def is_full(self):
         frames = Frame.objects.filter(event=self)
-        for frame in frames:
-            if not frame.is_full():
-                return False
-        return True
+        return all(frame.is_full() for frame in frames)
 
     def is_closed(self):
         frames = Frame.objects.filter(event=self)
-        for frame in frames:
-            if not frame.is_closed():
-                return False
-        return True
+        return all(frame.is_closed() for frame in frames)
 
     def is_started(self):
         return timezone.now() > self.start_time
@@ -106,21 +96,27 @@ class Event(AbstractBaseModel):
         return timezone.now() > self.end_time
 
     def get_status(self):
+        conv = {'finished': {'label': 'default', 'msg': _("Finished")},
+                'in_session': {'label': 'success', 'msg': _("In Session")},
+                'closed': {'label': 'default', 'msg': _("Closed")},
+                'full': {'label': 'default', 'msg': _("Full")},
+                'wanted': {'label': 'info', 'msg': _("Wanted")}}
+
         if self.is_over():
-            return "終了"
+            return conv['finished']
         elif self.is_started():
-            return "開催中"
+            return conv['in_session']
         elif self.is_closed():
-            return "締切済"
+            return conv['closed']
         elif self.is_full():
-            return "満員"
+            return conv['full']
         else:
-            return "募集中"
+            return conv['wanted']
 
     def get_region_kanji(self):
         region = self.prefectures.get(self.region)
         if not region:
-            return '未設定'  # XXX: regionがこない場合は未設定でいいのか
+            return _('Not provided')  # XXX: regionがこない場合は未設定でいいのか
         return region[0]
 
     def start_time_format(self):
@@ -156,12 +152,11 @@ class Frame(AbstractBaseModel):
     description = models.TextField(default='通常参加枠')
     upper_limit = models.IntegerField(blank=True, null=True)
     deadline = models.DateTimeField()
-    participant = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        related_name='participating_frame',
-        through='Participation',
-        blank=True,
-    )
+
+    participant = models.ManyToManyField(settings.AUTH_USER_MODEL,
+                                         related_name='participating_frame',
+                                         through='Participation',
+                                         blank=True)
 
     def __str__(self):
         return "Frame #" + str(self.pk) + " in Event #" + str(self.event_id)
@@ -244,25 +239,19 @@ class Comment(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.TextField()
-    reply_to = models.ForeignKey(
-        'self',
-        on_delete=models.CASCADE,
-        related_name='replies',
-        null=True
-    )
+    reply_to = models.ForeignKey('self',
+                                 on_delete=models.CASCADE,
+                                 related_name='replies',
+                                 null=True)
 
     def __str__(self):
         if self.reply_to:
-            return ">> %s\n%s :\"%s" % (
-                str(self.reply_to),
-                self.user.username,
-                self.text,
-            )
+            return ">> %s\n%s :\"%s" % (str(self.reply_to),
+                                        self.user.username,
+                                        self.text)
         else:
-            return "%s: \"%s\"" % (
-                self.user.username,
-                self.text,
-            )
+            return "%s: \"%s\"" % (self.user.username,
+                                   self.text)
 
     def get_absolute_url(self):
         return reverse('event:detail', kwargs={'pk': self.event.id})
@@ -272,11 +261,10 @@ class Comment(AbstractBaseModel):
 
 
 class Question(models.Model):
-    event = models.ForeignKey(
-        Event,
-        on_delete=models.CASCADE,
-        related_name='question',
-    )
+    event = models.ForeignKey(Event,
+                              on_delete=models.CASCADE,
+                              related_name='question')
+
     question = models.TextField()
 
     def __str__(self):
@@ -284,16 +272,14 @@ class Question(models.Model):
 
 
 class Answer(AbstractBaseModel):
-    question = models.ForeignKey(
-        Question,
-        on_delete=models.CASCADE,
-        related_name='answer',
-    )
-    participation = models.ForeignKey(
-        Participation,
-        on_delete=models.CASCADE,
-        related_name='answer',
-    )
+    question = models.ForeignKey(Question,
+                                 on_delete=models.CASCADE,
+                                 related_name='answer')
+
+    participation = models.ForeignKey(Participation,
+                                      on_delete=models.CASCADE,
+                                      related_name='answer')
+
     text = models.TextField()
 
     def __str__(self):

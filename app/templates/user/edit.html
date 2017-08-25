@@ -4,7 +4,51 @@
 {% block title %}{% trans 'Edit profile' %} | Sovol{% endblock %}
 
 {% block content %}
-  {% include "user/user_header.html" %}
+<div class="detail-header row mt15">
+  <div class="col-xs-12 col-sm-4 col-md-3" style="text-align: center">
+    <div class="media-object custom_thumbnail detail-thumbnail" style="background-image:url({{ user.get_image_url }});"></div>
+  </div>
+  <div class="col-xs-12 col-sm-8 col-md-9">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">
+            {{ user.username }}
+        </h3>
+      </div>
+      <div class="row"  style="padding-left:1em; padding-right: 1em;">
+        <div class="panel-body col-sm-7 col-md-8" style="overflow-wrap: break-word;">
+
+          {% if user.birthday != null %}
+          <p>{% trans "Age Group:" %} {{ user.get_about_age }}{% trans "'s" %}</p>
+          {% endif %}
+          {% if user.sex != null %}
+          <p>{% trans "Sex:" %} {{ user.sex|yesno:_("Male,Female,Prefer not to disclose") }}</p>
+          {% endif %}
+          <p>{% trans 'Region:' %} {{ user.get_region_kanji }}</p>
+        </div>
+
+        <div class="panel-body col-sm-5 col-md-4" style="padding-bottom: 5px;">
+          <h3> Lv. <span class="emphasis">{{ user.get_level }}</span></h3>
+          <p> {% trans 'Sovolage' %}<span class="sovolage-point">{{ user.get_point }}</span>pt</p>
+          <div style="text-align: right">
+            {% if user.id == request.user.id %}
+              <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">{% trans 'Edit profile' %}</a>
+            {% endif %}
+          </div>
+        </div>
+    </div>
+      <div class="panel-body" style="padding-top: 0;">
+        <span>{{ user.msg_you_need_more_xxx_sovolage_to_the_next_level }}</span>
+        <div class="progress" style="margin-bottom: 0;">
+          <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ user.get_level_percentage }}" aria-valuemin="0" aria-valuemax="100" style="width:{{ user.get_level_percentage }}%;">
+          <span>{{user.get_level_percentage}}%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
   <form action="" class="form-horizontal" method="post" enctype="multipart/form-data">
     <div id="user-detail-info" class="panel panel-default">
       <div class="panel-body">

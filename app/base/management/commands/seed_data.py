@@ -464,28 +464,30 @@ class Command(BaseCommand):
         past_event_list = [event for event in Event.objects.all() if event.is_closed()]
         for c_event in past_event_list:
             for c_participant in c_event.participant.all():
-                if random.choice([0,0,1,1,1,1,1,1,1,1]): # Did_or_Not_Did
-                    # H-> P
+
+                #  Host -> Participant
+                if random.choice([0,0,0,1,1,1,1,1,1,1]): # Did_or_Not_Did
                     userreviewlists_hp = UserReviewList(
                         to_rate_user = c_participant,
                         from_rate_user = c_event.host_user,
                         rating = random.choice([1,2,2,3,3,3,3,4,4,4,4,4,4,5,5,5,5]),
                         comment = review_comment_sample[random.choice([0,0,0,0,0,1,1,1,2,2,2,3,3,3,3,4,4,4,5])],
                         joined_event = c_event,
-                        post_day = c_event.end_time + random.choice(range(1,20)) * timezone.timedelta(days=1),
-                        event_host = True,
+                        post_day = c_event.end_time + random.choice(range(1,15)) * timezone.timedelta(days=1),
+                        from_event_host = True,
                     )
                     userreviewlists_hp.save()
+
+                # Participant-> Host
                 if random.choice([0,0,0,1,1,1,1,1,1,1]): # Did_or_Not_Did
-                    # P-> H
                     userreviewlists_ph = UserReviewList(
                         to_rate_user = c_event.host_user,
                         from_rate_user = c_participant,
                         rating = random.choice([1,2,2,3,3,3,3,4,4,4,4,4,4,5,5,5,5]),
                         comment = review_comment_sample[random.choice([0,0,0,0,0,1,1,1,2,2,2,3,3,3,3,4,4,4,5])],
                         joined_event = c_event,
-                        post_day = c_event.end_time + random.choice(range(1,20)) * timezone.timedelta(days=1),
-                        event_host = False,
+                        post_day = c_event.end_time + random.choice(range(1,15)) * timezone.timedelta(days=1),
+                        from_event_host = False,
                     )
                     userreviewlists_ph.save()
 

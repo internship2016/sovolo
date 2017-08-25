@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 00:32+0000\n"
+"POT-Creation-Date: 2017-08-24 23:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,26 +18,54 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: event/views.py:87
+#: event/models.py:100 templates/event/detail.html:54
+#: templates/event/detail.html:64 templates/map.html:116
+#: templates/top.html:172
+msgid "Finished"
+msgstr "終了"
+
+#: event/models.py:102 templates/event/detail.html:56
+#: templates/event/detail.html:66 templates/event/detail.html:99
+#: templates/event/detail.html:112 templates/map.html:113
+#: templates/top.html:169
+msgid "In Session"
+msgstr "開催中"
+
+#: event/models.py:104 templates/event/detail.html:58
+#: templates/event/detail.html:68 templates/event/detail.html:101
+#: templates/event/detail.html:114
+msgid "Closed"
+msgstr "締切済"
+
+#: event/models.py:106
+msgid "Full"
+msgstr "満員"
+
+#: event/models.py:108 templates/event/detail.html:119 templates/map.html:114
+#: templates/top.html:170
+msgid "Wanted"
+msgstr "募集中"
+
+#: event/models.py:113
+msgid "Not provided"
+msgstr "未設定"
+
+#: event/views.py:86
 #, python-format
 msgid "There is no user named %(name)s."
 msgstr "ユーザー名 %(name)s に一致するユーザーはいませんでした。"
 
-#: event/views.py:136
+#: event/views.py:133
 msgid "Your event was successfully added."
 msgstr "ボランティア情報を編集しました。"
 
-#: event/views.py:166
+#: event/views.py:163
 msgid "Event not found."
 msgstr "ボランティアがありません"
 
 #: sovolo/settings.py:145
 msgid "English"
-msgstr "英語"
-
-#: sovolo/settings.py:146
-msgid "Japanese"
-msgstr "日本語"
+msgstr "English"
 
 #: sovolo/settings.py:212
 msgid "Hokkaido"
@@ -235,28 +263,28 @@ msgstr "ボランティアを検索"
 msgid "Create an event"
 msgstr "ボランティア作成"
 
-#: templates/base.html:95 templates/user/acquire_email.html:4
+#: templates/base.html:98 templates/user/acquire_email.html:4
 #: templates/user/acquire_email.html:7 templates/user/register.html:21
 msgid "Register"
 msgstr "ユーザー登録"
 
-#: templates/base.html:96 templates/user/login_page.html:6
+#: templates/base.html:99 templates/user/login_page.html:6
 #: templates/user/login_page.html:11 templates/user/login_page.html:27
 #: templates/user/register.html:45
 msgid "Log in"
 msgstr "ログイン"
 
-#: templates/base.html:114
+#: templates/base.html:110
+msgid "View All Notifications"
+msgstr "全ての通知を見る"
+
+#: templates/base.html:120
 msgid "Profile"
 msgstr "プロフィール"
 
-#: templates/base.html:115
+#: templates/base.html:121
 msgid "Log out"
 msgstr "ログアウト"
-
-#: templates/base.html:126
-msgid "Change language"
-msgstr "言語切り替え"
 
 #: templates/container_top.html:10
 msgid "Let's Get Involved"
@@ -340,10 +368,9 @@ msgstr "締切"
 msgid "Participated"
 msgstr "参加しました"
 
-#: templates/event/detail.html:46 templates/map.html:113
-#: templates/top.html:161
+#: templates/event/detail.html:46
 msgid "Ongoing"
-msgstr "開催中"
+msgstr "参加中"
 
 #: templates/event/detail.html:48
 msgid "Confirmed"
@@ -353,36 +380,16 @@ msgstr "参加確定"
 msgid "Participating"
 msgstr "参加予定"
 
-#: templates/event/detail.html:54 templates/event/detail.html:64
-#: templates/map.html:116 templates/top.html:164
-msgid "Finished"
-msgstr "終了"
-
-#: templates/event/detail.html:56 templates/event/detail.html:58
-#: templates/event/detail.html:68 templates/event/detail.html:99
-#: templates/event/detail.html:101 templates/event/detail.html:112
-#: templates/event/detail.html:114
-msgid "Closed"
-msgstr "締切済"
-
 #: templates/event/detail.html:60 templates/event/detail.html:117
 #: templates/event/event_header.html:20 templates/event/participants.html:23
 #: templates/event/side_info.html:9
 msgid "Waiting List"
 msgstr "キャンセル待ち"
 
-#: templates/event/detail.html:66
-msgid "In Session"
-msgstr "開催中"
-
 #: templates/event/detail.html:88 templates/event/detail.html:93
 #: templates/event/detail.html:105
 msgid "Cancel"
 msgstr "キャンセル"
-
-#: templates/event/detail.html:119
-msgid "Join"
-msgstr "参加"
 
 #: templates/event/detail.html:130 templates/event/detail.html:134
 msgid " "
@@ -473,8 +480,8 @@ msgstr "内容変更"
 msgid "Send email to all participants"
 msgstr "メール一斉送信"
 
-#: templates/event/form_template.html:9 templates/user/user_header.html:75
-#: templates/user/user_post_review.html:16 templates/user/user_review.html:19
+#: templates/event/form_template.html:9 templates/user/user_header.html:74
+#: templates/user/user_post_review.html:16
 msgid "Event Name"
 msgstr "ボランティア名"
 
@@ -494,7 +501,7 @@ msgstr "終了"
 msgid "Location:"
 msgstr "開催地域"
 
-#: templates/event/form_template.html:81 templates/event/search_form.html:69
+#: templates/event/form_template.html:81 templates/event/search_form.html:71
 #: templates/event/search_form_side.html:69 templates/map.html:21
 msgid "Search"
 msgstr "検索"
@@ -524,7 +531,7 @@ msgstr "現在の画像："
 msgid "Change image to:"
 msgstr "画像を再設定する："
 
-#: templates/event/form_template.html:192 templates/user/edit.html:23
+#: templates/event/form_template.html:192 templates/user/edit.html:67
 msgid "Browse..."
 msgstr "選択..."
 
@@ -548,7 +555,7 @@ msgstr "（応募者のみに表示）"
 msgid "Organizer:"
 msgstr "管理者"
 
-#: templates/event/form_template.html:242 templates/user/edit.html:13
+#: templates/event/form_template.html:242 templates/user/edit.html:57
 msgid "Nickname"
 msgstr "ニックネーム"
 
@@ -603,7 +610,7 @@ msgstr "宛先"
 
 #: templates/event/message.html:16 templates/event/participants.html:11
 #: templates/event/side_info.html:5 templates/map.html:115
-#: templates/top.html:163 templates/user/user_list.html:8
+#: templates/top.html:171 templates/user/user_list.html:8
 msgid "Organizer"
 msgstr "管理者"
 
@@ -699,6 +706,13 @@ msgid "Status"
 msgstr "ステータス"
 
 #: templates/event/search_form.html:65
+msgid "Exclude closed events"
+msgstr "締め切られたボランティアを除外"
+
+#: templates/event/search_form.html:67
+msgid "Exclude full events"
+msgstr "満員になったボランティアを除外"
+
 #: templates/event/search_form_side.html:65
 msgid "Show closed events"
 msgstr "締め切られたボランティアを表示"
@@ -728,10 +742,6 @@ msgstr "地名を入力"
 msgid "Search with filters"
 msgstr "タグで絞り込む"
 
-#: templates/map.html:114 templates/top.html:162
-msgid "Wanted"
-msgstr "募集中"
-
 #: templates/map.html:149
 msgid "Failed to get location."
 msgstr "位置情報取得に失敗しました"
@@ -744,31 +754,31 @@ msgstr "情報を取得できませんでした"
 msgid "There are no events nearby."
 msgstr "周辺イベントはありません"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Sun"
 msgstr "日"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Mon"
 msgstr "月"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Tue"
 msgstr "火"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Wed"
 msgstr "水"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Thu"
 msgstr "木"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Fri"
 msgstr "金"
 
-#: templates/map.html:248 templates/top.html:97
+#: templates/map.html:248 templates/top.html:105
 msgid "Sat"
 msgstr "土"
 
@@ -788,19 +798,23 @@ msgstr "地図"
 msgid "Calender"
 msgstr "カレンダー"
 
-#: templates/top.html:61
+#: templates/top.html:24
 msgid "Events I'm going"
 msgstr "参加予定のボランティア"
 
-#: templates/top.html:67
+#: templates/top.html:30
 msgid "Events Nearby"
 msgstr "地域の新着ボランティア"
 
-#: templates/top.html:74
+#: templates/top.html:37
+msgid "View New Events"
+msgstr "新着のボランティア"
+
+#: templates/top.html:44
 msgid "View All Events"
 msgstr "すべてのボランティア"
 
-#: templates/top.html:135 templates/top.html:148
+#: templates/top.html:143 templates/top.html:156
 msgid "Failed to get information"
 msgstr "取得に失敗"
 
@@ -818,69 +832,86 @@ msgstr "管理しているボランティア一覧"
 
 #: templates/user/detail.html:14
 msgid "List of Events Attending"
-msgstr "管理しているボランティア一覧"
+msgstr "参加予定のボランティア一覧"
 
 #: templates/user/detail.html:15
 msgid "Event Achievements"
 msgstr "ボランティア実績"
 
-#: templates/user/detail.html:19
-msgid "Reviews posted"
-msgstr "すべてのレビューを見る"
-
-#: templates/user/detail.html:23
-msgid "Reviews not yet posted"
-msgstr "未レビューを見る"
-
-#: templates/user/edit.html:4 templates/user/user_header.html:30
+#: templates/user/edit.html:4 templates/user/edit.html:35
+#: templates/user/user_header.html:30
 msgid "Edit profile"
 msgstr "プロフィール編集"
 
-#: templates/user/edit.html:13
+#: templates/user/edit.html:22 templates/user/user_header.html:17
+msgid "Age Group:"
+msgstr "年代："
+
+#: templates/user/edit.html:22 templates/user/user_header.html:17
+msgid "'s"
+msgstr "代"
+
+#: templates/user/edit.html:25 templates/user/user_header.html:20
+msgid "Sex:"
+msgstr "性別："
+
+#: templates/user/edit.html:25 templates/user/user_header.html:20
+msgid "Male,Female,Prefer not to disclose"
+msgstr "男,女,秘密"
+
+#: templates/user/edit.html:27 templates/user/user_header.html:22
+msgid "Region:"
+msgstr "地域："
+
+#: templates/user/edit.html:32 templates/user/user_header.html:27
+msgid "Sovolage"
+msgstr "ソボレージ"
+
+#: templates/user/edit.html:57
 msgid "Input up to 15 characters."
 msgstr "15文字以内"
 
-#: templates/user/edit.html:21
+#: templates/user/edit.html:65
 msgid "Your photo"
 msgstr "プロフィール画像"
 
-#: templates/user/edit.html:28
+#: templates/user/edit.html:72
 msgid "Region"
 msgstr "地域"
 
-#: templates/user/edit.html:38
+#: templates/user/edit.html:82
 msgid "Sex"
 msgstr "性別"
 
-#: templates/user/edit.html:41
+#: templates/user/edit.html:85
 msgid "Male"
 msgstr "男性"
 
-#: templates/user/edit.html:42
+#: templates/user/edit.html:86
 msgid "Female"
 msgstr "女性"
 
-#: templates/user/edit.html:43
+#: templates/user/edit.html:87
 msgid "Prefer not to disclose"
 msgstr "秘密"
 
-#: templates/user/edit.html:49
+#: templates/user/edit.html:93
 msgid "Birthday"
 msgstr "生年月日"
 
-#: templates/user/edit.html:66 user/models.py:73
+#: templates/user/edit.html:110 user/models.py:73
 msgid "Language"
 msgstr "言語"
 
-#: templates/user/edit.html:81 templates/user/user_header.html:107
+#: templates/user/edit.html:125 templates/user/user_header.html:144
 msgid "Following tags"
 msgstr "フォローしているタグ"
 
-#: templates/user/edit.html:88
+#: templates/user/edit.html:132
 msgid "Change password"
 msgstr "パスワードを変更する"
 
-#: templates/user/edit.html:90
+#: templates/user/edit.html:134
 msgid "Apply"
 msgstr "適用"
 
@@ -960,7 +991,7 @@ msgid "Your new pasword"
 msgstr "新しいパスワード"
 
 #: templates/user/skill_add.html:6 templates/user/skill_add.html:10
-#: templates/user/user_skill.html:41
+#: templates/user/user_header.html:116
 msgid "Add a new skill"
 msgstr "スキル新規作成"
 
@@ -969,12 +1000,11 @@ msgid "Related tags"
 msgstr "関連付けるタグ"
 
 #: templates/user/skill_add.html:25 templates/user/skill_form.html:26
-#: templates/user/user_skill.html:26
+#: templates/user/user_header.html:101
 msgid "I can do"
 msgstr "できる内容"
 
-#: templates/user/skill_form.html:6 templates/user/user_skill.html:6
-#: templates/user/user_skill.html:13
+#: templates/user/skill_form.html:6 templates/user/user_header.html:88
 msgid "Skills"
 msgstr "スキル一覧"
 
@@ -982,56 +1012,35 @@ msgstr "スキル一覧"
 msgid "Edit skills"
 msgstr "スキル変更"
 
-#: templates/user/user_header.html:17
-msgid "Age Group:"
-msgstr "年代："
-
-#: templates/user/user_header.html:17
-msgid "'s"
-msgstr "代"
-
-#: templates/user/user_header.html:20
-msgid "Sex:"
-msgstr "性別："
-
-#: templates/user/user_header.html:20
-msgid "Male,Female,Prefer not to disclose"
-msgstr "男,女,秘密"
-
-#: templates/user/user_header.html:22
-msgid "Region:"
-msgstr "地域："
-
-#: templates/user/user_header.html:27
-msgid "Sovolage"
-msgstr "ソボレージ"
-
-#: templates/user/user_header.html:32
-msgid "View skills"
-msgstr "スキル一覧を見る"
-
-#: templates/user/user_header.html:52 templates/user/user_review.html:3
-#: templates/user/user_review.html:8
+#: templates/user/user_header.html:51
 msgid "Reviews"
 msgstr "レビュー"
 
-#: templates/user/user_header.html:58 templates/user/user_review.html:11
+#: templates/user/user_header.html:57
 msgid "reviews"
 msgstr "件"
 
-#: templates/user/user_header.html:70 templates/user/user_review.html:18
+#: templates/user/user_header.html:69
 msgid "Rated by"
 msgstr "投稿者"
 
-#: templates/user/user_header.html:76 templates/user/user_review.html:21
+#: templates/user/user_header.html:75
 msgid "Posted on"
 msgstr "投稿日"
 
-#: templates/user/user_header.html:89
+#: templates/user/user_header.html:95
+msgid "Skill "
+msgstr "スキル"
+
+#: templates/user/user_header.html:108
+msgid "Edit"
+msgstr "内容変更"
+
+#: templates/user/user_header.html:126
 msgid "Trophies"
 msgstr "獲得トロフィー"
 
-#: templates/user/user_header.html:115
+#: templates/user/user_header.html:152
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
 
@@ -1067,22 +1076,6 @@ msgstr "ユーザーID"
 #: templates/user/user_post_review.html:20
 msgid "User Name"
 msgstr "ユーザー名"
-
-#: templates/user/user_review.html:17
-msgid "Rating"
-msgstr "評価"
-
-#: templates/user/user_review.html:20
-msgid "Comment"
-msgstr "コメント"
-
-#: templates/user/user_skill.html:20
-msgid "Skill "
-msgstr "スキル"
-
-#: templates/user/user_skill.html:33
-msgid "Edit"
-msgstr "内容変更"
 
 #: templates/user/user_unreviewed.html:5
 msgid "Reviews Not Yet Posted"
@@ -1151,13 +1144,51 @@ msgid "No user found"
 msgstr "そのユーザーは存在しません"
 
 #: user/views.py:210
-msgid "User profile was successfully edited."
+msgid "User profile has been successfully edited."
 msgstr "ユーザー情報を編集しました。"
 
-#: user/views.py:225
+#: user/views.py:226
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
 
-#: user/views.py:391
+#: user/views.py:285 user/views.py:293 user/views.py:301 user/views.py:306
+#: user/views.py:311
+msgid "Invalid Review"
+msgstr "無効なレビューです"
+
+#: user/views.py:316
+msgid "You've already reviewd"
+msgstr "既にレビュー済みです"
+
+#: user/views.py:329
+msgid "Your review has been successfully posted!"
+msgstr "レビューを投稿しました。"
+
+#: user/views.py:371
+msgid "Your skill has been edited successfully."
+msgstr "スキルを編集しました。"
+
+#: user/views.py:401
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
+
+#~ msgid "Change language"
+#~ msgstr "言語切り替え"
+
+#~ msgid "View skills"
+#~ msgstr "スキル一覧を見る"
+
+#~ msgid "Japanese"
+#~ msgstr "日本語"
+
+#~ msgid "Reviews not yet posted"
+#~ msgstr "未レビューを見る"
+
+#~ msgid "Reviews posted"
+#~ msgstr "すべてのレビューを見る"
+
+#~ msgid "Rating"
+#~ msgstr "評価"
+
+#~ msgid "Comment"
+#~ msgstr "コメント"
