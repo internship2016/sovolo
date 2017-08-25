@@ -335,12 +335,6 @@ class UserUnReviewedView(ListView):
     model = User
     template_name = 'user/user_unreviewed.html'
 
-'''
-消したけど一応
-class UserSkillView(DetailView):
-    model = User
-    template_name = "user/user_skill.html"
-'''
 
 class UserSkillEditView(UpdateView):
     model = Skill
