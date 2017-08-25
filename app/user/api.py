@@ -40,7 +40,7 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
 
     res_obj = {'unreviewd_list': []}
 
-    if user.is_anonymous():
+    if user.is_anonymous:
         return JsonResponse(res_obj)
 
     if user.roll == 'helper':
