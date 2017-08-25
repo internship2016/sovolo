@@ -105,6 +105,10 @@ review_comment_sample = [
     """,
     """
     最悪な１日でした。
+    """,
+    """
+    拝啓　ΟΟの候、貴社ますますご清栄のこととお慶び申し上げます。平素は、格別のご厚情を賜り、心よりお礼申し上げます。
+    さて、先般の○○の折には、貴社には多大なるご協力を賜り/ΟΟ様をはじめ貴社の皆様には、大変お世話になり、心より感謝申し上げます。
     """
 ]
 
@@ -114,7 +118,19 @@ skill_text_sample = [
     '人のために生きることが私の使命です。',
     '愛は地球を救う',
     '人道支援が大好きです。',
-    '将来の夢はアグネス・チャンのような人になることです。'
+    '将来の夢はアグネス・チャンのような人になることです。',
+    """
+    私は調整力があります。
+    皆をまとめ、一つの方向に導く努力を惜しみません。
+    オーストラリア植林ボランティアに参加しましたが、メンバーはばらばらに仕事をしており成果も良くありませんでした。
+    その結果、「仕事が楽しくなった」と皆の理解が得られチームで仕事をするようになり、以前の２倍の仕事の成果を出すことが出来ました。
+    """,
+    """
+    私は、関心仕かけ人です。
+    所属するＮＰＯ法人で新聞社の方と、言語技術の新授業プログラムを開発し、小・中学校で授業を行いました。
+    授業は成功を収め、今後は全国展開の予定です。
+    人の気持ちを察し楽しませること、その力を伸ばす努力は怠りません。
+    """
 ]
 
 class Command(BaseCommand):
@@ -486,7 +502,7 @@ class Command(BaseCommand):
                         to_rate_user = c_participant,
                         from_rate_user = c_event.host_user,
                         rating = random.choice([1,2,2,3,3,3,3,4,4,4,4,4,4,5,5,5,5]),
-                        comment = review_comment_sample[random.choice([0,0,0,0,0,1,1,1,2,2,2,3,3,3,3,4,4,4,5])],
+                        comment = review_comment_sample[random.choice([0,0,0,0,0,1,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6,6])],
                         joined_event = c_event,
                         post_day = c_event.end_time + random.choice(range(1,15)) * timezone.timedelta(days=1),
                         from_event_host = True,
@@ -499,7 +515,7 @@ class Command(BaseCommand):
                         to_rate_user = c_event.host_user,
                         from_rate_user = c_participant,
                         rating = random.choice([1,2,2,3,3,3,3,4,4,4,4,4,4,5,5,5,5]),
-                        comment = review_comment_sample[random.choice([0,0,0,0,0,1,1,1,2,2,2,3,3,3,3,4,4,4,5])],
+                        comment = review_comment_sample[random.choice([0,0,0,0,0,1,1,1,2,2,2,3,3,3,3,4,4,4,5,5,6])],
                         joined_event = c_event,
                         post_day = c_event.end_time + random.choice(range(1,15)) * timezone.timedelta(days=1),
                         from_event_host = False,
@@ -511,7 +527,8 @@ class Command(BaseCommand):
         all_tag = list(Tag.objects.all())
 
         for user in User.objects.all():
-            have_skill_num = random.choice([0,1,1,1,1,1,2,2,3,3,3,8])
+
+            have_skill_num = random.choice([0,1,1,1,2,2,2,3,3,3,8])
             for _ in range(have_skill_num):
 
                 user_skill = Skill(

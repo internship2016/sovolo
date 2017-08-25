@@ -76,6 +76,20 @@
               </li>
             </ul>
 
+            <!--Go to Event for Participant-->
+            <ul class="nav navbar-nav">
+              <li class="text-center">
+                <a class="btn" href="{% url 'top_event' %}" role="button">Search Volunteer Work (翻訳お願いします)</a>
+              </li>
+            </ul>
+
+            <!--Go to User for Host-->
+            <ul class="nav navbar-nav">
+              <li class="text-center">
+                <a class="btn" href="{% url 'user:user_list' %}" role="button">Search Volunteer (翻訳お願いします)</a>
+              </li>
+            </ul>
+
             <!--right menu-->
             <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_anonymous %}

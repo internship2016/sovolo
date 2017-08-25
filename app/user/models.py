@@ -362,6 +362,14 @@ class UserPasswordResetting(models.Model):
 
 class UserReviewList(models.Model):
 
+    RATE_CHOICES = {
+        (1, '1'),
+        (2, '2'),
+        (3, '3'),
+        (4, '4'),
+        (5, '5')
+    }
+
     to_rate_user = models.ForeignKey(User,
                                      on_delete=models.CASCADE,
                                      related_name='to_rate_user')
@@ -370,16 +378,16 @@ class UserReviewList(models.Model):
                                        on_delete=models.CASCADE,
                                        related_name='from_rate_user')
 
-    rating = models.IntegerField(validators=[MinValueValidator(0),
+    rating = models.IntegerField(choices=RATE_CHOICES,validators=[MinValueValidator(0),
                                              MaxValueValidator(5)])
 
     comment = models.CharField(max_length=200, null=True, blank=True)
 
-    joined_event = models.ForeignKey('event.Event', null=True)
+    joined_event = models.ForeignKey('event.Event')
 
-    post_day = models.DateTimeField(default=timezone.now, null=True)
+    post_day = models.DateTimeField(default=timezone.now)
 
-    from_event_host = models.NullBooleanField(default=False, null=True)
+    from_event_host = models.NullBooleanField(default=False)
 
     def __str__(self):
         # Built-in attribute of django.contrib.auth.models.User !
@@ -387,8 +395,8 @@ class UserReviewList(models.Model):
 
 
 class Skill(AbstractBaseModel):
-    userskill = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    tag = models.ManyToManyField(Tag, blank=True)
+    userskill = models.ForeignKey(User, on_delete=models.CASCADE)
+    tag = models.ManyToManyField(Tag)
     skilltodo = models.CharField(max_length=200, null=True)
 
     def __str__(self):
