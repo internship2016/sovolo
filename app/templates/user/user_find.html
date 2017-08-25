@@ -48,7 +48,7 @@
     <h3 class="panel-heading">{% trans "Search by tags" %}</h3>
   </div>
     <div class="panel-body">
-      <form class="form-horizontal" role="search" action="{% url 'user:user_list' %}" method="get">
+      <form class="form-horizontal" role="search" action="{% url 'user:user_find' %}" method="get">
         <div class="row">
           <div class="checkbox col-lg-8">
             {% for tag in all_tags %}
