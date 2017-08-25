@@ -3,28 +3,87 @@
 {% block title %} {% trans "Post your review" %} | Sovol{% endblock %}
 
 {% block content %}
-<div class="panel panel-default">
-    <h1 class="panel-title">{% trans "Post your review" %}</h1>
-</div>
 
 
 {% if to_user.id %}
-  <h1>{% trans "Please post a review about this user." %}</h1>
-  <h1>{% trans "User ID" %} : {{to_user.id}}</h1>
-  <h1>{% trans "User Name" %}: {{to_user.usename}}</h1>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h4 class="panel-title">{% trans "Please post a review about this user." %}</h4>
+  </div>
+  <div class="panel-body">
+    <div class="media">
+      <div class="media-left">
+        <a href="/user/to_user.id">
+          <div class="media-object custom_thumbnail list-thumbnail"  style="background-image:url({{ user.get_image_url }});">
+          </div>
+        </a>
+      </div>
+      <div class="media-body">
+        <div class="event-info pull-left">
+          <div class="media-heading">
+            <a href="/user/to_user.id">
+              <h4>to_user.username</h4>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% else %}
-  <h1>{% trans "Please post a review about this event." %}</h1>
-  <h1>{% trans "Event ID" %} : {{review_event.id}}</h1>
-  <h1>{% trans "Owner" %} : {{review_event.host_user}}</h1>
-  <h1>{% trans "Event Name" %} : {{review_event.name}}</h1>
+<div class="panel panel-info">
+  <div class="panel-heading">
+    <h4 class="panel-title">{% trans "Please post a review about this event." %}</h4>
+  </div>
+  <div class="panel-body">
+    <div class="media">
+      <div class="media-left">
+        <a href="/event/{{review_event.pk}}">
+          <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{ review_event.get_image_url }});">
+          </div>
+        </a>
+      </div>
+      <div class="media-body">
+        <div class="event-info pull-left">
+          <div>
+            終了日時
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+              {{review_event.end_time_format| date:'n/j (D)'}}
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+              {{review_event.get_region_kanji}}
+          </div>
+          <div class="media-heading">
+            <a href="/event/{{review_event.pk}}">
+              <h4>{{ review_event.name }}</h4>
+            </a>
+            {% trans "Owner" %}
+            <a href="">{{review_event.host_user}}</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <form action="" class="form" method="post" enctype="multipart/form-data">
+    <div class="form-group review-form">
+      {% csrf_token %}
+      <div class="row">
+        <label for="review-rating" class="col-xs-12 col-md-2">{% trans "Rating" %}</label>
+        <div class="col-xs-12 col-md-10">
+          セレクトボタン！！
+        </div>
+      </div>
+      <div class="row">
+        <label for="review-comment" class="col-xs-12 col-md-2">{% trans "Comment" %}</label>
+        <div class="col-xs-12 col-md-9">
+          <textarea class="form-control" rows="5" id="review-comment"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <button class="btn btn-primary center-block review-btn" type="submit">{% trans "Submit" %}</button>
+    </div>
+  </form>
+</div>
 {% endif %}
-
-
-
-<form action="" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="{% trans 'Submit' %}" />
-</form>
 
 {% endblock %}
