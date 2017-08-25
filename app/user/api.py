@@ -14,8 +14,8 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
         return JsonResponse(res_obj)
 
     if user.roll == 'helper':
-        unreview_list = user.get_past_participated_and_unreviewed_events()  # event
-        for event in unreview_list[:back_num]:
+        unreview_events = user.get_past_participated_and_unreviewed_events()
+        for event in unreview_events[:back_num]:
 
             res_obj['unreviewd_list'].append({
                 'event_id': event.id,
@@ -27,8 +27,11 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
 
     else:
         counter = 0
-        unreview_list = user.get_zipped_unreviewed_hosted()  # zip(event, user_list)
-        for event, user_list in unreview_list:
+
+        # XXX: Bad method name: zip(event, user_list)
+        unreview_events = user.get_zipped_unreviewed_hosted()
+
+        for event, user_list in unreview_events:
             if counter >= back_num:
                 break
 
