@@ -27,7 +27,7 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
 
     else:
         counter = 0
-        unreview_list = user.get_zipped_unreviewed_hosted() # zip(event, user_list)
+        unreview_list = user.get_zipped_unreviewed_hosted()  # zip(event, user_list)
         for event, user_list in unreview_list:
             if counter >= back_num:
                 break
