@@ -146,8 +146,8 @@
               <label class="col-sm-3">{% endverbatim %}{% trans "Related tags" %}{% verbatim %}<sup><font color="red"></font></sup></label>
               <div class="col-sm-9">
                 {% endverbatim %}{% for tag in all_tags %}{% verbatim %}
-                   <label><input type="checkbox" name="skill_{{ X }}_tags" value="{{ tag.id }}" {% endverbatim %}{% if tag in skill.tag.all %}{% verbatim %}checked{% endverbatim %}{% endif %}{% verbatim %}>{{ tag.name }}</label>
-                {% endverbatim %}{% endfor %}{% verbatim %}
+                   <label><input type="checkbox" name="skill_{{ X }}_tags" value="{{ tag.id }}" {% endverbatim %}{% if tag in skill.tag.all %}{% verbatim %}checked{% endverbatim %}{% endif %}>{{ tag.name }}</label>
+                {% endfor %}{% verbatim %}
               </div>
             </div>
             <div class="row col-xs-12">
