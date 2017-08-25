@@ -208,7 +208,7 @@ class UserEditView(UpdateView):
 
         self.request.session[translation.LANGUAGE_SESSION_KEY] = user.language
 
-        info_msg = _("User profile has been successfully edited.")
+        info_msg = _("User profile has been successfully updated.")
         messages.info(self.request, info_msg)
         return super(UserEditView, self).form_valid(form)
 
@@ -363,7 +363,7 @@ class UserSkillEditView(UpdateView):
         return context
 
     def get_success_url(self, **kwargs):
-        info_msg = _("Your skill has been edited successfully.")
+        info_msg = _("Your skill has been updated successfully.")
         messages.info(self.request, info_msg)
         userskill_id = self.request.user.id
         return reverse('user:detail', kwargs={'pk': userskill_id})
