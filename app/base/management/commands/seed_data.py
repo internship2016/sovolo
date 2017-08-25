@@ -3,7 +3,7 @@ from django.core.files import File
 from django.utils import timezone
 from django.conf import settings
 from event.models import Event, Participation, Frame, Comment, Question, Answer
-from user.models import User, UserReviewList
+from user.models import User, UserReviewList, Skill
 from tag.models import Tag
 import csv
 import os
@@ -106,6 +106,15 @@ review_comment_sample = [
     """
     最悪な１日でした。
     """
+]
+
+skill_text_sample = [
+    'なんでもできます。',
+    '３０年以上の実務経験があります。',
+    '人のために生きることが私の使命です。',
+    '愛は地球を救う',
+    '人道支援が大好きです。',
+    '将来の夢はアグネス・チャンのような人になることです。'
 ]
 
 class Command(BaseCommand):
@@ -221,6 +230,12 @@ class Command(BaseCommand):
         parser.add_argument(
             '-userreviewlist',
             dest='userreviewlist',
+            action='store_true',
+            default=False,
+        )
+        parser.add_argument(
+            '-skill',
+            dest='skill',
             action='store_true',
             default=False,
         )
@@ -491,6 +506,20 @@ class Command(BaseCommand):
                     )
                     userreviewlists_ph.save()
 
+    def _create_skill(self):
+        all_user = User.objects.all()
+        all_tag = Tag.objects.all()
+
+        for user in all_user:
+            tag_num = random.choice([1,1,1,2,3])
+            user_skill = Skill(
+                userskill = user,
+                # tag = random.sample(all_tag, tag_num),
+                tag = random.choice(all_tag),
+                skilltodo = random.choice(skill_text_sample)
+            )
+            user_skill.save()
+
     def handle(self, *args, **options):
         arg_exist = False
         for attr in self.attributes:
@@ -505,6 +534,7 @@ class Command(BaseCommand):
             self._create_tags()
             self._create_questions_and_answers()
             self._create_userreviewlists()
+            self._create_skill()
         else:
             if options['user']:
                 self._create_users()
@@ -522,3 +552,5 @@ class Command(BaseCommand):
                 self._create_questions_and_answers()
             if option['userreviewlist']:
                 self._create_userreviewlists()
+            if option['skill']:
+                self._create_skill()
