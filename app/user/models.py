@@ -251,7 +251,8 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     # Review (using by participant)
     def get_mean_rating(self):
-        return self.to_rate_user.aggregate(Avg('rating'))['rating__avg']
+        avg_rate = self.to_rate_user.aggregate(Avg('rating'))['rating__avg']
+        return round(avg_rate, 2)
 
     def get_reviewed_events(self):
         return [event.joined_event for event in self.from_rate_user.all()]
