@@ -514,6 +514,17 @@ $logo-height :65px;
         }
       }
     }
-
   }
 }
+
+.review{
+  &-form{
+    margin: 0;
+    padding: 10px;
+    background-color: #fff9db;
+  }
+  &-btn{
+    width: 150px;
+  }
+}
+
