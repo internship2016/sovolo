@@ -1,5 +1,4 @@
 from django.http import JsonResponse
-from django.db.models import Q
 
 def get_unreview_list(request, unreview_kind, *args, **kwargs):
     """Get Unreview List.
