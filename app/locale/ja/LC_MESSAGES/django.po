@@ -832,7 +832,7 @@ msgstr "管理しているボランティア一覧"
 
 #: templates/user/detail.html:14
 msgid "List of Events Attending"
-msgstr "管理しているボランティア一覧"
+msgstr "参加予定のボランティア一覧"
 
 #: templates/user/detail.html:15
 msgid "Event Achievements"
