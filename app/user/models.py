@@ -40,6 +40,7 @@ class UserManager(BaseUserManager):
         return user
 
 
+# FIXME: Remove 'get_' prefixes, this is bad/meaningless/Java-ish habits
 class User(AbstractBaseModel, AbstractBaseUser):
     # Numbers are arbitrary
     first_name = models.CharField(max_length=100, null=True)
