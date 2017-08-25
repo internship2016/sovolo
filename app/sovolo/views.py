@@ -12,6 +12,10 @@ from django.db.models import Q
 def index(request):
     if (not request.user.is_anonymous) and request.user.role == "sufferer":
         return redirect('/user/top')
+    else:
+        return redirect('/event/top')
+
+def index_event(request):
     context = {}
 
     """All Tags

@@ -530,6 +530,22 @@ $logo-height :65px;
   &-btn{
     width: 150px;
   }
+
+.review{
+  &-form{
+    margin: 0;
+    padding: 10px;
+    background-color: #fff9db;
+  }
+}
+
+#skilllist_username{
+  position: absolute;
+  left: 150px;
+}
+  &-btn{
+    width: 150px;
+  }
 }
 
 .fa{

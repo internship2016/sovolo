@@ -100,20 +100,6 @@
     'lng' : ''
   };
 
-  var label_convert={
-    '開催中' : 'success',
-    '募集中' : 'info',
-    '管理者' : 'primary',
-    '終了' : 'default',
-  };
-
-  var label_trans={
-    '開催中' : '{% trans "In Session" %}',
-    '募集中' : '{% trans "Wanted" %}',
-    '管理者' : '{% trans "Organizer" %}',
-    '終了' :  '{% trans "Finished" %}',
-  }
-
   function initialize(){
     var lat = 35.7291213;
     var lng = 139.7191322;
@@ -202,8 +188,8 @@
   function markerSet(context){
       context['events_in_range'].forEach(function(val,index,arr){
         val['start_time'] = moment(val['start_time']).format("M月D日(ddd)");
-        val['label_brand'] = label_convert[val['status']];
-        val['status'] = label_trans[val['status']];
+        val['label_brand'] = val['label'];
+        val['status'] = val['status'];
         val['markernum'] = index;
       });
     $('#map-event-list').html(Mustache.to_html(map_event_template, context));
