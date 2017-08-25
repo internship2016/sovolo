@@ -507,18 +507,25 @@ class Command(BaseCommand):
                     userreviewlists_ph.save()
 
     def _create_skill(self):
-        all_user = User.objects.all()
-        all_tag = Tag.objects.all()
 
-        for user in all_user:
-            tag_num = random.choice([1,1,1,2,3])
-            user_skill = Skill(
-                userskill = user,
-                # tag = random.sample(all_tag, tag_num),
-                tag = random.choice(all_tag),
-                skilltodo = random.choice(skill_text_sample)
-            )
-            user_skill.save()
+        all_tag = list(Tag.objects.all())
+
+        for user in User.objects.all():
+            have_skill_num = random.choice([0,1,1,1,1,1,2,2,3,3,3,8])
+            for _ in range(have_skill_num):
+
+                user_skill = Skill(
+                    userskill = user,
+                    skilltodo = random.choice(skill_text_sample)
+                )
+                user_skill.save()
+
+                ## add Tag
+                tag_num = random.choice([1,1,1,2,3])
+                tag_list = random.sample(all_tag, k=tag_num)
+                for have_tag in tag_list:
+                    user_skill.tag.add(have_tag)
+                user_skill.save()
 
     def handle(self, *args, **options):
         arg_exist = False

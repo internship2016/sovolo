@@ -11,12 +11,11 @@ class UserReviewListInline(admin.TabularInline):
     readonly_fields = ('post_day',)
     extra = 3
 
-# class SkillAdmin(admin.ModelAdmin):
-#     list_display = (
-#         'pk',
-#         'description',
-#         'skilltodo',
-#     )
+class SkillAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'skilltodo',
+    )
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('pk', 'username', 'created', 'modified')
@@ -24,4 +23,4 @@ class UserAdmin(admin.ModelAdmin):
 
 
 admin.site.register(User, UserAdmin)
-# admin.site.register(Skill, SkillAdmin)
+admin.site.register(Skill, SkillAdmin)
