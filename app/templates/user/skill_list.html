@@ -7,7 +7,7 @@
 
 <div class="row mt15">
   <div class="col-md-8">
-    {% skill_list search_user タイトル %} 
+    {% skill_list search_user タイトル %}
     <nav aria-label="Page navigation">
       <ul class="pagination">
         <li class="page-item">
@@ -45,7 +45,7 @@
 
 <div class="panel panel-default">
   <div class="panel-deading">
-    <h3 class="panel-heading">{% trnas "Search by tags" %}</h3>
+    <h3 class="panel-heading">{% trans "Search by tags" %}</h3>
   </div>
     <div class="panel-body">
       <form class="form-horizontal" role="search" action="{% url 'user:user_list' %}" method="get">
@@ -62,7 +62,5 @@
       </form>
     </div>
 </div>
-        
+
 {% endblock %}
-
-
