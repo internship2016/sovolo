@@ -1,7 +1,6 @@
 from django.contrib import admin
-from .models import User, UserReviewList
-from .models import Skill
-from .models import SkillAdmin
+from .models import User, UserReviewList, Skill
+
 # Register your models here.
 # class ChoiceInline(admin.StackedInline):
 
@@ -12,6 +11,12 @@ class UserReviewListInline(admin.TabularInline):
     readonly_fields = ('post_day',)
     extra = 3
 
+class SkillAdmin(admin.ModelAdmin):
+    list_display = (
+        'pk',
+        'description',
+        'skilltodo',
+    )
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('pk', 'username', 'created', 'modified')

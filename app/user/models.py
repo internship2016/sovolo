@@ -327,6 +327,15 @@ class User(AbstractBaseModel, AbstractBaseUser):
         return zip(self.get_unreviewed_past_hosted_events(),
                    self.get_unreviewed_participant_of_past_hosted_events_poped())
 
+    # for Notification
+    def get_unreview_num_for_participant(self):
+        return len(self.get_past_participated_and_unreviewed_events())
+
+    def get_unreview_num_for_host(self):
+        num = 0
+        for user_list in self.get_unreviewed_participant_of_past_hosted_events_poped():
+            num += len(user_list)
+        return num
 
 class UserActivation(models.Model):
     user = models.OneToOneField(User)
@@ -395,12 +404,3 @@ class Skill(AbstractBaseModel):
 
     def get_absolute_url(self):
         return reverse('user:detail', kwargs={'pk': self.id})
-
-
-class SkillAdmin(admin.ModelAdmin):
-    list_display22 = (
-        'pk',
-        'event',
-        'description',
-        'skilltodo',
-    )

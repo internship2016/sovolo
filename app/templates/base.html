@@ -82,7 +82,7 @@
             <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_anonymous %}
             <!--言語切り替え-->
-              <li>
+              <li><a>
                 {% get_available_languages as LANGUAGES %}
                 <form action="/i18n/setlang/" method="post" id="languagetab">{% csrf_token %}
                   <input name="next" type="hidden" value="/" />
@@ -94,7 +94,7 @@
                     </select>
                   <input type="submit" value="change" />
                 </form>
-              </li>
+              </a></li>
               <li class="pull-left"><a href="{% url 'user:register' %}">{% trans "Register" %}</a></li>
               <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
             {% else %}
@@ -125,14 +125,6 @@
             </ul>
             <!--end of right menu-->
 
-            <!--言語切り替え-->
-            {% if not request.user.is_anonymous %}
-            <form class="navbar-form navbar-right" action="{% url 'event:search' %}" method="get" style="margin:auto 0;">
-              <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">
-                {% trans "Change language" %}
-              </button>
-            </form>
-            {% endif %}
             <!--end of form-->
           </div>
           <!--end of navbar-collapse-->

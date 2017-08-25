@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 22:19+0000\n"
+"POT-Creation-Date: 2017-08-24 23:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -274,21 +274,17 @@ msgstr "ユーザー登録"
 msgid "Log in"
 msgstr "ログイン"
 
-#: templates/base.html:109
+#: templates/base.html:110
 msgid "View All Notifications"
 msgstr "全ての通知を見る"
 
-#: templates/base.html:119
+#: templates/base.html:120
 msgid "Profile"
 msgstr "プロフィール"
 
-#: templates/base.html:120
+#: templates/base.html:121
 msgid "Log out"
 msgstr "ログアウト"
-
-#: templates/base.html:131
-msgid "Change language"
-msgstr "言語切り替え"
 
 #: templates/container_top.html:10
 msgid "Let's Get Involved"
@@ -484,7 +480,7 @@ msgstr "内容変更"
 msgid "Send email to all participants"
 msgstr "メール一斉送信"
 
-#: templates/event/form_template.html:9 templates/user/user_header.html:75
+#: templates/event/form_template.html:9 templates/user/user_header.html:74
 #: templates/user/user_post_review.html:16
 msgid "Event Name"
 msgstr "ボランティア名"
@@ -535,7 +531,7 @@ msgstr "現在の画像："
 msgid "Change image to:"
 msgstr "画像を再設定する："
 
-#: templates/event/form_template.html:192 templates/user/edit.html:68
+#: templates/event/form_template.html:192 templates/user/edit.html:67
 msgid "Browse..."
 msgstr "選択..."
 
@@ -559,7 +555,7 @@ msgstr "（応募者のみに表示）"
 msgid "Organizer:"
 msgstr "管理者"
 
-#: templates/event/form_template.html:242 templates/user/edit.html:58
+#: templates/event/form_template.html:242 templates/user/edit.html:57
 msgid "Nickname"
 msgstr "ニックネーム"
 
@@ -710,8 +706,6 @@ msgid "Status"
 msgstr "ステータス"
 
 #: templates/event/search_form.html:65
-#, fuzzy
-#| msgid "Show closed events"
 msgid "Exclude closed events"
 msgstr "締め切られたボランティアを除外"
 
@@ -838,7 +832,7 @@ msgstr "管理しているボランティア一覧"
 
 #: templates/user/detail.html:14
 msgid "List of Events Attending"
-msgstr "管理しているボランティア一覧"
+msgstr "参加予定のボランティア一覧"
 
 #: templates/user/detail.html:15
 msgid "Event Achievements"
@@ -873,55 +867,51 @@ msgstr "地域："
 msgid "Sovolage"
 msgstr "ソボレージ"
 
-#: templates/user/edit.html:37 templates/user/user_header.html:32
-msgid "View skills"
-msgstr "スキル一覧を見る"
-
-#: templates/user/edit.html:58
+#: templates/user/edit.html:57
 msgid "Input up to 15 characters."
 msgstr "15文字以内"
 
-#: templates/user/edit.html:66
+#: templates/user/edit.html:65
 msgid "Your photo"
 msgstr "プロフィール画像"
 
-#: templates/user/edit.html:73
+#: templates/user/edit.html:72
 msgid "Region"
 msgstr "地域"
 
-#: templates/user/edit.html:83
+#: templates/user/edit.html:82
 msgid "Sex"
 msgstr "性別"
 
-#: templates/user/edit.html:86
+#: templates/user/edit.html:85
 msgid "Male"
 msgstr "男性"
 
-#: templates/user/edit.html:87
+#: templates/user/edit.html:86
 msgid "Female"
 msgstr "女性"
 
-#: templates/user/edit.html:88
+#: templates/user/edit.html:87
 msgid "Prefer not to disclose"
 msgstr "秘密"
 
-#: templates/user/edit.html:94
+#: templates/user/edit.html:93
 msgid "Birthday"
 msgstr "生年月日"
 
-#: templates/user/edit.html:111 user/models.py:73
+#: templates/user/edit.html:110 user/models.py:73
 msgid "Language"
 msgstr "言語"
 
-#: templates/user/edit.html:126 templates/user/user_header.html:107
+#: templates/user/edit.html:125 templates/user/user_header.html:144
 msgid "Following tags"
 msgstr "フォローしているタグ"
 
-#: templates/user/edit.html:133
+#: templates/user/edit.html:132
 msgid "Change password"
 msgstr "パスワードを変更する"
 
-#: templates/user/edit.html:135
+#: templates/user/edit.html:134
 msgid "Apply"
 msgstr "適用"
 
@@ -1001,7 +991,7 @@ msgid "Your new pasword"
 msgstr "新しいパスワード"
 
 #: templates/user/skill_add.html:6 templates/user/skill_add.html:10
-#: templates/user/user_skill.html:41
+#: templates/user/user_header.html:116
 msgid "Add a new skill"
 msgstr "スキル新規作成"
 
@@ -1010,12 +1000,11 @@ msgid "Related tags"
 msgstr "関連付けるタグ"
 
 #: templates/user/skill_add.html:25 templates/user/skill_form.html:26
-#: templates/user/user_skill.html:26
+#: templates/user/user_header.html:101
 msgid "I can do"
 msgstr "できる内容"
 
-#: templates/user/skill_form.html:6 templates/user/user_skill.html:6
-#: templates/user/user_skill.html:13
+#: templates/user/skill_form.html:6 templates/user/user_header.html:88
 msgid "Skills"
 msgstr "スキル一覧"
 
@@ -1023,27 +1012,35 @@ msgstr "スキル一覧"
 msgid "Edit skills"
 msgstr "スキル変更"
 
-#: templates/user/user_header.html:52
+#: templates/user/user_header.html:51
 msgid "Reviews"
 msgstr "レビュー"
 
-#: templates/user/user_header.html:58
+#: templates/user/user_header.html:57
 msgid "reviews"
 msgstr "件"
 
-#: templates/user/user_header.html:70
+#: templates/user/user_header.html:69
 msgid "Rated by"
 msgstr "投稿者"
 
-#: templates/user/user_header.html:76
+#: templates/user/user_header.html:75
 msgid "Posted on"
 msgstr "投稿日"
 
-#: templates/user/user_header.html:89
+#: templates/user/user_header.html:95
+msgid "Skill "
+msgstr "スキル"
+
+#: templates/user/user_header.html:108
+msgid "Edit"
+msgstr "内容変更"
+
+#: templates/user/user_header.html:126
 msgid "Trophies"
 msgstr "獲得トロフィー"
 
-#: templates/user/user_header.html:115
+#: templates/user/user_header.html:152
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
 
@@ -1079,14 +1076,6 @@ msgstr "ユーザーID"
 #: templates/user/user_post_review.html:20
 msgid "User Name"
 msgstr "ユーザー名"
-
-#: templates/user/user_skill.html:20
-msgid "Skill "
-msgstr "スキル"
-
-#: templates/user/user_skill.html:33
-msgid "Edit"
-msgstr "内容変更"
 
 #: templates/user/user_unreviewed.html:5
 msgid "Reviews Not Yet Posted"
@@ -1175,13 +1164,19 @@ msgstr "既にレビュー済みです"
 msgid "Your review has been successfully posted!"
 msgstr "レビューを投稿しました。"
 
-#: user/views.py:370
+#: user/views.py:371
 msgid "Your skill has been edited successfully."
 msgstr "スキルを編集しました。"
 
-#: user/views.py:400
+#: user/views.py:401
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
+
+#~ msgid "Change language"
+#~ msgstr "言語切り替え"
+
+#~ msgid "View skills"
+#~ msgstr "スキル一覧を見る"
 
 #~ msgid "Japanese"
 #~ msgstr "日本語"

@@ -96,16 +96,22 @@ class Event(AbstractBaseModel):
         return timezone.now() > self.end_time
 
     def get_status(self):
+        conv = {'finished': {'label': 'default', 'msg': _("Finished")},
+                'in_session': {'label': 'success', 'msg': _("In Session")},
+                'closed': {'label': 'default', 'msg': _("Closed")},
+                'full': {'label': 'default', 'msg': _("Full")},
+                'wanted': {'label': 'info', 'msg': _("Wanted")}}
+
         if self.is_over():
-            return _("Finished")
+            return conv['finished']
         elif self.is_started():
-            return _("In Session")
+            return conv['in_session']
         elif self.is_closed():
-            return _("Closed")
+            return conv['closed']
         elif self.is_full():
-            return _("Full")
+            return conv['full']
         else:
-            return _("Wanted")
+            return conv['wanted']
 
     def get_region_kanji(self):
         region = self.prefectures.get(self.region)
