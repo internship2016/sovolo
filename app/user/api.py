@@ -1,5 +1,4 @@
 from django.http import JsonResponse
-<<<<<<< HEAD
 from user.models import User
 from django.db.models import Q
 from django.apps import apps
@@ -30,7 +29,6 @@ def user_filter(request, *args, **kwargs):
             'img_url':u.get_image_url()
         })
     return JsonResponse(res)
-=======
 
 
 def get_unreview_list(request, unreview_kind, *args, **kwargs):
@@ -48,7 +46,6 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
     if user.roll == 'helper':
         unreview_events = user.get_past_participated_and_unreviewed_events()
         for event in unreview_events[:back_num]:
-
             res_obj['unreviewd_list'].append({
                 'event_id': event.id,
                 'event_name': event.name,
@@ -82,5 +79,4 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
                 })
                 counter += 1
 
-    return JsonResponse(res_obj)
->>>>>>> dbe30bcf656d04277668c149631e2d048a895a9c
+        return JsonResponse(res_obj)
