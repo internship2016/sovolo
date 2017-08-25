@@ -1,6 +1,5 @@
 # coding=utf-8
 from django.db import models
-from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -41,6 +40,7 @@ class UserManager(BaseUserManager):
         return user
 
 
+# FIXME: Remove 'get_' prefixes, this is bad/meaningless/Java-ish habits
 class User(AbstractBaseModel, AbstractBaseUser):
     # Numbers are arbitrary
     first_name = models.CharField(max_length=100, null=True)
@@ -336,6 +336,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
         for user_list in self.get_unreviewed_participant_of_past_hosted_events_poped():
             num += len(user_list)
         return num
+
 
 class UserActivation(models.Model):
     user = models.OneToOneField(User)

@@ -26,7 +26,7 @@
         <div>
           {% if event.is_over %}
             <span class="label label-default" style="margin-right: 1em;">
-              {{ event.get_status }}
+              {{ event.get_status.msg }}
             </span>
           {% else %}
             {% if event in user.participating_event.all %}
@@ -39,7 +39,7 @@
               {% endfor %}
             {% else %}
               <span class="label label-info" style="margin-right: 1em;">
-                {{ event.get_status }}
+                {{ event.get_status.msg }}
               </span>
             {% endif %}
           {% endif %}
@@ -90,7 +90,7 @@
         <div>
           {% if event.is_over %}
             <span class="label label-default" style="margin-right: 1em;">
-              {{ event.get_status }}
+              {{ event.get_status.msg }}
             </span>
           {% else %}
             {% if event in user.participating_event.all %}
@@ -103,7 +103,7 @@
               {% endfor %}
             {% else %}
               <span class="label label-info" style="margin-right: 1em;">
-                {{ event.get_status }}
+                {{ event.get_status.msg }}
               </span>
             {% endif %}
           {% endif %}
