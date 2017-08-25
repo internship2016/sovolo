@@ -11,7 +11,7 @@
           </a>
           <div class="madia-body">
           <a href="/user/{{skill.userskill.id}}">
-           <h1>{{skill.userskill.username}}</h1>
+           <h1>名前　:{{skill.userskill.username}}</h1>
           </a>
           <i class="fa fa-map-marker" aria-hidden="true"></i>
           {{ skill.userskill.get_region_kanji}}
@@ -27,26 +27,4 @@
   {% empty %}
   <p> スキルがありません </p>
   {% endfor %}
-</div>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">タグで絞り込む</h3>
-  </div>
-  <div class="panel-body">
-    <form class="form-horizontal" role="search" action="{% url 'user:user_list' %}" method="get">
-      <div class="row">
-      <div class="checkbox col-lg-8">
-        {% for tag in all_tags %}
-          <label>
-            <input type="checkbox" name="tags">{{ tag.name }}
-          </label>
-        {% endfor %}
-      </div>
-      </div>
-      <div class="row">
-        <button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4 col-lg-2 col-lg-offset-5 col-xs-8 col-xs-offset-2">探す</button>
-      </div>
-    </form>
-  </div>
 </div>

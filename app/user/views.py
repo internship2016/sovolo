@@ -406,7 +406,6 @@ class UserListView(ListView):
     context_object_name = 'search_user'
     paginate_by = 10
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context["all_tags"] = Tag.objects.all()
