@@ -25,7 +25,7 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
                 'event_name': event.name,
                 'event_host': event.host_user,
                 'event_img': event.get_image_url(),
-                'message' : event.name + 'へのレビューをおねがいします。'
+                'message': event.name + 'へのレビューをおねがいします。'
             })
 
     # href="{% url 'user:post_review' %}?event_id={{event_id}}&to_user_id={{helper_id}}"
