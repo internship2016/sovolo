@@ -82,11 +82,19 @@ nav{
   margin-top:10px;
 }
 #map_canvas2{
-  min-height: 400px;
-  min-width: 400px;
+  min-height: 200px;
+  min-width: 200px;
   height:100%;
   width:100%;
   margin-top:10px;
+  @media(min-width: 450px){
+    min-height: 400px;
+    min-width: 400px;
+  }
+  @media(min-width: 768px){
+    min-height: 400px;
+    min-width: 400px;
+  }
 }
 
 /* Flush footer to the bottom */
@@ -188,6 +196,43 @@ _::-webkit-:not(:root:root), .detail-thumbnail {
     height: $detail-img-size;
   }
 }
+
+.header{
+  &-search{
+    width: 80%;
+    display: inline;
+    margin-left: 10px;
+    @media(min-width: 768px){
+      width: 100%; 
+    }
+  }
+  &-notif{
+    &-badge{
+      display: inline !important;
+      padding: 0 !important;
+      position: absolute !important;
+      z-index: 10;
+      &>span{
+        background-color: #ec1a2e;
+      }
+      top: 10px;
+      left: 30px;
+      @media(min-width: 768px){
+        top: 14px;
+        left: 17px;
+      }
+    }
+  }
+}
+
+#notification{
+  height: 69px;
+  padding: 25px 15px 20px;
+}
+.navbar-right > li{
+  height: 100%;
+}
+
 
 /* Event Details page */
 
@@ -440,14 +485,6 @@ $logo-height :65px;
 .side-search-btn{
   margin: 0 auto;
   display: block;
-}
-
-.badge-notification{
-  background-color: #ec1a2e;
-  position: absolute;
-  z-index: 10;
-  top: 14px;
-  left: 17px;
 }
 
 .panel-heading{

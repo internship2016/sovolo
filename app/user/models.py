@@ -365,13 +365,13 @@ class UserPasswordResetting(models.Model):
 
 class UserReviewList(models.Model):
 
-    RATE_CHOICES = {
+    RATE_CHOICES = [
         (1, '1'),
         (2, '2'),
         (3, '3'),
         (4, '4'),
         (5, '5')
-    }
+    ]
 
     to_rate_user = models.ForeignKey(User,
                                      on_delete=models.CASCADE,
@@ -382,7 +382,7 @@ class UserReviewList(models.Model):
                                        related_name='from_rate_user')
 
     rating = models.IntegerField(choices=RATE_CHOICES,validators=[MinValueValidator(0),
-                                             MaxValueValidator(5)])
+                                             MaxValueValidator(5)], default=3)
 
     comment = models.CharField(max_length=200, null=True, blank=True)
 
