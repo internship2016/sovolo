@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^(?P<user_id>[0-9]+)/skill/add/$', views.UserSkillAddView.as_view(), name='skill_add'),
     url(r'^post_review/$', views.UserPostReviewView.as_view(), name='post_review'),
     url(r'^unreviewed/$', views.UserUnReviewedView.as_view(), name='unreviewed'),
+    url(r'^top/list/$', views.UserListView.as_view(), name='user_list'),
     url(r'^filter/tag_users$', api.user_filter, {'user_kind':'tag_users'}, name='tag_users'),
     # unreview_list -> top.html
     url(r'^filter/get_unreviewd_list$', api.get_unreview_list, name='get_unreviewd_list'),

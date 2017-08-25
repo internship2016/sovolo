@@ -1,7 +1,11 @@
+import os
 from django.shortcuts import render
 from event.models import Event
 from tag.models import Tag
 from django.conf import settings
+from user.models import User, Skill
+from django.views.generic import ListView
+from django.db.models import Q
 
 
 def index(request):
@@ -40,3 +44,11 @@ def show_map(request):
     context['all_tags'] = Tag.objects.all()
 
     return render(request, 'map.html',context)
+
+
+def index_user(request):
+    context = {}
+
+    context['all_tags'] = Tag.objects.all()
+    return render(request, 'top_user.html', context)
+
