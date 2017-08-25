@@ -1,5 +1,6 @@
 from django.http import JsonResponse
 
+
 def get_unreview_list(request, unreview_kind, *args, **kwargs):
     """Get Unreview List.
     ログインしているユーザーの未レビューの最新５件を返す。
