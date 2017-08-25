@@ -37,6 +37,7 @@ nav{
 .ml10{margin-left:10px;}
 .ml15{margin-left:15px;}
 
+.pt15{padding-top: 15px;}
 
 #search-area {
   div {
@@ -48,6 +49,7 @@ nav{
 }
 
 #main-content {
+  background: #fff;
   padding-bottom: 70px;
 }
 
@@ -82,11 +84,19 @@ nav{
   margin-top:10px;
 }
 #map_canvas2{
-  min-height: 400px;
-  min-width: 400px;
+  min-height: 200px;
+  min-width: 200px;
   height:100%;
   width:100%;
   margin-top:10px;
+  @media(min-width: 450px){
+    min-height: 400px;
+    min-width: 400px;
+  }
+  @media(min-width: 768px){
+    min-height: 400px;
+    min-width: 400px;
+  }
 }
 
 /* Flush footer to the bottom */
@@ -504,6 +514,33 @@ $logo-height :65px;
         }
       }
     }
-
   }
 }
+
+.review{
+  &-form{
+    margin: 0;
+    padding: 10px;
+    background-color: #fff9db;
+  }
+  &-btn{
+    width: 150px;
+  }
+
+.review{
+  &-form{
+    margin: 0;
+    padding: 10px;
+    background-color: #fff9db;
+  }
+}
+
+#skilllist_username{
+  position: absolute;
+  left: 150px;
+}
+  &-btn{
+    width: 150px;
+  }
+}
+

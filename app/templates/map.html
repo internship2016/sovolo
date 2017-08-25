@@ -54,41 +54,39 @@
 
     </div>
   </div>
-  {% verbatim %}
-    <script id="map-event-template" type="text/x-handlebars-template">
+    <script id="map-event-template" type="text/template">
       <section class="inner">
-      {{#each events_in_range}}
+      [[#events_in_range]]
         <div class="media">
           <div class="media-left">
-            <a href="/event/{{id}}">
-              <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{img}});">
+            <a href="/event/[[id]]">
+              <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url([[img]]);">
               </div>
             </a>
           </div>
           <div class="media-body">
             <div class="event-info pull-left">
               <div>
-                <span class="label label-{{label_brand}}" style="margin-right: 1em;">
-                  {{status}}
+                <span class="label label-[[label_brand]]" style="margin-right: 1em;">
+                  [[status]]
                 </span>
                 <i class="fa fa-calendar" aria-hidden="true"></i>
-                  {{start_time}}
+                  [[start_time]]
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                  {{place}}
+                  [[place]]
               </div>
               <div class="media-heading">
-                <a href="/event/{{id}}">
-                  <h5>{{name}}</h5>
+                <a href="/event/[[id]]">
+                  <h5>[[name]]</h5>
                 </a>
               </div>
             </div>
           </div>
-          <input type="hidden" value="{{markernum}}">
+          <input type="hidden" value="[[markernum]]">
         </div>
-        {{/each}}
+        [[/events_in_range]]
       </section>
     </script>
-  {% endverbatim %}
 </div>
 
 <script>
@@ -101,20 +99,6 @@
     'lat' : '',
     'lng' : ''
   };
-
-  var label_convert={
-    '開催中' : 'success',
-    '募集中' : 'info',
-    '管理者' : 'primary',
-    '終了' : 'default',
-  };
-
-  var label_trans={
-    '開催中' : '{% trans "In Session" %}',
-    '募集中' : '{% trans "Wanted" %}',
-    '管理者' : '{% trans "Organizer" %}',
-    '終了' :  '{% trans "Finished" %}',
-  }
 
   function initialize(){
     var lat = 35.7291213;
@@ -204,11 +188,11 @@
   function markerSet(context){
       context['events_in_range'].forEach(function(val,index,arr){
         val['start_time'] = moment(val['start_time']).format("M月D日(ddd)");
-        val['label_brand'] = label_convert[val['status']];
-        val['status'] = label_trans[val['status']];
+        val['label_brand'] = val['label'];
+        val['status'] = val['status'];
         val['markernum'] = index;
       });
-    $('#map-event-list').html(map_event_template(context));
+    $('#map-event-list').html(Mustache.to_html(map_event_template, context));
     context['events_in_range'].forEach(function(val,index,arr){
       var marker = new google.maps.Marker({
         position: {
@@ -247,7 +231,7 @@
       weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
       weekdaysShort: ['{% trans "Sun" %}','{% trans "Mon" %}','{% trans "Tue" %}','{% trans "Wed" %}','{% trans "Thu" %}','{% trans "Fri" %}','{% trans "Sat" %}'],
     });
-    map_event_template = Handlebars.compile($("#map-event-template").html());
+    map_event_template = $("#map-event-template").html();
     initialize();
   });
 </script>

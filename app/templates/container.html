@@ -4,17 +4,19 @@
 {% load bootstrap3 %}
 
 {% block container %}
-<div id="main-content" class="container mt15">
-  {% if form.errors %}
-    {% bootstrap_form_errors form %}
-  {% endif %}
-    <div class="messages">
-      {% if messages %}
-        {% for message in messages %}
-          <p {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</p>
-        {% endfor %}
-      {% endif %}
-    </div>
-  {% block content %}{% endblock %}
+<div id="main">
+  <div id="main-content" class="container pt15">
+    {% if form.errors %}
+      {% bootstrap_form_errors form %}
+    {% endif %}
+      <div class="messages">
+        {% if messages %}
+          {% for message in messages %}
+            <p {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</p>
+          {% endfor %}
+        {% endif %}
+      </div>
+    {% block content %}{% endblock %}
+  </div>
 </div>
 {% endblock %}
