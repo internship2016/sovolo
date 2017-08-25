@@ -1,0 +1,22 @@
+{% extends "container.html" %}
+{% load i18n %}
+{% load event_tags %}
+{% load user_tags %}
+
+{% block title %} {{ user.username }} コメント一覧 | Sovol {% endblock %}
+
+{% usercomment user %}
+
+{% block content %}
+{% load i18n %}
+<div class="panel panel-danger">
+  <div class="panel-heading">
+    <div class="panel-title">コメント</div>
+  </div>
+  {% for comment in user %}
+  <div class="panel-body">{{ comment_list.text }}</div>
+  {% empty %}
+  <div class="panel-body">コメントはありません</div>
+  {% endfor %}
+</div>
+{% endblock %}

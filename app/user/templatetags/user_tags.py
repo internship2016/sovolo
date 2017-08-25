@@ -27,3 +27,7 @@ def query_transform(request, **kwargs):
     for key, value in kwargs.items():
         updated[key] = value
     return updated.urlencode()
+@register.inclusion_tag('user/usercomment_list.html', takes_context=True)
+def usercomment(context, user):
+    comment_list = user.comment_set.order_by('created')
+    return {'comment_list': comment_list, 'request': context['request'], 'user': user}

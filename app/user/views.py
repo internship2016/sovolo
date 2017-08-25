@@ -432,7 +432,6 @@ class UserListView(ListView):
         results = Skill.objects.filter(query).order_by('-id').distinct()
         return results
 
-@method_decorator(login_required, name='dispatch')
 class CommentCreate(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
@@ -449,3 +448,29 @@ class CommentCreate(RedirectView):
 
         return reverse_lazy('user:detail', kwargs={'pk': user_id})
 
+@method_decorator(login_required, name='dispatch')
+class UserCommentView(ListView):
+    model = UserComment
+    template_name = 'user/usercomment_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(UserCommentView, self).get_context_data(**kwargs)
+        if 'to_user_id' in self.request.GET:
+            to_user = User.objects.get(pk=self.request.GET['to_user_id'])
+            context['to_user'] = to_user
+            context['from_user'] = self.request.user
+        return context
+
+    def form_valid(self, form):
+        to_user = User.objects.get(pk=self.request.GET['to_user_id'])
+        from_user = self.request.user
+
+        form.instance.to_user_id = to_user.id
+        form.instance.from_user_id = from_user.id
+        form.save()
+        return super(UserCommentView, self).form_vaild(form)
+
+    def get_success_url(self, **kwargs):
+        info_msg = _("コメントを送信しました")
+        messages.info(self.request, info_msg)
+        return reverse('user:detail', kwargs={'pk': user_id})
