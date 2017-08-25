@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 16:06+0000\n"
+"POT-Creation-Date: 2017-08-25 16:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1011,6 +1011,18 @@ msgstr "スキル変更"
 #: templates/user/skill_list.html:4
 msgid "Find Users"
 msgstr "ユーザーを検索"
+
+#: templates/user/template_skilllist.html:4
+msgid "Users"
+msgstr "ユーザー一覧"
+
+#: templates/user/template_skilllist.html:14
+msgid "Username"
+msgstr "ユーザー名"
+
+#: templates/user/template_skilllist.html:28
+msgid "No skills found"
+msgstr "スキルがありません"
 
 #: templates/user/user_header.html:51
 msgid "Reviews"
