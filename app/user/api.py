@@ -1,5 +1,4 @@
 from django.http import JsonResponse
-from user.models import User, UserReviewList
 from django.apps import apps
 from django.db.models import Q
 
