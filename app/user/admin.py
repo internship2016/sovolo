@@ -14,7 +14,6 @@ class UserReviewListInline(admin.TabularInline):
 class SkillAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
-        'description',
         'skilltodo',
     )
 

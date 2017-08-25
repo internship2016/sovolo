@@ -1,6 +1,5 @@
 # coding=utf-8
 from django.db import models
-from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -41,6 +40,7 @@ class UserManager(BaseUserManager):
         return user
 
 
+# FIXME: Remove 'get_' prefixes, this is bad/meaningless/Java-ish habits
 class User(AbstractBaseModel, AbstractBaseUser):
     # Numbers are arbitrary
     first_name = models.CharField(max_length=100, null=True)
@@ -337,6 +337,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
             num += len(user_list)
         return num
 
+
 class UserActivation(models.Model):
     user = models.OneToOneField(User)
     key = models.CharField(max_length=255, unique=True)
@@ -387,12 +388,6 @@ class UserReviewList(models.Model):
 
 class Skill(AbstractBaseModel):
     userskill = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    description = models.TextField(default='ボランティアできること')
-    admin = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        related_name='admin_skill',
-        blank=True,
-    )
     tag = models.ManyToManyField(Tag, blank=True)
     skilltodo = models.CharField(max_length=200, null=True)
 

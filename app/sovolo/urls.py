@@ -23,6 +23,8 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name='top'),
+    url(r'^event/top/$', views.index, name='top_event'),
+    url(r'^user/top/$', views.index_user, name='top_user'),
     url(r'^admin/', admin.site.urls),
     url(r'^event/', include('event.urls')),
     url(r'^tag/', include('tag.urls')),

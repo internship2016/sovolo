@@ -1,0 +1,68 @@
+{% extends "container.html" %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% block title %} ユーザー検索 | Sovol{% endblock %}
+{% block content %}
+{% load user_tags %}
+
+<div class="row mt15">
+  <div class="col-md-8">
+    {% skill_list search_user タイトル %} 
+    <nav aria-label="Page navigation">
+      <ul class="pagination">
+        <li class="page-item">
+          {% if page_obj.previous %}
+            <a class="page-link" href="{% url 'user:user_list' %}?{% query_transform request page=page_obj.previous_page_number %}">
+              前へ
+            </a>
+          {% endif %}
+        </li>
+      {% for page_number in paginator.page_range %}
+        {% if page_number == page_obj.number %}
+          <li class="active page-item">
+            <span>{{ page_number }}</span>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="{% url 'user:user_list' %}?{% query_transform request page=page_number %}">
+              {{ page_number }}
+            </a>
+          </li>
+        {% endif %}
+      {% endfor %}
+
+      <li class="page-item">
+        {% if page_obj.has_next %}
+          <a class="page-link" href="{% url 'user:user_list' %}?{% query_transform request page=page_obj.next_page_number %}">
+            次へ
+          </a>
+        {% endif %}
+      </li>
+    </ul>
+  </nav>
+</div>
+</div>
+
+<div class="panel panel-default">
+  <div class="panel-deading">
+    <h3 class="panel-heading">タグで探す</h3>
+  </div>
+    <div class="panel-body">
+      <form class="form-horizontal" role="search" action="{% url 'user:user_list' %}" method="get">
+        <div class="row">
+          <div class="checkbox col-lg-8">
+            {% for tag in all_tags %}
+              <label><input type="checkbox" name="tags" value="{{ tag.pk }}" {% if tag in skill.tag.all %}checked{% endif %}>{{ tag.name }}</label>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="row">
+          <button type="submit" class="btn btn-primary col-sm-4 col-sm-offset-4 col-lg-2 col-lg-offset-5 col-xs-8 col-xs-offset-2"> 探す</button>
+        </div>
+      </form>
+    </div>
+</div>
+        
+{% endblock %}
+
+

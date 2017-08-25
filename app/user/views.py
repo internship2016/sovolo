@@ -21,8 +21,8 @@ from django.utils import translation
 from django.conf import settings
 
 from django.utils.translation import ugettext_lazy as _
-
-
+from django.db.models import Q
+from django.apps import apps
 class UserCreateView(CreateView):
     model = User
     fields = ['email', 'password', 'username']
@@ -335,12 +335,6 @@ class UserUnReviewedView(ListView):
     model = User
     template_name = 'user/user_unreviewed.html'
 
-'''
-消したけど一応
-class UserSkillView(DetailView):
-    model = User
-    template_name = "user/user_skill.html"
-'''
 
 class UserSkillEditView(UpdateView):
     model = Skill
@@ -402,3 +396,39 @@ class UserSkillAddView(CreateView):
         messages.info(self.request, info_msg)
         userskill_id = self.request.user.id
         return reverse('user:detail', kwargs={'pk': userskill_id})
+
+class UserListView(ListView):
+    model = Skill
+    template_name ='user/skill_list.html'
+    context_object_name = 'search_user'
+    paginate_by = 10
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["all_tags"] = Tag.objects.all()
+        tags = self.request.GET.getlist('tags')
+        context['checked_tags'] = [int(t) for t in tags]
+
+        return context
+
+    def get_queryset(self):
+
+        query = Q()
+
+        if 'tags' in self.request.GET:
+            tags = [int(t) for t in self.request.GET.getlist('tags')]
+
+            if len(tags) > 0:
+                Tag = apps.get_model('tag', 'Tag')
+                tag_query = None
+                for t in tags:
+                    tag = Tag.objects.get(pk=t)
+                    if tag_query is None:
+                        tag_query = Q(tag=tag)
+                    else:
+                        tag_query = tag_query | Q(tag=tag)
+                query = query & tag_query
+
+        results = Skill.objects.filter(query).order_by('-id').distinct()
+        return results
+
