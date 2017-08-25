@@ -406,3 +406,23 @@ class Skill(AbstractBaseModel):
 
     def get_absolute_url(self):
         return reverse('user:detail', kwargs={'pk': self.id})
+
+class UserComment(models.Model):
+    from_user = models.ForeignKey(User, 
+                                  on_delete=models.CASCADE, 
+                                  related_name='from_user',
+                                  null=True)
+    to_user = models.ForeignKey(User,
+                                on_delete=models.CASCADE,
+                                related_name='to_user',
+                                null=True)
+    text = models.TextField()
+
+    def __str__(self):
+        return str(self.to_user)
+
+    def get_absolute_url(self):
+        return reverse('user:detail', kwargs={'pk': self.skill.userskill_id})
+
+    def save(self, *args, **kwargs):
+        return super(UserComment, self).save(*args, **kwargs)

@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, FormView
-from django.views.generic import DetailView, View, ListView
+from django.views.generic import DetailView, View, ListView, RedirectView
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from tag.models import Tag
@@ -11,7 +11,7 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
-from .models import User, Skill, UserActivation, UserPasswordResetting
+from .models import User, Skill, UserActivation, UserPasswordResetting, UserComment
 from .form import UserReviewListForm
 from django.urls import reverse
 
@@ -431,4 +431,21 @@ class UserListView(ListView):
 
         results = Skill.objects.filter(query).order_by('-id').distinct()
         return results
+
+@method_decorator(login_required, name='dispatch')
+class CommentCreate(RedirectView):
+
+    def get_redirect_url(self, *args, **kwargs):
+        user_id = kwargs["user_id"]
+        
+        text = self.request.POST["test"]
+        if text.strip() != "":
+            comment = Comment(
+                from_user=self.request.user,
+                to_user=User.objects.get(pk=user_id),
+                text=text,
+            )
+            comment.save()
+
+        return reverse_lazy('user:detail', kwargs={'pk': user_id})
 
