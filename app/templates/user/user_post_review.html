@@ -9,16 +9,16 @@
 
 
 {% if to_user.id %}
-
+  <h1>{% trans "Please post a review about this user." %}</h1>
+  <h1>{% trans "User ID" %} : {{to_user.id}}</h1>
+  <h1>{% trans "User Name" %}: {{to_user.usename}}</h1>
+{% else %}
   <h1>{% trans "Please post a review about this event." %}</h1>
   <h1>{% trans "Event ID" %} : {{review_event.id}}</h1>
   <h1>{% trans "Owner" %} : {{review_event.host_user}}</h1>
   <h1>{% trans "Event Name" %} : {{review_event.name}}</h1>
-
-  <h1>{% trans "Please post a review about this user." %}</h1>
-  <h1>{% trans "User ID" %} : {{to_user.id}}</h1>
-  <h1>{% trans "User Name" %}: {{to_user.usename}}</h1>
 {% endif %}
+
 
 
 <form action="" method="post">
