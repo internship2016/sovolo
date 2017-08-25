@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-24 23:52+0000\n"
+"POT-Creation-Date: 2017-08-25 16:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,35 +18,32 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: event/models.py:100 templates/event/detail.html:54
+#: event/models.py:99 templates/event/detail.html:54
 #: templates/event/detail.html:64 templates/map.html:116
-#: templates/top.html:172
 msgid "Finished"
 msgstr "終了"
 
-#: event/models.py:102 templates/event/detail.html:56
+#: event/models.py:100 templates/event/detail.html:56
 #: templates/event/detail.html:66 templates/event/detail.html:99
 #: templates/event/detail.html:112 templates/map.html:113
-#: templates/top.html:169
 msgid "In Session"
 msgstr "開催中"
 
-#: event/models.py:104 templates/event/detail.html:58
+#: event/models.py:101 templates/event/detail.html:58
 #: templates/event/detail.html:68 templates/event/detail.html:101
 #: templates/event/detail.html:114
 msgid "Closed"
 msgstr "締切済"
 
-#: event/models.py:106
+#: event/models.py:102
 msgid "Full"
 msgstr "満員"
 
-#: event/models.py:108 templates/event/detail.html:119 templates/map.html:114
-#: templates/top.html:170
+#: event/models.py:103 templates/event/detail.html:119 templates/map.html:114
 msgid "Wanted"
 msgstr "募集中"
 
-#: event/models.py:113
+#: event/models.py:119
 msgid "Not provided"
 msgstr "未設定"
 
@@ -502,7 +499,8 @@ msgid "Location:"
 msgstr "開催地域"
 
 #: templates/event/form_template.html:81 templates/event/search_form.html:71
-#: templates/event/search_form_side.html:69 templates/map.html:21
+#: templates/event/search_form_side.html:73 templates/map.html:21
+#: templates/user/skill_list.html:60
 msgid "Search"
 msgstr "検索"
 
@@ -610,7 +608,7 @@ msgstr "宛先"
 
 #: templates/event/message.html:16 templates/event/participants.html:11
 #: templates/event/side_info.html:5 templates/map.html:115
-#: templates/top.html:171 templates/user/user_list.html:8
+#: templates/user/user_list.html:8
 msgid "Organizer"
 msgstr "管理者"
 
@@ -706,27 +704,25 @@ msgid "Status"
 msgstr "ステータス"
 
 #: templates/event/search_form.html:65
+#: templates/event/search_form_side.html:66
 msgid "Exclude closed events"
 msgstr "締め切られたボランティアを除外"
 
 #: templates/event/search_form.html:67
+#: templates/event/search_form_side.html:69
 msgid "Exclude full events"
 msgstr "満員になったボランティアを除外"
-
-#: templates/event/search_form_side.html:65
-msgid "Show closed events"
-msgstr "締め切られたボランティアを表示"
 
 #: templates/event/search_results.html:4
 #: templates/event/search_results.html:10
 msgid "Results"
 msgstr "検索結果"
 
-#: templates/event/search_results.html:16
+#: templates/event/search_results.html:16 templates/user/skill_list.html:16
 msgid "Previous"
 msgstr "前へ"
 
-#: templates/event/search_results.html:38
+#: templates/event/search_results.html:38 templates/user/skill_list.html:37
 msgid "Next"
 msgstr "次へ"
 
@@ -903,7 +899,7 @@ msgstr "生年月日"
 msgid "Language"
 msgstr "言語"
 
-#: templates/user/edit.html:125 templates/user/user_header.html:144
+#: templates/user/edit.html:125 templates/user/user_header.html:150
 msgid "Following tags"
 msgstr "フォローしているタグ"
 
@@ -991,7 +987,7 @@ msgid "Your new pasword"
 msgstr "新しいパスワード"
 
 #: templates/user/skill_add.html:6 templates/user/skill_add.html:10
-#: templates/user/user_header.html:116
+#: templates/user/user_header.html:119
 msgid "Add a new skill"
 msgstr "スキル新規作成"
 
@@ -1000,17 +996,33 @@ msgid "Related tags"
 msgstr "関連付けるタグ"
 
 #: templates/user/skill_add.html:25 templates/user/skill_form.html:26
-#: templates/user/user_header.html:101
+#: templates/user/user_header.html:104
 msgid "I can do"
 msgstr "できる内容"
 
-#: templates/user/skill_form.html:6 templates/user/user_header.html:88
+#: templates/user/skill_form.html:6 templates/user/user_header.html:89
 msgid "Skills"
 msgstr "スキル一覧"
 
 #: templates/user/skill_form.html:11
 msgid "Edit skills"
 msgstr "スキル変更"
+
+#: templates/user/skill_list.html:4
+msgid "Find Users"
+msgstr "ユーザーを検索"
+
+#: templates/user/template_skilllist.html:4
+msgid "Users"
+msgstr "ユーザー一覧"
+
+#: templates/user/template_skilllist.html:14
+msgid "Username"
+msgstr "ユーザー名"
+
+#: templates/user/template_skilllist.html:28
+msgid "No skills found"
+msgstr "スキルがありません"
 
 #: templates/user/user_header.html:51
 msgid "Reviews"
@@ -1028,19 +1040,19 @@ msgstr "投稿者"
 msgid "Posted on"
 msgstr "投稿日"
 
-#: templates/user/user_header.html:95
+#: templates/user/user_header.html:98
 msgid "Skill "
 msgstr "スキル"
 
-#: templates/user/user_header.html:108
+#: templates/user/user_header.html:111
 msgid "Edit"
 msgstr "内容変更"
 
-#: templates/user/user_header.html:126
+#: templates/user/user_header.html:131
 msgid "Trophies"
 msgstr "獲得トロフィー"
 
-#: templates/user/user_header.html:152
+#: templates/user/user_header.html:158
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
 
@@ -1164,13 +1176,16 @@ msgstr "既にレビュー済みです"
 msgid "Your review has been successfully posted!"
 msgstr "レビューを投稿しました。"
 
-#: user/views.py:371
+#: user/views.py:365
 msgid "Your skill has been edited successfully."
 msgstr "スキルを編集しました。"
 
-#: user/views.py:401
+#: user/views.py:395
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
+
+#~ msgid "Show closed events"
+#~ msgstr "締め切られたボランティアを表示"
 
 #~ msgid "Change language"
 #~ msgstr "言語切り替え"

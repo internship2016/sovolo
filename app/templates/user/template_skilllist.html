@@ -1,7 +1,7 @@
 {% load i18n %}
 <div class="panel panel-default">
   <div class="panel-heading">
-    <div class="panel-title">ユーザー一覧</div>
+    <div class="panel-title">{% trans "Users" %}</div>
     <div class="panel-body">
       {% for skill in skills %}
       <div class="media">
@@ -11,7 +11,7 @@
           </a>
           <div class="madia-body">
           <a href="/user/{{skill.userskill.id}}">
-           <h1>名前　:{{skill.userskill.username}}</h1>
+           <h1>{% trans "Username" %}:{{skill.userskill.username}}</h1>
           </a>
           <i class="fa fa-map-marker" aria-hidden="true"></i>
           {{ skill.userskill.get_region_kanji}}
@@ -25,6 +25,6 @@
     </div>
   </div>
   {% empty %}
-  <p> スキルがありません </p>
+  <p> {% trans "No skills found" %} </p>
   {% endfor %}
 </div>
