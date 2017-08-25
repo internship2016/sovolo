@@ -99,7 +99,7 @@
             <div class="row col-xs-12 col-sm-5">
               <div class="col-xs−12 col-sm-5">{% trans "Skill " %}{{ forloop.counter }}</div>
               {% for tag in skill.tag.all %}
-                <a class="tag col-xs-12 col-sm-7" href="{% url 'event:search' %}?tags={{ tags.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
+                <a class="tag col-xs-12 col-sm-7" href="{% url 'event:search' %}?tags={{ tag.id }}" id="skill_tags"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
               {% endfor %}
             </div>
             <label class="col-xs-12 col-sm-7">
