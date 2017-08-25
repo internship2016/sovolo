@@ -414,3 +414,25 @@ class UserListView(ListView):
         context['checked_tags'] = [int(t) for t in tags]
 
         return context
+
+    def get_queryset(self):
+
+        query = Q()
+
+        if 'tags' in self.request.GET:
+            tags = [int(t) for t in self.request.GET.getlist('tags')]
+
+            if len(tags) > 0:
+                Tag = apps.get_model('tag', 'Tag')
+                tag_query = None
+                for t in tags:
+                    tag = Tag.objects.get(pk=t)
+                    if tag_query is None:
+                        tag_query = Q(tag=tag)
+                    else:
+                        tag_query = tag_query | Q(tag=tag)
+                query = query & tag_query
+
+        results = Skill.objects.filter(query).order_by('-id').distinct()
+        return results
+
