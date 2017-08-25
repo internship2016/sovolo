@@ -143,7 +143,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGES = (
     ('en-us', _('English')),
-    ('ja-jp', _('Japanese')),
+    ('ja-jp', '日本語'),
 )
 LANGUAGE_CODE = 'ja-jp'
 TIME_ZONE = 'Asia/Tokyo'

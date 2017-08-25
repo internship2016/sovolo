@@ -425,11 +425,11 @@ class EventSearchResultsView(ListView):
 
         # Include events that are already over?
         if self.request.GET.get('exclude_full_events') == "on":
-            results = [event for event in results if event.is_full()]
+            results = [event for event in results if not event.is_full()]
 
         # Include events with no openings?
         if self.request.GET.get('exclude_closed_events') == "on":
-            results = [event for event in results if event.is_closed()]
+            results = [event for event in results if not event.is_closed()]
 
         if len(results) == 0:
             messages.error(self.request, "検索結果に一致するボランティアが見つかりませんでした")

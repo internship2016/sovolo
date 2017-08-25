@@ -1,6 +1,5 @@
 # coding=utf-8
 from django.db import models
-from django.contrib import admin
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.urlresolvers import reverse
 from django.conf import settings
@@ -41,6 +40,7 @@ class UserManager(BaseUserManager):
         return user
 
 
+# FIXME: Remove 'get_' prefixes, this is bad/meaningless/Java-ish habits
 class User(AbstractBaseModel, AbstractBaseUser):
     # Numbers are arbitrary
     first_name = models.CharField(max_length=100, null=True)
@@ -313,18 +313,29 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
         return user_unreviewed_list
 
-    # send html template
-    def get_zipped_unreviewed_hosted(self):
+    def get_unreviewed_participant_of_past_hosted_events_poped(self):
         user_unreviewed_list = []
-
         events = self.get_unreviewed_participant_of_past_hosted_events()
         for user_list in events:
             if len(user_list) == 0:
                 continue
             user_unreviewed_list.append(user_list)
+        return user_unreviewed_list
 
+    # send html template
+    def get_zipped_unreviewed_hosted(self):
         return zip(self.get_unreviewed_past_hosted_events(),
-                   user_unreviewed_list)
+                   self.get_unreviewed_participant_of_past_hosted_events_poped())
+
+    # for Notification
+    def get_unreview_num_for_participant(self):
+        return len(self.get_past_participated_and_unreviewed_events())
+
+    def get_unreview_num_for_host(self):
+        num = 0
+        for user_list in self.get_unreviewed_participant_of_past_hosted_events_poped():
+            num += len(user_list)
+        return num
 
 
 class UserActivation(models.Model):
@@ -377,12 +388,6 @@ class UserReviewList(models.Model):
 
 class Skill(AbstractBaseModel):
     userskill = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    description = models.TextField(default='ボランティアできること')
-    admin = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        related_name='admin_skill',
-        blank=True,
-    )
     tag = models.ManyToManyField(Tag, blank=True)
     skilltodo = models.CharField(max_length=200, null=True)
 
@@ -394,12 +399,3 @@ class Skill(AbstractBaseModel):
 
     def get_absolute_url(self):
         return reverse('user:detail', kwargs={'pk': self.id})
-
-
-class SkillAdmin(admin.ModelAdmin):
-    list_display22 = (
-        'pk',
-        'event',
-        'description',
-        'skilltodo',
-    )

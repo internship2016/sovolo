@@ -207,7 +207,8 @@ class UserEditView(UpdateView):
 
         self.request.session[translation.LANGUAGE_SESSION_KEY] = user.language
 
-        messages.info(self.request, _("User profile has been successfully edited."))
+        info_msg = _("User profile has been successfully edited.")
+        messages.info(self.request, info_msg)
         return super(UserEditView, self).form_valid(form)
 
 
@@ -317,7 +318,7 @@ class UserPostReviewView(FormView):
 
         # Set Instanse
         form.instance.to_rate_user_id = to_user.id
-        form.instance.from_rate_user_id = self.request.user.id  # 評価者 <--
+        form.instance.from_rate_user_id = req_user.id  # 評価者 <--
         form.instance.joined_event_id = joined_event.id
         form.save()
         return super(UserPostReviewView, self).form_valid(form)
@@ -325,18 +326,14 @@ class UserPostReviewView(FormView):
     # レビュー投稿時に未レビューページに帰還
     def get_success_url(self, **kwargs):
 
-        messages.info(self.request, _("Your review has been successfully posted!"))
+        info_msg = _("Your review has been successfully posted!")
+        messages.info(self.request, info_msg)
         return reverse('user:unreviewed')
 
 
 class UserUnReviewedView(ListView):
     model = User
     template_name = 'user/user_unreviewed.html'
-
-
-class UserSkillView(DetailView):
-    model = User
-    template_name = "user/user_skill.html"
 
 
 class UserSkillEditView(UpdateView):
@@ -365,9 +362,10 @@ class UserSkillEditView(UpdateView):
         return context
 
     def get_success_url(self, **kwargs):
-        messages.info(self.request, _("Your skill has been edited successfully."))
+        info_msg = _("Your skill has been edited successfully.")
+        messages.info(self.request, info_msg)
         userskill_id = self.request.user.id
-        return reverse('user:skill', kwargs={'pk': userskill_id})
+        return reverse('user:detail', kwargs={'pk': userskill_id})
 
 
 @method_decorator(login_required, name='dispatch')
@@ -397,4 +395,4 @@ class UserSkillAddView(CreateView):
         info_msg = _("Your new skill has been added successfully.")
         messages.info(self.request, info_msg)
         userskill_id = self.request.user.id
-        return reverse('user:skill', kwargs={'pk': userskill_id})
+        return reverse('user:detail', kwargs={'pk': userskill_id})
