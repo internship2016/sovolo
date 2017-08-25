@@ -29,8 +29,12 @@ nav{
 
 .m10{margin: 10px;}
 .m15{margin: 15px;}
+.mt5{margin-top: 5px;}
 .mt10{margin-top: 10px;}
 .mt15{margin-top: 15px;}
+.mb5{margin-bottom: 5px;}
+.mb10{margin-bottom: 10px;}
+.mb15{margin-bottom: 15px;}
 .mb10{margin-bottom: 10px;}
 .mb15{margin-bottom: 15px;}
 .ml5{margin-left:5px;}
@@ -528,3 +532,14 @@ $logo-height :65px;
   }
 }
 
+.fa{
+  &-starsize{
+    font-size: 20px;
+  }
+  &-white{
+    color: #ccc;
+  }
+  &-yellow{
+    color: #ff9800;
+  }
+}
