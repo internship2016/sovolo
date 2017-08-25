@@ -43,7 +43,7 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
                     'helper_name': h_user.username,
                     'helper_id': h_user.pk,
                     'helper_img': h_user.get_image_url(),
-                    'message' : h_user.username + 'さんへのレビューをおねがいします。'
+                    'message': h_user.username + 'さんへのレビューをおねがいします。'
                 })
                 counter += 1
 
