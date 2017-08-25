@@ -337,6 +337,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
             num += len(user_list)
         return num
 
+
 class UserActivation(models.Model):
     user = models.OneToOneField(User)
     key = models.CharField(max_length=255, unique=True)
