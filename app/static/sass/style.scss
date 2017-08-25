@@ -449,3 +449,32 @@ $logo-height :65px;
   top: 14px;
   left: 17px;
 }
+
+.panel-heading{
+  a[data-toggle="collapse"]{
+    &>h3,div{
+      position: relative;
+    }
+    &.collapsed{
+      &>h3,div{
+         &:after{
+          font-family: "FontAwesome";
+          content: "\f053";
+          position: absolute;
+          right: 0;
+        }
+      }
+    }
+    &:not(.collapsed){
+      &>h3,div{
+         &:after{
+          font-family: "FontAwesome";
+          content: "\f078";
+          position: absolute;
+          right: 0;
+        }
+      }
+    }
+
+  }
+}
