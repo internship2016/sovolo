@@ -6,7 +6,7 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
     ログインしているユーザーの未レビューの最新５件を返す。
     """
     back_num = 5
-    user = request.user # Login User
+    user = request.user  # Login User
 
     res_obj = {'unreviewd_list': []}
 
@@ -17,7 +17,7 @@ def get_unreview_list(request, unreview_kind, *args, **kwargs):
 
     # href="{% url 'user:post_review' %}?event_id={{event_id}}"
     if user.roll == 'helper':
-        unreview_list = user.get_past_participated_and_unreviewed_events() # event
+        unreview_list = user.get_past_participated_and_unreviewed_events()  # event
         for event in unreview_list[:back_num]:
 
             res_obj['unreviewd_list'].append({
