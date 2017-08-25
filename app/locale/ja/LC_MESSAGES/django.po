@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-25 16:11+0000\n"
+"POT-Creation-Date: 2017-08-25 18:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -252,34 +252,42 @@ msgstr "鹿児島県"
 msgid "Okinawa"
 msgstr "沖縄県"
 
-#: templates/base.html:64
+#: templates/base.html:67
 msgid "Find Events"
 msgstr "ボランティアを検索"
 
-#: templates/base.html:77
+#: templates/base.html:75
 msgid "Create an event"
 msgstr "ボランティア作成"
 
-#: templates/base.html:98 templates/user/acquire_email.html:4
+#: templates/base.html:82
+msgid "Search Volunteer Work"
+msgstr "ボランティアを探す"
+
+#: templates/base.html:89
+msgid "Search Volunteer"
+msgstr "人を探す"
+
+#: templates/base.html:112 templates/user/acquire_email.html:4
 #: templates/user/acquire_email.html:7 templates/user/register.html:21
 msgid "Register"
 msgstr "ユーザー登録"
 
-#: templates/base.html:99 templates/user/login_page.html:6
+#: templates/base.html:113 templates/user/login_page.html:6
 #: templates/user/login_page.html:11 templates/user/login_page.html:27
 #: templates/user/register.html:45
 msgid "Log in"
 msgstr "ログイン"
 
-#: templates/base.html:110
+#: templates/base.html:126
 msgid "View All Notifications"
 msgstr "全ての通知を見る"
 
-#: templates/base.html:120
+#: templates/base.html:136
 msgid "Profile"
 msgstr "プロフィール"
 
-#: templates/base.html:121
+#: templates/base.html:137
 msgid "Log out"
 msgstr "ログアウト"
 
@@ -1011,6 +1019,12 @@ msgstr "スキル変更"
 #: templates/user/skill_list.html:4
 msgid "Find Users"
 msgstr "ユーザーを検索"
+
+#: templates/user/skill_list.html:48
+#, fuzzy
+#| msgid "Search for events"
+msgid "Search by tags"
+msgstr "ボランティア検索"
 
 #: templates/user/template_skilllist.html:4
 msgid "Users"
