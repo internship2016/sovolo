@@ -331,10 +331,10 @@
           $('#add_frame').on('click', function (event) {
             var X = $('#frames>div').length + 1;
 
-            var tmpl = Handlebars.compile($('#tmpl-frame').html());
+            var tmpl = $('#tmpl-frame').html();
 
             $wrapper = $('<div>');
-            $wrapper.html(tmpl({X: X}));
+            $wrapper.html(Mustache.to_html(tmpl, {X: X}));
             $('#frames').append($wrapper);
           });
       });
@@ -354,25 +354,24 @@
   </div>
 </div>
 
-{% verbatim %}
-<script id="tmpl-frame" type="text/x-handlebars-template">
-  <div class="panel panel-default panel-body" style="margin:0" id="frame_number_{{ X }}">
+<script id="tmpl-frame" type="text/template">
+  <div class="panel panel-default panel-body" style="margin:0" id="frame_number_[[ X ]]">
     <div class="row">
-      <input type="hidden" name="frame_number" value="{{ X }}">
-      <label class="col-sm-3">{% endverbatim %}{% trans 'Job Description' %}{% verbatim %}<sup><font color="red"></font></sup></label>
+      <input type="hidden" name="frame_number" value="[[ X ]]">
+      <label class="col-sm-3">{% trans 'Job Description' %}<sup><font color="red"></font></sup></label>
       <div class="col-sm-9">
-        <textarea class="form-control" name="frame_{{ X }}_description"></textarea>
+        <textarea class="form-control" name="frame_[[ X ]]_description"></textarea>
       </div>
-      <label class="col-sm-3">{% endverbatim %}{% trans 'up to' %}{% verbatim %}</label>
+      <label class="col-sm-3">{% trans 'up to' %}</label>
       <div class="col-sm-9">
-        <input class="form-control" type="number" min="0"  max="2147483647" step="1" name="frame_{{ X }}_upperlimit" placeholder="{% endverbatim %}{% trans 'optional' %}{% verbatim %}">
+        <input class="form-control" type="number" min="0"  max="2147483647" step="1" name="frame_[[ X ]]_upperlimit" placeholder="{% trans 'optional' %}">
       </div>
-      <label class="col-sm-3">{% endverbatim %}{% trans 'Deadline' %}{% verbatim %}</label>
+      <label class="col-sm-3">{% trans 'Deadline' %}</label>
       <div class="col-sm-9">
-        <input class="form-control datetimepicker deadend" name="frame_{{ X }}_deadline" type="text" placeholder="{% endverbatim %}{% trans 'optional' %}{% verbatim %}">
+        <input class="form-control datetimepicker deadend" name="frame_[[ X ]]_deadline" type="text" placeholder="{% trans 'optional' %}">
         <script>
           (function () {
-            $("#frame_number_{{ X }} .datetimepicker").datetimepicker({
+            $("#frame_number_[[ X ]] .datetimepicker").datetimepicker({
               locale: moment.locale("ja"),
               format: "YYYY-MM-DD HH:mm",
               sideBySide:true,
@@ -380,12 +379,11 @@
               stepping: 15
             });
           })();
-        <{{!}}/script>
+        <[[!]]/script>
       </div>
     </div>
   </div>
 </script>
-{% endverbatim %}
 
 <div class="form-group">
   <label class="col-sm-3">{% trans "Related to:" %}</label>

@@ -126,44 +126,42 @@
             $('#add_skill').on('click', function (user) {
               var X = $('#skills>div').length + 1;
   
-              var tmpl = Handlebars.compile($('#tmpl-skill').html());
+              var tmpl = $('#tmpl-skill').html();
     
               $wrapper = $('<div>');
-              $wrapper.html(tmpl({X: X}));
+              $wrapper.html(Mustache.to_html(tmpl, {X: X}));
               $('#skills').append($wrapper);
             });
         });
         </script>
     
-      {% verbatim %}
       <form action="">
-      <script id="tmpl-skill" type="text/x-handlebars-template">
-        <div class="panel panel-default panel-body" style="margin:0" id="skill_number_{{ X }}">
+      <script id="tmpl-skill" type="text/template">
+        <div class="panel panel-default panel-body" style="margin:0" id="skill_number_[[ X ]]">
           <div class="row">
-              {% endverbatim %}{% csrf_token %}{% verbatim %}
-            <input type="hidden" name="skill_number" value="{{ X }}">
+              {% csrf_token %}
+            <input type="hidden" name="skill_number" value="[[ X ]]">
             <div class="row col-xs-12">
-              <label class="col-sm-3">{% endverbatim %}{% trans "Related tags" %}{% verbatim %}<sup><font color="red"></font></sup></label>
+              <label class="col-sm-3">{% trans "Related tags" %}<sup><font color="red"></font></sup></label>
               <div class="col-sm-9">
-                {% endverbatim %}{% for tag in all_tags %}{% verbatim %}
-                   <label><input type="checkbox" name="skill_{{ X }}_tags" value="{{ tag.id }}" {% endverbatim %}{% if tag in skill.tag.all %}{% verbatim %}checked{% endverbatim %}{% endif %}>{{ tag.name }}</label>
-                {% endfor %}{% verbatim %}
+                {% for tag in all_tags %}
+                   <label><input type="checkbox" name="skill_[[ X ]]_tags" value="{{ tag.id }}" {% if tag in skill.tag.all %}checked{% endif %}>{{ tag.name }}</label>
+                {% endfor %}
               </div>
             </div>
             <div class="row col-xs-12">
-            <label class="col-sm-3">{% endverbatim %}{% trans "I can do" %}:{% verbatim %}<sup><font color="red"></font></sup></label>
+            <label class="col-sm-3">{% trans "I can do" %}:<sup><font color="red"></font></sup></label>
               <div class="cl-sm-9">
-                <input id="id_name" class="form-control" name="skill_{{ X }}_todo" type="text" value="{{ skill.skilltodo }}" required/>
+                <input id="id_name" class="form-control" name="skill_[[ X ]]_todo" type="text" value="{{ skill.skilltodo }}" required/>
               </div>
             </div>
             <div class="panel-footer" style="text-align:center">
-              <button class="btn btn-primary" type="submit">{% endverbatim %}{% trans "Submit" %}{% verbatim %}</button>
+              <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
             </div>
           </div>
         </div>
       </script>
     </form>
-      {% endverbatim %}
       
       {% endif %}
     </div>

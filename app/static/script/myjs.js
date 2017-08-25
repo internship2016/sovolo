@@ -1,3 +1,5 @@
+// Use '[[' and ']]' tags since Django using Mustache's default template tags.
+Mustache.tags = ['[[', ']]'];
 
 $(function(){
   var swiper = new Swiper('.swiper-container', {
