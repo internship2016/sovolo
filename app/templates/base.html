@@ -45,7 +45,6 @@
           <!--navbar-header-->
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-content" aria-expanded="false">
-              <span class="sr-only">Toggle navigation</span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
@@ -58,23 +57,36 @@
 
           <!--navbar-collapse-->
           <div class="collapse navbar-collapse" id="navbar-collapse-content">
-            <!--検索フォーム-->
-            <form class="navbar-form navbar-left" role="search" action="{% url 'event:search' %}" method="get" style="margin:auto 0;">
-                <div class="input-group">
-                  <input type="text" class="form-control" placeholder="{% trans 'Find Events' %}" name="q">
-                  <span class="input-group-btn">
-                    <button class="btn btn-primary top-search" type="submit">
-                    <i class='glyphicon glyphicon-search'></i>
-                    </button>
-                  </span>
-                </div>
-            </form>
-            <!--end of form-->
+
 
             <!--イベント追加フォーム-->
             <ul class="nav navbar-nav">
+              <li>
+              <!--検索フォーム-->
+                <form class="navbar-form" role="search" action="{% url 'event:search' %}" method="get">
+                  <input type="text" class="form-control header-search" placeholder="{% trans 'Find Events' %}" name="q">
+                  <button class="btn btn-primary top-search" type="submit">
+                  <i class='glyphicon glyphicon-search'></i>
+                  </button>
+                </form>
+                <!--end of form-->
+              </li>
               <li class="text-center">
                 <a class="btn" href="{% url 'event:add' %}" role="button">{% trans "Create an event" %}</a>
+              </li>
+            </ul>
+
+            <!--Go to Event for Participant-->
+            <ul class="nav navbar-nav">
+              <li class="text-center">
+                <a class="btn" href="{% url 'top_event' %}" role="button">Search Volunteer Work (翻訳お願いします)</a>
+              </li>
+            </ul>
+
+            <!--Go to User for Host-->
+            <ul class="nav navbar-nav">
+              <li class="text-center">
+                <a class="btn" href="{% url 'user:user_list' %}" role="button">Search Volunteer (翻訳お願いします)</a>
               </li>
             </ul>
 
@@ -82,24 +94,28 @@
             <ul class="nav navbar-nav navbar-right">
             {% if request.user.is_anonymous %}
             <!--言語切り替え-->
-              <li><a>
+              <li>
                 {% get_available_languages as LANGUAGES %}
-                <form action="/i18n/setlang/" method="post" id="languagetab">{% csrf_token %}
+                <form class="navbar-form" action="/i18n/setlang/" method="post" id="languagetab">{% csrf_token %}
                   <input name="next" type="hidden" value="/" />
                     {% csrf_token %}
-                    <select name="language">
+                    <select class="form-control" name="language">
                       {% for lang in LANGUAGES %}
                         <option value="{{ lang.0 }}">{{ lang.1 }}</option>
                       {% endfor %}
                     </select>
-                  <input type="submit" value="change" />
+                  <button class="btn btn-primary top-search" type="submit">
+                    Change
+                  </button>
                 </form>
-              </a></li>
+              </li>
               <li class="pull-left"><a href="{% url 'user:register' %}">{% trans "Register" %}</a></li>
               <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
             {% else %}
               <li class="dropdown">
-                <span class="badge badge-notification">4</span>
+                <a class="header-notif-badge" href="{% url 'user:unreviewed' %}">
+                  <span class="badge">4</span>
+                </a>
                 <a href="#" id="notification" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <i class="fa fa-bell-o" aria-hidden="true"></i>
                 </a>
