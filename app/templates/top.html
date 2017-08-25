@@ -50,40 +50,38 @@
         <div id="event-area" class="col-xs-12 col-md-8 col-md-pull-4">
           <div></div>
         </div>
-        {% verbatim %}
-        <script id="event-template" type="text/x-handlebars-template">
+        <script id="event-template" type="text/template">
           <section class="inner">
-          {{#each filtered_events}}
+          [[#filtered_events]]
             <div class="media">
               <div class="media-left">
-                <a href="/event/{{id}}">
-                  <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{img}});">
+                <a href="/event/[[id]]">
+                  <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url([[img]]);">
                   </div>
                 </a>
               </div>
               <div class="media-body">
                 <div class="event-info pull-left">
                   <div>
-                    <span class="label label-{{label_brand}}" style="margin-right: 1em;">
-                      {{status}}
+                    <span class="label label-[[label_brand]]" style="margin-right: 1em;">
+                      [[status]]
                     </span>
                     <i class="fa fa-calendar" aria-hidden="true"></i>
-                      {{start_time}}
+                      [[start_time]]
                     <i class="fa fa-map-marker" aria-hidden="true"></i>
-                      {{place}}
+                      [[place]]
                   </div>
                   <div class="media-heading">
-                    <a href="/event/{{id}}">
-                      <h4>{{name}}</h4>
+                    <a href="/event/[[id]]">
+                      <h4>[[name]]</h4>
                     </a>
                   </div>
                 </div>
               </div>
             </div>
-            {{/each}}
+            [[/filtered_events]]
           </section>
         </script>
-        {% endverbatim %}
       </div>
     </div>
     <div id="top-tabs-3">
@@ -99,7 +97,7 @@
   <script>
     var template;
     $(function(){
-      template = Handlebars.compile($("#event-template").html());
+      template = $("#event-template").html();
       moment.updateLocale('ja', {
         weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
         weekdaysShort: ['{% trans "Sun" %}','{% trans "Mon" %}','{% trans "Tue" %}','{% trans "Wed" %}','{% trans "Thu" %}','{% trans "Fri" %}','{% trans "Sat" %}'],
@@ -144,7 +142,7 @@
       });
       $('.event-filter').on('click',function(){
         $('.event-filter').removeClass('event-active');
-        $(this).addClass('event-active')
+        $(this).addClass('event-active');
         $.ajax({
           'url':$(this).attr('action'),
           'data':$(this).serialize(),
@@ -164,7 +162,7 @@
         data['label_brand'] = data['label'];
         data['status'] = data['status'];
       }
-      $('#event-area').html(template(context));
+      $('#event-area').html(Mustache.to_html(template, context));
     }
 
   </script>

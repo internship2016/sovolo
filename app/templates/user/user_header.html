@@ -1,4 +1,6 @@
 {% load i18n %}
+{% load event_tags %}
+{% load user_tags %}
 <div class="detail-header row mt15">
   <div class="col-xs-12 col-sm-4 col-md-3" style="text-align: center">
     <div class="media-object custom_thumbnail detail-thumbnail" style="background-image:url({{ user.get_image_url }});"></div>
@@ -90,7 +92,7 @@
     </a>
   </div>
   <div id="collapse-skill" class="panel-collapse collapse">
-    <div class="panel-body">
+    <div id="skills" class="panel-body">
       {% for skill in user.skill_set.all %}
         <div class="panel panel-default panel-body" style="margin:0">
           <div class="row">
@@ -114,10 +116,53 @@
           </div>
         </div>
       {% endfor %}
+      
       {% if user.id == request.user.id %}
-      <div style="text-align: center; margin-top: 4px;">
-        <a href="{% url 'user:skill_add' user.id %}" type="button" class="btn btn-default">{% trans "Add a new skill" %}</a>
-      </div>
+      <button class="btn btn-primary pull-right" id="add_skill" type="button">
+          <span class="glyphicon glyphicon-plus"></span>
+      </button>
+        <script>
+        $(function () {
+            $('#add_skill').on('click', function (user) {
+              var X = $('#skills>div').length + 1;
+  
+              var tmpl = $('#tmpl-skill').html();
+    
+              $wrapper = $('<div>');
+              $wrapper.html(Mustache.to_html(tmpl, {X: X}));
+              $('#skills').append($wrapper);
+            });
+        });
+        </script>
+    
+      <form action="">
+      <script id="tmpl-skill" type="text/template">
+        <div class="panel panel-default panel-body" style="margin:0" id="skill_number_[[ X ]]">
+          <div class="row">
+              {% csrf_token %}
+            <input type="hidden" name="skill_number" value="[[ X ]]">
+            <div class="row col-xs-12">
+              <label class="col-sm-3">{% trans "Related tags" %}<sup><font color="red"></font></sup></label>
+              <div class="col-sm-9">
+                {% for tag in all_tags %}
+                   <label><input type="checkbox" name="skill_[[ X ]]_tags" value="{{ tag.id }}" {% if tag in skill.tag.all %}checked{% endif %}>{{ tag.name }}</label>
+                {% endfor %}
+              </div>
+            </div>
+            <div class="row col-xs-12">
+            <label class="col-sm-3">{% trans "I can do" %}:<sup><font color="red"></font></sup></label>
+              <div class="cl-sm-9">
+                <input id="id_name" class="form-control" name="skill_[[ X ]]_todo" type="text" value="{{ skill.skilltodo }}" required/>
+              </div>
+            </div>
+            <div class="panel-footer" style="text-align:center">
+              <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
+            </div>
+          </div>
+        </div>
+      </script>
+    </form>
+      
       {% endif %}
     </div>
   </div>

@@ -18,7 +18,7 @@
   <script type="text/javascript" src="{% static 'js/bootstrap-confirmation.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/bootstrap-filestyle.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/polyfiller.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/handlebars.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/mustache.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/script.min.js' %}"></script>
   <script type="text/javascript" src='https://www.google.com/recaptcha/api.js'></script>
   <script type="text/javascript" src="{% static 'js/swiper.min.js' %}"></script>
@@ -79,14 +79,14 @@
             <!--Go to Event for Participant-->
             <ul class="nav navbar-nav">
               <li class="text-center">
-                <a class="btn" href="{% url 'top_event' %}" role="button">Search Volunteer Work (翻訳お願いします)</a>
+                <a class="btn" href="{% url 'top_event' %}" role="button">{% trans "Search Volunteer Work" %}</a>
               </li>
             </ul>
 
             <!--Go to User for Host-->
             <ul class="nav navbar-nav">
               <li class="text-center">
-                <a class="btn" href="{% url 'user:user_list' %}" role="button">Search Volunteer (翻訳お願いします)</a>
+                <a class="btn" href="{% url 'user:user_find' %}" role="button">{% trans "Search Volunteer" %}</a>
               </li>
             </ul>
 
