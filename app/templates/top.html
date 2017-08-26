@@ -169,7 +169,7 @@
           data: $(this).serialize(),
           type: 'POST',
           dataType: 'json'
-        }).done(function(response){
+        }).done(function(response) {
           show_events(response);
         }).fail(function(){
           console.log("{% trans 'Failed to get information' %}");
