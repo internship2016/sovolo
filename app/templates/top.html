@@ -180,11 +180,11 @@
       });
     })
 
-    function show_events(context){
-      for(var data of context['filtered_events']){
-        data['start_time'] = moment(data['start_time']).format("M/D(ddd)");
-        data['label_brand'] = data['label'];
-        data['status'] = data['status'];
+    function show_events(context) {
+      for (var data of context.filtered_events) {
+        data.start_time = moment(data.start_time).format("M/D(ddd)");
+        data.label_brand = data.label;
+        data.status = data.status;  // XXX: ?!
       }
       $('#event-area').html(Mustache.to_html(template, context));
     }
