@@ -175,7 +175,7 @@
     }).done(function(response) {
       markerClear();
       markerSet(response);
-    }).fail(function(){
+    }).fail(function() {
       console.log('{% trans "There are no events nearby." %}');
     });
   }
