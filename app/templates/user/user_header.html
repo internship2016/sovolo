@@ -94,7 +94,7 @@
     <div id="skills" class="list-group">
       {% for skill in user.skill_set.all %}
         <div class="list-group-item skill-list-item" href="#">
-          <p class="list-group-item-heading" sstyle="overflow-wrap: break-word;">{{ skill.skilltodo }}</p>
+          <p class="list-group-item-heading" style="overflow-wrap: break-word;">{{ skill.skilltodo }}</p>
           <p class="list-group-item-text">
             {% for tag in skill.tag.all %}
             <a class="tag-label" href="{% url 'event:search' %}?tags={{ tag.id }}">
@@ -127,7 +127,7 @@
   <input type="hidden" name="skill_number" value="[[ X ]]">
 
   <div class="list-group-item skill-list-item" href="#">
-    <p class="list-group-item-heading" sstyle="overflow-wrap: break-word;">
+    <p class="list-group-item-heading" style="overflow-wrap: break-word;">
       {% trans "I can do" %}
       <textarea required name="skill_[[ X ]]_todo" id="" cols="30" class="form-control" rows="3"></textarea>
     </p>
