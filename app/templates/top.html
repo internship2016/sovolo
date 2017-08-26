@@ -152,10 +152,10 @@
       //もう一度spinを呼ぶとスピナー停止
       var init = $(".event-filter:first-of-type");
       $.ajax({
-          'url': init.attr("action"),
-          'data': init.serialize(),
-          'type': 'POST',
-          'dataType': 'json',
+          url: init.attr("action"),
+          data: init.serialize(),
+          type: 'POST',
+          dataType: 'json'
         }).done(function(response){
           show_events(response);
         }).fail(function(){
