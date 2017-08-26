@@ -24,10 +24,10 @@ def user_filter(request, *args, **kwargs):
                         .filter(query) \
                         .order_by('-id') \
                         .distinct()
-    res = {'filtered_users':[]}
+    res = {'filtered_users': []}
     for u in users:
         res['filtered_users'].append({
-            'username':u.username,
-            'img_url':u.get_image_url()
+            'username': u.username,
+            'img_url': u.get_image_url()
         })
     return JsonResponse(res)
