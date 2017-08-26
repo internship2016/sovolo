@@ -333,7 +333,7 @@ class Command(BaseCommand):
 
         #ポイント稼ぎ用ボランティア
         random.seed(1)
-        for i in range(1,31):
+        for i in range(1,21):
 
             for j in range(1,4):
                 name = "【第%d回】"%j + eventname_sample[i]["name"]
