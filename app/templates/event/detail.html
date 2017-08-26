@@ -218,7 +218,7 @@
 </div>
 
 <script type="text/javascript">
-  var gmap;
+  var gmap;  // XXX: global variable
 
   function initialize() {
 
@@ -226,11 +226,11 @@
       var lat = $('#event_lat').val()
       var lng = $('#event_lng').val()
       var latlng = new google.maps.LatLng(lat,lng);
-        var opts = {
-          zoom: 15,
-          center: latlng,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
+      var opts = {
+        zoom: 15,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
 
       gmap = new google.maps.Map(document.getElementById("map_canvas"), opts);
 
@@ -242,7 +242,9 @@
 
   }
 
-  window.onload = initialize()
+  $(function () {
+    initialize();
+  });
 
 </script>
 
