@@ -121,21 +121,21 @@
 
   function getnow() {
     navigator.geolocation.getCurrentPosition(function(position) {
-        // 緯度経度の取得
-        var now = new google.maps.LatLng(
-          position.coords.latitude,
-          position.coords.longitude
-        );
+      // 緯度経度の取得
+      var now = new google.maps.LatLng(
+        position.coords.latitude,
+        position.coords.longitude
+      );
 
-        gmap.setCenter(now);
-        $('#id_meeting_place').val(position.formatted_address);
-        geocoder.geocode({location: now}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-              $('#id_meeting_place').val(results[0].formatted_address);
-            }
-        });
+      gmap.setCenter(now);
+      $('#id_meeting_place').val(position.formatted_address);
+      geocoder.geocode({location: now}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            $('#id_meeting_place').val(results[0].formatted_address);
+          }
+      });
     }, function() {
-        alert('{% trans "Failed to get location." %}');
+      alert('{% trans "Failed to get location." %}');
     });
   }
 
