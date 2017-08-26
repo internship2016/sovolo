@@ -160,7 +160,7 @@ $(function(){
               cache: false,
               processData: false,
               contentType: false,
-              data: formData,
+              data: formData
             })
             .done(function () {
               global.location.reload();
