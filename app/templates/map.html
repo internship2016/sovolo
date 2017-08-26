@@ -236,6 +236,14 @@
   }
 
   $(function() {
+    {% trans "Sun" as str_week_sun %}
+    {% trans "Mon" as str_week_mon %}
+    {% trans "Tue" as str_week_tue %}
+    {% trans "Wed" as str_week_wed %}
+    {% trans "Thu" as str_week_thu %}
+    {% trans "Fri" as str_week_fri %}
+    {% trans "Sat" as str_week_sat %}
+    // XXX: dup: weekdays
     moment.updateLocale('ja', {
       weekdays: [  // FIXME: trans?
         "日曜日", "月曜日", "火曜日",
@@ -243,9 +251,10 @@
         "土曜日"
       ],
       weekdaysShort: [
-        '{% trans "Sun" %}', '{% trans "Mon" %}', '{% trans "Tue" %}',
-        '{% trans "Wed" %}', '{% trans "Thu" %}', '{% trans "Fri" %}',
-        '{% trans "Sat" %}'
+        '{{ str_week_sun|escapejs }}', '{{ str_week_mon|escapejs }}',
+        '{{ str_week_tue|escapejs }}', '{{ str_week_wed|escapejs }}',
+        '{{ str_week_thu|escapejs }}', '{{ str_week_fri|escapejs }}',
+        '{{ str_week_sat|escapejs }}'
       ],
     });
     map_event_template = $("#map-event-template").html();
