@@ -42,7 +42,7 @@
                 <div class="g-recaptcha" data-sitekey="6LcupCgTAAAAAL3L0mDBwqPil4PzFrtw28fWMgfq"></div>
                 <div id="g-recaptcha-message" style="color: red;"></div>
                 <button class="center-block btn btn-primary">{% trans "Post" %}</button>
-                <script>
+                <script type="text/javascript">
                   $('#comment-form').submit(function () {
                     if (grecaptcha.getResponse().length == 0) {
                         $('#g-recaptcha-message').text("{% trans 'Please check the box above.' %}");

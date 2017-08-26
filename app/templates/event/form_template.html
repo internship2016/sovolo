@@ -92,7 +92,7 @@
   </div>
 </div>
 
-<script>
+<script type="text/javascript">
 
   var gmap;
   var geocoder;
@@ -246,7 +246,7 @@
         </button>
       </span>
     </div>
-    <script>
+    <script type="text/javascript">
       (function () {
         var admins = document.querySelector("#admins");
         var admin_name = document.querySelector('#admin_name');
@@ -326,7 +326,7 @@
     <button class="btn btn-primary pull-right" id="add_frame" type="button">
       <span class="glyphicon glyphicon-plus"></span>
     </button>
-      <script>
+      <script type="text/javascript">
       $(function () {
           $('#add_frame').on('click', function (event) {
             var X = $('#frames>div').length + 1;
@@ -344,7 +344,7 @@
     <button class="btn btn-primary pull-right" id="delete_frame" type="button">
       <span class="glyphicon glyphicon-minus"></span>
     </button>
-      <script>
+      <script type="text/javascript">
       $('#delete_frame').click(function() {
         $wrapper = $('<div>');
         $('#frames div.panel:last').remove();
@@ -369,7 +369,7 @@
       <label class="col-sm-3">{% trans 'Deadline' %}</label>
       <div class="col-sm-9">
         <input class="form-control datetimepicker deadend" name="frame_[[ X ]]_deadline" type="text" placeholder="{% trans 'optional' %}">
-        <script>
+        <script type="text/javascript">
           (function () {
             $("#frame_number_[[ X ]] .datetimepicker").datetimepicker({
               locale: moment.locale("ja"),
