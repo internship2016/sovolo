@@ -29,6 +29,31 @@
       </div>
     </div>
   </div>
+  <form action="" class="form" method="post" enctype="multipart/form-data">
+    <div class="form-group review-form">
+      {% csrf_token %}
+      <div class="row">
+        <label for="" class="col-xs-12 col-md-2">{% trans "Rating" %}</label>
+        <div class="col-xs-12 col-md-10">
+          <input id="review-rating" name="rating" type="hidden" value="3">
+          <i class="review-star fa fa-star fa-starsize fa-yellow" data-rating="1" aria-hidden="true"></i>
+          <i class="review-star fa fa-star fa-starsize fa-yellow" data-rating="2" aria-hidden="true"></i>
+          <i class="review-star fa fa-star fa-starsize fa-yellow" data-rating="3" aria-hidden="true"></i>
+          <i class="review-star fa fa-star fa-starsize fa-white" data-rating="4" aria-hidden="true"></i>
+          <i class="review-star fa fa-star fa-starsize fa-white" data-rating="5" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div class="row mt10">
+        <label for="review-comment" class="col-xs-12 col-md-2">{% trans "Comment" %}</label>
+        <div class="col-xs-12 col-md-9">
+          <textarea name="comment" class="form-control" rows="5" id="review-comment"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="panel-footer">
+      <button class="btn btn-primary center-block review-btn" type="submit">{% trans "Submit" %}</button>
+    </div>
+  </form>
 </div>
 {% else %}
 <div class="panel panel-info">
@@ -67,15 +92,20 @@
     <div class="form-group review-form">
       {% csrf_token %}
       <div class="row">
-        <label for="review-rating" class="col-xs-12 col-md-2">{% trans "Rating" %}</label>
+        <label for="" class="col-xs-12 col-md-2">{% trans "Rating" %}</label>
         <div class="col-xs-12 col-md-10">
-          セレクトボタン！！
+          <input id="review-rating" name="rating" type="hidden" value="3">
+          <i class="review-star fa fa-star fa-starsize fa-yellow" data-rating="1" aria-hidden="true"></i>
+          <i class="review-star fa fa-star fa-starsize fa-yellow" data-rating="2" aria-hidden="true"></i>
+          <i class="review-star fa fa-star fa-starsize fa-yellow" data-rating="3" aria-hidden="true"></i>
+          <i class="review-star fa fa-star fa-starsize fa-white" data-rating="4" aria-hidden="true"></i>
+          <i class="review-star fa fa-star fa-starsize fa-white" data-rating="5" aria-hidden="true"></i>
         </div>
       </div>
-      <div class="row">
+      <div class="row mt10">
         <label for="review-comment" class="col-xs-12 col-md-2">{% trans "Comment" %}</label>
         <div class="col-xs-12 col-md-9">
-          <textarea class="form-control" rows="5" id="review-comment"></textarea>
+          <textarea name="comment" class="form-control" rows="5" id="review-comment"></textarea>
         </div>
       </div>
     </div>
@@ -85,5 +115,32 @@
   </form>
 </div>
 {% endif %}
+
+<script>
+  $(function(){
+    $('.review-star').hover(function(){
+      var star_cnt = parseInt($(this).attr('data-rating'));
+      $('.review-star').removeClass('fa-yellow');
+      $('.review-star').each(function(index,elem){
+        $(elem).addClass(index<star_cnt ? 'fa-yellow' : 'fa-white');
+      });
+    },function(){
+      var star_cnt = parseInt($('#review-rating').val());
+      $('.review-star').removeClass('fa-yellow');
+      $('.review-star').each(function(index,elem){
+        $(elem).addClass(index<star_cnt ? 'fa-yellow' : 'fa-white');
+      });
+    });
+    $('.review-star').on('click',function(){
+      var star_cnt = parseInt($(this).attr('data-rating'));
+      $('.review-star').removeClass('fa-yellow');
+      $('.review-star').each(function(index,elem){
+        $(elem).addClass(index<star_cnt ? 'fa-yellow' : 'fa-white');
+      });
+      $('#review-rating').val(star_cnt);
+    });
+  });
+
+</script>
 
 {% endblock %}

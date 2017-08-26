@@ -7,30 +7,35 @@
 
 {% block content %}
 <div class="panel paneli-primary">
-  <div class="panel-heading">
-      {% trans "Edit skills" %}
-  </div>
-  <form class="form-horizontal" action="" method="post" enctype="multipart/form-date">
-    <!--  {{ form.as_ul }} -->
-      {% csrf_token %}
-    <div class="form-group">
-    <label class="col-sm-3">{% trans "Related tags" %}</label>
-      <div class="">
-        {% for tag in all_tags %}
-          <label><input type="checkbox" name="tags" value="{{ tag.id }}" {% if tag in skill.tag.all %}checked{% endif %}>{{ tag.name }}</label>
-        {% endfor %}
-      </div>
+  <div class="panel-default">
+    <div class="panel-heading">
+        {% trans "Edit skills" %}
     </div>
+    <form class="form-horizontal" action="" method="post" enctype="multipart/form-date">
+    <div class="panel-body">
+      <!--  {{ form.as_ul }} -->
+        {% csrf_token %}
+      <div class="form-group">
+      <label class="col-sm-3">{% trans "Related tags" %}</label>
+        <div class="">
+          {% for tag in all_tags %}
+            <label><input type="checkbox" name="tags" value="{{ tag.id }}" {% if tag in skill.tag.all %}checked{% endif %}>{{ tag.name }}</label>
+          {% endfor %}
+        </div>
+      </div>
 
-    <div class="form-group">
-    <label class="col-sm-3">{% trans "I can do" %}:</label>
-      <div class="col-sm-9">
-        <input id="id_name" class="form-control" name="skilltodo" type="text" value="{{ skill.skilltodo }}" required/>
+      <div class="form-group">
+      <label class="col-sm-3">{% trans "I can do" %}:</label>
+        <div class="col-sm-9">
+          <input id="id_name" class="form-control" name="skilltodo" type="text" value="{{ skill.skilltodo }}" required/>
+        </div>
+      </div>
+      <div class="panel-footer" style="text-align:center">
+        <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
       </div>
     </div>
-    <div class="panel-footer" style="text-align:center">
-      <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
-    </div>
-  </form>
+    </form>
+  </div>
+</div>
   
 {% endblock %}      

@@ -87,86 +87,84 @@
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <a class="collapsed" data-toggle="collapse" href="#collapse-skill">
-      <h3 class="panel-title">{% trans "Skills" %}</h3>
-    </a>
+  <h3 class="panel-title">{% trans "Skills" %}</h3>
   </div>
-  <div id="collapse-skill" class="panel-collapse collapse">
-    <div id="skills" class="panel-body">
+  <form action="">
+    {% csrf_token %}
+    <div id="skills" class="list-group">
       {% for skill in user.skill_set.all %}
-        <div class="panel panel-default panel-body" style="margin:0">
-          <div class="row">
-            <div class="row col-xs-12 col-sm-5">
-              <div class="col-xs−12 col-sm-5">{% trans "Skill " %}{{ forloop.counter }}</div>
-              {% for tag in skill.tag.all %}
-                <a class="tag col-xs-12 col-sm-7" href="{% url 'event:search' %}?tags={{ tags.id }}"><i class="fa fa-tag" aria-hidden="true"></i>{{ tag.name }}</a>
-              {% endfor %}
-            </div>
-            <label class="col-xs-12 col-sm-7">
-              <div class="col-xs-12 col-md-4">{% trans "I can do" %}:</div>
-              <div class="col-xs-12 col-md-8">
-              <a name="skill_{{ forloop.counter }}_skilltodo">{{ skill.skilltodo }}</a>
-              </div>
-            </label>
+        <div class="list-group-item skill-list-item" href="#">
+          <p class="list-group-item-heading" sstyle="overflow-wrap: break-word;">{{ skill.skilltodo }}</p>
+          <p class="list-group-item-text">
+            {% for tag in skill.tag.all %}
+            <a class="tag-label" href="{% url 'event:search' %}?tags={{ tag.id }}">
+              <span class="label label-danger">{{tag.name}}</span>
+            </a>
+            {% endfor %}
+          </p>
           {% if user.id == request.user.id %}
-            <div style="text-align: right; margin-top: 2px;">
+            <div class="d-inline-block" style="text-align: right;">
               <a href="{% url 'user:skill_edit' skill.id %}" type="button" class="btn btn-default">{% trans "Edit" %}</a>
             </div>
           {% endif %}
-          </div>
         </div>
       {% endfor %}
-      
-      {% if user.id == request.user.id %}
+    </div>
+    {% if user.id == request.user.id %}
+    <div class="panel-footer">
       <button class="btn btn-primary pull-right" id="add_skill" type="button">
           <span class="glyphicon glyphicon-plus"></span>
       </button>
-        <script>
-        $(function () {
-            $('#add_skill').on('click', function (user) {
-              var X = $('#skills>div').length + 1;
-  
-              var tmpl = $('#tmpl-skill').html();
-    
-              $wrapper = $('<div>');
-              $wrapper.html(Mustache.to_html(tmpl, {X: X}));
-              $('#skills').append($wrapper);
-            });
-        });
-        </script>
-    
-      <form action="">
-      <script id="tmpl-skill" type="text/template">
-        <div class="panel panel-default panel-body" style="margin:0" id="skill_number_[[ X ]]">
-          <div class="row">
-              {% csrf_token %}
-            <input type="hidden" name="skill_number" value="[[ X ]]">
-            <div class="row col-xs-12">
-              <label class="col-sm-3">{% trans "Related tags" %}<sup><font color="red"></font></sup></label>
-              <div class="col-sm-9">
-                {% for tag in all_tags %}
-                   <label><input type="checkbox" name="skill_[[ X ]]_tags" value="{{ tag.id }}" {% if tag in skill.tag.all %}checked{% endif %}>{{ tag.name }}</label>
-                {% endfor %}
-              </div>
-            </div>
-            <div class="row col-xs-12">
-            <label class="col-sm-3">{% trans "I can do" %}:<sup><font color="red"></font></sup></label>
-              <div class="cl-sm-9">
-                <input id="id_name" class="form-control" name="skill_[[ X ]]_todo" type="text" value="{{ skill.skilltodo }}" required/>
-              </div>
-            </div>
-            <div class="panel-footer" style="text-align:center">
-              <button class="btn btn-primary" type="submit">{% trans "Submit" %}</button>
-            </div>
-          </div>
-        </div>
-      </script>
-    </form>
-      
-      {% endif %}
+      <button class="btn btn-primary" type="submit">
+        {% trans "Submit" %}
+      </button>
     </div>
-  </div>
+    {% endif %}
+  </form>
 </div>
+
+<script id="skill-form" type="text/template">
+  <input type="hidden" name="skill_number" value="[[ X ]]">
+
+  <div class="list-group-item skill-list-item" href="#">
+    <p class="list-group-item-heading" sstyle="overflow-wrap: break-word;">
+      {% trans "I can do" %}
+      <textarea required name="skill_[[ X ]]_todo" id="" cols="30" class="form-control" rows="3"></textarea>
+    </p>
+    <p class="list-group-item-text">
+      {% for tag in all_tags %}
+      <p class="tag-label tag-select" href="{% url 'event:search' %}?tags={{ tag.id }}">
+        <span class="label label-default">{{tag.name}}</span>
+        <input type="checkbox" name="skill_[[ X ]]_tags" value="{{ tag.id }}" {% if tag in skill.tag.all %}checked{% endif %}>
+      </p>
+      {% endfor %}
+    </p>
+  </div>
+</script>
+
+<script>
+$(function () {
+    $('#add_skill').on('click', function (user) {
+      var X = $('#skills>div').length + 1;
+      var tmpl = $('#skill-form').html();
+      var add_window = Mustache.to_html(tmpl,{X: X});
+      $('#skills').append(add_window);
+      $('.tag-select').on('click',function(){
+        $label = $(this).find('span');
+        $check = $(this).find('input');
+        if(!$check.is(':checked')){
+          $label.removeClass('label-default');
+          $label.addClass('label-danger');
+          $check.attr('checked','checked');
+        }else{
+          $label.removeClass('label-danger');
+          $label.addClass('label-default');
+          $check.removeAttr('checked');
+        }
+      });
+    });
+});
+</script>
 
 
 <div class="panel panel-default">
