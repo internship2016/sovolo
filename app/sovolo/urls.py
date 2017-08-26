@@ -29,7 +29,7 @@ urlpatterns = [
     url(r'^event/', include('event.urls')),
     url(r'^tag/', include('tag.urls')),
     url(r'^user/', include('user.urls')),
-    url(r'^map/', views.show_map ,name='show_map'),
+    url(r'^map/', views.show_map, name='show_map'),
     url('', include('social_django.urls', namespace='social')),
     url(r'^i18n/', include('django.conf.urls.i18n')),
 ]
