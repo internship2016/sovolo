@@ -121,7 +121,7 @@
     geocoder = new google.maps.Geocoder();
   }
 
-  function getnow(){
+  function getnow() {
     navigator.geolocation.getCurrentPosition(function(position) {
         // 緯度経度の取得
         var now = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
