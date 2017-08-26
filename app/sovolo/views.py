@@ -23,7 +23,9 @@ def index_event(request):
     """New Events
     新規イベント
     """
-    context['new_events'] = [event for event in Event.objects.all().order_by('-created') if not event.is_over()][:10]
+    context['new_events'] = [event for event
+                             in Event.objects.all().order_by('-created')
+                             if not event.is_over()][:10]
 
 
     """Prefectures
