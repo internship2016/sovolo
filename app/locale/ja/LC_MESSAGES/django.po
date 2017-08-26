@@ -294,7 +294,7 @@ msgstr "ログアウト"
 
 #: templates/container_top.html:10
 msgid "Let's Get Involved"
-msgstr "はじめよう、つながろう"
+msgstr "小さくたっていい、あなたの手を探している"
 
 #: templates/container_top.html:12
 msgid "Create an Event"

@@ -11,11 +11,13 @@ class UserReviewListInline(admin.TabularInline):
     readonly_fields = ('post_day',)
     extra = 3
 
+
 class SkillAdmin(admin.ModelAdmin):
     list_display = (
         'pk',
         'skilltodo',
     )
+
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('pk', 'username', 'created', 'modified')

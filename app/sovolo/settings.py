@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 
 import os
 from django.utils.translation import ugettext_lazy as _
+from django.contrib.messages import constants as message_constants
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -59,7 +60,6 @@ BOOTSTRAP3 = {
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 
-from django.contrib.messages import constants as message_constants
 MESSAGE_TAGS = {
     message_constants.ERROR: 'alert alert-danger',
     message_constants.INFO: 'alert alert-info',
@@ -161,7 +161,8 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a trailing slash.
+# URL that handles the media served from MEDIA_ROOT. Make sure to use
+# a trailing slash.
 MEDIA_URL = '/media/'
 
 LOGIN_REDIRECT_URL = '/'
@@ -195,11 +196,13 @@ SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
 SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
-  'locale': 'ja_JP',
-  'fields': 'id, name, email, age_range'
+    'locale': 'ja_JP',
+    'fields': 'id, name, email, age_range'
 }
 
-EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND') or 'django.core.mail.backends.console.EmailBackend'
+EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND',
+                               'django.core.mail.backends.console.EmailBackend')
+
 EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = None

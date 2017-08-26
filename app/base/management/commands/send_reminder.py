@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.core.management.base import BaseCommand
 from django.template.loader import get_template
-from django.template import Context
-from django.core.mail import send_mail
 from event.models import Event, Frame
 from base.utils import send_template_mail
 from django.utils import timezone
@@ -28,8 +26,8 @@ class Command(BaseCommand):
 
         reminder_template = get_template("email/reminder.txt")
         reminder_events = Event.objects.filter(
-            start_time__gte= today + datetime.timedelta(days=1),
-            start_time__lt = today + datetime.timedelta(days=2),
+            start_time__gte=today + datetime.timedelta(days=1),
+            start_time__lt=today + datetime.timedelta(days=2),
         )
         for event in reminder_events:
             for user in event.participant.all():
@@ -47,7 +45,7 @@ class Command(BaseCommand):
         )
 
         for frame in deadline_frames:
-            if not frame.event in reminder_events:
+            if frame.event not in reminder_events:
                 for user in frame.participant.all():
                     send_template_mail(
                         deadline_template,
