@@ -13,8 +13,8 @@
   <div class="panel-heading">
     <div class="panel-title">コメント</div>
   </div>
-  {% for comment in user %}
-  <div class="panel-body">{{ comment_list.text }}</div>
+  {% for comment in usercomment_list %}
+  <div>{{ comment.text }}</div>
   {% empty %}
   <div class="panel-body">コメントはありません</div>
   {% endfor %}
