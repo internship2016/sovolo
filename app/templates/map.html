@@ -231,7 +231,7 @@
     });
     $('.media').on('mouseenter',function(){
       console.log($(this).find('input'));
-      google.maps.event.trigger(markers[parseInt($(this).find('input').attr('value'), 10)], 'click');;
+      google.maps.event.trigger(markers[parseInt($(this).find('input').attr('value'), 10)], 'click');
     })
   }
    
