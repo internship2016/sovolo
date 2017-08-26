@@ -77,6 +77,28 @@ nav{
 
 .tag {
   display: inline-block;
+  &-label{
+    display: inline-block;
+    font-size: 19px; 
+  }
+  &-select{
+    cursor: pointer;
+    >input[type="checkbox"]{
+      display: none;
+    }
+  }
+}
+
+
+.skill{
+  &-list{
+    &-item{
+      &>.list-group-item-heading{
+        font-size: 20px;
+      }
+
+    }
+  }
 }
 
 /* Google Maps */
