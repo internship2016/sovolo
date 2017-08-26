@@ -105,7 +105,7 @@
             <label class="col-xs-12 col-sm-7">
               <div class="col-xs-12 col-md-4">{% trans "I can do" %}:</div>
               <div class="col-xs-12 col-md-8">
-              <a name="skill_{{ forloop.counter }}_skilltodo">{{ skill.skilltodo }}</a>
+              <a name="skill_{{ forloop.counter }}_skilltodo" style="overflow-wrap: break-word;">{{ skill.skilltodo }}</a>
               </div>
             </label>
           {% if user.id == request.user.id %}
@@ -161,8 +161,7 @@
           </div>
         </div>
       </script>
-    </form>
-      
+      </form>
       {% endif %}
     </div>
   </div>
