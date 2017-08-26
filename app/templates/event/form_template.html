@@ -265,7 +265,10 @@
 
           var label = document.createElement('label');
           var value = admin_name.value;
+
+          // FIXME: Possible XSS vulnerability
           label.innerHTML = "<div class='checkbox'><span><input name='admins' type='checkbox' value=" + value + " checked>" + value + "<\/span><\/div>";
+
           admin_name.value = "";
           admins.appendChild(label);
         });
