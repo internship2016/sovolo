@@ -471,7 +471,7 @@ class UserCommentCreate(CreateView):
 
     def form_valid(self, form):
         form_redirect = super(UserCommentCreate, self).form_valid(form)
-        form.instance.form_user_id = self.request.user.id
+        form.instance.from_user_id = self.request.user.id
         form.instance.to_user_id = self.id
         form.save()
         return form_redirect
