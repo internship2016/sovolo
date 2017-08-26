@@ -168,10 +168,10 @@
     $('#sw_lng').val(map_sw_lng);
 
     $.ajax({
-      'url': $('#bound_data').attr('action'),
-      'data':$('#bound_data').serialize(),
-      'type':'POST',
-      'dataType':'json'
+      url: $('#bound_data').attr('action'),
+      data:$('#bound_data').serialize(),
+      type:'POST',
+      dataType:'json'
     }).done(function(response){
       markerClear();
       markerSet(response);
