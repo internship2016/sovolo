@@ -7,7 +7,7 @@ app_name = 'user'
 
 urlpatterns = [
     url(r'^login/$', auth_views.login, {'template_name': "user/login_page.html"}, name='login'),
-    url(r'^logout/$', views.logout,  name='logout'),
+    url(r'^logout/$', views.logout, name='logout'),
     url(r'^register/$', views.UserCreateView.as_view(), name='register'),
     url(r'^activation/(?P<key>\w+)/$', views.UserActivationView.as_view(), name='activation'),
     url(r'^email_required/$', views.AcquireEmail.as_view(), name='acquire_email'),
@@ -24,5 +24,5 @@ urlpatterns = [
     url(r'^post_review/$', views.UserPostReviewView.as_view(), name='post_review'),
     url(r'^unreviewed/$', views.UserUnReviewedView.as_view(), name='unreviewed'),
     url(r'^top/list/$', views.UserListView.as_view(), name='user_find'),
-    url(r'^filter/tag_users$', api.user_filter, {'user_kind':'tag_users'}, name='tag_users'),
+    url(r'^filter/tag_users$', api.user_filter, {'user_kind': 'tag_users'}, name='tag_users'),
 ]
