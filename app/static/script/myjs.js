@@ -40,14 +40,14 @@ $(function(){
     });
 
     $('#result-number').change(function() {
-      var Url = window.location.href;
+      var url = window.location.href;
       var num = this.value;
       var regex = /\b(numperpage=)[^&]*/;
       var newUrl;
-      if (regex.test(Url)) {
-        newUrl = Url.replace(regex, '$1' + num);
+      if (regex.test(url)) {
+        newUrl = url.replace(regex, '$1' + num);
       } else {
-        newUrl = Url + "&numperpage=" + num;
+        newUrl = url + "&numperpage=" + num;
       }
       window.location.replace(newUrl);
     });
