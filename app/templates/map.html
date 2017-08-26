@@ -194,7 +194,7 @@
     markers = current == -1 ? [] : [markers[current]];
   }
 
-  function markerSet(context){
+  function markerSet(context) {
       context['events_in_range'].forEach(function(val,index,arr){
         val['start_time'] = moment(val['start_time']).format("M月D日(ddd)");
         val['label_brand'] = val['label'];
