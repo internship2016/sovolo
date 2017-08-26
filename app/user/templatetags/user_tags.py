@@ -19,7 +19,11 @@ def user_list_large(context, users, title):
 @register.inclusion_tag('user/template_skilllist.html', takes_context=True)
 def skill_list(context, skills, title):
     request = context['request']
-    return {'skills':skills, 'title':title, 'user':request.user}
+    return {
+        'skills': skills,
+        'title': title,
+        'user': request.user,
+    }
 
 
 @register.simple_tag
