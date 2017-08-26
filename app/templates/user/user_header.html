@@ -152,11 +152,11 @@ $(function () {
       $('.tag-select').on('click', function() {
         $label = $(this).find('span');
         $check = $(this).find('input');
-        if(!$check.is(':checked')){
+        if (!$check.is(':checked')) {
           $label.removeClass('label-default');
           $label.addClass('label-danger');
           $check.attr('checked','checked');
-        }else{
+        } else {
           $label.removeClass('label-danger');
           $label.addClass('label-default');
           $check.removeAttr('checked');
