@@ -97,7 +97,7 @@
     <div id="skills" class="list-group">
       {% for skill in user.skill_set.all %}
         <div class="list-group-item skill-list-item" href="#">
-          <p class="list-group-item-heading" sstyle="overflow-wrap: break-word;">{{ skill.skilltodo }}</p>
+          <p class="list-group-item-heading" style="overflow-wrap: break-word;">{{ skill.skilltodo }}</p>
           <p class="list-group-item-text">
             {% for tag in skill.tag.all %}
             <a class="tag-label" href="{% url 'event:search' %}?tags={{ tag.id }}">
@@ -130,7 +130,7 @@
   <input type="hidden" name="skill_number" value="[[ X ]]">
 
   <div class="list-group-item skill-list-item" href="#">
-    <p class="list-group-item-heading" sstyle="overflow-wrap: break-word;">
+    <p class="list-group-item-heading" style="overflow-wrap: break-word;">
       {% trans "I can do" %}
       <textarea required name="skill_[[ X ]]_todo" id="" cols="30" class="form-control" rows="3"></textarea>
     </p>
@@ -150,16 +150,16 @@ $(function () {
     $('#add_skill').on('click', function (user) {
       var X = $('#skills>div').length + 1;
       var tmpl = $('#skill-form').html();
-      var add_window = Mustache.to_html(tmpl,{X: X});
+      var add_window = Mustache.to_html(tmpl, {X: X});
       $('#skills').append(add_window);
-      $('.tag-select').on('click',function(){
+      $('.tag-select').on('click', function() {
         $label = $(this).find('span');
         $check = $(this).find('input');
-        if(!$check.is(':checked')){
+        if (!$check.is(':checked')) {
           $label.removeClass('label-default');
           $label.addClass('label-danger');
           $check.attr('checked','checked');
-        }else{
+        } else {
           $label.removeClass('label-danger');
           $label.addClass('label-default');
           $check.removeAttr('checked');
