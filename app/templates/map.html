@@ -90,17 +90,18 @@
 </div>
 
 <script type="text/javascript">
+  // XXX: dup: gmap
   var gmap;
   var geocoder;
   var markers = [];
   var map_event_template;
   var currentWindow;
-  var currentWindowInfo={
-    'lat' : '',
-    'lng' : ''
+  var currentWindowInfo = {
+    lat: '',
+    lng: ''
   };
 
-  function initialize(){
+  function initialize() {
     var lat = 35.7291213;
     var lng = 139.7191322;
     var latlng = new google.maps.LatLng(lat,lng);
@@ -112,124 +113,149 @@
     };
     gmap = new google.maps.Map(document.getElementById("map_canvas2"), opts);
     gmap.setCenter(latlng);
-    google.maps.event.addListener(gmap, 'idle', function(){
-      get_events();
+    google.maps.event.addListener(gmap, 'idle', function() {
+      get_events();
     });
     geocoder = new google.maps.Geocoder();
   }
 
-  function getnow(){
+  function getnow() {
     navigator.geolocation.getCurrentPosition(function(position) {
-        // 緯度経度の取得
-        var now = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-        gmap.setCenter(now);
-        $('#id_meeting_place').val(position.formatted_address);
-        geocoder.geocode( { 'location': now}, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-              $('#id_meeting_place').val(results[0].formatted_address);
-            }
-        });
+      // 緯度経度の取得
+      var now = new google.maps.LatLng(
+        position.coords.latitude,
+        position.coords.longitude
+      );
+
+      gmap.setCenter(now);
+      $('#id_meeting_place').val(position.formatted_address);
+      geocoder.geocode({location: now}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            $('#id_meeting_place').val(results[0].formatted_address);
+          }
+      });
     }, function() {
-        alert('{% trans "Failed to get location." %}');
+      alert('{% trans "Failed to get location." %}');
     });
   }
 
   function getlatlng(){
     //検索した時
     var address = document.getElementById("id_meeting_place").value;
-    geocoder.geocode( { 'address': address}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          gmap.setCenter(results[0].geometry.location);
-          get_events();
-        } else {
-          alert('{% trans "Failed to get information." %}');
-        }
+    geocoder.geocode({address: address}, function(results, status) {
+      if (status == google.maps.GeocoderStatus.OK) {
+        gmap.setCenter(results[0].geometry.location);
+        get_events();
+      } else {
+        alert('{% trans "Failed to get information." %}');
+      }
     });
   }
 
-  function get_events(){
+  function get_events() {
     //四隅の情報を取得
     var bounds = gmap.getBounds();
+
+    // XXX: global variables
     map_ne_lat = bounds.getNorthEast().lat();
     map_sw_lat = bounds.getSouthWest().lat();
     map_ne_lng = bounds.getNorthEast().lng();
     map_sw_lng = bounds.getSouthWest().lng();
+
     $('#ne_lat').val(map_ne_lat);
     $('#sw_lat').val(map_sw_lat);
     $('#ne_lng').val(map_ne_lng);
     $('#sw_lng').val(map_sw_lng);
 
     $.ajax({
-      'url': $('#bound_data').attr('action'),
-      'data':$('#bound_data').serialize(),
-      'type':'POST',
-      'dataType':'json',
-    }).done(function(response){
+      url: $('#bound_data').attr('action'),
+      data: $('#bound_data').serialize(),
+      type: 'POST',
+      dataType: 'json'
+    }).done(function(response) {
       markerClear();
       markerSet(response);
-    }).fail(function(){
+    }).fail(function() {
       console.log('{% trans "There are no events nearby." %}');
     });
   }
 
-  function markerClear(){
-    var current = -1;
+  function markerClear() {
+    var current = -1;  // FIXME: magic number?
     for (var i = 0; i < markers.length; i++) {
-      if(currentWindowInfo.lat==markers[i].position.lat()&&
-        currentWindowInfo.lng==markers[i].position.lng()){
-          current = i;
-          continue;
-        }
+      if(  currentWindowInfo.lat == markers[i].position.lat()
+        && currentWindowInfo.lng == markers[i].position.lng()
+      ) {
+        current = i;
+        continue;
+      }
       markers[i].setMap(null);
     }
-    markers = current==-1 ? [] : [markers[current]];
+    markers = current == -1 ? [] : [markers[current]];
   }
 
-  function markerSet(context){
-      context['events_in_range'].forEach(function(val,index,arr){
-        val['start_time'] = moment(val['start_time']).format("M月D日(ddd)");
-        val['label_brand'] = val['label'];
-        val['status'] = val['status'];
-        val['markernum'] = index;
+  function markerSet(context) {
+      context.events_in_range.forEach(function(val, index, arr) {
+        val.start_time = moment(val.start_time).format("M月D日(ddd)");
+        val.label_brand = val.label;
+        val.status = val.status;  // XXX: ?!
+        val.markernum = index;
       });
     $('#map-event-list').html(Mustache.to_html(map_event_template, context));
-    context['events_in_range'].forEach(function(val,index,arr){
+    context.events_in_range.forEach(function(val, index, arr) {
       var marker = new google.maps.Marker({
         position: {
           lat: val.latitude,
           lng: val.longitude
         },
-        map: gmap,
+        map: gmap
       });
       var infoWindowOpts = {
-          content : val.name,
-          maxWidth : 400
+        content : val.name,
+        maxWidth : 400
       };
       var infoWindow = new google.maps.InfoWindow(infoWindowOpts);
-      marker.addListener("click", function(m){
-          //先に開いた情報ウィンドウがあれば、closeする
-          if (currentWindow) {
-              currentWindow.close();
-          }
-          //情報ウィンドウを開く
-          infoWindow.open(gmap, marker);
-          //開いた情報ウィンドウを記録しておく
-          currentWindow = infoWindow;
-          currentWindowInfo.lat = m.latLng.lat();
-          currentWindowInfo.lng = m.latLng.lng();
+      marker.addListener("click", function(m) {
+        //先に開いた情報ウィンドウがあれば、closeする
+        if (currentWindow) {
+          currentWindow.close();
+        }
+        //情報ウィンドウを開く
+        infoWindow.open(gmap, marker);
+        //開いた情報ウィンドウを記録しておく
+        currentWindow = infoWindow;
+        currentWindowInfo.lat = m.latLng.lat();
+        currentWindowInfo.lng = m.latLng.lng();
       });
       markers.push(marker);
     });
     $('.media').on('mouseenter',function(){
       console.log($(this).find('input'));
-      google.maps.event.trigger(markers[parseInt($(this).find('input').attr('value'))], 'click');;
+      google.maps.event.trigger(markers[parseInt($(this).find('input').attr('value'), 10)], 'click');
     })
   }
-   
-  $(function(){
+
+  $(function() {
+    {% trans "Sun" as str_week_sun %}
+    {% trans "Mon" as str_week_mon %}
+    {% trans "Tue" as str_week_tue %}
+    {% trans "Wed" as str_week_wed %}
+    {% trans "Thu" as str_week_thu %}
+    {% trans "Fri" as str_week_fri %}
+    {% trans "Sat" as str_week_sat %}
+    // XXX: dup: weekdays
     moment.updateLocale('ja', {
-      weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
-      weekdaysShort: ['{% trans "Sun" %}','{% trans "Mon" %}','{% trans "Tue" %}','{% trans "Wed" %}','{% trans "Thu" %}','{% trans "Fri" %}','{% trans "Sat" %}'],
+      weekdays: [  // FIXME: trans?
+        "日曜日", "月曜日", "火曜日",
+        "水曜日", "木曜日", "金曜日",
+        "土曜日"
+      ],
+      weekdaysShort: [
+        '{{ str_week_sun|escapejs }}', '{{ str_week_mon|escapejs }}',
+        '{{ str_week_tue|escapejs }}', '{{ str_week_wed|escapejs }}',
+        '{{ str_week_thu|escapejs }}', '{{ str_week_fri|escapejs }}',
+        '{{ str_week_sat|escapejs }}'
+      ],
     });
     map_event_template = $("#map-event-template").html();
     initialize();
