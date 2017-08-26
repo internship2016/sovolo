@@ -420,7 +420,7 @@ class UserComment(models.Model):
 
 
     def __str__(self):
-            return "%s: \"%s\"" % (self.to_user.username,
+            return "%s: \"%s\"" % (self.to_user_id,
                                   self.text)
 
     def get_absolute_url(self):
