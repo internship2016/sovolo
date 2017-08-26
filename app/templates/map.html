@@ -215,7 +215,7 @@
           maxWidth : 400
       };
       var infoWindow = new google.maps.InfoWindow(infoWindowOpts);
-      marker.addListener("click", function(m){
+      marker.addListener("click", function(m) {
           //先に開いた情報ウィンドウがあれば、closeする
           if (currentWindow) {
               currentWindow.close();
