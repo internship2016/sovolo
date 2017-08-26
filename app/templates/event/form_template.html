@@ -259,7 +259,7 @@
         var admin_name = document.querySelector('#admin_name');
         var add_admin = document.querySelector('#add_admin');
         add_admin.addEventListener('click', function (e) {
-          if (admin_name.value == "") return;
+          if (admin_name.value === "") return;
           var label = document.createElement('label');
           var value = admin_name.value;
           label.innerHTML = "<div class='checkbox'><span><input name='admins' type='checkbox' value=" + value + " checked>" + value + "<\/span><\/div>";
@@ -268,7 +268,7 @@
         });
 
         admin_name.addEventListener('keypress', function (e) {
-          if (e.keyCode == 13) {
+          if (e.keyCode === 13) {
             e.preventDefault();
             add_admin.click();
           }
