@@ -124,14 +124,14 @@
       $('.review-star').each(function(index,elem){
         $(elem).addClass(index<star_cnt ? 'fa-yellow' : 'fa-white');
       });
-    },function(){
+    },function() {
       var star_cnt = parseInt($('#review-rating').val());
       $('.review-star').removeClass('fa-yellow');
       $('.review-star').each(function(index,elem){
         $(elem).addClass(index<star_cnt ? 'fa-yellow' : 'fa-white');
       });
     });
-    $('.review-star').on('click',function(){
+    $('.review-star').on('click',function() {
       var star_cnt = parseInt($(this).attr('data-rating'));
       $('.review-star').removeClass('fa-yellow');
       $('.review-star').each(function(index,elem){
