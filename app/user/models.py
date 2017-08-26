@@ -370,7 +370,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
             counter = 0
 
             # XXX: Bad method name: zip(event, user_list)
-            unreview_events = user.get_zipped_unreviewed_hosted()
+            unreview_events = self.get_zipped_unreviewed_hosted()
 
             for event, user_list in unreview_events:
                 if counter >= back_num:
