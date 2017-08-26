@@ -166,8 +166,8 @@
       });
       marker.addListener('dragend', function () {
         //マーカーを動かした時
-        $(('#id_latitude')).val(marker.position.lat())
-        $(('#id_longitude')).val(marker.position.lng())
+        $(('#id_latitude')).val(marker.position.lat());
+        $(('#id_longitude')).val(marker.position.lng());
         geocoder.geocode( { 'location': marker.position}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               $('#id_meeting_place').val(results[0].formatted_address);
