@@ -257,7 +257,8 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
     # Review (using by participant)
     def get_mean_rating(self):
-        return self.to_rate_user.aggregate(Avg('rating'))['rating__avg']
+        avg_rate = self.to_rate_user.aggregate(Avg('rating'))['rating__avg']
+        return round(avg_rate, 2)
 
     def get_reviewed_events(self):
         return [event.joined_event for event in self.from_rate_user.all()]
@@ -342,6 +343,52 @@ class User(AbstractBaseModel, AbstractBaseUser):
         for user_list in self.get_unreviewed_participant_of_past_hosted_events_poped():
             num += len(user_list)
         return num
+
+    def get_unreview_list(self):
+        """Get Unreview List.
+        ログインしているユーザーの未レビューの最新５件を返す。
+        """
+        back_num = 5
+
+        res_obj = []
+
+        if self.role == 'helper':
+            unreview_events = self.get_past_participated_and_unreviewed_events()
+            for event in unreview_events[:back_num]:
+                res_obj.append({
+                    'event_id': event.id,
+                    'event_name': event.name,
+                    'event_host': event.host_user,
+                    'event_img': event.get_image_url(),
+                    'message': event.name + 'へのレビューをおねがいします。'
+                })
+
+        else:
+            counter = 0
+
+            # XXX: Bad method name: zip(event, user_list)
+            unreview_events = self.get_zipped_unreviewed_hosted()
+
+            for event, user_list in unreview_events:
+                if counter >= back_num:
+                    break
+
+                for h_user in user_list:
+                    if counter >= back_num:
+                        break
+                    res_obj.append({
+                        'event_id': event.id,
+                        'event_name': event.name,
+                        'event_host': event.host_user,
+                        'event_img': event.get_image_url(),
+                        'helper_name': h_user.username,
+                        'helper_id': h_user.pk,
+                        'helper_img': h_user.get_image_url(),
+                        'message': h_user.username + 'さんへのレビューをおねがいします。'
+                    })
+                    counter += 1
+
+        return res_obj
 
 
 class UserActivation(models.Model):
