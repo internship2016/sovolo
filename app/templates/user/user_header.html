@@ -147,7 +147,7 @@ $(function () {
     $('#add_skill').on('click', function (user) {
       var X = $('#skills>div').length + 1;
       var tmpl = $('#skill-form').html();
-      var add_window = Mustache.to_html(tmpl,{X: X});
+      var add_window = Mustache.to_html(tmpl, {X: X});
       $('#skills').append(add_window);
       $('.tag-select').on('click',function(){
         $label = $(this).find('span');
