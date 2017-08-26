@@ -378,6 +378,7 @@ class UserSkillAddView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(UserSkillAddView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
+        context['to_user_id'] = pk
         return context
 
     def form_valid(self, form):
@@ -431,22 +432,32 @@ class UserListView(ListView):
 
         results = Skill.objects.filter(query).order_by('-id').distinct()
         return results
+@method_decorator(login_required, name='dispatch')
+class UserCommentCreate(CreateView):
+    model = UserComment
+    fields = ['text']
+    template_name = "user/usercomment_add.html"
 
-class CommentCreate(RedirectView):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['to_user'] = self.pk
+        context['from_user'] = self.request.user.id
+        return context
 
-    def get_redirect_url(self, *args, **kwargs):
-        user_id = kwargs["user_id"]
+    def form_valid(self, form):
+        form.instance.from_user = self.request.user
+        form_redirect = super(UserCommentCreate, self).form_valid(form)
         
         text = self.request.POST["test"]
         if text.strip() != "":
-            comment = Comment(
+            usercomment = UserComment(
                 from_user=self.request.user,
                 to_user=User.objects.get(pk=user_id),
                 text=text,
             )
-            comment.save()
+            usercomment.save()
 
-        return reverse_lazy('user:detail', kwargs={'pk': user_id})
+        return form_redirect
 
 @method_decorator(login_required, name='dispatch')
 class UserCommentView(ListView):
@@ -455,10 +466,8 @@ class UserCommentView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(UserCommentView, self).get_context_data(**kwargs)
-        if 'to_user_id' in self.request.GET:
-            to_user = User.objects.get(pk=self.request.GET['to_user_id'])
-            context['to_user'] = to_user
-            context['from_user'] = self.request.user
+        context['to_user'] = self.request.user
+        context['from_user'] = self.request.user
         return context
 
     def form_valid(self, form):

@@ -5,7 +5,8 @@
 
 {% block title %} {{ user.username }} コメント一覧 | Sovol {% endblock %}
 
-{% usercomment user %}
+{% usercomment from_user to_user %}
+
 
 {% block content %}
 {% load i18n %}
@@ -14,7 +15,10 @@
     <div class="panel-title">コメント</div>
   </div>
   {% for comment in usercomment_list %}
+  {% if request.user == comment.to_user %}
   <div>{{ comment.text }}</div>
+  <div>{{ comment.from_user.username }}</div>
+  {% endif %}
   {% empty %}
   <div class="panel-body">コメントはありません</div>
   {% endfor %}

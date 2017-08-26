@@ -417,19 +417,10 @@ class UserComment(models.Model):
                                 related_name='to_user',
                                 null=True)
     text = models.TextField()
-    reply_to = models.ForeignKey('self',
-                                on_delete=models.CASCADE,
-                                related_name='replies',
-                                null=True)
 
 
     def __str__(self):
-        if self.reply_to:
-            return ">> %s\n%s :\"%s" % (str(self.reply_to),
-                                        self.user.username,
-                                        self.text)
-        else:
-            return "%s: \"%s\"" % (self.user.username,
+            return "%s: \"%s\"" % (self.to_user.username,
                                   self.text)
 
     def get_absolute_url(self):

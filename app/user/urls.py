@@ -29,4 +29,5 @@ urlpatterns = [
     # unreview_list -> top.html
     url(r'^filter/get_unreviewd_list$', api.get_unreview_list, name='get_unreviewd_list'),
     url(r'^usercomment/$', views.UserCommentView.as_view(), name='usercomment'),
+    url(r'^(?P<pk>[0-9]+)/usercommentadd/$', views.UserCommentCreate.as_view(), name='usercommentadd'),
 ]
