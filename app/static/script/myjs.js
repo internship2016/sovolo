@@ -13,7 +13,7 @@ $(function(){
     spaceBetween: 30
   });
   $('#top-tabs').tabs({
-    selected  : 0,
+    selected: 0
   });
 });
 
