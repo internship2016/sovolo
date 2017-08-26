@@ -8,4 +8,141 @@
 
 {% block content %}
 
+  <div id="top-tabs">
+    <ul>
+        <li><a href="#top-tabs-1">{% trans "Browse" %}</a></li>
+        <li><a href="/user/top/">{% trans "Search" %}</a></li>
+    </ul>
+    <div id="top-tabs-1">
+      <div class="row">
+        <div class="col-xs-12 col-md-4 col-md-push-8">
+          <ul>
+            {% if not request.user.is_anonymous %}
+            <li>
+              <form method="post" action="{% url 'event:future_participating_events'%}" class="event-filter event-active">
+                {% csrf_token %}
+                {% trans "Events I'm going" %}
+              </form>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+        <div id="event-area" class="col-xs-12 col-md-8 col-md-pull-4">
+          <div></div>
+        </div>
+        <script id="event-template" type="text/template">
+          <section class="inner">
+          [[#filtered_events]]
+            <div class="media">
+              <div class="media-left">
+                <a href="/event/[[id]]">
+                  <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url([[img]]);">
+                  </div>
+                </a>
+              </div>
+              <div class="media-body">
+                <div class="event-info pull-left">
+                  <div>
+                    <span class="label label-[[label_brand]]" style="margin-right: 1em;">
+                      [[status]]
+                    </span>
+                    <i class="fa fa-calendar" aria-hidden="true"></i>
+                      [[start_time]]
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                      [[place]]
+                  </div>
+                  <div class="media-heading">
+                    <a href="/event/[[id]]">
+                      <h4>[[name]]</h4>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          [[/filtered_events]]
+          </section>
+        </script>
+      </div>
+    </div>
+    <div id="top-tabs-3">
+      <div class="row">
+        <div id="search-area" class="col-xs-12">
+          {% include 'event/search_form.html' %}
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    var template;
+    $(function(){
+      template = $("#event-template").html();
+      moment.updateLocale('ja', {
+        weekdays: ["日曜日","月曜日","火曜日","水曜日","木曜日","金曜日","土曜日"],
+        weekdaysShort: ['{% trans "Sun" %}','{% trans "Mon" %}','{% trans "Tue" %}','{% trans "Wed" %}','{% trans "Thu" %}','{% trans "Fri" %}','{% trans "Sat" %}'],
+      });
+      var opts = {
+        lines: 13, //線の数
+        length: 33, //線の長さ
+        width: 11, //線の幅
+        radius: 16, //スピナーの内側の広さ
+        corners: 1, //角の丸み
+        rotate: 74, //向き(あんまり意味が無い・・)
+        direction: 1, //1：時計回り -1：反時計回り
+        color: '#000', // 色
+        speed: 1.5, // 一秒間に回転する回数
+        trail: 71, //残像の長さ
+        shadow: true, // 影
+        hwaccel: true, // ？
+        className: 'spinner', // クラス名
+        zIndex: 2e9, // Z-index
+        top: '50%', // relative TOP
+        left: '50%', // relative LEFT
+        opacity: .25, //透明度
+        fps: 20 //fps
+      };
+      //描画先の親要素
+      var spin_target = $("#event-area").get(0);
+      //スピナーオブジェクト
+      var spinner = new Spinner(opts);
+      //スピナー描画
+      spinner.spin(spin_target);
+      //もう一度spinを呼ぶとスピナー停止
+      var init = $(".event-filter:first-of-type");
+      $.ajax({
+          'url':init.attr("action"),
+          'data':init.serialize(),
+          'type':'POST',
+          'dataType':'json',
+        }).done(function(response){
+          show_events(response);
+        }).fail(function(){
+          console.log("{% trans 'Failed to get information' %}")
+      });
+      $('.event-filter').on('click',function(){
+        $('.event-filter').removeClass('event-active');
+        $(this).addClass('event-active');
+        $.ajax({
+          'url':$(this).attr('action'),
+          'data':$(this).serialize(),
+          'type':'POST',
+          'dataType':'json',
+        }).done(function(response){
+          show_events(response);
+        }).fail(function(){
+          console.log("{% trans 'Failed to get information' %}");
+        });
+      });
+    })
+
+    function show_events(context){
+      for(var data of context['filtered_events']){
+        data['start_time'] = moment(data['start_time']).format("M/D(ddd)");
+        data['label_brand'] = data['label'];
+        data['status'] = data['status'];
+      }
+      $('#event-area').html(Mustache.to_html(template, context));
+    }
+
+  </script>
+
 {% endblock %}

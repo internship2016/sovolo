@@ -181,6 +181,7 @@ class UserEditView(UpdateView):
         'sex',
         'birthday',
         'language',
+        'role',
     ]
 
     template_name = 'user/edit.html'
@@ -432,4 +433,3 @@ class UserListView(ListView):
 
         results = Skill.objects.filter(query).order_by('-id').distinct()
         return results
-
