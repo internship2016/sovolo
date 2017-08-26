@@ -403,7 +403,7 @@ class UserSkillAddView(CreateView):
 
 class UserListView(ListView):
     model = Skill
-    template_name ='user/user_find.html'
+    template_name = 'user/user_find.html'
     context_object_name = 'search_user'
     paginate_by = 10
 
