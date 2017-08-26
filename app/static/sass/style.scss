@@ -378,7 +378,7 @@ $slide-img-size : 150px;
 
 .card{
   width: $slide-img-size*2+6px;
-  height: $slide-img-size;
+  height: $slide-img-size+3px;
   border: 1px solid #ccc;
   &-img{
     width: $slide-img-size;
