@@ -3,7 +3,6 @@ from django.shortcuts import redirect
 from event.models import Event
 from tag.models import Tag
 from django.conf import settings
-from user.models import User, Skill
 from django.views.generic import ListView
 from django.db.models import Q
 
