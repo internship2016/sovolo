@@ -102,11 +102,11 @@
   function initialize(){
     var lat = parseFloat($('#id_latitude').val());
     var lng = parseFloat($('#id_longitude').val());
-    if(isNaN(lat)||isNaN(lng)){
+    if (isNaN(lat) || isNaN(lng)) {
       lat = 35.7291213;
       lng = 139.7191322;
     }
-    var latlng = new google.maps.LatLng(lat,lng);
+    var latlng = new google.maps.LatLng(lat, lng);
 
     var opts = {
       zoom: 15,
