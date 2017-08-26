@@ -58,6 +58,7 @@ class UserCreateView(CreateView):
         messages.info(self.request, info_msg)
         return redirect("top")
 
+    def create_activation_key(self):
         key = uuid.uuid4().hex
         return key
 
