@@ -27,7 +27,6 @@ def index_event(request):
                              in Event.objects.all().order_by('-created')
                              if not event.is_over()][:10]
 
-
     """Prefectures
     日本の(!)県名
     """
