@@ -24,11 +24,11 @@
     "bootstrap-confirmation2": "^2.3.1",
     "jquery-migrate": "^3.0.0",
     "webshim": "^1.15.10",
-    "handlebars": "^4.0.5",
     "jquery-ui": "^1.12.1",
     "swiper": "^3.4.2",
     "moment": "^2.18.1",
     "reset-css": "^2.2.1",
-    "spin.js": "^2.3.2"
+    "spin.js": "^2.3.2",
+    "mustache.js": "mustache#^2.3.0"
   }
 }

@@ -1,5 +1,6 @@
 import os
 from django.shortcuts import render
+from django.shortcuts import redirect
 from event.models import Event
 from tag.models import Tag
 from django.conf import settings
@@ -9,6 +10,12 @@ from django.db.models import Q
 
 
 def index(request):
+    if (not request.user.is_anonymous) and request.user.role == "sufferer":
+        return redirect('/user/top')
+    else:
+        return redirect('/event/top')
+
+def index_event(request):
     context = {}
 
     """All Tags

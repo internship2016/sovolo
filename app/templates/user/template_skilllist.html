@@ -2,29 +2,37 @@
 <div class="panel panel-default">
   <div class="panel-heading">
     <div class="panel-title">{% trans "Users" %}</div>
+  </div>
+  <div class="row">
     <div class="panel-body">
       {% for skill in skills %}
       <div class="media">
         <div class="media-left">
-          <a href="/user/{{skill.userskill.id}}">
-          <div class="media-object custom_thumbnail list-thumbnail" style="background-image:url({{ skill.userskill.get_image_url }});"></div>
-          </a>
-          <div class="madia-body">
-          <a href="/user/{{skill.userskill.id}}">
-           <h1>{% trans "Username" %}:{{skill.userskill.username}}</h1>
-          </a>
-          <i class="fa fa-map-marker" aria-hidden="true"></i>
-          {{ skill.userskill.get_region_kanji}}
+          <div class="col-xs-4">
+            <a href="/user/{{skill.userskill.id}}">
+            <div class="media-object custom_thumbnail list-thumbnail" style="background-image:url({{ skill.userskill.get_image_url }});"></div>
+            </a>
           </div>
-    <div>
-      {% for tag in skill.tag.all %}
-        <a class="tag" ><i class="fa fa-tag" aria-hidden="ture"></i>{{ tag.name }}</a>
+          <div class="madia-body">
+            <div id="skilllist_username">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                {{ skill.userskill.get_region_kanji}}
+              <a href="/user/{{skill.userskill.id}}">
+              <h1>{% trans "Username" %}:{{skill.userskill.username}}</h1>
+              </a>
+            </div>
+            <div class="col-xs-12">
+                {% for tag in skill.tag.all %}
+                  <a class="tag" ><i class="fa fa-tag" aria-hidden="ture"></i>{{ tag.name }}</a>
+                {% endfor %}
+              <h4>{{skill.skilltodo}}</h4>
+            </div>        
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p> {% trans "No skills found" %} </p>
       {% endfor %}
     </div>
-        <h4>{{skill.skilltodo}}</h4>
-    </div>
   </div>
-  {% empty %}
-  <p> {% trans "No skills found" %} </p>
-  {% endfor %}
 </div>

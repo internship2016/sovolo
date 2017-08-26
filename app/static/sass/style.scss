@@ -29,14 +29,19 @@ nav{
 
 .m10{margin: 10px;}
 .m15{margin: 15px;}
+.mt5{margin-top: 5px;}
 .mt10{margin-top: 10px;}
 .mt15{margin-top: 15px;}
+.mb5{margin-bottom: 5px;}
+.mb10{margin-bottom: 10px;}
+.mb15{margin-bottom: 15px;}
 .mb10{margin-bottom: 10px;}
 .mb15{margin-bottom: 15px;}
 .ml5{margin-left:5px;}
 .ml10{margin-left:10px;}
 .ml15{margin-left:15px;}
 
+.pt15{padding-top: 15px;}
 
 #search-area {
   div {
@@ -48,6 +53,7 @@ nav{
 }
 
 #main-content {
+  background: #fff;
   padding-bottom: 70px;
 }
 
@@ -71,6 +77,28 @@ nav{
 
 .tag {
   display: inline-block;
+  &-label{
+    display: inline-block;
+    font-size: 19px; 
+  }
+  &-select{
+    cursor: pointer;
+    >input[type="checkbox"]{
+      display: none;
+    }
+  }
+}
+
+
+.skill{
+  &-list{
+    &-item{
+      &>.list-group-item-heading{
+        font-size: 20px;
+      }
+
+    }
+  }
 }
 
 /* Google Maps */
@@ -82,11 +110,19 @@ nav{
   margin-top:10px;
 }
 #map_canvas2{
-  min-height: 400px;
-  min-width: 400px;
+  min-height: 200px;
+  min-width: 200px;
   height:100%;
   width:100%;
   margin-top:10px;
+  @media(min-width: 450px){
+    min-height: 400px;
+    min-width: 400px;
+  }
+  @media(min-width: 768px){
+    min-height: 400px;
+    min-width: 400px;
+  }
 }
 
 /* Flush footer to the bottom */
@@ -363,7 +399,7 @@ $slide-img-size : 150px;
   }
   &-title{
     font-size: 14px;
-    height: 3em;
+    height: 3.2em;
     overflow: hidden;
   }
   &-text{
@@ -442,7 +478,7 @@ $logo-height :65px;
     border-color: #df0009;
     color: #fff;
     box-shadow: 0 2px 4px 0 rgba(152,152,152,0.5);
-    padding: 15px 30px;
+    padding: 15px 15px;
     border-radius: 4px;
     font-size: 18px;
     cursor: pointer;
@@ -504,6 +540,41 @@ $logo-height :65px;
         }
       }
     }
+  }
+}
 
+.review{
+  &-form{
+    margin: 0;
+    padding: 10px;
+    background-color: #fff9db;
+  }
+  &-btn{
+    width: 150px;
+  }
+}
+
+.review{
+  &-form{
+    margin: 0;
+    padding: 10px;
+    background-color: #fff9db;
+  }
+}
+
+#skilllist_username{
+  position: absolute;
+  left: 120px;
+}
+
+.fa{
+  &-starsize{
+    font-size: 20px;
+  }
+  &-white{
+    color: #ccc;
+  }
+  &-yellow{
+    color: #ff9800;
   }
 }
