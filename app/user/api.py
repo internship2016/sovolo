@@ -21,9 +21,9 @@ def user_filter(request, *args, **kwargs):
         query = query & tag_query
     # ほんとはソボレージ順に並べたい。けど、現状、ソボレージのfieldはないので、id順。追加したい。
     users = User.objects.all() \
-                       .filter(query) \
-                       .order_by('-id') \
-                       .distinct()
+                        .filter(query) \
+                        .order_by('-id') \
+                        .distinct()
     res = {'filtered_users':[]}
     for u in users:
         res['filtered_users'].append({
