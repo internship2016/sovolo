@@ -232,6 +232,7 @@
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
 
+      // FIXME: $('#map_canvas').get(0) vs document.getElementById
       gmap = new google.maps.Map(document.getElementById("map_canvas"), opts);
 
       var marker = new google.maps.Marker({
