@@ -155,10 +155,13 @@
   function get_events() {
     //四隅の情報を取得
     var bounds = gmap.getBounds();
+
+    // XXX: global variables
     map_ne_lat = bounds.getNorthEast().lat();
     map_sw_lat = bounds.getSouthWest().lat();
     map_ne_lng = bounds.getNorthEast().lng();
     map_sw_lng = bounds.getSouthWest().lng();
+
     $('#ne_lat').val(map_ne_lat);
     $('#sw_lat').val(map_sw_lat);
     $('#ne_lng').val(map_ne_lng);
