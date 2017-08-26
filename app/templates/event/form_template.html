@@ -164,7 +164,7 @@
         map: gmap,
         draggable: true
       });
-      marker.addListener('dragend',function () {
+      marker.addListener('dragend', function () {
         //マーカーを動かした時
         $(('#id_latitude')).val(marker.position.lat())
         $(('#id_longitude')).val(marker.position.lng())
