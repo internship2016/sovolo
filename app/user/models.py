@@ -344,7 +344,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
             num += len(user_list)
         return num
 
-    def get_unreview_list(request):
+    def get_unreview_list(self):
         """Get Unreview List.
         ログインしているユーザーの未レビューの最新５件を返す。
         """
@@ -352,10 +352,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
         res_obj = []
 
-        if user.is_anonymous:
-            return res_obj
-
-        if self.roll == 'helper':
+        if self.role == 'helper':
             unreview_events = self.get_past_participated_and_unreviewed_events()
             for event in unreview_events[:back_num]:
                 res_obj.append({
@@ -391,7 +388,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
                     })
                     counter += 1
 
-            return res_obj
+        return res_obj
 
 
 class UserActivation(models.Model):
