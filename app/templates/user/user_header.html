@@ -149,7 +149,7 @@ $(function () {
       var tmpl = $('#skill-form').html();
       var add_window = Mustache.to_html(tmpl, {X: X});
       $('#skills').append(add_window);
-      $('.tag-select').on('click',function(){
+      $('.tag-select').on('click', function() {
         $label = $(this).find('span');
         $check = $(this).find('input');
         if(!$check.is(':checked')){
