@@ -4,7 +4,8 @@ from django.template import Context
 from django.core.mail import EmailMessage
 
 
-def send_template_mail(template, context, from_address, to_addresses, bcc_addresses=None):
+def send_template_mail(template, context, from_address, to_addresses,
+                       bcc_addresses=None):
     if not isinstance(template, Template):
         template = get_template(template)
     if not isinstance(context, Context):
