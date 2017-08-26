@@ -211,21 +211,21 @@
         map: gmap
       });
       var infoWindowOpts = {
-          content : val.name,
-          maxWidth : 400
+        content : val.name,
+        maxWidth : 400
       };
       var infoWindow = new google.maps.InfoWindow(infoWindowOpts);
       marker.addListener("click", function(m) {
-          //先に開いた情報ウィンドウがあれば、closeする
-          if (currentWindow) {
-              currentWindow.close();
-          }
-          //情報ウィンドウを開く
-          infoWindow.open(gmap, marker);
-          //開いた情報ウィンドウを記録しておく
-          currentWindow = infoWindow;
-          currentWindowInfo.lat = m.latLng.lat();
-          currentWindowInfo.lng = m.latLng.lng();
+        //先に開いた情報ウィンドウがあれば、closeする
+        if (currentWindow) {
+          currentWindow.close();
+        }
+        //情報ウィンドウを開く
+        infoWindow.open(gmap, marker);
+        //開いた情報ウィンドウを記録しておく
+        currentWindow = infoWindow;
+        currentWindowInfo.lat = m.latLng.lat();
+        currentWindowInfo.lng = m.latLng.lng();
       });
       markers.push(marker);
     });
