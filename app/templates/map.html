@@ -121,7 +121,11 @@
   function getnow() {
     navigator.geolocation.getCurrentPosition(function(position) {
         // 緯度経度の取得
-        var now = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        var now = new google.maps.LatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+
         gmap.setCenter(now);
         $('#id_meeting_place').val(position.formatted_address);
         geocoder.geocode( { 'location': now}, function(results, status) {
