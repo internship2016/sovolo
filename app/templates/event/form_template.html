@@ -341,15 +341,15 @@
     </button>
       <script type="text/javascript">
       $(function () {
-          $('#add_frame').on('click', function (event) {
-            var X = $('#frames>div').length + 1;
+        $('#add_frame').on('click', function (event) {
+          var X = $('#frames>div').length + 1;
 
-            var tmpl = $('#tmpl-frame').html();
+          var tmpl = $('#tmpl-frame').html();
 
-            $wrapper = $('<div>');
-            $wrapper.html(Mustache.to_html(tmpl, {X: X}));
-            $('#frames').append($wrapper);
-          });
+          $wrapper = $('<div>');
+          $wrapper.html(Mustache.to_html(tmpl, {X: X}));
+          $('#frames').append($wrapper);
+        });
       });
 
       </script>
