@@ -112,7 +112,7 @@
     };
     gmap = new google.maps.Map(document.getElementById("map_canvas2"), opts);
     gmap.setCenter(latlng);
-    google.maps.event.addListener(gmap, 'idle', function(){
+    google.maps.event.addListener(gmap, 'idle', function() {
       get_events();
     });
     geocoder = new google.maps.Geocoder();
