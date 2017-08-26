@@ -198,7 +198,7 @@
       context.events_in_range.forEach(function(val, index, arr) {
         val.start_time = moment(val.start_time).format("M月D日(ddd)");
         val.label_brand = val.label;
-        val.status = val.status;
+        val.status = val.status;  // XXX: ?!
         val.markernum = index;
       });
     $('#map-event-list').html(Mustache.to_html(map_event_template, context));
