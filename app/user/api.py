@@ -19,7 +19,9 @@ def user_filter(request, *args, **kwargs):
             else:
                 tag_query = tag_query | Q(tag=tag)
         query = query & tag_query
-    # ほんとはソボレージ順に並べたい。けど、現状、ソボレージのfieldはないので、id順。追加したい。
+    # ほんとはソボレージ順に並べたい。
+    # けど、現状、ソボレージのfieldはないので、id順。
+    # 追加したい。
     users = User.objects.all() \
                         .filter(query) \
                         .order_by('-id') \
