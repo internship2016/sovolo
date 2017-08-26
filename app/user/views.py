@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
 from .models import User, Skill, UserActivation, UserPasswordResetting, UserComment
-from .form import UserReviewListForm
+from .form import UserReviewListForm, UserCommentCreateForm
 from django.urls import reverse
 
 from event.models import Event
@@ -432,32 +432,6 @@ class UserListView(ListView):
 
         results = Skill.objects.filter(query).order_by('-id').distinct()
         return results
-@method_decorator(login_required, name='dispatch')
-class UserCommentCreate(CreateView):
-    model = UserComment
-    fields = ['text']
-    template_name = "user/usercomment_add.html"
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['to_user'] = self.pk
-        context['from_user'] = self.request.user.id
-        return context
-
-    def form_valid(self, form):
-        form.instance.from_user = self.request.user
-        form_redirect = super(UserCommentCreate, self).form_valid(form)
-        
-        text = self.request.POST["test"]
-        if text.strip() != "":
-            usercomment = UserComment(
-                from_user=self.request.user,
-                to_user=User.objects.get(pk=user_id),
-                text=text,
-            )
-            usercomment.save()
-
-        return form_redirect
 
 @method_decorator(login_required, name='dispatch')
 class UserCommentView(ListView):
@@ -483,3 +457,23 @@ class UserCommentView(ListView):
         info_msg = _("コメントを送信しました")
         messages.info(self.request, info_msg)
         return reverse('user:detail', kwargs={'pk': user_id})
+
+class UserCommentCreate(CreateView):
+
+    template_name = 'user/usercommentadd.html'
+    model = UserComment
+    fields = ['text']
+    success_url = "../"
+
+    def get_context_data(self, **kwargs):
+        context = super(UserCommentCreate, self).get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        form_redirect = super(UserCommentCreate, self).form_valid(form)
+        form.instance.form_user_id = self.request.user.id
+        form.instance.to_user_id = self.id
+        form.save()
+        return form_redirect
+        
+       
