@@ -159,7 +159,7 @@
         }).done(function(response) {
           show_events(response);
         }).fail(function() {
-          console.log("{% trans 'Failed to get information' %}")
+          console.log("{% trans 'Failed to get information' %}");
       });
       $('.event-filter').on('click',function(){
         $('.event-filter').removeClass('event-active');
