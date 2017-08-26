@@ -202,7 +202,7 @@
         val.markernum = index;
       });
     $('#map-event-list').html(Mustache.to_html(map_event_template, context));
-    context['events_in_range'].forEach(function(val,index,arr){
+    context.events_in_range.forEach(function(val,index,arr){
       var marker = new google.maps.Marker({
         position: {
           lat: val.latitude,
