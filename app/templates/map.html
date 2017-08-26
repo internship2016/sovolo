@@ -142,7 +142,7 @@
   function getlatlng(){
     //検索した時
     var address = document.getElementById("id_meeting_place").value;
-    geocoder.geocode( { 'address': address}, function(results, status) {
+    geocoder.geocode({address: address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           gmap.setCenter(results[0].geometry.location);
           get_events();
