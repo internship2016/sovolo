@@ -2,6 +2,8 @@ from django.http import JsonResponse
 from user.models import User
 from django.db.models import Q
 from django.apps import apps
+
+
 def user_filter(request, *args, **kwargs):
     #将来的にはpostで、結果に含めるタグを選択できるようにしたい。
     query = Q()
