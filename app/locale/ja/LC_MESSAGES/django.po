@@ -54,11 +54,11 @@ msgstr "ユーザー名 %(name)s に一致するユーザーはいませんで�
 
 #: event/views.py:133
 msgid "Your event was successfully added."
-msgstr "ボランティア情報を編集しました。"
+msgstr "ボランティア活動情報を編集しました。"
 
 #: event/views.py:163
 msgid "Event not found."
-msgstr "ボランティアがありません"
+msgstr "ボランティア活動がありません"
 
 #: sovolo/settings.py:145
 msgid "English"
@@ -254,19 +254,20 @@ msgstr "沖縄県"
 
 #: templates/base.html:67
 msgid "Find Events"
-msgstr "ボランティアを検索"
+msgstr "ボランティア活動を検索"
 
 #: templates/base.html:75
 msgid "Create an event"
-msgstr "ボランティア作成"
+msgstr "ボランティア活動を作る"
 
 #: templates/base.html:82
-msgid "Search Volunteer Work"
-msgstr "ボランティアを探す"
+msgid "Search Volunteer events"
+msgstr "ボランティア活動を探す"
 
 #: templates/base.html:89
 msgid "Search Volunteer"
-msgstr "人を探す"
+msgstr "ボランティアを探す"
+
 
 #: templates/base.html:112 templates/user/acquire_email.html:4
 #: templates/user/acquire_email.html:7 templates/user/register.html:21
@@ -297,7 +298,7 @@ msgstr "はじめよう、つながろう"
 
 #: templates/container_top.html:12
 msgid "Create an Event"
-msgstr "ボランティアをはじめる"
+msgstr "ボランティア活動をはじめる"
 
 #: templates/container_top.html:23
 msgid "Event photo"
@@ -309,7 +310,7 @@ msgstr "いいね"
 
 #: templates/event/add.html:5 templates/event/add.html:13
 msgid "Create a new event"
-msgstr "ボランティア作成"
+msgstr "ボランティア活動を作る"
 
 #: templates/event/add.html:21 templates/event/edit.html:19
 #: templates/user/request_password_reset.html:17
@@ -354,7 +355,7 @@ msgstr "チェックを入れてください"
 
 #: templates/event/detail.html:7
 msgid "Details"
-msgstr "ボランティア詳細"
+msgstr "ボランティア活動詳細"
 
 #: templates/event/detail.html:22
 msgid "Availability"
@@ -436,23 +437,23 @@ msgstr "参加者への連絡事項（応募していないユーザーには見
 
 #: templates/event/edit.html:3
 msgid "Edit your event"
-msgstr "ボランティア編集"
+msgstr "ボランティア活動編集"
 
 #: templates/event/edit.html:9
 msgid "Edit Your Event"
-msgstr "ボランティア内容変更"
+msgstr "ボランティア活動内容変更"
 
 #: templates/event/edit.html:11
 msgid "Create a new event based on this one"
-msgstr "このボランティアを雛形に新しいボランティアを作成する"
+msgstr "このボランティア活動を雛形に新しいボランティア活動を作成する"
 
 #: templates/event/edit.html:25
 msgid "Delete this event"
-msgstr "ボランティアを削除する"
+msgstr "ボランティア活動を削除する"
 
 #: templates/event/event_header.html:13
 msgid "EVENT CLOSED"
-msgstr "このボランティアは終了しました"
+msgstr "このボランティア活動は終了しました"
 
 #: templates/event/event_header.html:16
 msgid "Onging"
@@ -489,7 +490,7 @@ msgstr "メール一斉送信"
 #: templates/event/form_template.html:9 templates/user/user_header.html:76
 #: templates/user/user_post_review.html:16
 msgid "Event Name"
-msgstr "ボランティア名"
+msgstr "ボランティア活動名"
 
 #: templates/event/form_template.html:9
 msgid "(Input up to 20 characters)"
@@ -528,7 +529,7 @@ msgstr "緯度経度情報を取得できませんでした"
 
 #: templates/event/form_template.html:184
 msgid "Event image"
-msgstr "ボランティア画像"
+msgstr "参考画像"
 
 #: templates/event/form_template.html:187
 msgid "Image:"
@@ -572,7 +573,7 @@ msgstr "参加枠"
 
 #: templates/event/form_template.html:287
 msgid "Job Description:"
-msgstr "仕事内容"
+msgstr "活動内容"
 
 #: templates/event/form_template.html:292
 msgid "up to:"
@@ -585,7 +586,7 @@ msgstr "応募締切"
 #: templates/event/form_template.html:309
 #: templates/event/form_template.html:361
 msgid "Job Description"
-msgstr "仕事内容"
+msgstr "活動内容"
 
 #: templates/event/form_template.html:313
 #: templates/event/form_template.html:365
@@ -605,11 +606,11 @@ msgstr "関連付けるタグ"
 
 #: templates/event/index.html:3
 msgid "View all new events"
-msgstr "新着ボランティア一覧"
+msgstr "新着ボランティア活動一覧"
 
 #: templates/event/index.html:7
 msgid "List of all events scheduled to be held"
-msgstr "すべての開催予定のボランティア"
+msgstr "すべての開催予定のボランティア活動"
 
 #: templates/event/message.html:14
 msgid "Recipients:"
@@ -657,7 +658,7 @@ msgstr "参加者がいません"
 
 #: templates/event/search_form.html:4 templates/event/search_form_side.html:4
 msgid "Search for events"
-msgstr "ボランティア検索"
+msgstr "ボランティア活動を探す"
 
 #: templates/event/search_form.html:17
 #: templates/event/search_form_side.html:17
@@ -715,12 +716,12 @@ msgstr "ステータス"
 #: templates/event/search_form.html:65
 #: templates/event/search_form_side.html:66
 msgid "Exclude closed events"
-msgstr "締め切られたボランティアを除外"
+msgstr "締め切られたボランティア活動を除外"
 
 #: templates/event/search_form.html:67
 #: templates/event/search_form_side.html:69
 msgid "Exclude full events"
-msgstr "満員になったボランティアを除外"
+msgstr "満員になったボランティア活動を除外"
 
 #: templates/event/search_results.html:4
 #: templates/event/search_results.html:10
@@ -737,7 +738,7 @@ msgstr "次へ"
 
 #: templates/event/side_info.html:19
 msgid "There are no filters attached."
-msgstr "このボランティアはタグ付けされていません"
+msgstr "このボランティア活動はタグ付けされていません"
 
 #: templates/map.html:12
 msgid "Postal code, Prefecture, City or Address"
@@ -805,19 +806,19 @@ msgstr "カレンダー"
 
 #: templates/top.html:24
 msgid "Events I'm going"
-msgstr "参加予定のボランティア"
+msgstr "参加予定のボランティア活動"
 
 #: templates/top.html:30
 msgid "Events Nearby"
-msgstr "地域の新着ボランティア"
+msgstr "地域の新着ボランティア活動"
 
 #: templates/top.html:37
 msgid "View New Events"
-msgstr "新着のボランティア"
+msgstr "新着のボランティア活動"
 
 #: templates/top.html:44
 msgid "View All Events"
-msgstr "すべてのボランティア"
+msgstr "すべてのボランティア活動"
 
 #: templates/top.html:141 templates/top.html:154
 msgid "Failed to get information"
@@ -833,15 +834,15 @@ msgstr "登録"
 
 #: templates/user/detail.html:12
 msgid "List of Events Organizing"
-msgstr "管理しているボランティア一覧"
+msgstr "管理しているボランティア活動一覧"
 
 #: templates/user/detail.html:14
 msgid "List of Events Attending"
-msgstr "参加予定のボランティア一覧"
+msgstr "参加予定のボランティア活動一覧"
 
 #: templates/user/detail.html:15
 msgid "Event Achievements"
-msgstr "ボランティア実績"
+msgstr "ボランティア活動実績"
 
 #: templates/user/edit.html:4 templates/user/edit.html:35
 #: templates/user/user_header.html:32
@@ -1025,7 +1026,7 @@ msgstr "ユーザーを検索"
 #, fuzzy
 #| msgid "Search for events"
 msgid "Search by tags"
-msgstr "ボランティア検索"
+msgstr "ボランティア活動を探す"
 
 #: templates/user/template_skilllist.html:4
 msgid "Users"
@@ -1110,11 +1111,11 @@ msgstr "未レビュー"
 
 #: templates/user/user_unreviewed.html:14
 msgid "Events not yet reviewed"
-msgstr "未レビューのボランティア一覧"
+msgstr "未レビューのボランティア活動一覧"
 
 #: templates/user/user_unreviewed.html:67
 msgid "You have reviewed all the events participated!"
-msgstr "未レビューのボランティアがありません"
+msgstr "未レビューのボランティア活動がありません"
 
 #: templates/user/user_unreviewed.html:76
 msgid "Participants not yet reviewed"
@@ -1200,7 +1201,7 @@ msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
 
 #~ msgid "Show closed events"
-#~ msgstr "締め切られたボランティアを表示"
+#~ msgstr "締め切られたボランティア活動を表示"
 
 #~ msgid "Change language"
 #~ msgstr "言語切り替え"
