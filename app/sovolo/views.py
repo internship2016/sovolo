@@ -1,12 +1,8 @@
-import os
 from django.shortcuts import render
 from django.shortcuts import redirect
 from event.models import Event
 from tag.models import Tag
 from django.conf import settings
-from user.models import User, Skill
-from django.views.generic import ListView
-from django.db.models import Q
 
 
 def index(request):
@@ -14,6 +10,7 @@ def index(request):
         return redirect('/user/top')
     else:
         return redirect('/event/top')
+
 
 def index_event(request):
     context = {}
@@ -26,8 +23,9 @@ def index_event(request):
     """New Events
     新規イベント
     """
-    context['new_events']  = [event for event in Event.objects.all().order_by('-created') if not event.is_over()][:10]
-
+    context['new_events'] = [event for event
+                             in Event.objects.all().order_by('-created')
+                             if not event.is_over()][:10]
 
     """Prefectures
     日本の(!)県名
@@ -46,7 +44,7 @@ def show_map(request):
     context = {}
     context['all_tags'] = Tag.objects.all()
 
-    return render(request, 'map.html',context)
+    return render(request, 'map.html', context)
 
 
 def index_user(request):

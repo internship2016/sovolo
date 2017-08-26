@@ -258,6 +258,11 @@ class User(AbstractBaseModel, AbstractBaseUser):
     # Review (using by participant)
     def get_mean_rating(self):
         avg_rate = self.to_rate_user.aggregate(Avg('rating'))['rating__avg']
+
+        # FIXME: avg_rate might be None
+        if avg_rate is None:
+            return avg_rate
+
         return round(avg_rate, 2)
 
     def get_reviewed_events(self):

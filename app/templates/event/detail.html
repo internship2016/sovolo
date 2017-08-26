@@ -217,21 +217,23 @@
  
 </div>
 
-<script>
-  var gmap;
+<script type="text/javascript">
+  // XXX: dup: gmap
+  var gmap;  // XXX: global variable
 
-  function initialize(){
+  function initialize() {
 
     if ($('#event_lat').length > 0) {
       var lat = $('#event_lat').val()
       var lng = $('#event_lng').val()
-      var latlng = new google.maps.LatLng(lat,lng);
-        var opts = {
-          zoom: 15,
-          center: latlng,
-          mapTypeId: google.maps.MapTypeId.ROADMAP
-        };
+      var latlng = new google.maps.LatLng(lat, lng);
+      var opts = {
+        zoom: 15,
+        center: latlng,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+      };
 
+      // FIXME: $('#map_canvas').get(0) vs document.getElementById
       gmap = new google.maps.Map(document.getElementById("map_canvas"), opts);
 
       var marker = new google.maps.Marker({
@@ -242,7 +244,9 @@
 
   }
 
-  window.onload = initialize()
+  $(function () {
+    initialize();
+  });
 
 </script>
 
