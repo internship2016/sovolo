@@ -156,9 +156,9 @@
           data: init.serialize(),
           type: 'POST',
           dataType: 'json'
-        }).done(function(response){
+        }).done(function(response) {
           show_events(response);
-        }).fail(function(){
+        }).fail(function() {
           console.log("{% trans 'Failed to get information' %}")
       });
       $('.event-filter').on('click',function(){
