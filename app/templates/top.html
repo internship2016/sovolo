@@ -151,6 +151,8 @@
       spinner.spin(spin_target);
       //もう一度spinを呼ぶとスピナー停止
       var init = $(".event-filter:first-of-type");
+
+      {% trans 'Failed to get information' as str_fail %}
       $.ajax({
           url: init.attr("action"),
           data: init.serialize(),
@@ -159,8 +161,9 @@
         }).done(function(response) {
           show_events(response);
         }).fail(function() {
-          console.log("{% trans 'Failed to get information' %}");
+          console.log("{{ str_fail|escapejs }}");
       });
+
       $('.event-filter').on('click', function() {
         $('.event-filter').removeClass('event-active');
         $(this).addClass('event-active');
@@ -172,7 +175,7 @@
         }).done(function(response) {
           show_events(response);
         }).fail(function() {
-          console.log("{% trans 'Failed to get information' %}");
+          console.log("{{ str_fail|escapejs }}");
         });
       });
     })
