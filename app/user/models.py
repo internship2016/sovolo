@@ -77,7 +77,10 @@ class User(AbstractBaseModel, AbstractBaseUser):
                                 null=True)
 
     # helper or sufferer
-    role = models.CharField(blank=True, null=True, max_length=15, default='helper')
+    role = models.CharField(blank=True,
+                            null=True,
+                            max_length=15,
+                            default='helper')
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -382,8 +385,10 @@ class UserReviewList(models.Model):
                                        on_delete=models.CASCADE,
                                        related_name='from_rate_user')
 
-    rating = models.IntegerField(choices=RATE_CHOICES,validators=[MinValueValidator(0),
-                                             MaxValueValidator(5)], default=3)
+    rating = models.IntegerField(choices=RATE_CHOICES,
+                                 validators=[MinValueValidator(0),
+                                             MaxValueValidator(5)],
+                                 default=3)
 
     comment = models.CharField(max_length=200, null=True, blank=True)
 
