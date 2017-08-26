@@ -11,6 +11,7 @@ def index(request):
     else:
         return redirect('/event/top')
 
+
 def index_event(request):
     context = {}
 
