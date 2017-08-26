@@ -383,6 +383,7 @@
         <input class="form-control datetimepicker deadend" name="frame_[[ X ]]_deadline" type="text" placeholder="{% trans 'optional' %}">
         <script type="text/javascript">
           (function () {
+            // FIXME: Variable interpolation with jQuery()
             $("#frame_number_[[ X ]] .datetimepicker").datetimepicker({
               locale: moment.locale("ja"),
               format: "YYYY-MM-DD HH:mm",
