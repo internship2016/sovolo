@@ -171,7 +171,7 @@
       'url': $('#bound_data').attr('action'),
       'data':$('#bound_data').serialize(),
       'type':'POST',
-      'dataType':'json',
+      'dataType':'json'
     }).done(function(response){
       markerClear();
       markerSet(response);
