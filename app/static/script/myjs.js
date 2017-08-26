@@ -39,31 +39,6 @@ $(function(){
       format: DateFormat
     });
 
-    $('#order-results').change(function() {
-      var Url = window.location.href;
-      var desc;
-      switch (this.value) {
-        case "開始日(昇順）":
-          desc = "asc";
-          break;
-        case "開始日(降順)":
-          desc = "desc";
-          break;
-        default:
-          desc = "";
-          break;
-      }
-      var regex = /\b(order_by=start_time-)[^&]*/;
-      var newUrl;
-      if (regex.test(Url)) {
-        newUrl = Url.replace(regex, '$1' + desc);
-      } else {
-        newUrl = Url + "&order_by=start_time-" + desc;
-      }
-      newUrl = newUrl.replace(/\bpage=\d+/, "page=1");
-      window.location.replace(newUrl);
-    });
-
     $('#result-number').change(function() {
       var Url = window.location.href;
       var num = this.value;
