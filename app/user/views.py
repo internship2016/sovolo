@@ -435,4 +435,3 @@ class UserListView(ListView):
 
         results = Skill.objects.filter(query).order_by('-id').distinct()
         return results
-
