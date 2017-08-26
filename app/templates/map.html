@@ -129,7 +129,7 @@
 
         gmap.setCenter(now);
         $('#id_meeting_place').val(position.formatted_address);
-        geocoder.geocode( { 'location': now}, function(results, status) {
+        geocoder.geocode({location: now}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               $('#id_meeting_place').val(results[0].formatted_address);
             }
