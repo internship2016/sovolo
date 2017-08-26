@@ -165,10 +165,10 @@
         $('.event-filter').removeClass('event-active');
         $(this).addClass('event-active');
         $.ajax({
-          'url':$(this).attr('action'),
-          'data':$(this).serialize(),
-          'type':'POST',
-          'dataType':'json',
+          url:$(this).attr('action'),
+          data:$(this).serialize(),
+          type:'POST',
+          dataType:'json',
         }).done(function(response){
           show_events(response);
         }).fail(function(){
