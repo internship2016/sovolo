@@ -143,12 +143,12 @@
     //検索した時
     var address = document.getElementById("id_meeting_place").value;
     geocoder.geocode({address: address}, function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-          gmap.setCenter(results[0].geometry.location);
-          get_events();
-        } else {
-          alert('{% trans "Failed to get information." %}');
-        }
+      if (status == google.maps.GeocoderStatus.OK) {
+        gmap.setCenter(results[0].geometry.location);
+        get_events();
+      } else {
+        alert('{% trans "Failed to get information." %}');
+      }
     });
   }
 
