@@ -183,14 +183,15 @@
   function markerClear() {
     var current = -1;  // FIXME: magic number?
     for (var i = 0; i < markers.length; i++) {
-      if(currentWindowInfo.lat==markers[i].position.lat()&&
-        currentWindowInfo.lng==markers[i].position.lng()){
-          current = i;
-          continue;
-        }
+      if(  currentWindowInfo.lat == markers[i].position.lat()
+        && currentWindowInfo.lng == markers[i].position.lng()
+      ) {
+        current = i;
+        continue;
+      }
       markers[i].setMap(null);
     }
-    markers = current==-1 ? [] : [markers[current]];
+    markers = current == -1 ? [] : [markers[current]];
   }
 
   function markerSet(context){
