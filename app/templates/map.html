@@ -172,7 +172,7 @@
       data: $('#bound_data').serialize(),
       type: 'POST',
       dataType: 'json'
-    }).done(function(response){
+    }).done(function(response) {
       markerClear();
       markerSet(response);
     }).fail(function(){
