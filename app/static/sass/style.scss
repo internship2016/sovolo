@@ -77,6 +77,28 @@ nav{
 
 .tag {
   display: inline-block;
+  &-label{
+    display: inline-block;
+    font-size: 19px; 
+  }
+  &-select{
+    cursor: pointer;
+    >input[type="checkbox"]{
+      display: none;
+    }
+  }
+}
+
+
+.skill{
+  &-list{
+    &-item{
+      &>.list-group-item-heading{
+        font-size: 20px;
+      }
+
+    }
+  }
 }
 
 /* Google Maps */
@@ -356,7 +378,7 @@ $slide-img-size : 150px;
 
 .card{
   width: $slide-img-size*2+6px;
-  height: $slide-img-size;
+  height: $slide-img-size+3px;
   border: 1px solid #ccc;
   &-img{
     width: $slide-img-size;
@@ -377,7 +399,7 @@ $slide-img-size : 150px;
   }
   &-title{
     font-size: 14px;
-    height: 3em;
+    height: 3.2em;
     overflow: hidden;
   }
   &-text{
@@ -409,16 +431,17 @@ $slide-img-size : 150px;
   margin: 17px!important;
 }
 
-$logo-height :65px;
+$logo-height :42px;
 .logo{
-  width: $logo-height*2;
+  width: $logo-height*2.78;
   height: $logo-height;
   padding: 0 15px 0 !important;
   img{
-    width: $logo-height*2;
+    width: $logo-height*2.78;
     height: $logo-height;
     display: inline-block;
     vertical-align: middle; 
+    margin-top:8px;
   }
 }
 
@@ -456,7 +479,7 @@ $logo-height :65px;
     border-color: #df0009;
     color: #fff;
     box-shadow: 0 2px 4px 0 rgba(152,152,152,0.5);
-    padding: 15px 30px;
+    padding: 15px 15px;
     border-radius: 4px;
     font-size: 18px;
     cursor: pointer;
@@ -530,6 +553,7 @@ $logo-height :65px;
   &-btn{
     width: 150px;
   }
+}
 
 .review{
   &-form{
@@ -541,11 +565,7 @@ $logo-height :65px;
 
 #skilllist_username{
   position: absolute;
-  left: 150px;
-}
-  &-btn{
-    width: 150px;
-  }
+  left: 120px;
 }
 
 .fa{

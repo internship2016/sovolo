@@ -116,25 +116,27 @@
 </div>
 {% endif %}
 
-<script>
-  $(function(){
-    $('.review-star').hover(function(){
-      var star_cnt = parseInt($(this).attr('data-rating'));
+<script type="text/javascript">
+  $(function() {
+    // FIXME: every single functions are all samy
+    $('.review-star').hover(function() {
+      var star_cnt = parseInt($(this).attr('data-rating'), 10);
       $('.review-star').removeClass('fa-yellow');
-      $('.review-star').each(function(index,elem){
+      $('.review-star').each(function(index, elem) {
         $(elem).addClass(index<star_cnt ? 'fa-yellow' : 'fa-white');
       });
-    },function(){
-      var star_cnt = parseInt($('#review-rating').val());
+    }, function() {
+      var star_cnt = parseInt($('#review-rating').val(), 10);
       $('.review-star').removeClass('fa-yellow');
-      $('.review-star').each(function(index,elem){
+      $('.review-star').each(function(index, elem) {
         $(elem).addClass(index<star_cnt ? 'fa-yellow' : 'fa-white');
       });
     });
-    $('.review-star').on('click',function(){
-      var star_cnt = parseInt($(this).attr('data-rating'));
+
+    $('.review-star').on('click', function() {
+      var star_cnt = parseInt($(this).attr('data-rating'), 10);
       $('.review-star').removeClass('fa-yellow');
-      $('.review-star').each(function(index,elem){
+      $('.review-star').each(function(index, elem) {
         $(elem).addClass(index<star_cnt ? 'fa-yellow' : 'fa-white');
       });
       $('#review-rating').val(star_cnt);

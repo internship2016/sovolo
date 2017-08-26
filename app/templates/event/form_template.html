@@ -92,8 +92,9 @@
   </div>
 </div>
 
-<script>
-
+<script type="text/javascript">
+  // XXX: dup: gmap
+  // XXX: global variables
   var gmap;
   var geocoder;
   var marker;
@@ -101,11 +102,11 @@
   function initialize(){
     var lat = parseFloat($('#id_latitude').val());
     var lng = parseFloat($('#id_longitude').val());
-    if(isNaN(lat)||isNaN(lng)){
+    if (isNaN(lat) || isNaN(lng)) {
       lat = 35.7291213;
       lng = 139.7191322;
     }
-    var latlng = new google.maps.LatLng(lat,lng);
+    var latlng = new google.maps.LatLng(lat, lng);
 
     var opts = {
       zoom: 15,
@@ -120,14 +121,18 @@
     geocoder = new google.maps.Geocoder();
   }
 
-  function getnow(){
+  function getnow() {
     navigator.geolocation.getCurrentPosition(function(position) {
         // 緯度経度の取得
-        var now = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+        var now = new google.maps.LatLng(
+          position.coords.latitude,
+          position.coords.longitude
+        );
+
         gmap.setCenter(now);
         $('#id_meeting_place').val(position.formatted_address);
         setPin(now);
-        geocoder.geocode( { 'location': now}, function(results, status) {
+        geocoder.geocode({location: now}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               $('#id_meeting_place').val(results[0].formatted_address);
             }
@@ -137,10 +142,10 @@
     });
   }
 
-  function getlatlng(){
+  function getlatlng() {
     //検索した時
     var address = document.getElementById("id_meeting_place").value;
-    geocoder.geocode( { 'address': address}, function(results, status) {
+    geocoder.geocode({address: address}, function(results, status) {
         if (status == google.maps.GeocoderStatus.OK) {
           gmap.setCenter(results[0].geometry.location);
           setPin(results[0].geometry.location);
@@ -159,11 +164,11 @@
         map: gmap,
         draggable: true
       });
-      marker.addListener('dragend',function () {
+      marker.addListener('dragend', function () {
         //マーカーを動かした時
-        $(('#id_latitude')).val(marker.position.lat())
-        $(('#id_longitude')).val(marker.position.lng())
-        geocoder.geocode( { 'location': marker.position}, function(results, status) {
+        $(('#id_latitude')).val(marker.position.lat());
+        $(('#id_longitude')).val(marker.position.lng());
+        geocoder.geocode({location: marker.position}, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
               $('#id_meeting_place').val(results[0].formatted_address);
               gmap.setCenter(results[0].geometry.location);
@@ -176,7 +181,9 @@
     marker.setPosition(pos);
   }
 
-  window.onload = initialize();
+  $(function () {
+    initialize();
+  });
 </script>
 
 
@@ -246,22 +253,28 @@
         </button>
       </span>
     </div>
-    <script>
+    <script type="text/javascript">
       (function () {
         var admins = document.querySelector("#admins");
         var admin_name = document.querySelector('#admin_name');
         var add_admin = document.querySelector('#add_admin');
         add_admin.addEventListener('click', function (e) {
-          if (admin_name.value == "") return;
+          if (admin_name.value === "") {
+            return;
+          }
+
           var label = document.createElement('label');
           var value = admin_name.value;
+
+          // FIXME: Possible XSS vulnerability
           label.innerHTML = "<div class='checkbox'><span><input name='admins' type='checkbox' value=" + value + " checked>" + value + "<\/span><\/div>";
+
           admin_name.value = "";
           admins.appendChild(label);
         });
 
         admin_name.addEventListener('keypress', function (e) {
-          if (e.keyCode == 13) {
+          if (e.keyCode === 13) {
             e.preventDefault();
             add_admin.click();
           }
@@ -326,17 +339,17 @@
     <button class="btn btn-primary pull-right" id="add_frame" type="button">
       <span class="glyphicon glyphicon-plus"></span>
     </button>
-      <script>
+      <script type="text/javascript">
       $(function () {
-          $('#add_frame').on('click', function (event) {
-            var X = $('#frames>div').length + 1;
+        $('#add_frame').on('click', function (event) {
+          var X = $('#frames>div').length + 1;
 
-            var tmpl = $('#tmpl-frame').html();
+          var tmpl = $('#tmpl-frame').html();
 
-            $wrapper = $('<div>');
-            $wrapper.html(Mustache.to_html(tmpl, {X: X}));
-            $('#frames').append($wrapper);
-          });
+          $wrapper = $('<div>');
+          $wrapper.html(Mustache.to_html(tmpl, {X: X}));
+          $('#frames').append($wrapper);
+        });
       });
 
       </script>
@@ -344,11 +357,10 @@
     <button class="btn btn-primary pull-right" id="delete_frame" type="button">
       <span class="glyphicon glyphicon-minus"></span>
     </button>
-      <script>
+      <script type="text/javascript">
       $('#delete_frame').click(function() {
         $wrapper = $('<div>');
         $('#frames div.panel:last').remove();
-
       });
       </script>
   </div>
@@ -369,8 +381,9 @@
       <label class="col-sm-3">{% trans 'Deadline' %}</label>
       <div class="col-sm-9">
         <input class="form-control datetimepicker deadend" name="frame_[[ X ]]_deadline" type="text" placeholder="{% trans 'optional' %}">
-        <script>
+        <script type="text/javascript">
           (function () {
+            // FIXME: Variable interpolation with jQuery()
             $("#frame_number_[[ X ]] .datetimepicker").datetimepicker({
               locale: moment.locale("ja"),
               format: "YYYY-MM-DD HH:mm",
@@ -434,7 +447,7 @@
       sideBySide: true,
       minDate: moment(),
       stepping: 15,
-      defaultDate: moment().add(1, 'days').hours(8).minutes(0),
+      defaultDate: moment().add(1, 'days').hours(8).minutes(0)
     });
 
     $('.end-date').datetimepicker({
@@ -443,7 +456,7 @@
       sideBySide: true,
       minDate: moment(),
       stepping: 15,
-      defaultDate: moment().add(1, 'days').hours(17).minutes(0),
+      defaultDate: moment().add(1, 'days').hours(17).minutes(0)
     });
 
     $('.datetimepicker').datetimepicker({
@@ -451,7 +464,7 @@
       format: fmt,
       sideBySide: true,
       minDate: moment(),
-      stepping: 15,
+      stepping: 15
     });
 
     if(start_blank){

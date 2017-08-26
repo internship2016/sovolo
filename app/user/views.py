@@ -23,6 +23,8 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
 from django.apps import apps
+
+
 class UserCreateView(CreateView):
     model = User
     fields = ['email', 'password', 'username']
@@ -56,6 +58,7 @@ class UserCreateView(CreateView):
         messages.info(self.request, info_msg)
         return redirect("top")
 
+    def create_activation_key(self):
         key = uuid.uuid4().hex
         return key
 
@@ -399,9 +402,10 @@ class UserSkillAddView(CreateView):
         userskill_id = self.request.user.id
         return reverse('user:detail', kwargs={'pk': userskill_id})
 
+
 class UserListView(ListView):
     model = Skill
-    template_name ='user/user_find.html'
+    template_name = 'user/user_find.html'
     context_object_name = 'search_user'
     paginate_by = 10
 
