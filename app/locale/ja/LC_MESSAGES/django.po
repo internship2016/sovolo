@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-27 05:57+0000\n"
+"POT-Creation-Date: 2017-08-27 06:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -314,7 +314,7 @@ msgstr "ボランティア活動を作る"
 #: templates/event/add.html:21 templates/event/edit.html:19
 #: templates/user/request_password_reset.html:17
 #: templates/user/reset_password.html:17 templates/user/skill_add.html:31
-#: templates/user/skill_form.html:34 templates/user/user_header.html:119
+#: templates/user/skill_form.html:34 templates/user/user_header.html:140
 #: templates/user/user_post_review.html:54
 #: templates/user/user_post_review.html:113
 msgid "Submit"
@@ -494,7 +494,7 @@ msgstr "内容変更"
 msgid "Send email to all participants"
 msgstr "メール一斉送信"
 
-#: templates/event/form_template.html:9 templates/user/user_header.html:76
+#: templates/event/form_template.html:9 templates/user/user_header.html:97
 msgid "Event Name"
 msgstr "ボランティア活動名"
 
@@ -846,7 +846,7 @@ msgid "Event Achievements"
 msgstr "ボランティア活動実績"
 
 #: templates/user/edit.html:4 templates/user/edit.html:35
-#: templates/user/user_header.html:32
+#: templates/user/user_header.html:44
 msgid "Edit profile"
 msgstr "プロフィール編集"
 
@@ -870,7 +870,7 @@ msgstr "男,女,秘密"
 msgid "Region:"
 msgstr "地域："
 
-#: templates/user/edit.html:32 templates/user/user_header.html:29
+#: templates/user/edit.html:32 templates/user/user_header.html:41
 msgid "Sovolage"
 msgstr "ソボレージ"
 
@@ -910,7 +910,7 @@ msgstr "生年月日"
 msgid "Language"
 msgstr "言語"
 
-#: templates/user/edit.html:125 templates/user/user_header.html:193
+#: templates/user/edit.html:125 templates/user/user_header.html:214
 msgid "Following tags"
 msgstr "フォローしているタグ"
 
@@ -1006,11 +1006,11 @@ msgid "Related tags"
 msgstr "関連付けるタグ"
 
 #: templates/user/skill_add.html:25 templates/user/skill_form.html:28
-#: templates/user/user_header.html:131
+#: templates/user/user_header.html:152
 msgid "I can do"
 msgstr "できる内容"
 
-#: templates/user/skill_form.html:6 templates/user/user_header.html:90
+#: templates/user/skill_form.html:6 templates/user/user_header.html:111
 msgid "Skills"
 msgstr "スキル一覧"
 
@@ -1038,31 +1038,31 @@ msgstr "ユーザーを検索"
 msgid "Search by tags"
 msgstr "タグでボランティア活動を探す"
 
-#: templates/user/user_header.html:53
-msgid "Reviews"
-msgstr "レビュー"
-
-#: templates/user/user_header.html:59
+#: templates/user/user_header.html:26
 msgid "reviews"
 msgstr "件"
 
-#: templates/user/user_header.html:71
+#: templates/user/user_header.html:76
+msgid "Reviews"
+msgstr "レビュー"
+
+#: templates/user/user_header.html:92
 msgid "Rated by"
 msgstr "投稿者"
 
-#: templates/user/user_header.html:77
+#: templates/user/user_header.html:98
 msgid "Posted on"
 msgstr "投稿日"
 
-#: templates/user/user_header.html:107
+#: templates/user/user_header.html:128
 msgid "Edit"
 msgstr "内容変更"
 
-#: templates/user/user_header.html:174
+#: templates/user/user_header.html:195
 msgid "Trophies"
 msgstr "獲得トロフィー"
 
-#: templates/user/user_header.html:201
+#: templates/user/user_header.html:222
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
 
@@ -1115,6 +1115,10 @@ msgstr "未レビューのボランティア活動がありません"
 #: templates/user/user_unreviewed.html:76
 msgid "Participants not yet reviewed"
 msgstr "未レビューの参加者一覧"
+
+#: templates/user/user_unreviewed.html:126
+msgid "User List"
+msgstr "ユーザー一覧"
 
 #: templates/user/user_unreviewed.html:139
 msgid "Write a review about this user"
