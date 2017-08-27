@@ -56,7 +56,7 @@
 
         <div class="media-heading">
           <a class="btn btn-primary" href="{% url 'user:post_review' %}?event_id={{event.id}}">
-            Go to Event Review Post Page
+            {% trans "Go to Event Review Page" %}
           </a>
         </div>
 
@@ -123,7 +123,7 @@
 
 
       <div class="panel panel-default">
-        <div class="panel-heading">User List</div>
+        <div class="panel-heading">{% trans "User List" %}</div>
           <div class="panel-body">
             <div class="row">
             {% for p_user in user_list %}
@@ -136,7 +136,7 @@
                   </div>
                 </a>
                 <a class="btn btn-primary" href="{% url 'user:post_review' %}?event_id={{event.id}}&to_user_id={{p_user.pk}}">
-                  {% trans "Write and post reviews this user" %}
+                  {% trans "Write a review about this user" %}
                 </a>
               </div>
             {% endfor %}
