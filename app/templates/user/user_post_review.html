@@ -13,6 +13,33 @@
   <div class="panel-body">
     <div class="media">
       <div class="media-left">
+        <a href="/event/{{review_event.pk}}">
+          <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{ review_event.get_image_url }});">
+          </div>
+        </a>
+      </div>
+      <div class="media-body">
+        <div class="event-info pull-left">
+          <div>
+            終了日時
+            <i class="fa fa-calendar" aria-hidden="true"></i>
+              {{review_event.end_time_format| date:'n/j (D)'}}
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+              {{review_event.get_region_kanji}}
+          </div>
+          <div class="media-heading">
+            <a href="/event/{{review_event.pk}}">
+              <h4>{{ review_event.name }}</h4>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel-body">
+    <div class="media">
+      <div class="media-left">
         <a href="/user/to_user.id">
           <div class="media-object custom_thumbnail list-thumbnail"  style="background-image:url({{ user.get_image_url }});">
           </div>
