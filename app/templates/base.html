@@ -40,7 +40,7 @@
   <div class="main-wrapper">
       <header>
         <nav role="navigation" class="navbar navbar-default">
-          <div class="container">
+          <div class="container-fluid">
             <div class="navbar-header navbar-left pull-left">
               <a class="navbar-brand" href="{% url 'top' %}">
                 <img src="{% static 'img/logo.png' %}" style="max-width:80px;height:auto;display:inline-block;vertical-align:middle;">
@@ -123,10 +123,10 @@
                   <!--言語切り替え-->
                     <li>
                       {% get_available_languages as LANGUAGES %}
-                      <form class="navbar-form" action="/i18n/setlang/" method="post" id="languagetab">{% csrf_token %}
+                      <form class="navbar-form" action="/i18n/setlang/" method="post" id="languagetab">
                         <input name="next" type="hidden" value="/" />
                           {% csrf_token %}
-                          <select class="form-control" name="language">
+                          <select class="form-control header-search" name="language">
                             {% for lang in LANGUAGES %}
                               <option value="{{ lang.0 }}">{{ lang.1 }}</option>
                             {% endfor %}
