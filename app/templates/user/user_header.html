@@ -99,7 +99,9 @@
               <span class="ml5">{% trans "Rated by" %} {{ rate.from_rate_user.username }}</span>
               <span class="ml5"></span>
             </h5>
-            <p>{{ rate.comment }}</p>
+            {% if rate.comment %}
+              <p>{{ rate.comment }}</p>
+            {% endif%}
             <p>
               {% trans "Event Name" %} ： {{ rate.joined_event.name }}
               {% trans "Posted on" %} ： {{ rate.post_day }}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-27 06:04+0000\n"
+"POT-Creation-Date: 2017-08-27 07:07+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -315,8 +315,8 @@ msgstr "ボランティア活動を作る"
 #: templates/user/request_password_reset.html:17
 #: templates/user/reset_password.html:17 templates/user/skill_add.html:31
 #: templates/user/skill_form.html:34 templates/user/user_header.html:140
-#: templates/user/user_post_review.html:54
-#: templates/user/user_post_review.html:113
+#: templates/user/user_post_review.html:81
+#: templates/user/user_post_review.html:140
 msgid "Submit"
 msgstr "送信"
 
@@ -653,7 +653,7 @@ msgid "Participants"
 msgstr "参加者"
 
 #: templates/event/participants.html:10 templates/event/side_info.html:6
-#: templates/user/user_post_review.html:84
+#: templates/user/user_post_review.html:111
 msgid "Owner"
 msgstr "オーナー"
 
@@ -1082,17 +1082,22 @@ msgstr "レビュー投稿"
 msgid "Please post a review about this user."
 msgstr "このユーザーのレビューをおこないます。"
 
-#: templates/user/user_post_review.html:36
-#: templates/user/user_post_review.html:95
+#: templates/user/user_post_review.html:24
+#: templates/user/user_post_review.html:101
+msgid "Event Date"
+msgstr "終了日時"
+
+#: templates/user/user_post_review.html:63
+#: templates/user/user_post_review.html:122
 msgid "Rating"
 msgstr "評価"
 
-#: templates/user/user_post_review.html:47
-#: templates/user/user_post_review.html:106
+#: templates/user/user_post_review.html:74
+#: templates/user/user_post_review.html:133
 msgid "Comment"
 msgstr "コメント"
 
-#: templates/user/user_post_review.html:61
+#: templates/user/user_post_review.html:88
 msgid "Please post a review about this event."
 msgstr "このボランティアのレビューをおこないます。"
 
