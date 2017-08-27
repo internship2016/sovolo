@@ -12,7 +12,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
 from .models import User, Skill, UserActivation, UserPasswordResetting, UserComment
-from .form import UserReviewListForm, UserCommentCreateForm
+from .form import UserReviewListForm, UserCommentCreateForm, SkillForm
 from django.urls import reverse
 
 from event.models import Event
@@ -481,4 +481,5 @@ class UserCommentCreate(CreateView):
         form.save()
         return form_redirect
         
-       
+def UserSkillAdd(request):
+
