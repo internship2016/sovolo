@@ -80,8 +80,8 @@
   <div id="collapse-review" class="panel-collapse collapse">
     <div class="panel-body">
       <ul class="list-unstyled">
-      
-      {% for rate in user.to_rate_user.all %}
+
+      {% for rate in user.to_rate_user.all|dictsortreversed:"post_day" %}
         <li class="media">
           <div class="media-left">
             <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{ rate.from_rate_user.get_image_url }});"></div>
