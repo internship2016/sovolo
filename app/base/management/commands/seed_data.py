@@ -527,8 +527,11 @@ class Command(BaseCommand):
         all_tag = list(Tag.objects.all())
 
         for user in User.objects.all():
+            if user.id > 2:
+                have_skill_num = random.choice([0,1,1,1,2,2,2,3,3,3,8])
+            else:
+                have_skill_num = 1
 
-            have_skill_num = random.choice([0,1,1,1,2,2,2,3,3,3,8])
             for _ in range(have_skill_num):
 
                 user_skill = Skill(
@@ -538,10 +541,13 @@ class Command(BaseCommand):
                 user_skill.save()
 
                 ## add Tag
-                tag_num = random.choice([1,1,1,2,3])
-                tag_list = random.sample(all_tag, k=tag_num)
-                for have_tag in tag_list:
-                    user_skill.tag.add(have_tag)
+                if user.id > 2:
+                    tag_num = random.choice([1,1,2])
+                    tag_list = random.sample(all_tag[1:], k=tag_num)
+                    for have_tag in tag_list:
+                        user_skill.tag.add(have_tag)
+                else:
+                    user_skill.tag.add(all_tag[0])
                 user_skill.save()
 
     def handle(self, *args, **options):
