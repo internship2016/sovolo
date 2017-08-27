@@ -6,10 +6,10 @@ from django.conf import settings
 
 
 def index(request):
-    if (not request.user.is_anonymous) and request.user.role == "sufferer":
-        return redirect('/user/top/list')
-    else:
+    if request.user.is_anonymous or request.user.role == "helper":
         return redirect('/event/top')
+    else:
+        return redirect('/user/top/list')
 
 
 def index_event(request):
