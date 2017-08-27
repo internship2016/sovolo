@@ -38,119 +38,115 @@
 </head>
 <body>
   <div class="main-wrapper">
-    <header>
-      <nav role="navigation" class="navbar navbar-default">
-        <!--container-fluid-->
-        <div class="container-fluid">
-          <!--navbar-header-->
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse-content" aria-expanded="false">
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand logo" href="{% url 'top' %}">
-              <img src="{% static 'img/logo.png' %}"/>
-            </a>
-          </div>
-          <!--end of navbar-header-->
-
-          <!--navbar-collapse-->
-          <div class="collapse navbar-collapse" id="navbar-collapse-content">
-
-
-            <!--イベント追加フォーム-->
-            <ul class="nav navbar-nav">
-              <li>
-              <!--検索フォーム-->
-                <form class="navbar-form" role="search" action="{% url 'event:search' %}" method="get">
-                  <input type="text" class="form-control header-search" placeholder="{% trans 'Find Events' %}" name="q">
-                  <button class="btn btn-primary top-search" type="submit">
-                  <i class='glyphicon glyphicon-search'></i>
-                  </button>
-                </form>
-                <!--end of form-->
-              </li>
-              <li class="text-center">
-                <a class="btn" href="{% url 'event:add' %}" role="button">{% trans "Create an event" %}</a>
-              </li>
-            </ul>
-
-            <!--Go to Event for Participant-->
-            <ul class="nav navbar-nav">
-              <li class="text-center">
-                <a class="btn" href="{% url 'top_event' %}" role="button">{% trans "Search Volunteer events" %}</a>
-              </li>
-            </ul>
-
-            <!--Go to User for Host-->
-            <ul class="nav navbar-nav">
-              <li class="text-center">
-                <a class="btn" href="{% url 'user:user_find' %}" role="button">{% trans "Search Volunteer" %}</a>
-              </li>
-            </ul>
-
-            <!--right menu-->
-            <ul class="nav navbar-nav navbar-right">
-            {% if request.user.is_anonymous %}
-            <!--言語切り替え-->
-              <li>
-                {% get_available_languages as LANGUAGES %}
-                <form class="navbar-form" action="/i18n/setlang/" method="post" id="languagetab">{% csrf_token %}
-                  <input name="next" type="hidden" value="/" />
-                    {% csrf_token %}
-                    <select class="form-control" name="language">
-                      {% for lang in LANGUAGES %}
-                        <option value="{{ lang.0 }}">{{ lang.1 }}</option>
-                      {% endfor %}
-                    </select>
-                  <button class="btn btn-primary top-search" type="submit">
-                    Change
-                  </button>
-                </form>
-              </li>
-              <li class="pull-left"><a href="{% url 'user:register' %}">{% trans "Register" %}</a></li>
-              <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
-            {% else %}
-              <li class="dropdown">
-                <a class="header-notif-badge" href="{% url 'user:unreviewed' %}">
-                  <span class="badge">4</span>
-                </a>
-                <a href="#" id="notification" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                  <i class="fa fa-bell-o" aria-hidden="true"></i>
-                </a>
-                <ul class="dropdown-menu" aria-labelledby="dUser">
-                  <li role="separator" class="divider"></li>
-                  <li><a href="{% url 'user:unreviewed' %}">{% trans "View All Notifications" %}</a></li>
-                </ul>
-              </li>
-              <li class="dropdown">
-                <a href="#" id="dUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                    <img src="{{ request.user.get_image_url }}" width="24" height="24">
-                    {{ request.user.username }}
-                    <span class="caret"></span>
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="dUser">
-                    <li><a href="{% url 'user:detail' request.user.id %}">{% trans 'Profile' %}</a></li>
-                    <li><a href="{% url 'user:logout' %}">{% trans "Log out" %}</a></li>
+      <header>
+        <nav role="navigation" class="navbar navbar-default">
+          <div class="container">
+            <div class="navbar-header navbar-left pull-left">
+              <a class="navbar-brand" href="{% url 'top' %}">
+                <img src="{% static 'img/logo.png' %}" style="max-width:80px;height:auto;display:inline-block;vertical-align:middle;">
+              </a>
+            </div>
+          
+            <div class="navbar-header navbar-right pull-right">
+              <ul class="nav navbar-nav pull-left">
+                {% if request.user.is_anonymous %}
+                  <li class="pull-left"><a href="{% url 'user:register' %}">{% trans "Register" %}</a></li>
+                  <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
+                {% else %}
+                  <li class="pull-left">
+                      <a class="header-notif-badge" href="{% url 'user:unreviewed' %}">
+                        <span class="badge">4</span>
+                      </a>
+                      <a id="notification" role="button" aria-haspopup="true" aria-expanded="false" href="{% url 'user:unreviewed' %}">
+                        <i class="fa fa-bell-o" aria-hidden="true"></i>
+                      </a>
+                    </li>
+                  <li class="dropdown pull-right">
+                     <a href="#" id="dUser" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                          <img src="{{ request.user.get_image_url }}" width="24" height="24">
+                          {{ request.user.username }}
+                          <span class="caret"></span>
+                      </a>
+                      <ul class="dropdown-menu" aria-labelledby="dUser">
+                        <li><a href="{% url 'user:detail' request.user.id %}">{% trans 'Profile' %}</a></li>
+                        <li><a href="{% url 'user:logout' %}">{% trans "Log out" %}</a></li>
+                      </ul>
+                  </li>
+                {% endif %}
+              </ul>
+              
+      
+              <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+            </div>
+      
+            <div class="visible-xs-block clearfix"></div>
+          
+            <div class="collapse navbar-collapse">
+                  <!--イベント追加フォーム-->
+                  <ul class="nav navbar-nav">
+                    <li>
+                    <!--検索フォーム-->
+                      <form class="navbar-form" role="search" action="{% url 'event:search' %}" method="get">
+                        <input type="text" class="form-control header-search" placeholder="{% trans 'Find Events' %}" name="q">
+                        <button class="btn btn-primary top-search" type="submit">
+                        <i class='glyphicon glyphicon-search'></i>
+                        </button>
+                      </form>
+                      <!--end of form-->
+                    </li>
+                    <li class="text-center">
+                      <a class="btn" href="{% url 'event:add' %}" role="button">{% trans "Create an event" %}</a>
+                    </li>
                   </ul>
-              </li>
-            {% endif %}
-            </ul>
-            <!--end of right menu-->
-
-            <!--end of form-->
+  
+                  <!--Go to Event for Participant-->
+                  <ul class="nav navbar-nav">
+                    <li class="text-center">
+                      <a class="btn" href="{% url 'top_event' %}" role="button">{% trans "Search Volunteer events" %}</a>
+                    </li>
+                  </ul>
+          
+                  <!--Go to User for Host-->
+                  <ul class="nav navbar-nav">
+                    <li class="text-center">
+                      <a class="btn" href="{% url 'user:user_find' %}" role="button">{% trans "Search Volunteers" %}</a>
+                    </li>
+                  </ul>          
+                  <!--right menu-->
+                  <ul class="nav navbar-nav navbar-right">
+                  {% if request.user.is_anonymous %}
+                  <!--言語切り替え-->
+                    <li>
+                      {% get_available_languages as LANGUAGES %}
+                      <form class="navbar-form" action="/i18n/setlang/" method="post" id="languagetab">{% csrf_token %}
+                        <input name="next" type="hidden" value="/" />
+                          {% csrf_token %}
+                          <select class="form-control" name="language">
+                            {% for lang in LANGUAGES %}
+                              <option value="{{ lang.0 }}">{{ lang.1 }}</option>
+                            {% endfor %}
+                          </select>
+                        <button class="btn btn-primary top-search" type="submit">
+                          Change
+                        </button>
+                      </form>
+                    </li>
+                  {% endif %}
+            </div>
           </div>
-          <!--end of navbar-collapse-->
-        </div>
-        <!--end of container-fluid-->
-      </nav>
-    </header>
+        </nav>
+          
+      </header>
 
     {% block container %}{% endblock %}
 
     <div class="footer-push"></div>
-  </div>
+    </div>
 
 <footer class="container-fluid">
   <div class="container text-center">

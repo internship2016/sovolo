@@ -395,6 +395,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
         return res_obj
 
+    def is_helper(self):
+        return self.role == 'helper'
+
 
 class UserActivation(models.Model):
     user = models.OneToOneField(User)

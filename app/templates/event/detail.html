@@ -114,9 +114,9 @@
                         <button class="btn btn-primary" disabled>{% trans "Closed" %}</button>
                       {% else %}<!--未応募/募集中-->
                         {% if frame.is_full %}<!--未応募/募集中/参加枠満員-->
-                          <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">{% trans "Waiting List" %}</a>
+                          <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">{% trans "Get on the Waiting List" %}</a>
                         {% else %}<!--未応募/募集中/参加枠空き有-->
-                          <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">{% trans "Wanted" %}</a>
+                          <a href="{% url 'event:participate' event.id frame.id %}" class="btn btn-primary">{% trans "Join this Event" %}</a>
                         {% endif %}
                       {% endif %}
                     {% endif %}

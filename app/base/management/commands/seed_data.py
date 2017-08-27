@@ -333,15 +333,16 @@ class Command(BaseCommand):
 
         #ポイント稼ぎ用ボランティア
         random.seed(1)
-        for i in range(1,31):
+        for i in range(1,21):
 
             for j in range(1,4):
                 name = "【第%d回】"%j + eventname_sample[i]["name"]
                 host_user = User.objects.get(username="demo_user_%d"%i)
+                past_or_future = 1 if i < 10 else -1
                 demoevent = Event(
                     name=name,
-                    start_time=timezone.now() + timezone.timedelta(days=301),
-                    end_time = timezone.now() + timezone.timedelta(days=302),
+                    start_time=timezone.now() + timezone.timedelta(days=301) * past_or_future,
+                    end_time = timezone.now() + timezone.timedelta(days=302) * past_or_future,
                     meeting_place="池袋駅東口母子像前",
                     contact="testvol@sovol.earth",
                     details=eventdetail_sample,
