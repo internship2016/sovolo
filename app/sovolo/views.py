@@ -7,7 +7,7 @@ from django.conf import settings
 
 def index(request):
     if (not request.user.is_anonymous) and request.user.role == "sufferer":
-        return redirect('/user/top')
+        return redirect('/user/top/list')
     else:
         return redirect('/event/top')
 
