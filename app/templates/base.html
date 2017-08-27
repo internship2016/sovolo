@@ -48,7 +48,7 @@
             </div>
 
             <div class="navbar-header navbar-right pull-right">
-              <ul class="nav navbar-nav pull-left">
+              <ul class="nav navbar-nav pull-left header-right">
                 {% if request.user.is_anonymous %}
                   <li class="pull-left"><a href="{% url 'user:register' %}">{% trans "Register" %}</a></li>
                   <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
