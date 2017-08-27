@@ -313,6 +313,7 @@ class Command(BaseCommand):
             lastname = str(i)
             username = 'demo_user_'+str(i)
             email = "demo%d@sovol.earth"%i
+            role_type = 'helper' if i > 20 else 'rescuee'
             user = User(
                 first_name=firstname,
                 last_name=lastname,
@@ -323,6 +324,7 @@ class Command(BaseCommand):
                 email=email,
                 occupation='BUG_TEST',
                 region=self.prefec_list[i%47],
+                role = role_type,
             )
             user.set_password('pass1234')
             user.save()
