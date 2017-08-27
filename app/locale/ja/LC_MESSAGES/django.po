@@ -273,7 +273,7 @@ msgstr "ログアウト"
 
 #: templates/base.html:105
 msgid "Find Events"
-msgstr "ボランティア活動を検索"
+msgstr "活動を検索"
 
 #: templates/base.html:113
 msgid "Create an event"
