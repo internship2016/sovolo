@@ -122,15 +122,24 @@
   </div>
 
 
-  <h4>@User List</h4>
-  {% for p_user in user_list %}
-    <h5>User ID : {{ p_user.id }}</h5>
-    <h5>User Name : {{ p_user.username }}</h5>
-    <a class="btn btn-primary" href="{% url 'user:post_review' %}?event_id={{event.id}}&to_user_id={{p_user.pk}}">
-        {% trans "Write and post reviews about users" %}
-    </a>
-  {% endfor %}
-
+      <div class="panel panel-default">
+        <div class="panel-heading">User List</div>
+          <div class="panel-body">
+            <div class="row">
+            {% for p_user in user_list %}
+              <div class="col-md-3">
+                <div>{{ p_user.username }}</div>
+                <a href="{% url 'user:detail' p_user.id %}" title="{{ p_user.username }}">
+                  <div class="custom_thumbnail user_list_large-thumbnail" style="background-image: url({{ p_user.get_image_url }});"></div>
+                </a>
+                <a class="btn btn-primary" href="{% url 'user:post_review' %}?event_id={{event.id}}&to_user_id={{p_user.pk}}">
+                    {% trans "Write and post reviews about users" %}
+                </a>
+              </div>
+            {% endfor %}
+            </div>
+          </div>
+      </div>
 
   {% empty %}
     <p>{% trans "You have reviewed all the participants!" %}</p>
