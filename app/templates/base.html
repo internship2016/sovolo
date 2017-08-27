@@ -48,9 +48,11 @@
             </div>
           
             <div class="navbar-header navbar-right pull-right">
-                  
-              {% if not request.user.is_anonymous %}
-                <ul class="nav navbar-nav pull-left">
+              <ul class="nav navbar-nav pull-left">
+                {% if request.user.is_anonymous %}
+                  <li class="pull-left"><a href="{% url 'user:register' %}">{% trans "Register" %}</a></li>
+                  <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
+                {% else %}
                   <li class="pull-left">
                       <a class="header-notif-badge" href="{% url 'user:unreviewed' %}">
                         <span class="badge">4</span>
@@ -70,8 +72,8 @@
                         <li><a href="{% url 'user:logout' %}">{% trans "Log out" %}</a></li>
                       </ul>
                   </li>
-                </ul>
-              {% endif %}
+                {% endif %}
+              </ul>
               
       
               <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
