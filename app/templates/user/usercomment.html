@@ -1,0 +1,25 @@
+{% load i18n %}
+{% if usercomment.to_user.id == request.user.id %}
+<div id="upcoming-users" class="panel panel-default">
+  <div class="panel-heading">コメント</div>
+  <div class="panel-body">
+    {% for comment in comment_list %}
+    <div id="comment#comment.id" class="media">
+      <div class="media-left">
+        <div class="media-object custom_thumbnail list-thumbnail" style="background-image: url({{ usercomment.user.get_image_url }});"></div>
+      </div>
+      <div class="media-body">
+        <div class="media-heading">
+          <h4 style="display:inline-block">{{ forloop.counter }}: {{ usercomment.from_user.username }} <small><i>{{ comment.created }}</i></small></h4>
+        </div>
+        <div>
+          {{ comment.text }}
+        </div>
+      </div>
+    {% empty %}
+    <div> コメントはありません</div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+

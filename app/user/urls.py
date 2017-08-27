@@ -44,6 +44,7 @@ urlpatterns = [
         name='detail'),
 
     # review
+    url(r'^(?P<user_id>[0-9]+)/usercommentadd/$', views.UserCommentCreate.as_view(), name='usercommentadd'),
     url(r'^skill/(?P<pk>[0-9]+)/edit/$',
         views.UserSkillEditView.as_view(),
         name='skill_edit'),
@@ -67,4 +68,6 @@ urlpatterns = [
     url(r'^filter/tag_users$',
         api.user_filter, {'user_kind': 'tag_users'},
         name='tag_users'),
+    url(r'^usercomment/$', views.UserCommentView.as_view(), name='usercomment'),
+    url(r'^(?P<user_id>[0-9]+)/usercommentadd/$', views.UserCommentCreate.as_view(), name='usercommentadd'),
 ]

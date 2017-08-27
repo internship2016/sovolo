@@ -1,7 +1,7 @@
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.views.generic.edit import CreateView, UpdateView, FormView
-from django.views.generic import DetailView, View, ListView
+from django.views.generic import DetailView, View, ListView, RedirectView
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from tag.models import Tag
@@ -11,8 +11,8 @@ import uuid
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from django.utils.decorators import method_decorator
-from .models import User, Skill, UserActivation, UserPasswordResetting
-from .form import UserReviewListForm
+from .models import User, Skill, UserActivation, UserPasswordResetting, UserComment
+from .form import UserReviewListForm, UserCommentCreateForm
 from django.urls import reverse
 
 from event.models import Event
@@ -383,6 +383,7 @@ class UserSkillAddView(CreateView):
     def get_context_data(self, **kwargs):
         context = super(UserSkillAddView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
+        context['to_user_id'] = pk
         return context
 
     def form_valid(self, form):
@@ -437,3 +438,48 @@ class UserListView(ListView):
 
         results = Skill.objects.filter(query).order_by('-id').distinct()
         return results
+
+@method_decorator(login_required, name='dispatch')
+class UserCommentView(ListView):
+    model = UserComment
+    template_name = 'user/usercomment_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(UserCommentView, self).get_context_data(**kwargs)
+        context['to_user'] = self.request.user
+        context['from_user'] = self.request.user
+        return context
+
+    def form_valid(self, form):
+        to_user = User.objects.get(pk=self.request.GET['to_user_id'])
+        from_user = self.request.user
+
+        form.instance.to_user_id = to_user.id
+        form.instance.from_user_id = from_user.id
+        form.save()
+        return super(UserCommentView, self).form_vaild(form)
+
+    def get_success_url(self, **kwargs):
+        info_msg = _("コメントを送信しました")
+        messages.info(self.request, info_msg)
+        return reverse('user:detail', kwargs={'pk': user_id})
+
+class UserCommentCreate(CreateView):
+
+    template_name = 'user/usercommentadd.html'
+    model = UserComment
+    fields = ['text']
+    success_url = "../"
+
+    def get_context_data(self, **kwargs):
+        context = super(UserCommentCreate, self).get_context_data(**kwargs)
+        return context
+
+    def form_valid(self, form):
+        form_redirect = super(UserCommentCreate, self).form_valid(form)
+        form.instance.from_user_id = self.request.user.id
+        form.instance.to_user_id = self.kwargs['user_id']
+        form.save()
+        return form_redirect
+        
+       
