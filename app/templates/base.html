@@ -49,6 +49,7 @@
           
             <div class="navbar-header navbar-right pull-right">
                   
+              {% if not request.user.is_anonymous %}
                 <ul class="nav navbar-nav pull-left">
                   <li class="pull-left">
                       <a class="header-notif-badge" href="{% url 'user:unreviewed' %}">
@@ -70,6 +71,7 @@
                       </ul>
                   </li>
                 </ul>
+              {% endif %}
               
       
               <button type="button" data-toggle="collapse" data-target=".navbar-collapse" class="navbar-toggle">
