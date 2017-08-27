@@ -165,7 +165,7 @@
 
 <script type="text/javascript">
 $(function () {
-    $('#add_skill').on('click', function (user) {
+    $('#add_skill').one('click', function (user) {
       var X = $('#skills>div').length + 1;
       var tmpl = $('#skill-form').html();
       var add_window = Mustache.to_html(tmpl, {X: X});
