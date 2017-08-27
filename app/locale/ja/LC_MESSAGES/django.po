@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-27 07:07+0000\n"
+"POT-Creation-Date: 2017-08-27 18:25+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,6 +59,79 @@ msgstr "ボランティア活動情報を編集しました。"
 #: event/views.py:163
 msgid "Event not found."
 msgstr "ボランティア活動がありません"
+
+#: event/views.py:228
+#, python-format
+msgid "No users found matching %(name)s."
+msgstr "%(name)s に一致するユーザーはいませんでした。"
+
+#: event/views.py:272
+msgid "Event detail has been updated."
+msgstr "ボランティア情報を編集しました。"
+
+#: event/views.py:305
+msgid "Event has been deleted."
+msgstr "ボランティアを削除しました。"
+
+#: event/views.py:368 event/views.py:434
+msgid "No events found matching your search."
+msgstr "検索結果に一致するボランティアが見つかりませんでした。"
+
+#: event/views.py:469
+msgid "This event has already ended."
+msgstr "このボランティアはすでに終了しています。"
+
+#: event/views.py:476
+msgid "This position is closed."
+msgstr "この枠はすでに締め切られています。"
+
+#: event/views.py:487
+msgid "You are on the waiting list."
+msgstr "キャンセル待ちです。"
+
+#: event/views.py:489
+msgid "You joined this event."
+msgstr "参加しました。"
+
+#: event/views.py:493 event/views.py:540
+msgid "You have already joined."
+msgstr "参加済みです。"
+
+#: event/views.py:495 event/views.py:542
+msgid "An error occurred while processing."
+msgstr "参加処理中にエラーが発生しました。"
+
+#: event/views.py:507
+msgid "You cannot undo your like."
+msgstr "応援のキャンセルはできません。"
+
+#: event/views.py:511
+msgid "You cannot like events ended."
+msgstr "終了したボランティアは応援できません。"
+
+#: event/views.py:513
+msgid "Liked this event!"
+msgstr "応援しました。"
+
+#: event/views.py:527
+msgid "This event is already closed."
+msgstr "このボランティアはすでに締め切られています。"
+
+#: event/views.py:582
+msgid "Canceled your participation."
+msgstr "参加をキャンセルしました。"
+
+#: event/views.py:611
+msgid "Authentication failed."
+msgstr "認証に失敗しました。"
+
+#: event/views.py:659
+msgid "Invalid recipient"
+msgstr "不正な送信先です"
+
+#: event/views.py:677
+msgid "Your message has been sent successfully."
+msgstr "メッセージの送信が完了しました。"
 
 #: sovolo/settings.py:145
 msgid "English"
@@ -295,7 +368,7 @@ msgstr "小さくたっていい、"
 msgid "Involved"
 msgstr "あなたの手を探している"
 
-#: templates/container_top.html:12
+#: templates/container_top.html:12 templates/container_top_user.html:12
 msgid "Create an Event"
 msgstr "ボランティア活動をはじめる"
 
@@ -307,6 +380,10 @@ msgstr "トップ画像"
 msgid "Like"
 msgstr "いいね"
 
+#: templates/container_top_user.html:10
+msgid "Let's Get Involved"
+msgstr "小さくたっていい、"
+
 #: templates/event/add.html:5 templates/event/add.html:13
 msgid "Create a new event"
 msgstr "ボランティア活動を作る"
@@ -314,7 +391,7 @@ msgstr "ボランティア活動を作る"
 #: templates/event/add.html:21 templates/event/edit.html:19
 #: templates/user/request_password_reset.html:17
 #: templates/user/reset_password.html:17 templates/user/skill_add.html:31
-#: templates/user/skill_form.html:34 templates/user/user_header.html:140
+#: templates/user/skill_form.html:34 templates/user/user_header.html:159
 #: templates/user/user_post_review.html:81
 #: templates/user/user_post_review.html:140
 msgid "Submit"
@@ -494,7 +571,7 @@ msgstr "内容変更"
 msgid "Send email to all participants"
 msgstr "メール一斉送信"
 
-#: templates/event/form_template.html:9 templates/user/user_header.html:97
+#: templates/event/form_template.html:9 templates/user/user_header.html:106
 msgid "Event Name"
 msgstr "ボランティア活動名"
 
@@ -516,7 +593,7 @@ msgstr "開催地域"
 
 #: templates/event/form_template.html:81 templates/event/search_form.html:71
 #: templates/event/search_form_side.html:73 templates/map.html:21
-#: templates/user/user_find.html:24
+#: templates/top_user.html:14 templates/user/user_find.html:24
 msgid "Search"
 msgstr "検索"
 
@@ -761,31 +838,31 @@ msgstr "情報を取得できませんでした"
 msgid "There are no events nearby."
 msgstr "周辺イベントはありません"
 
-#: templates/map.html:240 templates/top.html:104
+#: templates/map.html:240 templates/top.html:104 templates/top_user.html:81
 msgid "Sun"
 msgstr "日"
 
-#: templates/map.html:241 templates/top.html:105
+#: templates/map.html:241 templates/top.html:105 templates/top_user.html:81
 msgid "Mon"
 msgstr "月"
 
-#: templates/map.html:242 templates/top.html:106
+#: templates/map.html:242 templates/top.html:106 templates/top_user.html:81
 msgid "Tue"
 msgstr "火"
 
-#: templates/map.html:243 templates/top.html:107
+#: templates/map.html:243 templates/top.html:107 templates/top_user.html:81
 msgid "Wed"
 msgstr "水"
 
-#: templates/map.html:244 templates/top.html:108
+#: templates/map.html:244 templates/top.html:108 templates/top_user.html:81
 msgid "Thu"
 msgstr "木"
 
-#: templates/map.html:245 templates/top.html:109
+#: templates/map.html:245 templates/top.html:109 templates/top_user.html:81
 msgid "Fri"
 msgstr "金"
 
-#: templates/map.html:246 templates/top.html:110
+#: templates/map.html:246 templates/top.html:110 templates/top_user.html:81
 msgid "Sat"
 msgstr "土"
 
@@ -793,7 +870,7 @@ msgstr "土"
 msgid "Social Volunteering Network"
 msgstr "ソーシャルボランティアプラットフォーム"
 
-#: templates/top.html:12
+#: templates/top.html:12 templates/top_user.html:13
 msgid "Browse"
 msgstr "イベント"
 
@@ -805,7 +882,7 @@ msgstr "地図"
 msgid "Calender"
 msgstr "カレンダー"
 
-#: templates/top.html:24
+#: templates/top.html:24 templates/top_user.html:24
 msgid "Events I'm going"
 msgstr "参加予定のボランティア活動"
 
@@ -821,7 +898,8 @@ msgstr "新着のボランティア活動"
 msgid "View All Events"
 msgstr "すべてのボランティア活動"
 
-#: templates/top.html:155
+#: templates/top.html:155 templates/top_user.html:119
+#: templates/top_user.html:132
 msgid "Failed to get information"
 msgstr "取得に失敗"
 
@@ -910,7 +988,7 @@ msgstr "生年月日"
 msgid "Language"
 msgstr "言語"
 
-#: templates/user/edit.html:125 templates/user/user_header.html:214
+#: templates/user/edit.html:125 templates/user/user_header.html:233
 msgid "Following tags"
 msgstr "フォローしているタグ"
 
@@ -1006,11 +1084,11 @@ msgid "Related tags"
 msgstr "関連付けるタグ"
 
 #: templates/user/skill_add.html:25 templates/user/skill_form.html:28
-#: templates/user/user_header.html:152
+#: templates/user/user_header.html:171
 msgid "I can do"
 msgstr "できる内容"
 
-#: templates/user/skill_form.html:6 templates/user/user_header.html:111
+#: templates/user/skill_form.html:6 templates/user/user_header.html:130
 msgid "Skills"
 msgstr "スキル一覧"
 
@@ -1046,23 +1124,23 @@ msgstr "件"
 msgid "Reviews"
 msgstr "レビュー"
 
-#: templates/user/user_header.html:92
+#: templates/user/user_header.html:99
 msgid "Rated by"
 msgstr "投稿者"
 
-#: templates/user/user_header.html:98
+#: templates/user/user_header.html:107
 msgid "Posted on"
 msgstr "投稿日"
 
-#: templates/user/user_header.html:128
+#: templates/user/user_header.html:147
 msgid "Edit"
 msgstr "内容変更"
 
-#: templates/user/user_header.html:195
+#: templates/user/user_header.html:214
 msgid "Trophies"
 msgstr "獲得トロフィー"
 
-#: templates/user/user_header.html:222
+#: templates/user/user_header.html:241
 msgid "Tags not found"
 msgstr "フォローしているタグがありません"
 
@@ -1175,32 +1253,32 @@ msgstr "パスワードを再設定しました。"
 msgid "No user found"
 msgstr "そのユーザーは存在しません"
 
-#: user/views.py:214
+#: user/views.py:215
 msgid "User profile has been successfully updated."
 msgstr "ユーザー情報を編集しました。"
 
-#: user/views.py:230
+#: user/views.py:231
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
 
-#: user/views.py:289 user/views.py:297 user/views.py:305 user/views.py:310
-#: user/views.py:315
+#: user/views.py:290 user/views.py:298 user/views.py:306 user/views.py:311
+#: user/views.py:316
 msgid "Invalid Review"
 msgstr "無効なレビューです"
 
-#: user/views.py:320
+#: user/views.py:321
 msgid "You've already reviewd"
 msgstr "既にレビュー済みです"
 
-#: user/views.py:333
+#: user/views.py:334
 msgid "Your review has been successfully posted!"
 msgstr "レビューを投稿しました。"
 
-#: user/views.py:369
+#: user/views.py:370
 msgid "Your skill has been updated successfully."
 msgstr "スキルを編集しました。"
 
-#: user/views.py:399
+#: user/views.py:400
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
 

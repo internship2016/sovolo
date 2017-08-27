@@ -225,8 +225,7 @@ class EventEditView(UserPassesTestMixin, UpdateView):
 
         new_admin_names = new_admins.values_list('username', flat=True)
         for name in set(raw_admins) - set(new_admin_names):
-            error_msg = ("ユーザー名 %(name)s に一致する"
-                         "ユーザーはいませんでした。") % {'name': name}
+            error_msg = _("No users found matching %(name)s.") % {'name': name}
             messages.error(self.request, error_msg)
 
         # Tags
@@ -270,7 +269,7 @@ class EventEditView(UserPassesTestMixin, UpdateView):
             event.longitude = longitude
             event.save()
 
-        messages.info(self.request, "ボランティア情情報を編集しました。")
+        messages.info(self.request, _("Event detail has been updated."))
         return form_redirect
 
     def test_func(self):
@@ -303,7 +302,7 @@ class EventDeleteView(UserPassesTestMixin, DeleteView):
         return HttpResponseForbidden()
 
     def get_success_url(self):
-        messages.info(self.request, "ボランティアを削除しました")
+        messages.info(self.request, _("Event has been deleted."))
         return reverse_lazy('top')
 
 
@@ -366,7 +365,7 @@ class EventSearchResultsView(ListView):
             if user_entry is not None and user_entry != "":
                 freeword_query = self.make_query_from_string(user_entry)
                 if freeword_query is None:
-                    messages.error(self.request, "検索結果に一致するボランティアが見つかりませんでした")
+                    messages.error(self.request, _("No events found matching your search."))
                     return Event.objects.none()
                 else:
                     query = query & freeword_query
@@ -432,7 +431,7 @@ class EventSearchResultsView(ListView):
             results = [event for event in results if not event.is_closed()]
 
         if len(results) == 0:
-            messages.error(self.request, "検索結果に一致するボランティアが見つかりませんでした")
+            messages.error(self.request, _("No events found matching your search."))
 
         # Filter based on page and number per page
         if 'numperpage' in self.request.GET:
@@ -467,14 +466,14 @@ class EventJoinView(RedirectView):
         event = Event.objects.get(pk=event_id)
 
         if event.is_over():
-            messages.error(self.request, "このボランティアはすでに終了しています")
+            messages.error(self.request, _("This event has already ended."))
         else:
 
             frame = Frame.objects.get(pk=frame_id)
             status = "キャンセル待ち" if frame.is_full() else "参加中"
 
             if frame.is_closed():
-                messages.error(self.request, "この枠はすでに締め切られています。")
+                messages.error(self.request, _("This position is closed."))
             else:
                 try:
                     p = Participation.objects.create(
@@ -485,15 +484,15 @@ class EventJoinView(RedirectView):
                     )
                     p.save()
                     if status == "キャンセル待ち":
-                        messages.success(self.request, "あなたはキャンセル待ちです")
+                        messages.success(self.request, _("You are on the waiting list."))
                     else:
-                        messages.success(self.request, "参加しました。")
+                        messages.success(self.request, _("You joined this event."))
                 except IntegrityError:
                     event = Event.objects.get(pk=event_id)
                     if event in self.request.user.participating_event.all():
-                        messages.error(self.request, "参加済みです。")
+                        messages.error(self.request, _("You have already joined."))
                     else:
-                        messages.error(self.request, "参加処理中にエラーが発生しました。")
+                        messages.error(self.request, _("An error occurred while processing."))
 
         self.url = reverse_lazy('event:detail', kwargs={'pk': event_id})
         return super(EventJoinView, self).get_redirect_url(*args, **kwargs)
@@ -505,13 +504,13 @@ class EventSupportView(RedirectView):
         event = Event.objects.get(pk=kwargs['event_id'])
 
         if 'cancel' in kwargs:
-            messages.error(self.request, "応援のキャンセルはできません。")
+            messages.error(self.request, _("You cannot undo your like."))
             # event.supporter.remove(self.request.user.id)
         else:
             if event.is_over():
-                messages.error(self.request, "終了したボランティアは応援できません")
+                messages.error(self.request, _("You cannot like events ended."))
             else:
-                messages.info(self.request, "応援しました。")
+                messages.info(self.request, _("Liked this event!"))
                 event.supporter.add(self.request.user.id)
 
         self.url = reverse_lazy('event:detail', kwargs={'pk': event.id})
@@ -525,7 +524,7 @@ class EventFollowView(RedirectView):
         event = Event.objects.get(pk=event_id)
 
         if event.is_closed():
-            messages.error(self.request, "このボランティアはすでに締め切られています。")
+            messages.error(self.request, _("This event is already closed."))
         else:
             try:
                 p = Participation.objects.create(
@@ -538,9 +537,9 @@ class EventFollowView(RedirectView):
             except IntegrityError:
                 event = Event.objects.get(pk=event_id)
                 if event in self.request.user.participating_event.all():
-                    messages.error(self.request, "参加済みです。")
+                    messages.error(self.request, _("You have already joined."))
                 else:
-                    messages.error(self.request, "参加処理中にエラーが発生しました。")
+                    messages.error(self.request, _("An error occurred while processing."))
 
         self.url = reverse_lazy('event:detail', kwargs={'pk': event_id})
         return super(EventFollowView, self).get_redirect_url(*args, **kwargs)
@@ -580,7 +579,7 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
                           "reminder@sovol.earth",
                           [carry_up.user.email])
 
-        messages.success(self.request, "参加をキャンセルしました。")
+        messages.success(self.request, _("Canceled your participation."))
 
         return reverse_lazy('event:detail', kwargs={
             'pk': self.kwargs['event_id']
@@ -609,7 +608,7 @@ class CommentCreate(RedirectView):
         )
         data = json.loads(verify.text)
         if not data['success']:
-            messages.error(self.request, "認証に失敗しました。")
+            messages.error(self.request, _("Authentication failed."))
             return reverse_lazy('event:detail', kwargs={'pk': event_id})
 
         text = self.request.POST["text"]
@@ -657,7 +656,7 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
             users = event.participant \
                          .filter(participation__status__in=["管理者", "キャンセル待ち"])
         else:
-            messages.error(request, "不正な送信先です")
+            messages.error(request, _("Invalid recipient"))
             return redirect(reverse_lazy('event:message',
                                          kwargs={'pk': kwargs['pk']}))
 
@@ -675,7 +674,7 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
                 [user.email],
             )
 
-        messages.success(self.request, "メッセージの送信が完了しました。")
+        messages.success(self.request, _("Your message has been sent successfully."))
         return redirect(reverse_lazy('event:message',
                                      kwargs={'pk': kwargs['pk']}))
 
