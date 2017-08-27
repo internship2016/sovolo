@@ -1,7 +1,6 @@
 {% extends "container.html" %}
 {% load i18n %}
 {% load event_tags %}
-{% load user_tags %}
 
 {% block title %}{{ user.username }} | Sovol{% endblock %}
 
@@ -14,6 +13,5 @@
 {% endif %}
 {% collapse_event_list user.get_future_participating_events _("List of Events Attending") "participating-event" %}
 {% collapse_event_list user.get_past_participated_events _("Event Achievements") "participated-event" %}
-
 
 {% endblock %}

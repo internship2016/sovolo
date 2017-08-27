@@ -461,6 +461,7 @@ class Skill(AbstractBaseModel):
     userskill = models.ForeignKey(User, on_delete=models.CASCADE)
     tag = models.ManyToManyField(Tag)
     skilltodo = models.CharField(max_length=200, null=True)
+
     def __str__(self):
         return "Skill #" + str(self.pk) + " in User #" + str(self.userskill_id)
 
@@ -469,25 +470,3 @@ class Skill(AbstractBaseModel):
 
     def get_absolute_url(self):
         return reverse('user:detail', kwargs={'pk': self.id})
-
-class UserComment(models.Model):
-    from_user = models.ForeignKey(User, 
-                                  on_delete=models.CASCADE, 
-                                  related_name='from_user',
-                                  null=True)
-    to_user = models.ForeignKey(User,
-                                on_delete=models.CASCADE,
-                                related_name='to_user',
-                                null=True)
-    text = models.TextField()
-
-
-    def __str__(self):
-            return "%s: \"%s\"" % (self.to_user_id,
-                                  self.text)
-
-    def get_absolute_url(self):
-        return reverse('user:detail', kwargs={'pk': self.skill.userskill_id})
-
-    def save(self, *args, **kwargs):
-        return super(UserComment, self).save(*args, **kwargs)

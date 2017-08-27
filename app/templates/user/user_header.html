@@ -42,9 +42,6 @@
           <div style="text-align: right">
             {% if user.id == request.user.id %}
               <a class="btn btn-default btn-sm" href="{% url 'user:edit' %}">{% trans 'Edit profile' %}</a>
-              <a class="btn btn-default btn-sm" href="{% url 'user:usercomment' %}">コメントを見る</a>
-            {% else %}
-              <a class="btn btn-default btn-sm" href="{% url 'user:usercommentadd' user.id %}">この人にコメントを送る</a>
             {% endif %}
           </div>
         </div>

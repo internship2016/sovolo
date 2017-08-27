@@ -1,33 +1,19 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% load event_tags %}
-{% load bootstrap3 %}
+{% load user_tags %}
 {% load static %}
 
 {% block container %}
 
-<div class="container-fluid" id="top-image" style="background: url({% static 'img/topimg.jpg' %}) no-repeat;">
-  <h2>{% trans "Let's Get Involved" %}</h2>
+<div class="container-fluid" id="top-image" style="background: url({% static 'img/topimg.jpg' %}) no-repwat;">
+  <h2>Let's Get Involved</h2>
   <div class="container-fluid-button">
-    <a href="/event/add/">{% trans "Create an Event"%}</a>
-  </div>
+    <a href="../../event/add/">ボランティアを開催する</a>
+  <div>
 </div>
-<script type="text/javascript"
-  src="//maps.googleapis.com/maps/api/js?key=AIzaSyAW5PZqv_tJA9Pd-il4UeG-Mk9622Ub7R0">
-</script>
-<div id="main">
-  <div id="main-content" class="container">
-    {% if form.errors %}
-      {% bootstrap_form_errors form %}
-    {% endif %}
-      <div class="messages">
-        {% if messages %}
-          {% for message in messages %}
-            <p {% if message.tags %} class="{{ message.tags }}"{% endif %} >{{ message }}</p>
-          {% endfor %}
-        {% endif %}
-      </div>
-    {% block content %}{% endblock %}
-  </div>
-</div>
+
 {% endblock %}
+    
+
+
