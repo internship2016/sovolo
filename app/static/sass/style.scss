@@ -52,6 +52,10 @@ nav{
   }
 }
 
+#dUser{
+  padding-top: 21px;
+}
+
 #main-content {
   background: #fff;
   padding-bottom: 70px;
@@ -227,9 +231,10 @@ _::-webkit-:not(:root:root), .detail-thumbnail {
 
 .header{
   &-search{
-    width: 80%;
+    width: 70%;
     display: inline;
     margin-left: 10px;
+    padding: 0;
     @media(min-width: 768px){
       width: 100%; 
     }
@@ -250,6 +255,13 @@ _::-webkit-:not(:root:root), .detail-thumbnail {
         left: 17px;
       }
     }
+  }
+  &-right{
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  &-anker{
+    padding-top: 23px !important;
   }
 }
 
@@ -459,7 +471,12 @@ $logo-height :42px;
     color: white;
     position: absolute;
     top: 30px;
-    left: 50px;
+    left: 30px;
+    @media(min-width: 700px){
+      br{
+        display: none;
+      }
+    }
   }
 }
 

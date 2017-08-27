@@ -395,6 +395,9 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
         return res_obj
 
+    def is_helper(self):
+        return self.role == 'helper'
+
 
 class UserActivation(models.Model):
     user = models.OneToOneField(User)
@@ -441,7 +444,7 @@ class UserReviewList(models.Model):
                                              MaxValueValidator(5)],
                                  default=3)
 
-    comment = models.CharField(max_length=200, null=True, blank=True)
+    comment = models.CharField(max_length=200, default='', null=True, blank=True)
 
     joined_event = models.ForeignKey('event.Event')
 

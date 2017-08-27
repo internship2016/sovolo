@@ -313,6 +313,7 @@ class Command(BaseCommand):
             lastname = str(i)
             username = 'demo_user_'+str(i)
             email = "demo%d@sovol.earth"%i
+            role_type = 'helper' if i > 20 else 'rescuee'
             user = User(
                 first_name=firstname,
                 last_name=lastname,
@@ -323,6 +324,7 @@ class Command(BaseCommand):
                 email=email,
                 occupation='BUG_TEST',
                 region=self.prefec_list[i%47],
+                role = role_type,
             )
             user.set_password('pass1234')
             user.save()
@@ -338,10 +340,11 @@ class Command(BaseCommand):
             for j in range(1,4):
                 name = "【第%d回】"%j + eventname_sample[i]["name"]
                 host_user = User.objects.get(username="demo_user_%d"%i)
+                past_or_future = 1 if i < 10 else -1
                 demoevent = Event(
                     name=name,
-                    start_time=timezone.now() + timezone.timedelta(days=301),
-                    end_time = timezone.now() + timezone.timedelta(days=302),
+                    start_time=timezone.now() + timezone.timedelta(days=301) * past_or_future,
+                    end_time = timezone.now() + timezone.timedelta(days=302) * past_or_future,
                     meeting_place="池袋駅東口母子像前",
                     contact="testvol@sovol.earth",
                     details=eventdetail_sample,
