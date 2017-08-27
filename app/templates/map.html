@@ -227,9 +227,12 @@
       });
       markers.push(marker);
     });
-    $('.media').on('mouseenter',function(){
-      console.log($(this).find('input'));
-      google.maps.event.trigger(markers[parseInt($(this).find('input').attr('value'), 10)], 'click');
+    $('.media').hover(function(){
+      var i = parseInt($(this).find('input').attr('value'));
+      markers[i].setAnimation(google.maps.Animation.BOUNCE);
+    },function(){
+      var i = parseInt($(this).find('input').attr('value'));
+      markers[i].setAnimation(null);
     })
   }
 
