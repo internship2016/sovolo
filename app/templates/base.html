@@ -114,9 +114,15 @@
               <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
             {% else %}
               <li class="dropdown">
-                <a class="header-notif-badge" href="{% url 'user:unreviewed' %}">
-                  <span class="badge">4</span>
-                </a>
+                {% if user.is_helper %}
+                  <a class="header-notif-badge" href="{% url 'user:unreviewed' %}">
+                    <span class="badge">{{ user.get_unreview_num_for_participant }}</span>
+                  </a>
+                {% else %}
+                  <a class="header-notif-badge" href="{% url 'user:unreviewed' %}">
+                    <span class="badge">{{ user.get_unreview_num_for_host }}</span>
+                  </a>
+                {% endif %}
                 <a href="#" id="notification" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
                   <i class="fa fa-bell-o" aria-hidden="true"></i>
                 </a>
