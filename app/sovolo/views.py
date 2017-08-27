@@ -7,7 +7,7 @@ from django.conf import settings
 
 def index(request):
     if (not request.user.is_anonymous) and request.user.role == "sufferer":
-        return redirect('/user/top')
+        return redirect('/user/top/list')
     else:
         return redirect('/event/top')
 
@@ -51,4 +51,11 @@ def index_user(request):
     context = {}
 
     context['all_tags'] = Tag.objects.all()
+    context['new_events']  = [event for event in Event.objects.all().order_by('-created') if not event.is_over()][:10]
+
+    prefs = settings.PREFECTURES.items()
+    prefs = sorted(prefs, key=lambda x: x[1][1])
+    prefs = [(k, v[0]) for k, v in prefs]
+    context['prefectures'] = prefs
+
     return render(request, 'top_user.html', context)

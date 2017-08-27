@@ -184,6 +184,7 @@ class UserEditView(UpdateView):
         'sex',
         'birthday',
         'language',
+        'role',
     ]
 
     template_name = 'user/edit.html'
