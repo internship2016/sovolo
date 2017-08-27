@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-26 23:47+0000\n"
+"POT-Creation-Date: 2017-08-27 05:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -252,48 +252,48 @@ msgstr "鹿児島県"
 msgid "Okinawa"
 msgstr "沖縄県"
 
-#: templates/base.html:67
-msgid "Find Events"
-msgstr "ボランティア活動を検索"
-
-#: templates/base.html:75
-msgid "Create an event"
-msgstr "ボランティア活動を作る"
-
-#: templates/base.html:82
-msgid "Search Volunteer events"
-msgstr "ボランティア活動を探す"
-
-#: templates/base.html:89
-msgid "Search Volunteers"
-msgstr "ボランティアを探す"
-
-#: templates/base.html:112 templates/user/acquire_email.html:4
+#: templates/base.html:53 templates/user/acquire_email.html:4
 #: templates/user/acquire_email.html:7 templates/user/register.html:21
 msgid "Register"
 msgstr "ユーザー登録"
 
-#: templates/base.html:113 templates/user/login_page.html:6
+#: templates/base.html:54 templates/user/login_page.html:6
 #: templates/user/login_page.html:11 templates/user/login_page.html:27
 #: templates/user/register.html:45
 msgid "Log in"
 msgstr "ログイン"
 
-#: templates/base.html:124
-msgid "View All Notifications"
-msgstr "全ての通知を見る"
-
-#: templates/base.html:134
+#: templates/base.html:81
 msgid "Profile"
 msgstr "プロフィール"
 
-#: templates/base.html:135
+#: templates/base.html:82
 msgid "Log out"
 msgstr "ログアウト"
 
+#: templates/base.html:105
+msgid "Find Events"
+msgstr "ボランティア活動を検索"
+
+#: templates/base.html:113
+msgid "Create an event"
+msgstr "ボランティア活動を作る"
+
+#: templates/base.html:120
+msgid "Search Volunteer events"
+msgstr "ボランティア活動を探す"
+
+#: templates/base.html:127
+msgid "Search Volunteers"
+msgstr "ボランティアを探す"
+
 #: templates/container_top.html:10
-msgid "Let's Get Involved"
-msgstr "小さくたっていい、あなたの手を探している"
+msgid "Let's Get"
+msgstr "小さくたっていい、"
+
+#: templates/container_top.html:10
+msgid "Involved"
+msgstr "あなたの手を探している"
 
 #: templates/container_top.html:12
 msgid "Create an Event"
@@ -749,47 +749,43 @@ msgstr "このボランティア活動はタグ付けされていません"
 msgid "Postal code, Prefecture, City or Address"
 msgstr "地名を入力"
 
-#: templates/map.html:38
-msgid "Search with filters"
-msgstr "タグで絞り込む"
-
-#: templates/map.html:138
+#: templates/map.html:134
 msgid "Failed to get location."
 msgstr "位置情報取得に失敗しました"
 
-#: templates/map.html:150
+#: templates/map.html:146
 msgid "Failed to get information."
 msgstr "情報を取得できませんでした"
 
-#: templates/map.html:179
+#: templates/map.html:175
 msgid "There are no events nearby."
 msgstr "周辺イベントはありません"
 
-#: templates/map.html:239 templates/top.html:104
+#: templates/map.html:240 templates/top.html:104
 msgid "Sun"
 msgstr "日"
 
-#: templates/map.html:240 templates/top.html:105
+#: templates/map.html:241 templates/top.html:105
 msgid "Mon"
 msgstr "月"
 
-#: templates/map.html:241 templates/top.html:106
+#: templates/map.html:242 templates/top.html:106
 msgid "Tue"
 msgstr "火"
 
-#: templates/map.html:242 templates/top.html:107
+#: templates/map.html:243 templates/top.html:107
 msgid "Wed"
 msgstr "水"
 
-#: templates/map.html:243 templates/top.html:108
+#: templates/map.html:244 templates/top.html:108
 msgid "Thu"
 msgstr "木"
 
-#: templates/map.html:244 templates/top.html:109
+#: templates/map.html:245 templates/top.html:109
 msgid "Fri"
 msgstr "金"
 
-#: templates/map.html:245 templates/top.html:110
+#: templates/map.html:246 templates/top.html:110
 msgid "Sat"
 msgstr "土"
 
@@ -1116,11 +1112,11 @@ msgstr "未レビューのボランティア活動がありません"
 msgid "Participants not yet reviewed"
 msgstr "未レビューの参加者一覧"
 
-#: templates/user/user_unreviewed.html:130
-msgid "Write and post reviews about users"
+#: templates/user/user_unreviewed.html:139
+msgid "Write and post reviews this user"
 msgstr "ユーザーのレビューを投稿する"
 
-#: templates/user/user_unreviewed.html:136
+#: templates/user/user_unreviewed.html:148
 msgid "You have reviewed all the participants!"
 msgstr "未レビューの参加者はいません"
 
@@ -1194,6 +1190,12 @@ msgstr "スキルを編集しました。"
 #: user/views.py:399
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
+
+#~ msgid "View All Notifications"
+#~ msgstr "全ての通知を見る"
+
+#~ msgid "Search with filters"
+#~ msgstr "タグで絞り込む"
 
 #~ msgid "Skill "
 #~ msgstr "スキル"

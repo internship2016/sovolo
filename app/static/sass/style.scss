@@ -463,7 +463,12 @@ $logo-height :42px;
     color: white;
     position: absolute;
     top: 30px;
-    left: 50px;
+    left: 30px;
+    @media(min-width: 700px){
+      br{
+        display: none;
+      }
+    }
   }
 }
 
