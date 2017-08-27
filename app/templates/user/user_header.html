@@ -118,7 +118,6 @@
   $(function() {
     $('.past-reviewed').each(function(i,e){
       var rate = parseInt($(e).find('input').val());
-      console.log(rate);
       $(e).find('.review-star').each(function(index, elem){
         $(elem).addClass(index<rate ? 'fa-yellow' : 'fa-white');
       });
