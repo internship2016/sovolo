@@ -52,6 +52,10 @@ nav{
   }
 }
 
+#dUser{
+  padding-top: 21px;
+}
+
 #main-content {
   background: #fff;
   padding-bottom: 70px;
@@ -253,7 +257,11 @@ _::-webkit-:not(:root:root), .detail-thumbnail {
     }
   }
   &-right{
+    margin-top: 0px;
     margin-bottom: 0px;
+  }
+  &-anker{
+    padding-top: 23px !important;
   }
 }
 

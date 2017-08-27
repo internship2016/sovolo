@@ -50,8 +50,8 @@
             <div class="navbar-header navbar-right pull-right">
               <ul class="nav navbar-nav pull-left header-right">
                 {% if request.user.is_anonymous %}
-                  <li class="pull-left"><a href="{% url 'user:register' %}">{% trans "Register" %}</a></li>
-                  <li class="pull-left"><a href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
+                  <li class="pull-left"><a class="header-anker" href="{% url 'user:register' %}">{% trans "Register" %}</a></li>
+                  <li class="pull-left"><a class="header-anker" href="{% url 'user:login' %}">{% trans "Log in" %}</a></li>
                 {% else %}
                   <li class="pull-left">
                     {% if request.user.is_helper %}
@@ -160,7 +160,7 @@
 
 <footer class="container-fluid">
   <div class="container text-center">
-    <span>&copy; 2016 Interlink</span>
+    <span>&copy; 2017 Interlink</span>
   </div>
     {% load git %}
   <div class="container text-center">
