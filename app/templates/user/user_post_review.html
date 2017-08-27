@@ -21,7 +21,7 @@
       <div class="media-body">
         <div class="event-info pull-left">
           <div>
-            終了日時
+            {% trans "Event Date" %}
             <i class="fa fa-calendar" aria-hidden="true"></i>
               {{review_event.end_time_format| date:'n/j (D)'}}
             <i class="fa fa-map-marker" aria-hidden="true"></i>
@@ -98,7 +98,7 @@
       <div class="media-body">
         <div class="event-info pull-left">
           <div>
-            終了日時
+            {% trans "Event Date" %}
             <i class="fa fa-calendar" aria-hidden="true"></i>
               {{review_event.end_time_format| date:'n/j (D)'}}
             <i class="fa fa-map-marker" aria-hidden="true"></i>
