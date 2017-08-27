@@ -69,7 +69,7 @@
   </div>
 </div>
 
-
+{% if not user.is_helper %}
 
 <div class="panel panel-danger">
     <div class="panel-heading">
@@ -127,13 +127,16 @@
           <div class="panel-body">
             <div class="row">
             {% for p_user in user_list %}
-              <div class="col-md-3">
-                <div>{{ p_user.username }}</div>
-                <a href="{% url 'user:detail' p_user.id %}" title="{{ p_user.username }}">
-                  <div class="custom_thumbnail user_list_large-thumbnail" style="background-image: url({{ p_user.get_image_url }});"></div>
+              <div class="col-sm-6 col-md-4">
+                <a href="{% url 'user:detail' p_user.id %}" title="{{ p_user.username }}" class="row">
+                  <div class="custom_thumbnail user_list_large-thumbnail col-xs-5" style="background-image: url({{ p_user.get_image_url }});"></div>
+                  <div class="col-xs-7">
+                    <br>
+                    <h4>{{ p_user.username }}</h4>
+                  </div>
                 </a>
                 <a class="btn btn-primary" href="{% url 'user:post_review' %}?event_id={{event.id}}&to_user_id={{p_user.pk}}">
-                    {% trans "Write and post reviews about users" %}
+                  {% trans "Write and post reviews this user" %}
                 </a>
               </div>
             {% endfor %}
@@ -147,4 +150,5 @@
   </div>
 </div>
 
+{% endif %}
 {% endblock %}

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-08-27 04:49+0000\n"
+"POT-Creation-Date: 2017-08-27 05:43+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1112,11 +1112,11 @@ msgstr "未レビューのボランティア活動がありません"
 msgid "Participants not yet reviewed"
 msgstr "未レビューの参加者一覧"
 
-#: templates/user/user_unreviewed.html:130
-msgid "Write and post reviews about users"
+#: templates/user/user_unreviewed.html:139
+msgid "Write and post reviews this user"
 msgstr "ユーザーのレビューを投稿する"
 
-#: templates/user/user_unreviewed.html:136
+#: templates/user/user_unreviewed.html:148
 msgid "You have reviewed all the participants!"
 msgstr "未レビューの参加者はいません"
 
