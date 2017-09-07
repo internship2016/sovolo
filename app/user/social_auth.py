@@ -42,4 +42,5 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
         else:
             # If there's no email information to be had, we need to ask the
             # user to fill it in.  This should redirect us to a view
-            return redirect('/user/email_required')
+            current_partial = kwargs.get('current_partial');
+            return strategy.redirect('/user/email_required?partial_token={0}'.format(current_partial.token))
