@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from social.pipeline.partial import partial
+from social_core.pipeline.partial import partial
 from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 import uuid
