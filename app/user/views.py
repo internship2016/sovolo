@@ -24,6 +24,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.db.models import Q
 from django.apps import apps
 
+from social_django.utils import load_strategy
+
 
 class UserCreateView(CreateView):
     model = User
@@ -223,8 +225,10 @@ class AcquireEmail(View):
         Request email for the create user flow for logins that don't specify
         their email address.
         """
-        backend = request.session['partial_pipeline']['backend']
-        return render(request, 'user/acquire_email.html', {"backend": backend})
+        strategy = load_strategy()
+        partial_token = request.GET.get('partial_token')
+        partial = strategy.partial_load(partial_token)
+        return render(request, 'user/acquire_email.html', {"backend": partial.backend})
 
 
 def logout(request):
