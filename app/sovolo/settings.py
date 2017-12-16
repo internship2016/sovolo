@@ -27,7 +27,7 @@ SECRET_KEY = 'h+7tnng9qb&$^@qa=y_@g5wr0d@6vsq!pa5gwa6e7_8ngj+8k!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['sovol.moe']
+ALLOWED_HOSTS = ['sovol.moe', 'localhost']
 
 
 # Application definition
