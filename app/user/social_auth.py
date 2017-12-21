@@ -4,7 +4,10 @@ from django.core.files import File
 from django.core.files.temp import NamedTemporaryFile
 import uuid
 import urllib
+import random
+import string
 
+from .models import User
 
 @partial
 def get_profile_image(strategy, details, response,
@@ -29,18 +32,33 @@ def get_profile_image(strategy, details, response,
 @partial
 def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
     # backend = kwargs.get('backend')
+
     if user and user.email:
         # The user we're logging in already has their email attribute set
         return
-    elif is_new and not details.get('email'):
+
+    if is_new and not details.get('email'):
         # If we're creating a new user, and we can't find the email in the
         # details.  we'll attempt to request it from the data returned from our
         # backend strategy
         userEmail = strategy.request_data().get('email')
         if userEmail:
-            details['email'] = userEmail
+            # first check if email exists
+            findUser = User.objects.filter(email=userEmail)
+            if findUser.exists():
+                current_partial = kwargs.get('current_partial')
+                return strategy.redirect('/user/email_required?partial_token={0}&emailexists=1'.format(current_partial.token))
+            else:
+                details['email'] = userEmail
+                # # temporary fix: check if username is registered
+                if details.get('username'):
+                    existingUser = User.objects.filter(username=details.get('username'))
+                    if existingUser.exists():
+                        randomString = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+                        details['username'] = details['username'] + randomString
+
         else:
             # If there's no email information to be had, we need to ask the
             # user to fill it in.  This should redirect us to a view
-            current_partial = kwargs.get('current_partial');
+            current_partial = kwargs.get('current_partial')
             return strategy.redirect('/user/email_required?partial_token={0}'.format(current_partial.token))

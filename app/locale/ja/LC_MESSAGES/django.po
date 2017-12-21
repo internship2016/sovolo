@@ -907,7 +907,11 @@ msgstr "取得に失敗"
 msgid "You need an email address to create a Sovol account."
 msgstr "サービスの利用にはEmailアドレスが必要です"
 
-#: templates/user/acquire_email.html:17
+#: templates/user/acquire_email.html:16
+msgid "This email is used by an existing user."
+msgstr "すでにアカウントが存在しています。お手数ですが他のアカウントでご利用下さい。"
+
+#: templates/user/acquire_email.html:20
 msgid "REGISTER"
 msgstr "登録"
 
