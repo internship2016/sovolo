@@ -32,10 +32,19 @@ def get_profile_image(strategy, details, response,
 @partial
 def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
     # backend = kwargs.get('backend')
-
     if user and user.email:
         # The user we're logging in already has their email attribute set
         return
+
+    if is_new:
+        # quick fix: check if username is registered, add random string if so
+        # todo: rethink about username uniqueness
+        # todo: only check when form is posted (token cache will be reloaded, this will run twice)
+        if details.get('username'):
+            existingUser = User.objects.filter(username=details.get('username'))
+            if existingUser.exists():
+                randomString = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+                details['username'] = details['username'] + randomString
 
     if is_new and not details.get('email'):
         # If we're creating a new user, and we can't find the email in the
@@ -50,12 +59,6 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
                 return strategy.redirect('/user/email_required?partial_token={0}&emailexists=1'.format(current_partial.token))
             else:
                 details['email'] = userEmail
-                # # temporary fix: check if username is registered
-                if details.get('username'):
-                    existingUser = User.objects.filter(username=details.get('username'))
-                    if existingUser.exists():
-                        randomString = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
-                        details['username'] = details['username'] + randomString
 
         else:
             # If there's no email information to be had, we need to ask the
