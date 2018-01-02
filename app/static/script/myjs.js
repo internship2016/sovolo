@@ -2,16 +2,21 @@
 Mustache.tags = ['[[', ']]'];
 
 $(function(){
-  var swiper = new Swiper('.swiper-container', {
-    loop : true,
-    pagination: '.swiper-pagination',
-    nextButton: '.swiper-button-next',
-    prevButton: '.swiper-button-prev',
-    slidesPerView: 'auto',
-    centeredSlides: true,
-    paginationClickable: true,
-    spaceBetween: 30
-  });
+  var count = $('.swiper-container .swiper-slide').length;
+  if (count > 0) {
+    var swiper = new Swiper('.swiper-container', {
+      loop : true,
+      pagination: '.swiper-pagination',
+      nextButton: '.swiper-button-next',
+      prevButton: '.swiper-button-prev',
+      slidesPerView: 'auto',
+      centeredSlides: true,
+      paginationClickable: true,
+      spaceBetween: 30
+    });
+  } else {
+    $('.swiper-container').hide();
+  }
   $('#top-tabs').tabs({
     selected: 0
   });
