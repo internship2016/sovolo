@@ -10,6 +10,8 @@ ALLOWED_HOSTS = []
 # google api key for frontend
 GOOGLE_MAP_KEY = ''
 
+# GRECAPTCHA sitekey
+GRECAPTCHA_SITEKEY = ''
 
 ### these setttings are in OS env or settings.py
 # SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY')

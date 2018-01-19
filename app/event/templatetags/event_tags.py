@@ -1,4 +1,6 @@
 from django import template
+from django.conf import settings
+
 
 register = template.Library()
 
@@ -35,4 +37,5 @@ def comments(context, event):
         'comment_list': comment_list,
         'request': context['request'],
         'event': event,
+        'g_recaptcha_sitekey': settings.GRECAPTCHA_SITEKEY
     }

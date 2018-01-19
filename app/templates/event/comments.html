@@ -39,7 +39,7 @@
             <div class="form-group">
               <div class="comment-input-area">
                 <textarea class="form-control" rows="10" name="text" placeholder="{% trans 'Write your comment here' %}" style="resize:vertical;"></textarea>
-                <div class="g-recaptcha" data-sitekey="6Lcpki8UAAAAAC_3aggUiz7YkI18d7IgcLWxvIUy"></div>
+                <div class="g-recaptcha" data-sitekey="{{ g_recaptcha_sitekey }}"></div>
                 <div id="g-recaptcha-message" style="color: red;"></div>
                 <button class="center-block btn btn-primary">{% trans "Post" %}</button>
 
