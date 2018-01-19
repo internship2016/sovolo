@@ -29,13 +29,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ### All moved to local_settings, DATABASE settings are not moved for now
 ###
 # # SECURITY WARNING: keep the secret key used in production secret!
-# SECRET_KEY = 'h+7tnng9qb&$^@qa=y_@g5wr0d@6vsq!pa5gwa6e7_8ngj+8k!'
+# SECRET_KEY = ''
 
 # # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
 
 # ALLOWED_HOSTS = []
-###
 
 
 # Application definition
@@ -164,6 +163,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
