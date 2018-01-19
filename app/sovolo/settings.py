@@ -14,20 +14,27 @@ import os
 from django.utils.translation import ugettext_lazy as _
 from django.contrib.messages import constants as message_constants
 
+# local settings with sensible settings, do not include this in git
+from .local_settings import *
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'h+7tnng9qb&$^@qa=y_@g5wr0d@6vsq!pa5gwa6e7_8ngj+8k!'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+### All moved to local_settings, DATABASE settings are not moved for now
+###
+# # SECURITY WARNING: keep the secret key used in production secret!
+# SECRET_KEY = 'h+7tnng9qb&$^@qa=y_@g5wr0d@6vsq!pa5gwa6e7_8ngj+8k!'
 
-ALLOWED_HOSTS = ['sovol.moe', 'localhost', '127.0.0.1']
+# # SECURITY WARNING: don't run with debug turned on in production!
+# DEBUG = True
+
+# ALLOWED_HOSTS = []
 
 
 # Application definition

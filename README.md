@@ -25,5 +25,12 @@
     # cd /home/docker/code/app
     # python3 manage.py compilemessages
 
+## Settings
+
+ユーザのローカル設定ファイル、名前は/home/docker/code/app/sovolo/local_settings.py
+gitにIGNORE設定をしておいているが、実行には必要。
+/home/docker/code/app/sovolo/local_settings.py.templateを参考にファイルを作成する。
+
+
 ## TESTING (port 8000)
     # runserver
