@@ -13,7 +13,7 @@ from django.contrib.auth import login
 from django.utils.decorators import method_decorator
 from .models import User, Skill, UserActivation, UserPasswordResetting
 from .form import UserReviewListForm
-from django.urls import reverse
+from django.core.urlresolvers import reverse
 
 from event.models import Event
 

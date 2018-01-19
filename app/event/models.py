@@ -30,6 +30,7 @@ class Event(AbstractBaseModel):
     share_message = models.CharField(max_length=100, blank=True)
 
     host_user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                  on_delete=models.CASCADE,
                                   related_name='host_event')
 
     supporter = models.ManyToManyField(User,
@@ -220,7 +221,7 @@ class Participation(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=30)
-    frame = models.ForeignKey(Frame, blank=True, null=True)
+    frame = models.ForeignKey(Frame, on_delete=models.CASCADE, blank=True, null=True)
 
     class Meta:
         unique_together = (('event', 'user'),)
