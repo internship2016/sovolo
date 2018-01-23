@@ -33,7 +33,7 @@
 ### Python3
 
     (root) yum install https://centos7.iuscommunity.org/ius-release.rpm
-    (root) yum install python35u python35u-libs python35u-devel python35u-pip
+    (root) yum install python36u python36u-libs python36u-devel python36u-pip
 
 ### Front Web Server
 
