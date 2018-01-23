@@ -50,6 +50,23 @@
     (root) echo_supervisord_conf > /etc/supervisord/supervisord.conf
     (root) echo "[include]" >> /etc/supervisord/supervisord.conf
     (root) echo "files = conf.d/*.conf" >> /etc/supervisord/supervisord.conf
+    (root) vi /usr/lib/systemd/system/supervisord.service
+
+        [Unit]
+        Description=supervisord - Supervisor process control system for UNIX
+        Documentation=http://supervisord.org
+        After=network.target
+
+        [Service]
+        Type=forking
+        ExecStart=/usr//bin/supervisord -c /etc/supervisord/supervisord.conf
+        ExecReload=/usr/bin/supervisorctl reload
+        ExecStop=/usr/bin/supervisorctl shutdown
+        User=root
+
+        [Install]
+        WantedBy=multi-user.target
+
     (root) systemctl enable supervisord
     (root) systemctl start supervisord.service
 
