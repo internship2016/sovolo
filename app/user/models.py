@@ -1,7 +1,7 @@
 # coding=utf-8
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from django.conf import settings
 from django.apps import apps
 
@@ -400,7 +400,7 @@ class User(AbstractBaseModel, AbstractBaseUser):
 
 
 class UserActivation(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     key = models.CharField(max_length=255, unique=True)
     created = models.DateTimeField(editable=False)
 
@@ -411,7 +411,7 @@ class UserActivation(models.Model):
 
 
 class UserPasswordResetting(models.Model):
-    user = models.OneToOneField(User)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     key = models.CharField(max_length=255, unique=True)
     created = models.DateTimeField(editable=False)
 
@@ -446,7 +446,7 @@ class UserReviewList(models.Model):
 
     comment = models.CharField(max_length=200, default='', null=True, blank=True)
 
-    joined_event = models.ForeignKey('event.Event')
+    joined_event = models.ForeignKey('event.Event', on_delete=models.CASCADE)
 
     post_day = models.DateTimeField(default=timezone.now)
 

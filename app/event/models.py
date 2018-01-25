@@ -1,6 +1,6 @@
 # coding=utf-8
 from django.db import models
-from django.core.urlresolvers import reverse
+from django.urls import reverse
 from user.models import User
 from base.models import AbstractBaseModel
 from django.conf import settings
@@ -30,7 +30,8 @@ class Event(AbstractBaseModel):
     share_message = models.CharField(max_length=100, blank=True)
 
     host_user = models.ForeignKey(settings.AUTH_USER_MODEL,
-                                  related_name='host_event')
+                                  related_name='host_event',
+                                  on_delete=models.CASCADE)
 
     supporter = models.ManyToManyField(User,
                                        related_name="support",
@@ -220,7 +221,7 @@ class Participation(AbstractBaseModel):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     status = models.CharField(max_length=30)
-    frame = models.ForeignKey(Frame, blank=True, null=True)
+    frame = models.ForeignKey(Frame, blank=True, null=True, on_delete=models.CASCADE)
 
     class Meta:
         unique_together = (('event', 'user'),)
