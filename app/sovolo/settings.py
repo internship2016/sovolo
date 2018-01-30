@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
+##
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'h+7tnng9qb&$^@qa=y_@g5wr0d@6vsq!pa5gwa6e7_8ngj+8k!'
 
@@ -210,6 +211,7 @@ EMAIL_HOST_PASSWORD = None
 DEFAULT_FROM_EMAIL = 'Sovol <noreply@sovol.earth>'
 
 GOOGLE_RECAPTCHA_SECRET = os.environ.get('GOOGLE_RECAPTCHA_SECRET')
+GOOGLE_MAP_KEY = os.environ.get('GOOGLE_MAP_KEY')
 
 PREFECTURES = {
     "Hokkaido"  : (_("Hokkaido" ),  1),

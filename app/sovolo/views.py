@@ -37,6 +37,12 @@ def index_event(request):
     prefs = [(k, v[0]) for k, v in prefs]
     context['prefectures'] = prefs
 
+    """Google MAP KEY
+    MAP KEY from settings
+    """
+    context['google_map_key'] = settings.GOOGLE_MAP_KEY
+
+
     return render(request, 'top.html', context)
 
 
@@ -57,5 +63,10 @@ def index_user(request):
     prefs = sorted(prefs, key=lambda x: x[1][1])
     prefs = [(k, v[0]) for k, v in prefs]
     context['prefectures'] = prefs
+
+    """Google MAP KEY
+    MAP KEY from settings
+    """
+    context['google_map_key'] = settings.GOOGLE_MAP_KEY
 
     return render(request, 'top_user.html', context)
