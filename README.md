@@ -320,3 +320,27 @@
         Content-Length: 0
         Vary: Accept-Language, Cookie
         Content-Language: ja-jp
+
+## Backup and Restore
+
+### Backup
+
+#### Database
+
+    (postgres) pg_dump -Fc -U sovolo_admin -W -h localhost sovolo > /tmp/pg_sovolo_20180201.dump
+
+#### Assets
+
+    (user) cd app
+    (user) tar zcvf /tmp/media_20180201.tar.gz media
+
+### Restore
+
+#### Database
+
+    (postgres) pg_restore -c -U sovolo_admin -W -h localhost -d sovolo /tmp/pg_sovolo_20180201.dump
+
+#### Assets
+
+    (root) cd app
+    (root) tar zxvf /tmp/media_20180201.tar.gz
