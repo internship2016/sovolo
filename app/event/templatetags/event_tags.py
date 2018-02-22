@@ -37,5 +37,5 @@ def comments(context, event):
         'comment_list': comment_list,
         'request': context['request'],
         'event': event,
-        'g_recaptcha_sitekey': settings.GOOGLE_RECAPTCHA_SECRET
+        'g_recaptcha_sitekey': settings.GOOGLE_RECAPTCHA_SITEKEY
     }
