@@ -95,6 +95,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                'sovolo.context_processors.google_analytics',
             ],
         },
     },
@@ -213,6 +214,7 @@ DEFAULT_FROM_EMAIL = 'Sovol <noreply@sovol.earth>'
 GOOGLE_RECAPTCHA_SECRET = os.environ.get('GOOGLE_RECAPTCHA_SECRET')
 GOOGLE_RECAPTCHA_SITEKEY = os.environ.get('GOOGLE_RECAPTCHA_SITEKEY')
 GOOGLE_MAP_KEY = os.environ.get('GOOGLE_MAP_KEY')
+GOOGLE_ANALYTICS_PROP = os.environ.get('GOOGLE_ANALYTICS_PROP')
 
 PREFECTURES = {
     "Hokkaido"  : (_("Hokkaido" ),  1),
