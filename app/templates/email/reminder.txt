@@ -8,6 +8,6 @@
 集合場所: {{ event.meeting_place }}
 
 詳細は以下のURLからご覧ください。
-https://sovol.earth/{% url 'event:detail' event.id %}
+https://sovol.moe/{% url 'event:detail' event.id %}
 
 よろしくお願いいたします。

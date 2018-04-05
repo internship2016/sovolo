@@ -593,7 +593,7 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
                 # XXX: Hardcoded From address
                 send_mail(subject,
                           message,
-                          "reminder@sovol.earth",
+                          "reminder@sovol.moe",
                           [carry_up.user.email])
 
         messages.success(self.request, _("Canceled your participation."))
@@ -687,7 +687,7 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
                     "sender": request.user,
                     "message": message,
                 },
-                "Sovol Info <info@sovol.earth>",
+                "Sovol Info <info@sovol.moe>",
                 [user.email],
             )
 
