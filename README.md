@@ -272,6 +272,63 @@
 
     (root) systemctl restart postfix.service
 
+#### DKIM
+
+    (root) yum install opendkim
+    (root) opendkim-default-keygen
+    (root) vi /etc/opendkim.conf
+
+        ...
+        Mode    s
+        ...
+        Socket  inet:8891@127.0.0.1
+        ...
+        Domain  sovol.moe
+        ...
+        Canonicalization        relaxed/simple
+        ...
+        #KeyFile        /etc/opendkim/keys/default.private
+        ...
+        KeyTable        refile:/etc/opendkim/KeyTable
+        ...
+        SigningTable    refile:/etc/opendkim/SigningTable
+        ...
+        ExternalIgnoreList      refile:/etc/opendkim/TrustedHosts
+        ...
+        InternalHosts   refile:/etc/opendkim/TrustedHosts
+        ...
+
+    (root) vi /etc/opendkim/KeyTable
+
+        default._domainkey.sovol.moe sovol.moe:default:/etc/opendkim/keys/default.private
+
+    (root) vi /etc/opendkim/SigningTable
+
+        *@sovol.moe default._domainkey.sovol.moe
+
+    (root) vi /etc/opendkim/TrustedHost
+
+        127.0.0.1
+        ::1
+        sovol.moe
+
+    (root) vi /etc/postfix/main.cf
+
+        ...
+        smtpd_milters = inet:127.0.0.1:8891
+        non_smtpd_milters = $smtpd_milters
+        milter_default_action = accept
+
+    (root) hash -r
+    (root) systemctl start opendkim
+    (root) systemctl enable opendkim
+    (root) systemctl restart postfix
+
+    (root) cat /etc/opendkim/keys/default.txt
+
+        (Copy domainkey to TXT record)
+
+
 ### I18N
 
     (root) yum install gettext
