@@ -94,9 +94,7 @@
 
 ### LetsEncrypt
 
-    (root) yum install certbot
-    (root) systemctl stop nginx.service
-    (root) certbot certonly --standalone -d sovol.moe -m who@example.com
+    (root) yum install letsencrypt
     (root) vi /etc/nginx/conf.d/sovol.conf
 
         # mysite_nginx.conf
@@ -111,7 +109,9 @@
         server {
             listen 80;
             server_name sovol.moe;
-            return 301 https://$host$request_uri;
+            root /usr/local/src/sovolo/app/static;
+            location /.well-known/acme-challenge/ { allow all; }
+            location / { return 301 https://$host$request_uri; }
         }
 
         # configuration of the server
@@ -152,7 +152,13 @@
             }
         }
 
+    (root) letsencrypt certonly --webroot -d sovol.moe -m who@example.com -w /usr/local/src/sovolo/app/static
     (root) systemctl start nginx.service
+    (root) crontab -e
+
+        MAILTO=who@example.com
+        49 0,12 * * * root /bin/letsencrypt renew --quiet && /bin/systemctl reload nginx.service
+
 
 ### Clone django-uwsgi-nginx
 
