@@ -157,7 +157,7 @@
     (root) crontab -e
 
         MAILTO=who@example.com
-        49 0,12 * * * root /bin/letsencrypt renew --quiet && /bin/systemctl reload nginx.service
+        49 0,12 * * * /bin/letsencrypt renew --quiet && /bin/systemctl reload nginx.service
 
 
 ### Clone django-uwsgi-nginx
