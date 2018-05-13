@@ -28,12 +28,13 @@ SECRET_KEY = 'h+7tnng9qb&$^@qa=y_@g5wr0d@6vsq!pa5gwa6e7_8ngj+8k!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['local.domain.jp']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_gulp',
     'event.apps.EventConfig',
     'tag.apps.TagConfig',
     'user.apps.UserConfig',
@@ -266,3 +267,5 @@ PREFECTURES = {
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
+
+GULP_PRODUCTION_COMMAND='gulp default --production'
