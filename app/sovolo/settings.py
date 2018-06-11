@@ -269,4 +269,4 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
 
-GULP_PRODUCTION_COMMAND='gulp default --production'
+GULP_PRODUCTION_COMMAND='npm run gulp default --production'
