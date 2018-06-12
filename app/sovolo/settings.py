@@ -34,6 +34,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django_gulp',
     'event.apps.EventConfig',
     'tag.apps.TagConfig',
     'user.apps.UserConfig',
@@ -74,6 +75,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'user.auth_exception_middleware.AuthCanceledExceptionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -269,3 +271,5 @@ PREFECTURES = {
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
+
+GULP_PRODUCTION_COMMAND='npm run gulp default --production'
