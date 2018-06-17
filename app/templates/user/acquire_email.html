@@ -8,19 +8,38 @@
   <h4>{% trans "You need an email address to create a Sovol account." %}</h4>
   <form action="{% url "social:complete" backend=backend %}" class="form-horizontal" method="post">
     {% csrf_token %}
+
+      <input type="hidden" name="posted" value="1">
+
     {% if email_exists == '1' %}
       <div class="form-group has-error">
     {% else %}
       <div class="form-group">
     {% endif %}
-        <div class="col-sm-1 col-sm-offset-1"><label class="control-label" for="email">Email</label></div>
+        <div class="col-sm-1 col-sm-offset-1"><label class="control-label" for="email">{% trans "Email" %}</label></div>
         <div class="col-sm-9">
-          <input class="form-control" id="email" type="email" name="email" value="" required>
+          <input class="form-control" id="email" type="email" name="email" value="{{ email }}" required>
           {% if email_exists == '1' %}
             <span class="help-block">{% trans "This email is used by an existing user." %}</span>
           {% endif %}
         </div>
       </div>
+
+    {% if user_exists == '1' %}
+      <div class="form-group has-error">
+    {% else %}
+      <div class="form-group">
+    {% endif %}
+        <div class="col-sm-1 col-sm-offset-1"><label class="control-label" for="username">{% trans "Username" %}</label></div>
+        <div class="col-sm-9">
+          <input class="form-control" id="username" type="input" name="username" value="{{ username }}" required>
+          {% if user_exists == '1' %}
+            <span class="help-block">{% trans "This name is used by an existing user." %}</span>
+          {% endif %}
+        </div>
+      </div>
+
+
       <div style="text-align: center"><input type="submit" class="btn btn-default btn-lg" value="{% trans 'REGISTER' %}"/></div>
   </form>
 {% endblock %}
