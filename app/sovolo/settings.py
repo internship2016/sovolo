@@ -180,25 +180,18 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SOCIAL_AUTH_PIPELINE = (
-    # 'social_core.pipeline.debug.debug',
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
     'social_core.pipeline.social_auth.auth_allowed',
-    # 'social_core.pipeline.debug.debug',
     'social_core.pipeline.social_auth.social_user',
     'social_core.pipeline.user.get_username',
-    # 'social_core.pipeline.debug.debug',
     'user.social_auth.require_email',
-    # 'social_core.pipeline.debug.debug',
     'social_core.pipeline.user.get_username',
-    # 'social_core.pipeline.debug.debug',
     'social_core.pipeline.user.create_user',
-    # 'social_core.pipeline.debug.debug',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'user.social_auth.get_profile_image',
     'social_core.pipeline.user.user_details',
-    # 'social_core.pipeline.debug.debug',
 )
 
 SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY')

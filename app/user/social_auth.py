@@ -42,15 +42,12 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
         # todo: rethink about username uniqueness
         # todo: only check when form is posted (token cache will be reloaded, this will run twice)
 
-        # if details.get('username'):
         # userName in kwargs overwrites details
         #  should check username in pre-processed string, i.e. after pipeline getusername
         #  (for some reason? pre-processed string is only in kwargs, not in details?)
         userNameDetails = details.get('username', None)
         userName = kwargs.get('username', userNameDetails)
         if userName:
-            # print ('XXXXXusername:', details.get('username'))
-            # print ('XXXXXusername:', userName)
             existingUser = User.objects.filter(username=userName)
             if existingUser.exists():
                 randomString = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
@@ -60,7 +57,6 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
         # (in facebook case): it seems facebook will come in this branch, not the following strategy email one
         if details.get('email'):
             userEmail = details.get('email')
-            # print ('=',userEmail)
             if userEmail:
                 # first check if email exists
                 findUser = User.objects.filter(email=userEmail)
@@ -74,8 +70,6 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
                         if findUser2.exists():
                             current_partial = kwargs.get('current_partial')
                             return strategy.redirect('/user/email_required?partial_token={0}&emailexists=1'.format(current_partial.token))
-                            # return strategy.redirect('/user/email_required?partial_token={0}&emailexists=1&u={1}&e={2}'
-                                # .format(current_partial.token, details.get('username'), details['email']))
                         else:
                             details['email'] = userEmail
 
@@ -84,8 +78,6 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
                         # user to fill it in.  This should redirect us to a view
                         current_partial = kwargs.get('current_partial')
                         return strategy.redirect('/user/email_required?partial_token={0}'.format(current_partial.token))
-                        # return strategy.redirect('/user/email_required?partial_token={0}&emailexists=1&u=a.{1}&e={2}'
-                            # .format(current_partial.token, details.get('username'), details['email']))
 
     if is_new and not details.get('email'):
         # If we're creating a new user, and we can't find the email in the
