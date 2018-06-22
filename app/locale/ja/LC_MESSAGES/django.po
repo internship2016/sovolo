@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-01-28 10:03+0000\n"
+"POT-Creation-Date: 2018-06-17 11:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,195 +133,195 @@ msgstr "不正な送信先です"
 msgid "Your message has been sent successfully."
 msgstr "メッセージの送信が完了しました。"
 
-#: sovolo/settings.py:145
+#: sovolo/settings.py:147
 msgid "English"
 msgstr "English"
 
-#: sovolo/settings.py:216
+#: sovolo/settings.py:220
 msgid "Hokkaido"
 msgstr "北海道"
 
-#: sovolo/settings.py:217
+#: sovolo/settings.py:221
 msgid "Aomori"
 msgstr "青森県"
 
-#: sovolo/settings.py:218
+#: sovolo/settings.py:222
 msgid "Iwate"
 msgstr "岩手県"
 
-#: sovolo/settings.py:219
+#: sovolo/settings.py:223
 msgid "Miyagi"
 msgstr "宮城県"
 
-#: sovolo/settings.py:220
+#: sovolo/settings.py:224
 msgid "Akita"
 msgstr "秋田県"
 
-#: sovolo/settings.py:221
+#: sovolo/settings.py:225
 msgid "Yamagata"
 msgstr "山形県"
 
-#: sovolo/settings.py:222
+#: sovolo/settings.py:226
 msgid "Fukushima"
 msgstr "福島県"
 
-#: sovolo/settings.py:223
+#: sovolo/settings.py:227
 msgid "Ibaraki"
 msgstr "茨城県"
 
-#: sovolo/settings.py:224
+#: sovolo/settings.py:228
 msgid "Tochigi"
 msgstr "栃木県"
 
-#: sovolo/settings.py:225
+#: sovolo/settings.py:229
 msgid "Gunnma"
 msgstr "群馬県"
 
-#: sovolo/settings.py:226
+#: sovolo/settings.py:230
 msgid "Saitama"
 msgstr "埼玉県"
 
-#: sovolo/settings.py:227
+#: sovolo/settings.py:231
 msgid "Chiba"
 msgstr "千葉県"
 
-#: sovolo/settings.py:228
+#: sovolo/settings.py:232
 msgid "Tokyo"
 msgstr "東京都"
 
-#: sovolo/settings.py:229
+#: sovolo/settings.py:233
 msgid "Kanagawa"
 msgstr "神奈川県"
 
-#: sovolo/settings.py:230
+#: sovolo/settings.py:234
 msgid "Niigata"
 msgstr "新潟県"
 
-#: sovolo/settings.py:231
+#: sovolo/settings.py:235
 msgid "Toyama"
 msgstr "富山県"
 
-#: sovolo/settings.py:232
+#: sovolo/settings.py:236
 msgid "Ishikawa"
 msgstr "石川県"
 
-#: sovolo/settings.py:233
+#: sovolo/settings.py:237
 msgid "Fukui"
 msgstr "福井県"
 
-#: sovolo/settings.py:234
+#: sovolo/settings.py:238
 msgid "Yamanashi"
 msgstr "山梨県"
 
-#: sovolo/settings.py:235
+#: sovolo/settings.py:239
 msgid "Nagano"
 msgstr "長野県"
 
-#: sovolo/settings.py:236
+#: sovolo/settings.py:240
 msgid "Gifu"
 msgstr "岐阜県"
 
-#: sovolo/settings.py:237
+#: sovolo/settings.py:241
 msgid "Shizuoka"
 msgstr "静岡県"
 
-#: sovolo/settings.py:238
+#: sovolo/settings.py:242
 msgid "Aichi"
 msgstr "愛知県"
 
-#: sovolo/settings.py:239
+#: sovolo/settings.py:243
 msgid "Mie"
 msgstr "三重県"
 
-#: sovolo/settings.py:240
+#: sovolo/settings.py:244
 msgid "Shiga"
 msgstr "滋賀県"
 
-#: sovolo/settings.py:241
+#: sovolo/settings.py:245
 msgid "Kyoto"
 msgstr "京都府"
 
-#: sovolo/settings.py:242
+#: sovolo/settings.py:246
 msgid "Osaka"
 msgstr "大阪府"
 
-#: sovolo/settings.py:243
+#: sovolo/settings.py:247
 msgid "Hyogo"
 msgstr "兵庫県"
 
-#: sovolo/settings.py:244
+#: sovolo/settings.py:248
 msgid "Nara"
 msgstr "奈良県"
 
-#: sovolo/settings.py:245
+#: sovolo/settings.py:249
 msgid "Wakayama"
 msgstr "和歌山県"
 
-#: sovolo/settings.py:246
+#: sovolo/settings.py:250
 msgid "Tottori"
 msgstr "鳥取県"
 
-#: sovolo/settings.py:247
+#: sovolo/settings.py:251
 msgid "Shimane"
 msgstr "島根県"
 
-#: sovolo/settings.py:248
+#: sovolo/settings.py:252
 msgid "Okayama"
 msgstr "岡山県"
 
-#: sovolo/settings.py:249
+#: sovolo/settings.py:253
 msgid "Hiroshima"
 msgstr "広島県"
 
-#: sovolo/settings.py:250
+#: sovolo/settings.py:254
 msgid "Yamaguchi"
 msgstr "山口県"
 
-#: sovolo/settings.py:251
+#: sovolo/settings.py:255
 msgid "Tokushima"
 msgstr "徳島県"
 
-#: sovolo/settings.py:252
+#: sovolo/settings.py:256
 msgid "Kagawa"
 msgstr "香川県"
 
-#: sovolo/settings.py:253
+#: sovolo/settings.py:257
 msgid "Ehime"
 msgstr "愛媛県"
 
-#: sovolo/settings.py:254
+#: sovolo/settings.py:258
 msgid "Kouchi"
 msgstr "高知県"
 
-#: sovolo/settings.py:255
+#: sovolo/settings.py:259
 msgid "Fukuoka"
 msgstr "福岡県"
 
-#: sovolo/settings.py:256
+#: sovolo/settings.py:260
 msgid "Saga"
 msgstr "佐賀県"
 
-#: sovolo/settings.py:257
+#: sovolo/settings.py:261
 msgid "Nagasaki"
 msgstr "長崎県"
 
-#: sovolo/settings.py:258
+#: sovolo/settings.py:262
 msgid "Kumamoto"
 msgstr "熊本県"
 
-#: sovolo/settings.py:259
+#: sovolo/settings.py:263
 msgid "Ooita"
 msgstr "大分県"
 
-#: sovolo/settings.py:260
+#: sovolo/settings.py:264
 msgid "Miyazaki"
 msgstr "宮崎県"
 
-#: sovolo/settings.py:261
+#: sovolo/settings.py:265
 msgid "Kagoshima"
 msgstr "鹿児島県"
 
-#: sovolo/settings.py:262
+#: sovolo/settings.py:266
 msgid "Okinawa"
 msgstr "沖縄県"
 
@@ -907,12 +907,26 @@ msgstr "取得に失敗"
 msgid "You need an email address to create a Sovol account."
 msgstr "サービスの利用にはEmailアドレスが必要です"
 
-#: templates/user/acquire_email.html:20
+#: templates/user/acquire_email.html:19
+msgid "Email"
+msgstr "Emailアドレス"
+
+#: templates/user/acquire_email.html:23
 msgid "This email is used by an existing user."
 msgstr ""
 "すでにアカウントが存在しています。お手数ですが他のアカウントでご利用下さい。"
 
-#: templates/user/acquire_email.html:24
+#: templates/user/acquire_email.html:33
+#: templates/user/template_skilllist.html:21
+msgid "Username"
+msgstr "ユーザー名"
+
+#: templates/user/acquire_email.html:37
+msgid "This name is used by an existing user."
+msgstr ""
+"すでにアカウントが存在しています。お手数ですが他のアカウントでご利用下さい。"
+
+#: templates/user/acquire_email.html:43
 msgid "REGISTER"
 msgstr "登録"
 
@@ -1105,10 +1119,6 @@ msgstr "スキル変更"
 msgid "Users"
 msgstr "ユーザー一覧"
 
-#: templates/user/template_skilllist.html:21
-msgid "Username"
-msgstr "ユーザー名"
-
 #: templates/user/template_skilllist.html:34
 msgid "No skills found"
 msgstr "スキルがありません"
@@ -1262,28 +1272,28 @@ msgstr "そのユーザーは存在しません"
 msgid "User profile has been successfully updated."
 msgstr "ユーザー情報を編集しました。"
 
-#: user/views.py:236
+#: user/views.py:246
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
 
-#: user/views.py:295 user/views.py:303 user/views.py:311 user/views.py:316
-#: user/views.py:321
+#: user/views.py:305 user/views.py:313 user/views.py:321 user/views.py:326
+#: user/views.py:331
 msgid "Invalid Review"
 msgstr "無効なレビューです"
 
-#: user/views.py:326
+#: user/views.py:336
 msgid "You've already reviewd"
 msgstr "既にレビュー済みです"
 
-#: user/views.py:339
+#: user/views.py:349
 msgid "Your review has been successfully posted!"
 msgstr "レビューを投稿しました。"
 
-#: user/views.py:375
+#: user/views.py:385
 msgid "Your skill has been updated successfully."
 msgstr "スキルを編集しました。"
 
-#: user/views.py:405
+#: user/views.py:415
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
 
