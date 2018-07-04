@@ -8,7 +8,10 @@ import urllib
 import random
 import string
 
-from .models import User
+from django.contrib import messages
+from base.utils import send_template_mail
+from .models import User, UserActivation
+from django.utils.translation import ugettext_lazy as _
 
 @partial
 def get_profile_image(strategy, details, response,
@@ -118,10 +121,12 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
         # ok, pass on pipeline
         details['username'] = userName
         details['email'] = userEmail
+        # details['is_active'] = False
 
         return {
             'username': userName,
             'email': userEmail
+            # 'is_active': False
         }
 
     # if is_new and not details.get('email'):
@@ -149,3 +154,39 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
 def check_anonymous(strategy, details, request, user=None, *args, **kwargs):
     if request and request.user and request.user.is_authenticated:
         return redirect("/")
+    pass
+
+# send validation mail and make user not active first
+def send_validation(strategy, details, request, user=None, is_new=False, *args, **kwargs):
+    if is_new and user is not None:
+        user.is_active = False
+        user.save()
+
+        # send validation mail
+        activation_key = uuid.uuid4().hex #self.create_activation_key()
+        activation = UserActivation(user=user, key=activation_key)
+        activation.save()
+
+        base_url = "/".join(request.build_absolute_uri().split("/")[:3])
+        activation_url = "{0}/user/activation/{1}".format(base_url,
+                                                          activation_key)
+        send_template_mail(
+            "email/activation.txt",
+            {"activation_url": activation_url},
+            "Sovol Info <info@sovol.earth>",
+            [user.email],
+        )
+
+        info_msg = _("Confirmation email has been "
+                     "sent to your email address.") % {'email': user.email}
+
+        messages.info(request, info_msg)
+        return redirect("top")
+
+        # return not active user info for user creation
+        # details['is_active'] = False
+        # if kwargs is None:
+        #     kwargs = {}
+        # kwargs['is_active'] = False
+        # return kwargs
+    pass
