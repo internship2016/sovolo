@@ -132,3 +132,9 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
     #         # user to fill it in.  This should redirect us to a view
     #         current_partial = kwargs.get('current_partial')
     #         return strategy.redirect('/user/email_required?partial_token={0}'.format(current_partial.token))
+
+
+# full pipeline func, check if is anonymous
+def check_anonymous(strategy, details, request, user=None, *args, **kwargs):
+    if request and request.user and request.user.is_authenticated:
+        return redirect("/")
