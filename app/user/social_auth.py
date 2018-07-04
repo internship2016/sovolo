@@ -43,6 +43,12 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
         # todo: rethink about username uniqueness
         # todo: only check when form is posted (token cache will be reloaded, this will run twice)
 
+        isallright = 1
+        userexists = 0
+        emailexists = 0
+
+        # 1. get current info from sns (firsttime) or form post
+        # 2. check ok
         posted = (strategy.request_data().get('posted') == '1')
         if not posted:
             ## first time
@@ -57,45 +63,50 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
                 if existingUser.exists():
                     randomString = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
                     details['username'] = userName + randomString
+                    isallright = 0
+                    userexists = 1
 
             userEmailDetails = details.get('email', None)
             userEmail = kwargs.get('email', userEmailDetails)
 
-            # if userEmail:
-            #     findUser = User.objects.filter(email=userEmail)
-            #     if findUser.exists():
-            #         emailexists = 1
-            current_partial = kwargs.get('current_partial')
-            return strategy.redirect('/user/email_required?partial_token={0}&username={1}&email={2}'.format(
-                current_partial.token, quote(userName), quote(userEmail)))
-
-        # posted, check all
-        userName = strategy.request_data().get('username')
-        isallright = 1
-        userexists = 0
-        emailexists = 0
-        if userName:
-            existingUser = User.objects.filter(username=userName)
-            if existingUser.exists():
-                userexists = 1
+            if userEmail:
+                findUser = User.objects.filter(email=userEmail)
+                if findUser.exists():
+                    isallright = 0
+                    emailexists = 1
+            else:
+                # email empty
                 isallright = 0
-        else: # name empty
-            isallright = 0
+            # current_partial = kwargs.get('current_partial')
+            # return strategy.redirect('/user/email_required?partial_token={0}&username={1}&email={2}'.format(
+                # current_partial.token, quote(userName), quote(userEmail)))
 
-        # if email is used by some user
-        # (in facebook case): it seems facebook will come in this branch, not the following strategy email one
-        userEmail = strategy.request_data().get('email')
-        if userEmail:
-            # first check if email exists
-            findUser = User.objects.filter(email=userEmail)
-            if findUser.exists():
-                # seems we cannot set details['email'] directly here, maybe return is not good?
-                # We should process strategy request for email input here, or will be caught in a loop
-                emailexists = 1
+        else:
+            # posted, info from post
+            userName = strategy.request_data().get('username')
+            if userName:
+                existingUser = User.objects.filter(username=userName)
+                if existingUser.exists():
+                    userexists = 1
+                    isallright = 0
+            else: # name empty
                 isallright = 0
-        else: # email empty
-            isallright = 0
 
+            # if email is used by some user
+            # (in facebook case): it seems facebook will come in this branch, not the following strategy email one
+            userEmail = strategy.request_data().get('email')
+            if userEmail:
+                # first check if email exists
+                findUser = User.objects.filter(email=userEmail)
+                if findUser.exists():
+                    # seems we cannot set details['email'] directly here, maybe return is not good?
+                    # We should process strategy request for email input here, or will be caught in a loop
+                    emailexists = 1
+                    isallright = 0
+            else: # email empty
+                isallright = 0
+
+        # 3. ok pass or show form
         if not isallright:
             # If there's no email information to be had, we need to ask the
             # user to fill it in.  This should redirect us to a view
@@ -104,7 +115,7 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
             return strategy.redirect('/user/email_required?partial_token={0}&username={1}&email={2}&userexists={3}&emailexists={4}'.format(
                 current_partial.token, quote(userName), quote(userEmail), userexists, emailexists))
 
-
+        # ok, pass on pipeline
         details['username'] = userName
         details['email'] = userEmail
 
