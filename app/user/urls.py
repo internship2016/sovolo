@@ -36,7 +36,7 @@ urlpatterns = [
         name='logout'),
 
     url(r'^register/$',
-        views.UserCreateView.as_view(),
+        anonymous_wrapper(views.UserCreateView.as_view()),
         name='register'),
 
     url(r'^activation/(?P<key>\w+)/$',
