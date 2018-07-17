@@ -8,7 +8,10 @@ import urllib
 import random
 import string
 
-from .models import User
+from django.contrib import messages
+from base.utils import send_template_mail
+from .models import User, UserActivation
+from django.utils.translation import ugettext_lazy as _
 
 @partial
 def get_profile_image(strategy, details, response,
@@ -43,6 +46,12 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
         # todo: rethink about username uniqueness
         # todo: only check when form is posted (token cache will be reloaded, this will run twice)
 
+        isallright = 1
+        userexists = 0
+        emailexists = 0
+
+        # 1. get current info from sns (firsttime) or form post
+        # 2. check ok
         posted = (strategy.request_data().get('posted') == '1')
         if not posted:
             ## first time
@@ -57,45 +66,50 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
                 if existingUser.exists():
                     randomString = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
                     details['username'] = userName + randomString
+                    isallright = 0
+                    userexists = 1
 
             userEmailDetails = details.get('email', None)
             userEmail = kwargs.get('email', userEmailDetails)
 
-            # if userEmail:
-            #     findUser = User.objects.filter(email=userEmail)
-            #     if findUser.exists():
-            #         emailexists = 1
-            current_partial = kwargs.get('current_partial')
-            return strategy.redirect('/user/email_required?partial_token={0}&username={1}&email={2}'.format(
-                current_partial.token, quote(userName), quote(userEmail)))
-
-        # posted, check all
-        userName = strategy.request_data().get('username')
-        isallright = 1
-        userexists = 0
-        emailexists = 0
-        if userName:
-            existingUser = User.objects.filter(username=userName)
-            if existingUser.exists():
-                userexists = 1
+            if userEmail:
+                findUser = User.objects.filter(email=userEmail)
+                if findUser.exists():
+                    isallright = 0
+                    emailexists = 1
+            else:
+                # email empty
                 isallright = 0
-        else: # name empty
-            isallright = 0
+            # current_partial = kwargs.get('current_partial')
+            # return strategy.redirect('/user/email_required?partial_token={0}&username={1}&email={2}'.format(
+                # current_partial.token, quote(userName), quote(userEmail)))
 
-        # if email is used by some user
-        # (in facebook case): it seems facebook will come in this branch, not the following strategy email one
-        userEmail = strategy.request_data().get('email')
-        if userEmail:
-            # first check if email exists
-            findUser = User.objects.filter(email=userEmail)
-            if findUser.exists():
-                # seems we cannot set details['email'] directly here, maybe return is not good?
-                # We should process strategy request for email input here, or will be caught in a loop
-                emailexists = 1
+        else:
+            # posted, info from post
+            userName = strategy.request_data().get('username')
+            if userName:
+                existingUser = User.objects.filter(username=userName)
+                if existingUser.exists():
+                    userexists = 1
+                    isallright = 0
+            else: # name empty
                 isallright = 0
-        else: # email empty
-            isallright = 0
 
+            # if email is used by some user
+            # (in facebook case): it seems facebook will come in this branch, not the following strategy email one
+            userEmail = strategy.request_data().get('email')
+            if userEmail:
+                # first check if email exists
+                findUser = User.objects.filter(email=userEmail)
+                if findUser.exists():
+                    # seems we cannot set details['email'] directly here, maybe return is not good?
+                    # We should process strategy request for email input here, or will be caught in a loop
+                    emailexists = 1
+                    isallright = 0
+            else: # email empty
+                isallright = 0
+
+        # 3. ok pass or show form
         if not isallright:
             # If there's no email information to be had, we need to ask the
             # user to fill it in.  This should redirect us to a view
@@ -104,13 +118,15 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
             return strategy.redirect('/user/email_required?partial_token={0}&username={1}&email={2}&userexists={3}&emailexists={4}'.format(
                 current_partial.token, quote(userName), quote(userEmail), userexists, emailexists))
 
-
+        # ok, pass on pipeline
         details['username'] = userName
         details['email'] = userEmail
+        # details['is_active'] = False
 
         return {
             'username': userName,
             'email': userEmail
+            # 'is_active': False
         }
 
     # if is_new and not details.get('email'):
@@ -132,3 +148,45 @@ def require_email(strategy, details, user=None, is_new=False, *args, **kwargs):
     #         # user to fill it in.  This should redirect us to a view
     #         current_partial = kwargs.get('current_partial')
     #         return strategy.redirect('/user/email_required?partial_token={0}'.format(current_partial.token))
+
+
+# full pipeline func, check if is anonymous
+def check_anonymous(strategy, details, request, user=None, *args, **kwargs):
+    if request and request.user and request.user.is_authenticated:
+        return redirect("/")
+    pass
+
+# send validation mail and make user not active first
+def send_validation(strategy, details, request, user=None, is_new=False, *args, **kwargs):
+    if is_new and user is not None:
+        user.is_active = False
+        user.save()
+
+        # send validation mail
+        activation_key = uuid.uuid4().hex #self.create_activation_key()
+        activation = UserActivation(user=user, key=activation_key)
+        activation.save()
+
+        base_url = "/".join(request.build_absolute_uri().split("/")[:3])
+        activation_url = "{0}/user/activation/{1}".format(base_url,
+                                                          activation_key)
+        send_template_mail(
+            "email/activation.txt",
+            {"activation_url": activation_url},
+            "Sovol Info <info@sovol.earth>",
+            [user.email],
+        )
+
+        info_msg = _("Confirmation email has been "
+                     "sent to your email address.") % {'email': user.email}
+
+        messages.info(request, info_msg)
+        return redirect("top")
+
+        # return not active user info for user creation
+        # details['is_active'] = False
+        # if kwargs is None:
+        #     kwargs = {}
+        # kwargs['is_active'] = False
+        # return kwargs
+    pass
