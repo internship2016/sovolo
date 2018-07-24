@@ -23,10 +23,14 @@ from django.db.models import Avg
 
 
 class UserManager(BaseUserManager):
-    def create_user(self, email="", username="", password=None):
+    def create_user(self, email="", username="", password=None, is_active=True):
+        if is_active is None:
+            is_active = True
+
         user = self.model(
             username=username,
-            email=self.normalize_email(email)
+            email=self.normalize_email(email),
+            is_active=is_active
         )
 
         user.set_password(password)

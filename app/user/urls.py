@@ -1,13 +1,34 @@
 from django.conf.urls import url
 from . import views, api
 from django.contrib.auth import views as auth_views
+from django.shortcuts import redirect
 
 app_name = 'user'
 
 
+def anonymous_required(redirect_url):
+    """
+    Decorator for views that allow only unauthenticated users to access view.
+    Usage:
+    @anonymous_required(redirect_url='company_info')
+    def homepage(request):
+        return render(request, 'homepage.html')
+    """
+    def _wrapped(view_func, *args, **kwargs):
+        def check_anonymous(request, *args, **kwargs):
+            view = view_func(request, *args, **kwargs)
+            if (not request.user is None) and request.user.is_authenticated:
+                return redirect(redirect_url)
+            return view
+        return check_anonymous
+    return _wrapped
+
+# for use in urlpatterns, redirect to home
+anonymous_wrapper = anonymous_required("/")
+
 urlpatterns = [
     url(r'^login/$',
-        auth_views.login, {'template_name': "user/login_page.html"},
+        anonymous_wrapper(auth_views.login), {'template_name': "user/login_page.html"},
         name='login'),
 
     url(r'^logout/$',
@@ -15,7 +36,7 @@ urlpatterns = [
         name='logout'),
 
     url(r'^register/$',
-        views.UserCreateView.as_view(),
+        anonymous_wrapper(views.UserCreateView.as_view()),
         name='register'),
 
     url(r'^activation/(?P<key>\w+)/$',
