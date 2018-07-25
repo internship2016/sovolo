@@ -176,10 +176,12 @@
   <div class="container text-center">
     <span>&copy; 2017 Interlink</span>
   </div>
+  {% if debug %}
     {% load git %}
-  <div class="container text-center">
-    <span>rev: <a href="https://github.com/internship2016/sovolo/commit/{% git_version %}">{% git_version %}</a></span>
-  </div>
+    <div class="container text-center">
+      <span>rev: <a href="https://github.com/internship2016/sovolo/commit/{% git_version %}">{% git_version %}</a></span>
+    </div>
+    {% endif %}
 </footer>
 
 
