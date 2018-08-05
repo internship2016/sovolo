@@ -50,7 +50,7 @@ class UserCreateView(CreateView):
         send_template_mail(
             "email/activation.txt",
             {"activation_url": activation_url},
-            "Sovol Info <info@sovol.earth>",
+            "Sovol Info <info@sovol.moe>",
             [user.email],
         )
 
@@ -112,7 +112,7 @@ class RequestPasswordReset(View):
             send_template_mail(
                 "email/reset_password.txt",
                 {"reset_url": reset_url},
-                "Sovol Info<info@sovol.earth>",
+                "Sovol Info<info@sovol.moe>",
                 [user.email]
             )
 

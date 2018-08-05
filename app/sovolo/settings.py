@@ -30,6 +30,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+INTERNAL_IPS = (
+    '127.0.0.1',
+)
 
 # Application definition
 
@@ -97,6 +100,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                'sovolo.context_processors.google_analytics',
             ],
         },
     },
@@ -213,10 +217,12 @@ EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = None
 EMAIL_HOST_PASSWORD = None
-DEFAULT_FROM_EMAIL = 'Sovol <noreply@sovol.earth>'
+DEFAULT_FROM_EMAIL = 'Sovol <noreply@sovol.moe>'
 
 GOOGLE_RECAPTCHA_SECRET = os.environ.get('GOOGLE_RECAPTCHA_SECRET')
+GOOGLE_RECAPTCHA_SITEKEY = os.environ.get('GOOGLE_RECAPTCHA_SITEKEY')
 GOOGLE_MAP_KEY = os.environ.get('GOOGLE_MAP_KEY')
+GOOGLE_ANALYTICS_PROP = os.environ.get('GOOGLE_ANALYTICS_PROP')
 
 PREFECTURES = {
     "Hokkaido"  : (_("Hokkaido" ),  1),
@@ -272,4 +278,4 @@ LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
 
-GULP_PRODUCTION_COMMAND='gulp default --production'
+GULP_PRODUCTION_COMMAND='npm run gulp default --production'

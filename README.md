@@ -94,9 +94,7 @@
 
 ### LetsEncrypt
 
-    (root) yum install certbot
-    (root) systemctl stop nginx.service
-    (root) certbot certonly --standalone -d sovol.moe -m who@example.com
+    (root) yum install letsencrypt
     (root) vi /etc/nginx/conf.d/sovol.conf
 
         # mysite_nginx.conf
@@ -111,7 +109,9 @@
         server {
             listen 80;
             server_name sovol.moe;
-            return 301 https://$host$request_uri;
+            root /usr/local/src/sovolo/app/static;
+            location /.well-known/acme-challenge/ { allow all; }
+            location / { return 301 https://$host$request_uri; }
         }
 
         # configuration of the server
@@ -152,7 +152,13 @@
             }
         }
 
+    (root) letsencrypt certonly --webroot -d sovol.moe -m who@example.com -w /usr/local/src/sovolo/app/static
     (root) systemctl start nginx.service
+    (root) crontab -e
+
+        MAILTO=who@example.com
+        49 0,12 * * * /bin/letsencrypt renew --quiet && /bin/systemctl reload nginx.service
+
 
 ### Clone django-uwsgi-nginx
 
@@ -266,6 +272,63 @@
 
     (root) systemctl restart postfix.service
 
+#### DKIM
+
+    (root) yum install opendkim
+    (root) opendkim-default-keygen
+    (root) vi /etc/opendkim.conf
+
+        ...
+        Mode    s
+        ...
+        Socket  inet:8891@127.0.0.1
+        ...
+        Domain  sovol.moe
+        ...
+        Canonicalization        relaxed/simple
+        ...
+        #KeyFile        /etc/opendkim/keys/default.private
+        ...
+        KeyTable        refile:/etc/opendkim/KeyTable
+        ...
+        SigningTable    refile:/etc/opendkim/SigningTable
+        ...
+        ExternalIgnoreList      refile:/etc/opendkim/TrustedHosts
+        ...
+        InternalHosts   refile:/etc/opendkim/TrustedHosts
+        ...
+
+    (root) vi /etc/opendkim/KeyTable
+
+        default._domainkey.sovol.moe sovol.moe:default:/etc/opendkim/keys/default.private
+
+    (root) vi /etc/opendkim/SigningTable
+
+        *@sovol.moe default._domainkey.sovol.moe
+
+    (root) vi /etc/opendkim/TrustedHost
+
+        127.0.0.1
+        ::1
+        sovol.moe
+
+    (root) vi /etc/postfix/main.cf
+
+        ...
+        smtpd_milters = inet:127.0.0.1:8891
+        non_smtpd_milters = $smtpd_milters
+        milter_default_action = accept
+
+    (root) hash -r
+    (root) systemctl start opendkim
+    (root) systemctl enable opendkim
+    (root) systemctl restart postfix
+
+    (root) cat /etc/opendkim/keys/default.txt
+
+        (Copy domainkey to TXT record)
+
+
 ### I18N
 
     (root) yum install gettext
@@ -320,3 +383,27 @@
         Content-Length: 0
         Vary: Accept-Language, Cookie
         Content-Language: ja-jp
+
+## Backup and Restore
+
+### Backup
+
+#### Database
+
+    (postgres) pg_dump -Fc -U sovolo_admin -W -h localhost sovolo > /tmp/pg_sovolo_20180201.dump
+
+#### Assets
+
+    (user) cd app
+    (user) tar zcvf /tmp/media_20180201.tar.gz media
+
+### Restore
+
+#### Database
+
+    (postgres) pg_restore -c -U sovolo_admin -W -h localhost -d sovolo /tmp/pg_sovolo_20180201.dump
+
+#### Assets
+
+    (root) cd app
+    (root) tar zxvf /tmp/media_20180201.tar.gz
