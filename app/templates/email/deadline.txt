@@ -6,6 +6,6 @@
 ボランティアの円滑の運営のため、確実に参加できる場合以外は、キャンセルをお願いいたします。
 
 変更は以下のURLから可能です。
-https://sovol.earth/{% url 'event:detail' event.id %}
+https://sovol.moe/{% url 'event:detail' event.id %}
 
 よろしくお願いいたします。

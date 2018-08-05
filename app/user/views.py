@@ -50,7 +50,7 @@ class UserCreateView(CreateView):
         send_template_mail(
             "email/activation.txt",
             {"activation_url": activation_url},
-            "Sovol Info <info@sovol.earth>",
+            "Sovol Info <info@sovol.moe>",
             [user.email],
         )
 
@@ -112,7 +112,7 @@ class RequestPasswordReset(View):
             send_template_mail(
                 "email/reset_password.txt",
                 {"reset_url": reset_url},
-                "Sovol Info<info@sovol.earth>",
+                "Sovol Info<info@sovol.moe>",
                 [user.email]
             )
 
@@ -228,8 +228,18 @@ class AcquireEmail(View):
         strategy = load_strategy()
         partial_token = request.GET.get('partial_token')
         partial = strategy.partial_load(partial_token)
+        username = request.GET.get('username', '')
+        email = request.GET.get('email', '')
         email_exists = request.GET.get('emailexists')
-        return render(request, 'user/acquire_email.html', {"backend": partial.backend, "email_exists": email_exists})
+        user_exists = request.GET.get('userexists')
+        return render(request, 'user/acquire_email.html',
+            {
+                "backend": partial.backend,
+                "username": username,
+                "email": email,
+                "user_exists": user_exists,
+                "email_exists": email_exists
+            })
 
 
 def logout(request):

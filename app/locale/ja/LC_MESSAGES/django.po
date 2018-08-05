@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2017-09-07 13:33+0900\n"
+"POT-Creation-Date: 2018-06-17 11:35+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,310 +18,310 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: event/models.py:99 templates/event/detail.html:54
+#: event/models.py:100 templates/event/detail.html:54
 #: templates/event/detail.html:64
 msgid "Finished"
 msgstr "終了"
 
-#: event/models.py:100 templates/event/detail.html:56
+#: event/models.py:101 templates/event/detail.html:56
 #: templates/event/detail.html:66 templates/event/detail.html:99
 #: templates/event/detail.html:112
 msgid "In Session"
 msgstr "開催中"
 
-#: event/models.py:101 templates/event/detail.html:58
+#: event/models.py:102 templates/event/detail.html:58
 #: templates/event/detail.html:68 templates/event/detail.html:101
 #: templates/event/detail.html:114
 msgid "Closed"
 msgstr "締切済"
 
-#: event/models.py:102
+#: event/models.py:103
 msgid "Full"
 msgstr "満員"
 
-#: event/models.py:103
+#: event/models.py:104
 msgid "Wanted"
 msgstr "募集中"
 
-#: event/models.py:119
+#: event/models.py:120
 msgid "Not provided"
 msgstr "未設定"
 
-#: event/views.py:86
+#: event/views.py:92
 #, python-format
 msgid "There is no user named %(name)s."
 msgstr "ユーザー名 %(name)s に一致するユーザーはいませんでした。"
 
-#: event/views.py:133
+#: event/views.py:139
 msgid "Your event was successfully added."
 msgstr "ボランティア活動情報を編集しました。"
 
-#: event/views.py:163
+#: event/views.py:169
 msgid "Event not found."
 msgstr "ボランティア活動がありません"
 
-#: event/views.py:228
+#: event/views.py:239
 #, python-format
 msgid "No users found matching %(name)s."
 msgstr "%(name)s に一致するユーザーはいませんでした。"
 
-#: event/views.py:272
+#: event/views.py:283
 msgid "Event detail has been updated."
 msgstr "ボランティア情報を編集しました。"
 
-#: event/views.py:305
+#: event/views.py:322
 msgid "Event has been deleted."
 msgstr "ボランティアを削除しました。"
 
-#: event/views.py:368 event/views.py:434
+#: event/views.py:385 event/views.py:451
 msgid "No events found matching your search."
 msgstr "検索結果に一致するボランティアが見つかりませんでした。"
 
-#: event/views.py:469
+#: event/views.py:486
 msgid "This event has already ended."
 msgstr "このボランティアはすでに終了しています。"
 
-#: event/views.py:476
+#: event/views.py:493
 msgid "This position is closed."
 msgstr "この枠はすでに締め切られています。"
 
-#: event/views.py:487
+#: event/views.py:504
 msgid "You are on the waiting list."
 msgstr "キャンセル待ちです。"
 
-#: event/views.py:489
+#: event/views.py:506
 msgid "You joined this event."
 msgstr "参加しました。"
 
-#: event/views.py:493 event/views.py:540
+#: event/views.py:510 event/views.py:557
 msgid "You have already joined."
 msgstr "参加済みです。"
 
-#: event/views.py:495 event/views.py:542
+#: event/views.py:512 event/views.py:559
 msgid "An error occurred while processing."
 msgstr "参加処理中にエラーが発生しました。"
 
-#: event/views.py:507
+#: event/views.py:524
 msgid "You cannot undo your like."
 msgstr "応援のキャンセルはできません。"
 
-#: event/views.py:511
+#: event/views.py:528
 msgid "You cannot like events ended."
 msgstr "終了したボランティアは応援できません。"
 
-#: event/views.py:513
+#: event/views.py:530
 msgid "Liked this event!"
 msgstr "応援しました。"
 
-#: event/views.py:527
+#: event/views.py:544
 msgid "This event is already closed."
 msgstr "このボランティアはすでに締め切られています。"
 
-#: event/views.py:582
+#: event/views.py:599
 msgid "Canceled your participation."
 msgstr "参加をキャンセルしました。"
 
-#: event/views.py:611
+#: event/views.py:628
 msgid "Authentication failed."
 msgstr "認証に失敗しました。"
 
-#: event/views.py:659
+#: event/views.py:676
 msgid "Invalid recipient"
 msgstr "不正な送信先です"
 
-#: event/views.py:677
+#: event/views.py:694
 msgid "Your message has been sent successfully."
 msgstr "メッセージの送信が完了しました。"
 
-#: sovolo/settings.py:144
+#: sovolo/settings.py:147
 msgid "English"
 msgstr "English"
 
-#: sovolo/settings.py:214
+#: sovolo/settings.py:220
 msgid "Hokkaido"
 msgstr "北海道"
 
-#: sovolo/settings.py:215
+#: sovolo/settings.py:221
 msgid "Aomori"
 msgstr "青森県"
 
-#: sovolo/settings.py:216
+#: sovolo/settings.py:222
 msgid "Iwate"
 msgstr "岩手県"
 
-#: sovolo/settings.py:217
+#: sovolo/settings.py:223
 msgid "Miyagi"
 msgstr "宮城県"
 
-#: sovolo/settings.py:218
+#: sovolo/settings.py:224
 msgid "Akita"
 msgstr "秋田県"
 
-#: sovolo/settings.py:219
+#: sovolo/settings.py:225
 msgid "Yamagata"
 msgstr "山形県"
 
-#: sovolo/settings.py:220
+#: sovolo/settings.py:226
 msgid "Fukushima"
 msgstr "福島県"
 
-#: sovolo/settings.py:221
+#: sovolo/settings.py:227
 msgid "Ibaraki"
 msgstr "茨城県"
 
-#: sovolo/settings.py:222
+#: sovolo/settings.py:228
 msgid "Tochigi"
 msgstr "栃木県"
 
-#: sovolo/settings.py:223
+#: sovolo/settings.py:229
 msgid "Gunnma"
 msgstr "群馬県"
 
-#: sovolo/settings.py:224
+#: sovolo/settings.py:230
 msgid "Saitama"
 msgstr "埼玉県"
 
-#: sovolo/settings.py:225
+#: sovolo/settings.py:231
 msgid "Chiba"
 msgstr "千葉県"
 
-#: sovolo/settings.py:226
+#: sovolo/settings.py:232
 msgid "Tokyo"
 msgstr "東京都"
 
-#: sovolo/settings.py:227
+#: sovolo/settings.py:233
 msgid "Kanagawa"
 msgstr "神奈川県"
 
-#: sovolo/settings.py:228
+#: sovolo/settings.py:234
 msgid "Niigata"
 msgstr "新潟県"
 
-#: sovolo/settings.py:229
+#: sovolo/settings.py:235
 msgid "Toyama"
 msgstr "富山県"
 
-#: sovolo/settings.py:230
+#: sovolo/settings.py:236
 msgid "Ishikawa"
 msgstr "石川県"
 
-#: sovolo/settings.py:231
+#: sovolo/settings.py:237
 msgid "Fukui"
 msgstr "福井県"
 
-#: sovolo/settings.py:232
+#: sovolo/settings.py:238
 msgid "Yamanashi"
 msgstr "山梨県"
 
-#: sovolo/settings.py:233
+#: sovolo/settings.py:239
 msgid "Nagano"
 msgstr "長野県"
 
-#: sovolo/settings.py:234
+#: sovolo/settings.py:240
 msgid "Gifu"
 msgstr "岐阜県"
 
-#: sovolo/settings.py:235
+#: sovolo/settings.py:241
 msgid "Shizuoka"
 msgstr "静岡県"
 
-#: sovolo/settings.py:236
+#: sovolo/settings.py:242
 msgid "Aichi"
 msgstr "愛知県"
 
-#: sovolo/settings.py:237
+#: sovolo/settings.py:243
 msgid "Mie"
 msgstr "三重県"
 
-#: sovolo/settings.py:238
+#: sovolo/settings.py:244
 msgid "Shiga"
 msgstr "滋賀県"
 
-#: sovolo/settings.py:239
+#: sovolo/settings.py:245
 msgid "Kyoto"
 msgstr "京都府"
 
-#: sovolo/settings.py:240
+#: sovolo/settings.py:246
 msgid "Osaka"
 msgstr "大阪府"
 
-#: sovolo/settings.py:241
+#: sovolo/settings.py:247
 msgid "Hyogo"
 msgstr "兵庫県"
 
-#: sovolo/settings.py:242
+#: sovolo/settings.py:248
 msgid "Nara"
 msgstr "奈良県"
 
-#: sovolo/settings.py:243
+#: sovolo/settings.py:249
 msgid "Wakayama"
 msgstr "和歌山県"
 
-#: sovolo/settings.py:244
+#: sovolo/settings.py:250
 msgid "Tottori"
 msgstr "鳥取県"
 
-#: sovolo/settings.py:245
+#: sovolo/settings.py:251
 msgid "Shimane"
 msgstr "島根県"
 
-#: sovolo/settings.py:246
+#: sovolo/settings.py:252
 msgid "Okayama"
 msgstr "岡山県"
 
-#: sovolo/settings.py:247
+#: sovolo/settings.py:253
 msgid "Hiroshima"
 msgstr "広島県"
 
-#: sovolo/settings.py:248
+#: sovolo/settings.py:254
 msgid "Yamaguchi"
 msgstr "山口県"
 
-#: sovolo/settings.py:249
+#: sovolo/settings.py:255
 msgid "Tokushima"
 msgstr "徳島県"
 
-#: sovolo/settings.py:250
+#: sovolo/settings.py:256
 msgid "Kagawa"
 msgstr "香川県"
 
-#: sovolo/settings.py:251
+#: sovolo/settings.py:257
 msgid "Ehime"
 msgstr "愛媛県"
 
-#: sovolo/settings.py:252
+#: sovolo/settings.py:258
 msgid "Kouchi"
 msgstr "高知県"
 
-#: sovolo/settings.py:253
+#: sovolo/settings.py:259
 msgid "Fukuoka"
 msgstr "福岡県"
 
-#: sovolo/settings.py:254
+#: sovolo/settings.py:260
 msgid "Saga"
 msgstr "佐賀県"
 
-#: sovolo/settings.py:255
+#: sovolo/settings.py:261
 msgid "Nagasaki"
 msgstr "長崎県"
 
-#: sovolo/settings.py:256
+#: sovolo/settings.py:262
 msgid "Kumamoto"
 msgstr "熊本県"
 
-#: sovolo/settings.py:257
+#: sovolo/settings.py:263
 msgid "Ooita"
 msgstr "大分県"
 
-#: sovolo/settings.py:258
+#: sovolo/settings.py:264
 msgid "Miyazaki"
 msgstr "宮崎県"
 
-#: sovolo/settings.py:259
+#: sovolo/settings.py:265
 msgid "Kagoshima"
 msgstr "鹿児島県"
 
-#: sovolo/settings.py:260
+#: sovolo/settings.py:266
 msgid "Okinawa"
 msgstr "沖縄県"
 
@@ -356,7 +356,7 @@ msgstr "ボランティアを募集する"
 msgid "Search Volunteer events"
 msgstr "ボランティア活動を探す"
 
-#: templates/base.html:127
+#: templates/base.html:128
 msgid "Search Volunteers"
 msgstr "ボランティアを探す"
 
@@ -368,15 +368,15 @@ msgstr "小さくたっていい、"
 msgid "Involved"
 msgstr "あなたの手を探している"
 
-#: templates/container_top.html:12 templates/container_top_user.html:12
+#: templates/container_top.html:13 templates/container_top_user.html:12
 msgid "Create an Event"
 msgstr "ボランティア活動をはじめる"
 
-#: templates/container_top.html:23
+#: templates/container_top.html:25
 msgid "Event photo"
 msgstr "トップ画像"
 
-#: templates/container_top.html:34 templates/event/event_header.html:48
+#: templates/container_top.html:36 templates/event/event_header.html:48
 msgid "Like"
 msgstr "いいね"
 
@@ -406,7 +406,7 @@ msgid "?"
 msgstr "を本当に削除しますか？"
 
 #: templates/event/collapse_event_list.html:53
-#: templates/event/event_list.html:50
+#: templates/event/event_list.html:58
 msgid "There are no events"
 msgstr "イベントはありません"
 
@@ -907,11 +907,26 @@ msgstr "取得に失敗"
 msgid "You need an email address to create a Sovol account."
 msgstr "サービスの利用にはEmailアドレスが必要です"
 
-#: templates/user/acquire_email.html:16
-msgid "This email is used by an existing user."
-msgstr "すでにアカウントが存在しています。お手数ですが他のアカウントでご利用下さい。"
+#: templates/user/acquire_email.html:19
+msgid "Email"
+msgstr "Emailアドレス"
 
-#: templates/user/acquire_email.html:20
+#: templates/user/acquire_email.html:23
+msgid "This email is used by an existing user."
+msgstr ""
+"すでにアカウントが存在しています。お手数ですが他のアカウントでご利用下さい。"
+
+#: templates/user/acquire_email.html:33
+#: templates/user/template_skilllist.html:21
+msgid "Username"
+msgstr "ユーザー名"
+
+#: templates/user/acquire_email.html:37
+msgid "This name is used by an existing user."
+msgstr ""
+"すでにアカウントが存在しています。お手数ですが他のアカウントでご利用下さい。"
+
+#: templates/user/acquire_email.html:43
 msgid "REGISTER"
 msgstr "登録"
 
@@ -1104,10 +1119,6 @@ msgstr "スキル変更"
 msgid "Users"
 msgstr "ユーザー一覧"
 
-#: templates/user/template_skilllist.html:21
-msgid "Username"
-msgstr "ユーザー名"
-
 #: templates/user/template_skilllist.html:34
 msgid "No skills found"
 msgstr "スキルがありません"
@@ -1261,28 +1272,28 @@ msgstr "そのユーザーは存在しません"
 msgid "User profile has been successfully updated."
 msgstr "ユーザー情報を編集しました。"
 
-#: user/views.py:235
+#: user/views.py:246
 msgid "You have been successfully logged out."
 msgstr "ログアウトしました。"
 
-#: user/views.py:294 user/views.py:302 user/views.py:310 user/views.py:315
-#: user/views.py:320
+#: user/views.py:305 user/views.py:313 user/views.py:321 user/views.py:326
+#: user/views.py:331
 msgid "Invalid Review"
 msgstr "無効なレビューです"
 
-#: user/views.py:325
+#: user/views.py:336
 msgid "You've already reviewd"
 msgstr "既にレビュー済みです"
 
-#: user/views.py:338
+#: user/views.py:349
 msgid "Your review has been successfully posted!"
 msgstr "レビューを投稿しました。"
 
-#: user/views.py:374
+#: user/views.py:385
 msgid "Your skill has been updated successfully."
 msgstr "スキルを編集しました。"
 
-#: user/views.py:404
+#: user/views.py:415
 msgid "Your new skill has been added successfully."
 msgstr "新規スキルを作成しました。"
 

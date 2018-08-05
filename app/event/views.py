@@ -65,6 +65,12 @@ class EventCreate(CreateView):
             copy_event.start_time = None
             copy_event.end_time = None
             context['event'] = copy_event
+
+        """Google MAP KEY
+        MAP KEY from settings
+        """
+        context['google_map_key'] = settings.GOOGLE_MAP_KEY
+
         return context
 
     def form_valid(self, form):
@@ -180,6 +186,11 @@ class EventDetailView(DetailView):
                                .filter(event=self.object) \
                                .get(user=login_user)
 
+        """Google MAP KEY
+        MAP KEY from settings
+        """
+        context['google_map_key'] = settings.GOOGLE_MAP_KEY
+
         return context
 
 
@@ -281,6 +292,12 @@ class EventEditView(UserPassesTestMixin, UpdateView):
     def get_context_data(self, **kwargs):
         context = super(EventEditView, self).get_context_data(**kwargs)
         context['all_tags'] = Tag.objects.all
+
+        """Google MAP KEY
+        MAP KEY from settings
+        """
+        context['google_map_key'] = settings.GOOGLE_MAP_KEY
+
         return context
 
 
@@ -576,7 +593,7 @@ class ParticipationDeleteView(DeleteView, UserPassesTestMixin):
                 # XXX: Hardcoded From address
                 send_mail(subject,
                           message,
-                          "reminder@sovol.earth",
+                          "reminder@sovol.moe",
                           [carry_up.user.email])
 
         messages.success(self.request, _("Canceled your participation."))
@@ -670,7 +687,7 @@ class SendMessage(UserPassesTestMixin, SingleObjectMixin, View):
                     "sender": request.user,
                     "message": message,
                 },
-                "Sovol Info <info@sovol.earth>",
+                "Sovol Info <info@sovol.moe>",
                 [user.email],
             )
 

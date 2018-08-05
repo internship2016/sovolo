@@ -21,6 +21,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
 
+##
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'h+7tnng9qb&$^@qa=y_@g5wr0d@6vsq!pa5gwa6e7_8ngj+8k!'
 
@@ -29,10 +30,14 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+INTERNAL_IPS = (
+    '127.0.0.1',
+)
 
 # Application definition
 
 INSTALLED_APPS = [
+    'django_gulp',
     'event.apps.EventConfig',
     'tag.apps.TagConfig',
     'user.apps.UserConfig',
@@ -73,6 +78,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'user.auth_exception_middleware.AuthCanceledExceptionMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
@@ -94,6 +100,7 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'social_django.context_processors.backends',
                 'social_django.context_processors.login_redirect',
+                'sovolo.context_processors.google_analytics',
             ],
         },
     },
@@ -177,19 +184,22 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SOCIAL_AUTH_PIPELINE = (
+    'user.social_auth.check_anonymous',
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
     'social_core.pipeline.social_auth.auth_allowed',
     'social_core.pipeline.social_auth.social_user',
-    'user.social_auth.require_email',
     'social_core.pipeline.user.get_username',
+    'user.social_auth.require_email',
+    # 'social_core.pipeline.user.get_username',
     'social_core.pipeline.user.create_user',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',
     'user.social_auth.get_profile_image',
     'social_core.pipeline.user.user_details',
+    'user.social_auth.send_validation',
 )
-
+USER_FIELDS = ['username', 'email', 'is_active']
 SOCIAL_AUTH_TWITTER_KEY = os.environ.get('SOCIAL_AUTH_TWITTER_KEY')
 SOCIAL_AUTH_TWITTER_SECRET = os.environ.get('SOCIAL_AUTH_TWITTER_SECRET')
 SOCIAL_AUTH_FACEBOOK_KEY = os.environ.get('SOCIAL_AUTH_FACEBOOK_KEY')
@@ -197,7 +207,7 @@ SOCIAL_AUTH_FACEBOOK_SECRET = os.environ.get('SOCIAL_AUTH_FACEBOOK_SECRET')
 SOCIAL_AUTH_FACEBOOK_SCOPE = ['email']
 SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {
     'locale': 'ja_JP',
-    'fields': 'id, name, email, age_range'
+    'fields': 'id, name, email'
 }
 
 EMAIL_BACKEND = os.environ.get('EMAIL_BACKEND',
@@ -207,9 +217,12 @@ EMAIL_HOST = 'localhost'
 EMAIL_PORT = 25
 EMAIL_HOST_USER = None
 EMAIL_HOST_PASSWORD = None
-DEFAULT_FROM_EMAIL = 'Sovol <noreply@sovol.earth>'
+DEFAULT_FROM_EMAIL = 'Sovol <noreply@sovol.moe>'
 
 GOOGLE_RECAPTCHA_SECRET = os.environ.get('GOOGLE_RECAPTCHA_SECRET')
+GOOGLE_RECAPTCHA_SITEKEY = os.environ.get('GOOGLE_RECAPTCHA_SITEKEY')
+GOOGLE_MAP_KEY = os.environ.get('GOOGLE_MAP_KEY')
+GOOGLE_ANALYTICS_PROP = os.environ.get('GOOGLE_ANALYTICS_PROP')
 
 PREFECTURES = {
     "Hokkaido"  : (_("Hokkaido" ),  1),
@@ -264,3 +277,5 @@ PREFECTURES = {
 LOCALE_PATHS = (
     os.path.join(BASE_DIR, 'locale'),
 )
+
+GULP_PRODUCTION_COMMAND='npm run gulp default --production'
