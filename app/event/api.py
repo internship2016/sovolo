@@ -36,8 +36,8 @@ def event_filter(request, event_kind, *args, **kwargs):
             res_obj['filtered_events'].append({
                 'id': event.id,
                 'name': event.name,
-                'start_time': event.start_time.strftime(DATETIME_FORMAT),
-                'end_time': event.end_time.strftime(DATETIME_FORMAT),
+                'start_time': event.start_time, #strftime(DATETIME_FORMAT),
+                'end_time': event.end_time, #.strftime(DATETIME_FORMAT),
                 'place': event.meeting_place,
                 'img': event.get_image_url(),
                 'status': status['msg'],
@@ -86,8 +86,8 @@ def event_range_search(request, *args, **kwargs):
         res['events_in_range'].append({
             'id': event.id,
             'name': event.name,
-            'start_time': event.start_time.strftime(DATETIME_FORMAT),
-            'end_time': event.end_time.strftime(DATETIME_FORMAT),
+            'start_time': event.start_time, #.strftime(DATETIME_FORMAT),
+            'end_time': event.end_time, #.strftime(DATETIME_FORMAT),
             'place': event.meeting_place,
             'longitude': event.longitude,
             'latitude': event.latitude,
